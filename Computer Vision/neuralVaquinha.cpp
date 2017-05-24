@@ -32,7 +32,7 @@ vector<float> angles, anglesP;
 // SET DE DADOS PARA IA
 
 const int K = 2; // NUMERO DE CLUSTERS
-const int nCICLOS = 5000;
+const int nCICLOS = 250;
 
 /*void black_white(vector <Point2f>& pontos){
   int width = pontoLinha.cols, height = pontoLinha.rows;
@@ -72,7 +72,7 @@ void kmeans_training (vector<Point2f> corners) {
 
 
 
-    int x1 = trainingData[i][0]-15, x2= trainingData[i][0]+15, y1= trainingData[i][1]-15, y2= trainingData[i][1]+15;
+    int x1 = trainingData[i][0]-5, x2= trainingData[i][0]+5, y1= trainingData[i][1]-5, y2= trainingData[i][1]+5;
 
     if (x1<0) {
       x1 = 0;
@@ -110,14 +110,27 @@ void kmeans_training (vector<Point2f> corners) {
       }
     }
 
-  // atribui aos primeiros centroides pontos na amostra
+  for (int n = 0; n < nCICLOS; n++) {
+
+    // atribui aos primeiros centroides o centroide anterior identificado
 
     for (int j = 0; j < 5; j++) {
       c[0][j] = trainingData[0][j];
       c[1][j] = trainingData[tam-1][j];
     }
 
-  for (int n = 0; n < nCICLOS; n++) {
+
+    /*c[0][0] = centroides[0][0];
+    c[0][1] = centroides[0][1];
+    c[0][2] = centroides[0][2];
+    c[0][3] = centroides[0][3];
+    c[0][4] = centroides[0][4];
+
+    c[1][0] = centroides[1][0];
+    c[1][1] = centroides[1][1];
+    c[1][2] = centroides[1][2];
+    c[1][3] = centroides[1][3];
+    c[1][4] = centroides[1][4];*/
 
     // DATA ASSIGMENT STEP - cada ponto é associado a um centroide
     for (unsigned int i = 0; i < tam; i++) {
@@ -176,11 +189,29 @@ void kmeans_training (vector<Point2f> corners) {
     c[i][4] = int(c[i][4]/cont);
 
   }
+
+/*if (centroides[0][0] - c[0][0] < 2 && n > 1 && centroides[0][1] - c[0][1] < 2 && centroides[1][0] - c[1][0] < 2
+          &&  centroides[1][1] - c[1][1] < 2) {
+
+              break;
+  }*/
+
 }
 
 
   // ajustar retorno
 
+  /*centroides[0][0] = c[0][0];
+  centroides[0][1] = c[0][1];
+  centroides[0][2] = c[0][2];
+  centroides[0][3] = c[0][3];
+  centroides[0][4] = c[0][4];
+
+  centroides[1][0] = c[1][0];
+  centroides[1][1] = c[1][1];
+  centroides[1][2] = c[1][2];
+  centroides[1][3] = c[1][3];
+  centroides[1][4] = c[1][4];*/
 
   mitNeural = frame.clone();
   circle(mitNeural, Point(c[0][0], c[0][1]), 10, Scalar(173, 0, 0), -1, 8, 0 );
@@ -419,6 +450,7 @@ void filtrar_linhas (vector<Vec4i> &lines) {
 
 void all_lines() {
 	Canny(frame, canny, 50, 200, 3 );
+
   cvtColor(canny, mitLines, CV_GRAY2BGR );
 
 	vector<Vec2f> lines0;
@@ -443,7 +475,20 @@ void all_lines() {
 		}
 	#else
   // ultimos tres elementos                  (threshold, minLineLength, maxLineGap)
+
 		HoughLinesP( canny, lines, 1, CV_PI/180, 75, 50, 30);
+
+    Mat hough = canny;
+    for (unsigned int i = 0; i < lines.size(); i++){
+      line( hough, Point(lines[i][0], lines[i][1]),
+          Point(lines[i][2], lines[i][3]), Scalar(0,0,255), 3, 8 );
+    }
+
+    namedWindow("Hough Lines", WINDOW_NORMAL);
+	  resizeWindow("Hough Lines", 640,480);
+    imshow( "Hough Lines", hough );
+
+
     filtrar_linhas(lines);
 
 		/*for( size_t i = 0; i < lines.size(); i++ ){
@@ -512,6 +557,21 @@ int main(){
   	cout << "Cannot open the video file. \n";
   	return -1;
   }
+
+
+  /*int centroides[2][5];
+
+  centroides[0][0] = 100;
+  centroides[0][1] = 100;
+  centroides[0][2] = 10;
+  centroides[0][3] = 15;
+  centroides[0][4] = 11;
+  centroides[1][0] = 250;
+  centroides[1][1] = 250;
+  centroides[1][2] = 15;
+  centroides[1][3] = 6;
+  centroides[1][4] = 15;*/
+
 
   while(1){
   	if (!capture.read(frame)) {
