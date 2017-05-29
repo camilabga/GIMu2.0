@@ -34,17 +34,7 @@ vector<float> angles, anglesP;
 const int K = 2; // NUMERO DE CLUSTERS
 const int nCICLOS = 250;
 
-/*void black_white(vector <Point2f>& pontos){
-  int width = pontoLinha.cols, height = pontoLinha.rows;
-  for (int i = 0; i < pontos.size(); i++) {
-    int greyscale = src_grey.at<uchar>(pontos[i].x,
-                              pontos[i].y);
-    if (!(greyscale < 30 || greyscale > 225)) {
-      pontos.erase(i);
-    }
-  }
-}*/
-
+//////////////////////////////////////////////////////////////////////////////////////////////7
 
 void kmeans_training (vector<Point2f> corners) {
   unsigned int tam = corners.size(); // pegar tamanho de algum vetor
@@ -190,13 +180,9 @@ void kmeans_training (vector<Point2f> corners) {
 
   }
 
-/*if (centroides[0][0] - c[0][0] < 2 && n > 1 && centroides[0][1] - c[0][1] < 2 && centroides[1][0] - c[1][0] < 2
-          &&  centroides[1][1] - c[1][1] < 2) {
 
-              break;
-  }*/
 
-}
+  }
 
 
   // ajustar retorno
@@ -478,7 +464,7 @@ void all_lines() {
 
 		HoughLinesP( canny, lines, 1, CV_PI/180, 75, 50, 30);
 
-    Mat hough = canny;
+    /*Mat hough = src_grey;
     for (unsigned int i = 0; i < lines.size(); i++){
       line( hough, Point(lines[i][0], lines[i][1]),
           Point(lines[i][2], lines[i][3]), Scalar(0,0,255), 3, 8 );
@@ -486,7 +472,7 @@ void all_lines() {
 
     namedWindow("Hough Lines", WINDOW_NORMAL);
 	  resizeWindow("Hough Lines", 640,480);
-    imshow( "Hough Lines", hough );
+    imshow( "Hough Lines", hough );*/
 
 
     filtrar_linhas(lines);
@@ -559,8 +545,7 @@ int main(){
   }
 
 
-  /*int centroides[2][5];
-
+/*int centroides[2][5];
   centroides[0][0] = 100;
   centroides[0][1] = 100;
   centroides[0][2] = 10;
@@ -571,7 +556,6 @@ int main(){
   centroides[1][2] = 15;
   centroides[1][3] = 6;
   centroides[1][4] = 15;*/
-
 
   while(1){
   	if (!capture.read(frame)) {
