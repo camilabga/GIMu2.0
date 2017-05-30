@@ -544,19 +544,6 @@ int main(){
   	return -1;
   }
 
-
-/*int centroides[2][5];
-  centroides[0][0] = 100;
-  centroides[0][1] = 100;
-  centroides[0][2] = 10;
-  centroides[0][3] = 15;
-  centroides[0][4] = 11;
-  centroides[1][0] = 250;
-  centroides[1][1] = 250;
-  centroides[1][2] = 15;
-  centroides[1][3] = 6;
-  centroides[1][4] = 15;*/
-
   while(1){
   	if (!capture.read(frame)) {
   		cout<<"\n Cannot read the video file. \n";
