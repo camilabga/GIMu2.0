@@ -262,9 +262,9 @@ void istInDerLinie(){
   }
   // CHAMAR ML
 
-  if (pontos.size() > 10) {
+  /*if (pontos.size() > 10) {
       kmeans_training(pontos);
-  }
+  }*/
 
 }
 
@@ -531,18 +531,28 @@ void find_corners(){ // NAO MEXE NOS PARAMETROS PELO AMOR DE DEUS
 
   }
 
-  /*if (corners.size() > 10) {
+  if (corners.size() > 10) {
       kmeans_training(corners);
-  }*/
+  }
 }
 
 int main(){
 
-  VideoCapture capture("vaquinha_melhor.mp4");
+  VideoCapture capture("vaquinha.mp4");
   if ( !capture.isOpened() ){
   	cout << "Cannot open the video file. \n";
   	return -1;
   }
+
+  int width = static_cast<int>(capture.get(CV_CAP_PROP_FRAME_WIDTH));
+  int height = static_cast<int>(capture.get(CV_CAP_PROP_FRAME_HEIGHT));
+  double FPS = capture.get(CV_CAP_PROP_FPS);
+
+  VideoWriter out("output.mov", CV_FOURCC('m','p', '4', 'v'), FPS, cv::Size(width, height));
+  if(!out.isOpened()) {
+    cout <<"Error! Unable to open video file for output." << endl;
+    exit(-1);
+     }
 
   while(1){
   	if (!capture.read(frame)) {
@@ -576,6 +586,8 @@ int main(){
     namedWindow("Mit Neural", WINDOW_NORMAL);
     resizeWindow("Mit Neural", 640, 480);
     imshow( "Mit Neural", mitNeural);
+
+    out << mitNeural;
 
 		if(waitKey(30) == 27){
       break;
