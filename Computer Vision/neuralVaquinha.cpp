@@ -34,7 +34,7 @@ vector<float> angles, anglesP;
 const int K = 2; // NUMERO DE CLUSTERS
 const int nCICLOS = 250;
 
-//////////////////////////////////////////////////////////////////////////////////////////////7
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 void kmeans_training (vector<Point2f> corners) {
   unsigned int tam = corners.size(); // pegar tamanho de algum vetor
@@ -544,15 +544,8 @@ int main(){
   	return -1;
   }
 
-  int width = static_cast<int>(capture.get(CV_CAP_PROP_FRAME_WIDTH));
-  int height = static_cast<int>(capture.get(CV_CAP_PROP_FRAME_HEIGHT));
-  double FPS = capture.get(CV_CAP_PROP_FPS);
-
-  VideoWriter out("output.mov", CV_FOURCC('m','p', '4', 'v'), FPS, cv::Size(width, height));
-  if(!out.isOpened()) {
-    cout <<"Error! Unable to open video file for output." << endl;
-    exit(-1);
-     }
+  /*int width = static_cast<int>(capture.get(CV_CAP_PROP_FRAME_WIDTH));
+  int height = static_cast<int>(capture.get(CV_CAP_PROP_FRAME_HEIGHT));*/
 
   while(1){
   	if (!capture.read(frame)) {
@@ -565,29 +558,29 @@ int main(){
 		morphOps(frame);
 
     lParalelas.clear();
+    namedWindow("Original", WINDOW_NORMAL);
+    resizeWindow("Original", 640,480);
+		namedWindow("Detected Lines", WINDOW_NORMAL);
+	  resizeWindow("Detected Lines", 640,480);
+		namedWindow("Detected Quinas", WINDOW_NORMAL);
+	  resizeWindow("Detected Quinas", 640,480);
+		namedWindow("Detected Quinas nas Linhas", WINDOW_NORMAL);
+    resizeWindow("Detected Quinas nas Linhas", 640, 480);
+		namedWindow("Mit Neural", WINDOW_NORMAL);
+    resizeWindow("Mit Neural", 640, 480);
+
 
     // FUNCOES PRINCIPAIS
 		all_lines(); // pega todas as linhas e coloca num vec4f e dps chama filtrar_linhas(lines) pra selecionar só as paralelas
     find_corners(); // usa o algoritmo shi pra achar pontos de interesse (quinas)
     istInDerLinie(); // mantém as linhas que cruzam os pontos achados na funcao anterior
 
-    namedWindow("Detected Lines", WINDOW_NORMAL);
-	  resizeWindow("Detected Lines", 640,480);
+
+    imshow( "Original", frame );
     imshow( "Detected Lines", mitLines );
-
-    namedWindow("Detected Quinas", WINDOW_NORMAL);
-	  resizeWindow("Detected Quinas", 640,480);
     imshow( "Detected Quinas", mitPunkte);
-
-    namedWindow("Detected Quinas nas Linhas", WINDOW_NORMAL);
-    resizeWindow("Detected Quinas nas Linhas", 640, 480);
     imshow( "Detected Quinas nas Linhas", pontoLinha);
-
-    namedWindow("Mit Neural", WINDOW_NORMAL);
-    resizeWindow("Mit Neural", 640, 480);
     imshow( "Mit Neural", mitNeural);
-
-    out << mitNeural;
 
 		if(waitKey(30) == 27){
       break;
