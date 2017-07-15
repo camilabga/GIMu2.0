@@ -10,6 +10,7 @@
 #include <opencv2/imgproc/imgproc.hpp>
 //#include <opencv2/ml/ml.hpp>
 
+
 using namespace cv;
 using namespace std;
 //using namespace cv::ml;
@@ -33,12 +34,13 @@ vector<float> angles, anglesP;
 
 const int K = 2; // NUMERO DE CLUSTERS
 const int nCICLOS = 250;
+bool first_time = true;
+int c[2][5];
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-void kmeans_training (vector<Point2f> corners) {
-  unsigned int tam = corners.size(); // pegar tamanho de algum vetor
-  int c[K][5];
+void kmeans_training (vector<Point2f> pontos) {
+  unsigned int tam = pontos.size(); // pegar tamanho de algum vetor
 
   unsigned int clusters[tam];
 
@@ -51,76 +53,64 @@ void kmeans_training (vector<Point2f> corners) {
   [4] -> intensidade preto
   */
 
-  int rows = src_grey.rows;
-  int cols = src_grey.cols;
+  int rows = frame.rows;
+  int cols = frame.cols;
 
   for (unsigned int i = 0; i < tam; i++) {
-    trainingData[i][0] = corners[i].x;
-    trainingData[i][1] = corners[i].y;
+    trainingData[i][0] = pontos[i].x;
+    trainingData[i][1] = pontos[i].y;
 
     //GET HISTOGRAMAS
+      int x1 = trainingData[i][0]-5, x2= trainingData[i][0]+5, y1= trainingData[i][1]-5, y2= trainingData[i][1]+5;
+
+      if (x1<0) {
+        x1 = 0;
+      }
+
+      if (x2>cols) {
+        x2 = cols-1;
+      }
+
+      if (y1<0) {
+        y1 = 0;
+      }
+
+      if (y2>rows) {
+        y2 = rows-1;
+      }
+
+      //Mat img = Mat(src_grey, Rect(x1,y1,x2,y2));
 
 
+      trainingData[i][2] = 0;
+      trainingData[i][3] = 0;
+      trainingData[i][4] = 0;
 
-    int x1 = trainingData[i][0]-5, x2= trainingData[i][0]+5, y1= trainingData[i][1]-5, y2= trainingData[i][1]+5;
+      MatIterator_<uchar> it, end;
+        for( it = src_grey.begin<uchar>(), end = src_grey.end<uchar>(); it != end; ++it){
 
-    if (x1<0) {
-      x1 = 0;
-    }
-
-    if (x2>cols) {
-      x2 = cols-1;
-    }
-
-    if (y1<0) {
-      y1 = 0;
-    }
-
-    if (y2>rows) {
-      y2 = rows-1;
-    }
-
-    //Mat img = Mat(src_grey, Rect(x1,y1,x2,y2));
-
-
-    trainingData[i][2] = 0;
-    trainingData[i][3] = 0;
-    trainingData[i][4] = 0;
-
-    MatIterator_<uchar> it, end;
-      for( it = src_grey.begin<uchar>(), end = src_grey.end<uchar>(); it != end; ++it){
-
-        if (*it <= LIMIT_MINOR) {
-          trainingData[i][2]++;
-        } else if (*it < LIMIT_MAJOR) {
-          trainingData[i][3]++;
-        } else {
-          trainingData[i][4]++;
+          if (*it <= LIMIT_MINOR) {
+            trainingData[i][2]++;
+          } else if (*it < LIMIT_MAJOR) {
+            trainingData[i][3]++;
+          } else {
+            trainingData[i][4]++;
+          }
         }
       }
-    }
 
+
+    // atribuindo centroide inicial
+    if (first_time){
+      for (int j = 0; j < 5; j++) {
+        c[0][j] = trainingData[0][j];
+        c[1][j] = trainingData[tam-1][j];
+      }
+      first_time = false;
+    }
+    float umK = false;
+    int umZero;
   for (int n = 0; n < nCICLOS; n++) {
-
-    // atribui aos primeiros centroides o centroide anterior identificado
-
-    for (int j = 0; j < 5; j++) {
-      c[0][j] = trainingData[0][j];
-      c[1][j] = trainingData[tam-1][j];
-    }
-
-
-    /*c[0][0] = centroides[0][0];
-    c[0][1] = centroides[0][1];
-    c[0][2] = centroides[0][2];
-    c[0][3] = centroides[0][3];
-    c[0][4] = centroides[0][4];
-
-    c[1][0] = centroides[1][0];
-    c[1][1] = centroides[1][1];
-    c[1][2] = centroides[1][2];
-    c[1][3] = centroides[1][3];
-    c[1][4] = centroides[1][4];*/
 
     // DATA ASSIGMENT STEP - cada ponto é associado a um centroide
     for (unsigned int i = 0; i < tam; i++) {
@@ -130,91 +120,75 @@ void kmeans_training (vector<Point2f> corners) {
                           (trainingData[i][3]-c[0][3])*(trainingData[i][3]-c[0][3]) +
                           (trainingData[i][4]-c[0][4])*(trainingData[i][4]-c[0][4]));
       clusters[i] = 0;
-      for (int j = 1; j < K; j++) {
-        if (sqrt((trainingData[i][0]-c[j][0])*(trainingData[i][0]-c[j][0]) +
-                            (trainingData[i][1]-c[j][1])*(trainingData[i][1]-c[j][1]) +
-                            (trainingData[i][2]-c[j][2])*(trainingData[i][2]-c[j][2]) +
-                            (trainingData[i][3]-c[j][3])*(trainingData[i][3]-c[j][3]) +
-                            (trainingData[i][4]-c[j][4])*(trainingData[i][4]-c[j][4])) < distancia){
 
-                            clusters[i] = j;
+        if (sqrt((trainingData[i][0]-c[1][0])*(trainingData[i][0]-c[1][0]) +
+                            (trainingData[i][1]-c[1][1])*(trainingData[i][1]-c[1][1]) +
+                            (trainingData[i][2]-c[1][2])*(trainingData[i][2]-c[1][2]) +
+                            (trainingData[i][3]-c[1][3])*(trainingData[i][3]-c[1][3]) +
+                            (trainingData[i][4]-c[1][4])*(trainingData[i][4]-c[1][4])) < distancia){
 
-                  distancia = sqrt((trainingData[i][0]-c[j][0])*(trainingData[i][0]-c[j][0]) +
-                                      (trainingData[i][1]-c[j][1])*(trainingData[i][1]-c[j][1]) +
-                                      (trainingData[i][2]-c[j][2])*(trainingData[i][2]-c[j][2]) +
-                                      (trainingData[i][3]-c[j][3])*(trainingData[i][3]-c[j][3]) +
-                                      (trainingData[i][4]-c[j][4])*(trainingData[i][4]-c[j][4]));
-
-
-      }
-    }
-  }
-
-
-  // CENTROID UPDATE STEP - os centroides sao recomputados
-
-  unsigned int cont = 0;
-  for (unsigned int i = 0; i < K; i++) {
-    c[i][0] = 0;
-    c[i][1] = 0;
-    c[i][2] = 0;
-    c[i][3] = 0;
-    c[i][4] = 0;
-    cont = 0;
-    for (unsigned int j = 0; j < tam; j++) {
-      if (clusters[j] == i){
-        c[i][0] = c[i][0]+ trainingData[j][0];
-        c[i][1] = c[i][1]+ trainingData[j][1];
-        c[i][2] = c[i][2]+ trainingData[j][2];
-        c[i][3] = c[i][3]+ trainingData[j][3];
-        c[i][4] = c[i][4]+ trainingData[j][4];
-        cont++;
+                            clusters[i] = 1;
       }
     }
 
-    c[i][0] = int(c[i][0]/cont);
-    c[i][1] = int(c[i][1]/cont);
-    c[i][2] = int(c[i][2]/cont);
-    c[i][3] = int(c[i][3]/cont);
-    c[i][4] = int(c[i][4]/cont);
 
+    // CENTROID UPDATE STEP - os centroides sao recomputados
+    umK=false;
+    unsigned int cont = 0;
+    for (unsigned int i = 0; i < K; i++) {
+      c[i][0] = 0;
+      c[i][1] = 0;
+      c[i][2] = 0;
+      c[i][3] = 0;
+      c[i][4] = 0;
+      cont = 0;
+      for (unsigned int j = 0; j < tam; j++) {
+        if (clusters[j] == i){
+          c[i][0] = c[i][0]+ trainingData[j][0];
+          c[i][1] = c[i][1]+ trainingData[j][1];
+          c[i][2] = c[i][2]+ trainingData[j][2];
+          c[i][3] = c[i][3]+ trainingData[j][3];
+          c[i][4] = c[i][4]+ trainingData[j][4];
+          cont++;
+        }
+      }
+
+      if (cont != 0) {
+        c[i][0] = int(c[i][0]/cont);
+        c[i][1] = int(c[i][1]/cont);
+        c[i][2] = int(c[i][2]/cont);
+        c[i][3] = int(c[i][3]/cont);
+        c[i][4] = int(c[i][4]/cont);
+      } else {
+        umK = true;
+        umZero = i;
+      }
+    }
   }
-
-
-
-  }
-
-
-  // ajustar retorno
-
-  /*centroides[0][0] = c[0][0];
-  centroides[0][1] = c[0][1];
-  centroides[0][2] = c[0][2];
-  centroides[0][3] = c[0][3];
-  centroides[0][4] = c[0][4];
-
-  centroides[1][0] = c[1][0];
-  centroides[1][1] = c[1][1];
-  centroides[1][2] = c[1][2];
-  centroides[1][3] = c[1][3];
-  centroides[1][4] = c[1][4];*/
 
   mitNeural = frame.clone();
-  circle(mitNeural, Point(c[0][0], c[0][1]), 10, Scalar(173, 0, 0), -1, 8, 0 );
-  circle(mitNeural, Point(c[0][0], c[0][1]), 12, Scalar(0, 0, 255), -1, 8, 0 );
 
-  circle(mitNeural, Point(c[1][0], c[1][1]), 10, Scalar(173, 0, 0), -1, 8, 0 );
-  circle(mitNeural, Point(c[1][0], c[1][1]), 12, Scalar(0, 0, 255), -1, 8, 0 );
-
-  line(mitNeural, Point(c[0][0], 0), Point(c[0][0], rows), Scalar(0,0,255), 5, 8 );
-  line(mitNeural, Point(c[1][0], 0), Point(c[1][0], rows), Scalar(0,0,255), 5, 8 );
+  if (umK){
+    if (umZero == 0) {
+      c[0][0] = c[1][0];
+      c[0][1] = c[1][1];
+      c[0][2] = c[1][2];
+      c[0][3] = c[1][3];
+      c[0][4] = c[1][4];
+    } else {
+      c[1][0] = c[0][0];
+      c[1][1] = c[0][1];
+      c[1][2] = c[0][2];
+      c[1][3] = c[0][3];
+      c[1][4] = c[0][4];
+    }
+  }
 
   int X = int((c[0][0]+c[1][0])/2.0);
   int Y = int((c[0][1]+c[1][1])/2.0);
 
   circle(mitNeural, Point(X,Y), 20, Scalar(255, 0, 0), -1, 8, 0 );
   circle(mitNeural, Point(X,Y), 25, Scalar(255, 0, 0), -1, 8, 0 );
-
 }
 
 void istInDerLinie(){
@@ -262,47 +236,11 @@ void istInDerLinie(){
   }
   // CHAMAR ML
 
-  /*if (pontos.size() > 10) {
+  if (pontos.size() > 10) {
       kmeans_training(pontos);
-  }*/
-
-}
-
-/*int distancia_retas_paralelas(Vec4i line1, Vec4i line2){
-  // extraindo pontos line1
-  // reta s
-  int x1 = line1[0];
-  int y1 = line1[1];
-  int x2 = line1[2];
-  int y2 = line1[3];
-
-  //extraindo pontos line2 - reta t
-  int x3 = line2[0];
-  int y3 = line2[1];
-  int x4 = line2[2];
-  int y4 = line2[3];
-
-  Vec2f r = (x3-x1,y3-y1); // reta q sai de s e vai a t
-  Vec2f s = (x2-x1,y2-y1);
-
-  cout << r[0] << endl << r[1] << endl << s[0] << endl << s[1] << endl;
-
-  if (r[0] == s[0]) {
-    return abs((int)(r[1]-s[1]));
-  } else if (r[1] == s[1]) {
-    return abs((int)(r[0]-s[0]));
   }
 
-  return 50;
-
-
-  float theta = 0;
-  theta = acos(s[0]*r[0]+ s[1]*r[1])/(sqrt(s[0]*s[0]+s[1]*s[1])*sqrt(r[0]*r[0]+r[1]*r[1]));
-
-  float distancia = 0;
-  distancia = sqrt(r[0]*r[0]+r[1]*r[1]) * sin(theta);
-
-}*/
+}
 
 void swap(int i,int j, vector<float> &a, vector<Vec4i> &lines){
     int temp = a[i];
@@ -531,21 +469,32 @@ void find_corners(){ // NAO MEXE NOS PARAMETROS PELO AMOR DE DEUS
 
   }
 
-  if (corners.size() > 10) {
+  /*if (corners.size() > 10) {
       kmeans_training(corners);
-  }
+  }*/
 }
 
 int main(){
 
-  VideoCapture capture("vaquinha.mp4");
+  VideoCapture capture("vaquinha_melhor.mp4");
   if ( !capture.isOpened() ){
   	cout << "Cannot open the video file. \n";
   	return -1;
   }
 
-  /*int width = static_cast<int>(capture.get(CV_CAP_PROP_FRAME_WIDTH));
-  int height = static_cast<int>(capture.get(CV_CAP_PROP_FRAME_HEIGHT));*/
+  int width = static_cast<int>(capture.get(CV_CAP_PROP_FRAME_WIDTH));
+  int height = static_cast<int>(capture.get(CV_CAP_PROP_FRAME_HEIGHT));
+
+  Size frameSize(static_cast<int>(width), static_cast<int>(height));
+
+  VideoWriter oVideoWriter ("out.avi", CV_FOURCC('P','I','M','1'), 20, frameSize,true);
+
+   if ( !oVideoWriter.isOpened() )
+   {
+      cout << "ERROR: Failed to write the video" << endl;
+      return -1;
+    }
+
 
   while(1){
   	if (!capture.read(frame)) {
@@ -582,9 +531,17 @@ int main(){
     imshow( "Detected Quinas nas Linhas", pontoLinha);
     imshow( "Mit Neural", mitNeural);
 
-		if(waitKey(30) == 27){
+     oVideoWriter.write(mitNeural);
+
+     if (waitKey(10) == 27)
+         {
+            cout << "esc key is pressed by user" << endl;
+            break;
+         }
+
+		/*if(waitKey(30) == 27){
       break;
-    }
+    }*/
   }
 
   return 0;
