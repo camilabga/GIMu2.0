@@ -266,6 +266,8 @@ void istInDerLinie(){
 
   if (pontos.size() > 10) {
       kmeans_training(pontos);
+  } else {
+    mitNeural = frame.clone();
   }
 
 }
@@ -509,6 +511,14 @@ int main(){
   	cout << "Cannot open the video file. \n";
   	return -1;
   }
+
+  /*VideoCapture capture(0);
+  if ( !capture.isOpened() ){
+    cout << "Cannot open the video file" << endl;
+    return -1;
+  }*/
+
+
 
   /*int width = static_cast<int>(capture.get(CV_CAP_PROP_FRAME_WIDTH));
   int height = static_cast<int>(capture.get(CV_CAP_PROP_FRAME_HEIGHT));*/

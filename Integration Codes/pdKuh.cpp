@@ -27,7 +27,7 @@ vector<Vec4i> lParalelas;
 vector<Point2f> corners;
 vector<float> angles, anglesP;
 
-int width, height;
+int width = 640, height = 480;
 
 
 // ---------  COISAS PARA K-MEANS  -----------
@@ -38,7 +38,34 @@ const int nCICLOS = 250;
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-void PDControl(int x, int y){
+void sendStop(){
+	char to_send_char [2] = {'p', ';'};
+
+	FILE * pFile;
+
+	pFile = fopen ("/dev/ttyUSB1", "w");
+
+	cout<< to_send_char <<endl;
+
+	fputs(to_send_char, pFile);
+	fclose(pFile);
+}
+
+
+void send_SerialCommand(int to_send){
+	char to_send_char [3] = {'r', (char)to_send, ';'};
+
+	FILE * pFile;
+
+	pFile = fopen ("/dev/ttyUSB0", "w");
+
+	cout<< to_send_char <<endl;
+
+	fputs(to_send_char, pFile);
+	fclose(pFile);
+}
+
+void PDIControl(int x, int y){
   float erro = x - (width/2);
 	erro = erro/(width/2);
   cout << erro << endl;
@@ -51,13 +78,16 @@ void PDControl(int x, int y){
 		to_show = (int)(100*erro);
 		line(frame,Point((width/2),y),Point(x,y),Scalar(0,0,255),to_show);
     line(frame,Point((width/2),y),Point(x,y),Scalar(0,0,255),to_show);
-	}
+  }
+
+  int to_send = (int)erro*100 +100;
+  //send_SerialCommand(to_send);
+
 
 	// QUANTO MENOR O NÚMERO, MAIOR O ALINHAMENTO DO ROBO
 	// QUANTO MAIOR O NÚMERO, MAIOR A DIFERENCA ENTRE AS VELOCIDADES DOS MOTORES
 	// QUANTO MENOR O NÚMERO, MAIS PRÓXIMAS SAO AS VELOCIDADES DOS MOTORES
 	// TO FALANDO DA VARIÁVEL 	erro
-
 }
 
 void kmeans_training (vector<Point2f> corners) {
@@ -236,7 +266,7 @@ void kmeans_training (vector<Point2f> corners) {
   int X = int((c[0][0]+c[1][0])/2.0);
   int Y = int((c[0][1]+c[1][1])/2.0);
 
-  PDControl(X,Y);
+  PDIControl(X,Y);
 
   circle(mitNeural, Point(X,Y), 20, Scalar(255, 0, 0), -1, 8, 0 );
   circle(mitNeural, Point(X,Y), 25, Scalar(255, 0, 0), -1, 8, 0 );
@@ -288,9 +318,11 @@ void istInDerLinie(){
   }
   // CHAMAR ML
 
-  /*if (pontos.size() > 10) {
+  if (pontos.size() > 100) {
       kmeans_training(pontos);
-  }*/
+  } else {
+      //sendStop();
+  }
 
 }
 
@@ -500,7 +532,7 @@ void find_corners(){ // NAO MEXE NOS PARAMETROS PELO AMOR DE DEUS
   double qualityLevel = 0.05;
   double minDistance = 100;
   int blockSize = 3;
-  bool useHarrisDetector = false;
+  bool useHarrisDetector = false;   
   double k = 0.04;
   int MAX_QUINAS = 40;
 
@@ -521,21 +553,25 @@ void find_corners(){ // NAO MEXE NOS PARAMETROS PELO AMOR DE DEUS
 
   }
 
-  if (corners.size() > 10) {
+  /*if (corners.size() > 10) {
       kmeans_training(corners);
-  }
+  }*/
 }
 
 int main(){
 
-  VideoCapture capture("vaquinha.mp4");
+  /*VideoCapture capture("vaquinha_melhor.mp4");
   if ( !capture.isOpened() ){
-  	cout << "Cannot open the video file. \n";
-  	return -1;
-  }
+      cout << "Cannot open the video file. \n";
+      return -1;
+  }*/
 
-  width = static_cast<int>(capture.get(CV_CAP_PROP_FRAME_WIDTH));
-  height = static_cast<int>(capture.get(CV_CAP_PROP_FRAME_HEIGHT));
+  // com webcam
+  VideoCapture capture(0);
+  if ( !capture.isOpened() ){
+    cout << "Cannot open the video file" << endl;
+    return -1;
+  }
 
   while(1){
   	if (!capture.read(frame)) {
@@ -567,9 +603,9 @@ int main(){
 
 
     imshow( "Original", frame );
-    imshow( "Detected Lines", mitLines );
-    imshow( "Detected Quinas", mitPunkte);
-    imshow( "Detected Quinas nas Linhas", pontoLinha);
+    //imshow( "Detected Lines", mitLines );
+    //imshow( "Detected Quinas", mitPunkte);
+    //imshow( "Detected Quinas nas Linhas", pontoLinha);
     imshow( "Mit Neural", mitNeural);
 
 		if(waitKey(30) == 27){
