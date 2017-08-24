@@ -25,14 +25,18 @@ int main(){
         }
 
         cow.setROI(frame);
-        cow.transformImage(); // 24/08
-        cow.searchSquares(); 
+        cow.transformImage(); 
+        cow.searchSquares(); // 24/08
 
         if (cow.find()){
             cow.drawCenter(frame);
         } else {
             //send command to look again
         }
+
+        namedWindow("Original", WINDOW_NORMAL);
+        resizeWindow("Original", 640, 480);
+        imshow("Original", frame);
 
         if (waitKey(1) == 27){
             break;

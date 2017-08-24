@@ -2,7 +2,9 @@
 
 Cow::Cow(){
     detected = false;
-
+    center.x = 0;
+    center.y = 0;
+    centers.clear();
 }
 
 Cow::Cow(const Cow &C){
