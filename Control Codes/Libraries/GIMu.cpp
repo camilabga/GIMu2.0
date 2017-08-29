@@ -24,7 +24,7 @@ void GIMu::moveTank(int pwm_esquerdo, int pwm_direito){
     Mleft.moveMotor(pwm_esquerdo, 1);
 }
 
-int GIMu::getSharp(int pin){
+/*int GIMu::getSharp(int pin){
     const byte media = 50;
     int valueSensorAux = 0;
     int total = 0;
@@ -38,4 +38,4 @@ int GIMu::getSharp(int pin){
     }
 
     return total / media;
-}
+}*/
