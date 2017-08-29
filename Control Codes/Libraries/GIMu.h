@@ -15,7 +15,6 @@ class GIMu{
   private:
     Motor Mright;
     Motor Mleft;
-    
 };
 
 #endif
