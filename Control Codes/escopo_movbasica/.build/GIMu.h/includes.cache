@@ -1,0 +1,67 @@
+[
+  {
+    "Sourcefile": "",
+    "Include": "",
+    "Includepath": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/hardware/arduino/avr/cores/arduino"
+  },
+  {
+    "Sourcefile": "",
+    "Include": "",
+    "Includepath": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/hardware/arduino/avr/variants/standard"
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Control Codes/escopo_movbasica/.build/GIMu.h/sketch/GIMu.h.cpp",
+    "Include": "GIMu.h",
+    "Includepath": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/libraries/GIMu"
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Control Codes/escopo_movbasica/.build/GIMu.h/sketch/GIMu.h.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Control Codes/escopo_movbasica/.build/GIMu.h/sketch/GIMu.cpp",
+    "Include": "Motor.h",
+    "Includepath": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/libraries/Motor"
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Control Codes/escopo_movbasica/.build/GIMu.h/sketch/GIMu.cpp",
+    "Include": "SharpSensor.h",
+    "Includepath": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/libraries/SharpSensor"
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Control Codes/escopo_movbasica/.build/GIMu.h/sketch/GIMu.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Control Codes/escopo_movbasica/.build/GIMu.h/sketch/ListaSharp.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Control Codes/escopo_movbasica/.build/GIMu.h/sketch/Motor.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Control Codes/escopo_movbasica/.build/GIMu.h/sketch/SharpSensor.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/libraries/GIMu/GIMu.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/libraries/Motor/Motor.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/libraries/SharpSensor/SharpSensor.cpp",
+    "Include": "",
+    "Includepath": ""
+  }
+]

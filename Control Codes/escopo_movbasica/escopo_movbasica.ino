@@ -1,8 +1,11 @@
-#include <GIMu.h> 
+#include "GIMu.h"
 
 Motor direito(6, 9);
 Motor esquerdo(3, 5);
-GIMu robo (direito, esquerdo);
+int portasSensoresBase[] = {0,1,2,3,6,7};
+ListaSharp sensoresBase(6, portasSensoresBase);
+
+GIMu robo (direito, esquerdo, sensoresBase);
 
 void setup() {
   

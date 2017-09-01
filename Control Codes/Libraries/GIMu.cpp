@@ -1,12 +1,24 @@
 #include "Arduino.h"
-#include "Motor.h"
 #include "GIMu.h"
 
 GIMu::GIMu(Motor d, Motor e){
-    Mright.pinFrente = d.pinFrente;
-    Mright.pinTras = d.pinTras;
-    Mleft.pinFrente = e.pinFrente;
-    Mleft.pinTras = e.pinTras;
+    Mright.setPinFrente(d.getPinFrente());
+    Mright.setPinTras(d.getPinTras());
+    Mleft.setPinFrente(e.getPinFrente());
+    Mleft.setPinTras(e.getPinTras());
+}
+
+GIMu::GIMu(Motor d, Motor e, int nSharps, SharpSensor &sharps){
+    Mright.setPinFrente(d.getPinFrente());
+    Mright.setPinTras(d.getPinTras());
+    Mleft.setPinFrente(e.getPinFrente());
+    Mleft.setPinTras(e.getPinTras());
+
+    sharpSensors = new SharpSensor[nSharps];
+
+    for(int i = 0; i < nSharps; i++){
+        sharpSensors[i] = &sharps+i;
+    }
 }
 
 void GIMu::moveFrente(int velocidade){
@@ -24,18 +36,3 @@ void GIMu::moveTank(int pwm_esquerdo, int pwm_direito){
     Mleft.moveMotor(pwm_esquerdo, 1);
 }
 
-/*int GIMu::getSharp(int pin){
-    const byte media = 50;
-    int valueSensorAux = 0;
-    int total = 0;
-    int cont = 0;
-
-    valueSensorAux = analogRead(sensorPin[pin]);
-    while (cont < media)
-    {
-        total = valueSensorAux + total;
-        cont++;
-    }
-
-    return total / media;
-}*/
