@@ -10,11 +10,12 @@ class SharpSensor{
 
         void getSharp();
         
-
     public:
         SharpSensor();
         SharpSensor(int porta);
         inline int getDistancia(){getSharp(); return distancia;}
+
+        inline setPorta(int porta){this->porta = porta;}
 
         void operator=(const SharpSensor &SS);
 };

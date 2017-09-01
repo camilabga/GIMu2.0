@@ -11,17 +11,15 @@ SharpSensor::SharpSensor(){
 }
 
 void SharpSensor::getSharp(){
-    const byte media = 50;
+    const int media = 50;
     int valueSensorAux = 0;
     int total = 0;
     int cont = 0;
-
-    valueSensorAux = analogRead(porta);
+    
     while (cont < media){
-        total = valueSensorAux + total;
+        total += analogRead(porta);
         cont++;
     }
-
     distancia = total / media;
 }
 
