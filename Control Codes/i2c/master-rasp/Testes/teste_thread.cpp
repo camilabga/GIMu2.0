@@ -1,33 +1,40 @@
+// thread example
 #include <iostream>       // std::cout
 #include <thread>         // std::thread
+#include <unistd.h>   /* For open(), */
+
 using namespace std;
- 
+
+long int x = 0;
 
 void foo() 
 {
-	for(int i=0;i<100000;i++){
-		cout << i << endl;
+	for(int i=0;i<1000;i++){
+		x ++;
+		usleep(10);
 	}
 }
 
-void bar(int x)
+void bar()
 {
-	// do stuff...
+	for(int i=0;i<10;i++){
+		cout << x << endl;
+		usleep(10000);
+	}
 }
 
 int main() 
 {
-	thread first (foo);     // spawn new thread that calls foo()
-	thread second (bar,0);  // spawn new thread that calls bar(0)
+  thread first (foo);     // spawn new thread that calls foo()
+  thread second (bar);  // spawn new thread that calls bar(0)
 
-	cout << "main, foo and bar now execute concurrently...\n";
-	
-	second.join();
-	cout << "Voltou2" << endl;
-	first.join();
-	cout << "Voltou1" << endl;
-	
-	cout << "foo and bar completed.\n";
+  cout << "main, foo and bar now execute concurrently...\n";
 
-	return 0;
+  // synchronize threads:
+  first.join();                // pauses until first finishes
+  second.join();               // pauses until second finishes
+
+  cout << "foo and bar completed.\n";
+
+  return 0;
 }
