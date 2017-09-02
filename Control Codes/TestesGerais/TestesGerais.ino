@@ -6,7 +6,7 @@ Motor direito(DC21, DC22);
 GIMu robo (direito, esquerdo);
 
 void setup() {
-  
+  Serial.begin(9600);
 }
 
 void loop() {
@@ -32,5 +32,7 @@ void loop() {
   Serial.print(robo.getDist(SH4));
   Serial.print(" S5: ");
   Serial.println(robo.getDist(SH5));
+  delay(500);
+  // ###
 
 }

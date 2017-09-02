@@ -2,6 +2,7 @@
 #define GIMu_h
 
 #include "Motor.h"
+#include "SharpIR.h"
 
 class GIMu{
   public:

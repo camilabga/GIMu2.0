@@ -24,7 +24,14 @@ void GIMu::moveTank(int pwm_esquerdo, int pwm_direito){
 }
 
 int GIMu::getDist(int porta){
-    const int media = 50;
+    SharpIR SharpIR(porta, 1080);
+    byte media = 10;
+    long unsigned soma=0;
+    for(int i=0;i<media;i++)
+        soma += SharpIR.distance();  // this returns the distance to the object you're measuring
+    return (soma/media) ;
+     
+    /*const int media = 50;
     int valueSensorAux = 0;
     int total = 0;
     int cont = 0;
@@ -33,5 +40,5 @@ int GIMu::getDist(int porta){
         total += analogRead(porta);
         cont++;
     }
-    return (total / media);
+    return (total / media);*/
 }
