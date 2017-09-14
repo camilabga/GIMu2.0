@@ -29,7 +29,7 @@ int GIMu::getDist(int porta){
     long unsigned soma=0;
     for(int i=0;i<media;i++)
         soma += SharpIR.distance();  // this returns the distance to the object you're measuring
-    return (soma/media) ;
+    return (soma/media);
      
     /*const int media = 50;
     int valueSensorAux = 0;

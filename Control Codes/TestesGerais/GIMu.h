@@ -11,7 +11,7 @@ class GIMu{
     void moveFrente(int velocidade);
     void moveTras(int velocidade);
     void moveTank(int pwm_esquerdo, int pwm_direito);
-    int  getDist(int porta);
+    int getDist(int porta);
 
   private:
     Motor Mright;

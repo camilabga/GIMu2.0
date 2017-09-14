@@ -26,7 +26,7 @@ int main(){
 
         cow.setROI(frame);
         cow.transformImage(); 
-        cow.searchSquares(); // 24/08
+        cow.searchSquares(); // 24/08 SHAME
 
         if (cow.find()){
             cow.drawCenter(frame);
