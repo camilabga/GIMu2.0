@@ -74,7 +74,6 @@ void Cow::searchSquares(){
     vector<vector<Point>> contours;
     vector<Vec4i> hierarchy;
     int thresh = 200;
-    
     RNG rng(12345);
     
     Canny(ROI, canny_output, thresh, thresh*2, 3);
