@@ -2,21 +2,27 @@
 #define GIMu_h
 
 #include "Motor.h"
-#include "SharpSensor.h"
+#include "SharpIR.h"
+#include "Pins.cpp"
 
 class GIMu{
   public:
     GIMu(Motor d, Motor e);
-    GIMu(Motor d, Motor e, int n, SharpSensor S[]);
 
     void moveFrente(int velocidade);
     void moveTras(int velocidade);
     void moveTank(int pwm_esquerdo, int pwm_direito);
+    void getSharps();
+    inline int getDistancia(int i){return sharpsBase[i]}
+
+    void follow_wall();
 
   private:
     Motor Mright;
     Motor Mleft;
-    SharpSensor *sharpSensors;  
+    int sharpsBase[6];
+
+    int getSharp(int porta);
 };
 
 #endif

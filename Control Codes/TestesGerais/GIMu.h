@@ -1,9 +1,11 @@
 #ifndef GIMu_h
 #define GIMu_h
 
+#include "Arduino.h"
 #include "Motor.h"
 #include "SharpIR.h"
 #include "Pins.cpp"
+#include "variables.cpp"
 
 class GIMu{
   public:
@@ -13,9 +15,9 @@ class GIMu{
     void moveTras(int velocidade);
     void moveTank(int pwm_esquerdo, int pwm_direito);
     void getSharps();
-    inline int getDistancia(int i){return sharpsBase[i]}
+    inline int getDistancia(int i){return sharpsBase[i];}
 
-    void follow_wall();
+    void follow_wall_to_cup();
 
   private:
     Motor Mright;
@@ -25,4 +27,4 @@ class GIMu{
     int getSharp(int porta);
 };
 
-#endifss
+#endif

@@ -7,13 +7,8 @@ Motor esquerdo(3 /*Esquerdo*/, 5);
 Motor direito(6 /*Direito*/, 9);
 GIMu robo (direito, esquerdo);
 
-// Teste com Bluetooth
-SoftwareSerial bt(10, 11); // RX, TX
-
 void setup() {
-  //Teste com Bluetooth
-  bt.begin(9600);
-  pinMode(13,0x1);
+  //Serial.begin(9600);
 }
 
 void loop() {
@@ -28,32 +23,21 @@ void loop() {
 
   // ### Teste dos sensores Sharps:
   /*Serial.print(" S0: ");
-  Serial.print(robo.getDist(SH0));
+  Serial.print(robo.getSharp(SH0));
   Serial.print(" S1: ");
-  Serial.print(robo.getDist(SH1));
+  Serial.print(robo.getSharp(SH1));
   Serial.print(" S2: ");
-  Serial.print(robo.getDist(SH2));
+  Serial.print(robo.getSharp(SH2));
   Serial.print(" S3: ");
-  Serial.print(robo.getDist(SH3));
+  Serial.print(robo.getSharp(SH3));
   Serial.print(" S4: ");
-  Serial.print(robo.getDist(SH4));
+  Serial.print(robo.getSharp(SH4));
   Serial.print(" S5: ");
-  Serial.println(robo.getDist(SH5));*/
+  Serial.println(robo.getSharp(SH5));
+  delay(500);*/
+  // ###
 
-  // Teste com bluetooth
-  if (bt.available())
-    S=bt.read();
-  if(S=='w')
-    robo.moveFrente(255);
-  if(S=='s')
-    robo.moveTras(255);
-  if(S=='d') //direita
-    robo.moveTank(255, 120);
-  if(S=='a') //esquerda
-    robo.moveTank(120, 255);
-  if(S=='p') //esquerda
-    robo.moveTank(0, 0);
-  if(S=='q')
-      digitalWrite(13,!digitalRead(13));
+
+  robo.follow_wall();
 
 }

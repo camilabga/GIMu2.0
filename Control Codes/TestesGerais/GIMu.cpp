@@ -52,7 +52,7 @@ void GIMu::getSharps(){
     sharpsBase[5] = getSharp(SH5);
 }
 
-void GIMu::follow_wall() {
+void GIMu::follow_wall_to_cup() {
     bool found_wall = false;
     while (1){
         getSharps();
@@ -64,6 +64,7 @@ void GIMu::follow_wall() {
 
             } else { 
                 if (abs(sharpsBase[0] - sharpsBase[1]) <= SHARP_DIFF) {
+                    moveFrente(LOOKING_SPEED);
                     if (sharpsBase[0] > sharpsBase[1]){
                         moveTank(ADJUSTING_SPEED2, ADJUSTING_SPEED1);
                     } else {
@@ -72,15 +73,23 @@ void GIMu::follow_wall() {
                 } else {
                     moveTras(LOOKING_SPEED);
                     delay(TEMPO_DE_RE);
-                    moveTank(TURNING_SPEED, 0);
-                    delay(TURNING_TIME);
+                    do {
+                        moveTank(TURNING_SPEED, 0);
+                    } while(abs(sharpsBase[2] - sharpsBase[3]) > SHARP_DIFF);
 
                     found_wall = true;
                 }
             }
-            
+
         } else {
-            
+            if (abs(sharpsBase[2] - sharpsBase[3]) <= SHARP_DIFF) {
+                moveFrente(LOOKING_SPEED);
+                if (sharpsBase[2] > sharpsBase[3]){
+                    moveTank(ADJUSTING_SPEED2, ADJUSTING_SPEED1);
+                } else {
+                    moveTank(ADJUSTING_SPEED1, ADJUSTING_SPEED2);
+                }
+            }
         }
     }
 }

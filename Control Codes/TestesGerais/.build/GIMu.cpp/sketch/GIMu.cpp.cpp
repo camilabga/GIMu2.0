@@ -1,31 +1,18 @@
-#line 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/escopo_movbasica/GIMu.cpp"
-#line 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/escopo_movbasica/GIMu.cpp"
+#line 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/GIMu.cpp"
+#line 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/GIMu.cpp"
 #include "Arduino.h"
 #include "GIMu.h"
 
 GIMu::GIMu(Motor d, Motor e){
     Mright.setPinFrente(d.getPinFrente());
     Mright.setPinTras(d.getPinTras());
-#line 7 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/escopo_movbasica/escopo_movbasica.ino"
+    Mleft.setPinFrente(e.getPinFrente());
+#line 8 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void setup();
-#line 11 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/escopo_movbasica/escopo_movbasica.ino"
+#line 12 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void loop();
-#line 7 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/escopo_movbasica/escopo_movbasica.ino"
-    Mleft.setPinFrente(e.getPinFrente());
+#line 8 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
     Mleft.setPinTras(e.getPinTras());
-}
-
-GIMu::GIMu(Motor d, Motor e, int n, SharpSensor S[]){
-    Mright.setPinFrente(d.getPinFrente());
-    Mright.setPinTras(d.getPinTras());
-    Mleft.setPinFrente(e.getPinFrente());
-    Mleft.setPinTras(e.getPinTras());
-
-    sharpSensors = new SharpSensor[n];
-
-    for(int i = 0; i < n; i++){
-        sharpSensors[i] = S[i];
-    }
 }
 
 void GIMu::moveFrente(int velocidade){
@@ -43,24 +30,121 @@ void GIMu::moveTank(int pwm_esquerdo, int pwm_direito){
     Mleft.moveMotor(pwm_esquerdo, 1);
 }
 
+int GIMu::getSharp(int porta){
+    SharpIR SharpIR(porta, 1080);
+    byte media = 10;
+    long unsigned soma=0;
+    for(int i=0;i<media;i++)
+        soma += SharpIR.distance();  // this returns the distance to the object you're measuring
+    return (soma/media);
+     
+    /*const int media = 50;
+    int valueSensorAux = 0;
+    int total = 0;
+    int cont = 0;
+    
+    while (cont < media){
+        total += analogRead(porta);
+        cont++;
+    }
+    return (total / media);*/
+}
 
-#line 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/escopo_movbasica/escopo_movbasica.ino"
+void GIMu::getSharps(){
+    sharpsBase[0] = getSharp(SH0);
+    sharpsBase[1] = getSharp(SH1);
+    sharpsBase[2] = getSharp(SH2);
+    sharpsBase[3] = getSharp(SH3);
+    sharpsBase[4] = getSharp(SH4);
+    sharpsBase[5] = getSharp(SH5);
+}
+
+void GIMu::follow_wall() {
+    bool found_wall = false;
+    while (1){
+        getSharps();
+        if (!found_wall){
+            if (abs(sharpsBase[0] - sharpsBase[1]) <= SHARP_DIFF && 
+                (sharpsBase[0] > DIST_TURN0 && sharpsBase[1] > DIST_TURN0)) {
+                    
+                moveFrente(LOOKING_SPEED);
+
+            } else { 
+                if (abs(sharpsBase[0] - sharpsBase[1]) <= SHARP_DIFF) {
+                    if (sharpsBase[0] > sharpsBase[1]){
+                        moveTank(ADJUSTING_SPEED2, ADJUSTING_SPEED1);
+                    } else {
+                        moveTank(ADJUSTING_SPEED1, ADJUSTING_SPEED2);
+                    }
+                } else {
+                    moveTras(LOOKING_SPEED);
+                    delay(TEMPO_DE_RE);
+                    do {
+                        moveTank(TURNING_SPEED, 0);
+                    } while(abs(sharpsBase[2] - sharpsBase[3]) <= SHARP_DIFF);
+
+                    found_wall = true;
+                }
+            }
+
+        } else {
+            
+        }
+    }
+}
+#line 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 #include "GIMu.h"
+#include "Pins.cpp"
 
-Motor direito(6, 9);
-Motor esquerdo(3, 5);
+Motor esquerdo(DC11, DC12);
+Motor direito(DC21, DC22);
 GIMu robo (direito, esquerdo);
 
 void setup() {
-  
+  Serial.begin(9600);
 }
 
 void loop() {
-  robo.moveFrente(255);
-  delay(1000);
-  robo.moveTras(255);
-  delay(1000);
-  robo.moveTank(120, 240);
-  delay(1000); 
+  // ### Teste de Movimentação:
+  // robo.moveFrente(255);
+  // delay(1000);
+  // robo.moveTras(255);
+  // delay(1000);
+  // robo.moveTank(120, 240);
+  // delay(1000);
+  // ###
+
+  // ### Teste dos sensores Sharps:
+  Serial.print(" S0: ");
+  Serial.print(robo.getSharp(SH0));
+  Serial.print(" S1: ");
+  Serial.print(robo.getSharp(SH1));
+  Serial.print(" S2: ");
+  Serial.print(robo.getSharp(SH2));
+  Serial.print(" S3: ");
+  Serial.print(robo.getSharp(SH3));
+  Serial.print(" S4: ");
+  Serial.print(robo.getSharp(SH4));
+  Serial.print(" S5: ");
+  Serial.println(robo.getSharp(SH5));
+  delay(500);
+  // ###
+
 }
 
+#line 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/segueParede.ino"
+#include "GIMu.h"
+#include "Pins.cpp"
+#include "variables.cpp"
+
+Motor esquerdo(DC11, DC12);
+Motor direito(DC21, DC22);
+GIMu robo (direito, esquerdo);
+
+void setup() {
+    
+}
+
+void loop() {
+    robo.follow_wall();
+}

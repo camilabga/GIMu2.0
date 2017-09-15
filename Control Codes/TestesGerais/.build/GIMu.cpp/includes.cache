@@ -10,17 +10,32 @@
     "Includepath": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/hardware/arduino/avr/variants/standard"
   },
   {
-    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Control Codes/escopo_movbasica/.build/GIMu.cpp/sketch/GIMu.cpp.cpp",
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/.build/GIMu.cpp/sketch/GIMu.cpp.cpp",
     "Include": "",
     "Includepath": ""
   },
   {
-    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Control Codes/escopo_movbasica/.build/GIMu.cpp/sketch/Motor.cpp",
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/.build/GIMu.cpp/sketch/Motor.cpp",
     "Include": "",
     "Includepath": ""
   },
   {
-    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Control Codes/escopo_movbasica/.build/GIMu.cpp/sketch/SharpSensor.cpp",
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/.build/GIMu.cpp/sketch/Pins.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/.build/GIMu.cpp/sketch/SharpIR.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/.build/GIMu.cpp/sketch/SharpSensor.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/.build/GIMu.cpp/sketch/variables.cpp",
     "Include": "",
     "Includepath": ""
   }

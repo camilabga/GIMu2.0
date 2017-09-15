@@ -12,4 +12,7 @@
  /home/barbosa/Downloads/Executáveis/arduino-1.8.3/hardware/arduino/avr/cores/arduino/Arduino.h \
  /home/barbosa/Downloads/Executáveis/arduino-1.8.3/hardware/arduino/avr/variants/standard/pins_arduino.h \
  /home/barbosa/Documentos/GIMu\ 2.0/Control\ Codes/TestesGerais/.build/TestesGerais/sketch/GIMu.h \
- /home/barbosa/Documentos/GIMu\ 2.0/Control\ Codes/TestesGerais/.build/TestesGerais/sketch/Motor.h
+ /home/barbosa/Documentos/GIMu\ 2.0/Control\ Codes/TestesGerais/.build/TestesGerais/sketch/Motor.h \
+ /home/barbosa/Documentos/GIMu\ 2.0/Control\ Codes/TestesGerais/.build/TestesGerais/sketch/SharpIR.h \
+ /home/barbosa/Documentos/GIMu\ 2.0/Control\ Codes/TestesGerais/.build/TestesGerais/sketch/Pins.cpp \
+ /home/barbosa/Documentos/GIMu\ 2.0/Control\ Codes/TestesGerais/.build/TestesGerais/sketch/variables.cpp

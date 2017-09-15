@@ -8,18 +8,13 @@ Motor esquerdo(DC11, DC12);
 Motor direito(DC21, DC22);
 GIMu robo (direito, esquerdo);
 
-// Teste com Bluetooth
-SoftwareSerial bt(10, 11); // RX, TX
-
-#line 11 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
+#line 8 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void setup();
-#line 17 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
+#line 12 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void loop();
-#line 11 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
+#line 8 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void setup() {
-  //Teste com Bluetooth
-  bt.begin(9600);
-  pinMode(13,OUTPUT);
+  //Serial.begin(9600);
 }
 
 void loop() {
@@ -34,33 +29,22 @@ void loop() {
 
   // ### Teste dos sensores Sharps:
   /*Serial.print(" S0: ");
-  Serial.print(robo.getDist(SH0));
+  Serial.print(robo.getSharp(SH0));
   Serial.print(" S1: ");
-  Serial.print(robo.getDist(SH1));
+  Serial.print(robo.getSharp(SH1));
   Serial.print(" S2: ");
-  Serial.print(robo.getDist(SH2));
+  Serial.print(robo.getSharp(SH2));
   Serial.print(" S3: ");
-  Serial.print(robo.getDist(SH3));
+  Serial.print(robo.getSharp(SH3));
   Serial.print(" S4: ");
-  Serial.print(robo.getDist(SH4));
+  Serial.print(robo.getSharp(SH4));
   Serial.print(" S5: ");
-  Serial.println(robo.getDist(SH5));*/
+  Serial.println(robo.getSharp(SH5));
+  delay(500);*/
+  // ###
 
-  // Teste com bluetooth
-  if (bt.available())
-    S=bt.read();
-  if(S=='w')
-    robo.moveFrente(255);
-  if(S=='s') 
-    robo.moveTras(255);
-  if(S=='d') //direita
-    robo.moveTank(255, 120);
-  if(S=='a') //esquerda
-    robo.moveTank(120, 255);
-  if(S=='p') //esquerda
-    robo.moveTank(0, 0);
-  if(S=='q')
-      digitalWrite(13,!digitalRead(13));
+  
+  robo.follow_wall();  
 
 }
 
