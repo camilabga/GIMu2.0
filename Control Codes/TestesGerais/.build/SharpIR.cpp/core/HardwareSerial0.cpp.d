@@ -1,5 +1,5 @@
-/home/barbosa/Documentos/GIMu\ 2.0/Control\ Codes/TestesGerais/.build/GIMu.cpp/sketch/GIMu.cpp.cpp.o: \
- /home/barbosa/Documentos/GIMu\ 2.0/Control\ Codes/TestesGerais/.build/GIMu.cpp/sketch/GIMu.cpp.cpp \
+/home/barbosa/Documentos/GIMu\ 2.0/Control\ Codes/TestesGerais/.build/SharpIR.cpp/core/HardwareSerial0.cpp.o: \
+ /home/barbosa/Downloads/Executáveis/arduino-1.8.3/hardware/arduino/avr/cores/arduino/HardwareSerial0.cpp \
  /home/barbosa/Downloads/Executáveis/arduino-1.8.3/hardware/arduino/avr/cores/arduino/Arduino.h \
  /home/barbosa/Downloads/Executáveis/arduino-1.8.3/hardware/arduino/avr/cores/arduino/binary.h \
  /home/barbosa/Downloads/Executáveis/arduino-1.8.3/hardware/arduino/avr/cores/arduino/WCharacter.h \
@@ -9,10 +9,6 @@
  /home/barbosa/Downloads/Executáveis/arduino-1.8.3/hardware/arduino/avr/cores/arduino/Print.h \
  /home/barbosa/Downloads/Executáveis/arduino-1.8.3/hardware/arduino/avr/cores/arduino/Printable.h \
  /home/barbosa/Downloads/Executáveis/arduino-1.8.3/hardware/arduino/avr/cores/arduino/USBAPI.h \
- /home/barbosa/Downloads/Executáveis/arduino-1.8.3/hardware/arduino/avr/cores/arduino/Arduino.h \
  /home/barbosa/Downloads/Executáveis/arduino-1.8.3/hardware/arduino/avr/variants/standard/pins_arduino.h \
- /home/barbosa/Documentos/GIMu\ 2.0/Control\ Codes/TestesGerais/.build/GIMu.cpp/sketch/GIMu.h \
- /home/barbosa/Documentos/GIMu\ 2.0/Control\ Codes/TestesGerais/.build/GIMu.cpp/sketch/Motor.h \
- /home/barbosa/Documentos/GIMu\ 2.0/Control\ Codes/TestesGerais/.build/GIMu.cpp/sketch/SharpIR.h \
- /home/barbosa/Documentos/GIMu\ 2.0/Control\ Codes/TestesGerais/.build/GIMu.cpp/sketch/Pins.cpp \
- /home/barbosa/Documentos/GIMu\ 2.0/Control\ Codes/TestesGerais/.build/GIMu.cpp/sketch/variables.cpp
+ /home/barbosa/Downloads/Executáveis/arduino-1.8.3/hardware/arduino/avr/cores/arduino/HardwareSerial_private.h \
+ /home/barbosa/Downloads/Executáveis/arduino-1.8.3/hardware/arduino/avr/cores/arduino/wiring_private.h

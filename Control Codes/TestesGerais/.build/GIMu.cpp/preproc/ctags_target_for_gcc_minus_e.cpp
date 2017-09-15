@@ -54,36 +54,38 @@ void GIMu::getSharps(){
     sharpsBase[5] = getSharp(5 /* direita tras*/);
 }
 
-void GIMu::follow_wall() {
+void GIMu::follow_wall_to_cup() {
     bool found_wall = false;
-    while (1){
+    bool found_terrine_area = false;
+    while (!found_terrine_area){
         getSharps();
         if (!found_wall){
-            if (((sharpsBase[0] - sharpsBase[1])>0?(sharpsBase[0] - sharpsBase[1]):-(sharpsBase[0] - sharpsBase[1])) <= SHARP_DIFF &&
-                (sharpsBase[0] > DIST_TURN0 && sharpsBase[1] > DIST_TURN0)) {
-
-                moveFrente(LOOKING_SPEED);
-
-            } else {
-                if (((sharpsBase[0] - sharpsBase[1])>0?(sharpsBase[0] - sharpsBase[1]):-(sharpsBase[0] - sharpsBase[1])) <= SHARP_DIFF) {
+            if (sharpsBase[0] > 10 && sharpsBase[1] > 10) {
+                if (((sharpsBase[0] - sharpsBase[1])>0?(sharpsBase[0] - sharpsBase[1]):-(sharpsBase[0] - sharpsBase[1])) > 5){
                     if (sharpsBase[0] > sharpsBase[1]){
-                        moveTank(ADJUSTING_SPEED2, ADJUSTING_SPEED1);
+                        moveTank(150, 200);
                     } else {
-                        moveTank(ADJUSTING_SPEED1, ADJUSTING_SPEED2);
+                        moveTank(200, 150);
                     }
-                } else {
-                    moveTras(LOOKING_SPEED);
-                    delay(TEMPO_DE_RE);
-                    do {
-                        moveTank(TURNING_SPEED, 0);
-                    } while(((sharpsBase[2] - sharpsBase[3])>0?(sharpsBase[2] - sharpsBase[3]):-(sharpsBase[2] - sharpsBase[3])) <= SHARP_DIFF);
-
-                    found_wall = true;
                 }
+            } else {
+                moveTras(180);
+                delay(100);
+                do {
+                    moveTank(200, 0);
+                    getSharps();
+                } while(((sharpsBase[2] - sharpsBase[3])>0?(sharpsBase[2] - sharpsBase[3]):-(sharpsBase[2] - sharpsBase[3])) > 5);
             }
 
         } else {
-
+            if (((sharpsBase[2] - sharpsBase[3])>0?(sharpsBase[2] - sharpsBase[3]):-(sharpsBase[2] - sharpsBase[3])) <= 5) {
+                moveFrente(180);
+                if (sharpsBase[2] > sharpsBase[3]){
+                    moveTank(150, 200);
+                } else {
+                    moveTank(200, 150);
+                }
+            }
         }
     }
 }
@@ -96,7 +98,7 @@ Motor direito(6 /*Direito*/, 9);
 GIMu robo (direito, esquerdo);
 
 void setup() {
-  Serial.begin(9600);
+  //Serial.begin(9600);
 }
 
 void loop() {
@@ -110,35 +112,22 @@ void loop() {
   // ###
 
   // ### Teste dos sensores Sharps:
-  Serial.print(" S0: ");
-  Serial.print(robo.getSharp(0 /* frente direita */));
+  /*Serial.print(" S0: ");
+  Serial.print(robo.getSharp(SH0));
   Serial.print(" S1: ");
-  Serial.print(robo.getSharp(1 /* frente esquerda*/));
+  Serial.print(robo.getSharp(SH1));
   Serial.print(" S2: ");
-  Serial.print(robo.getSharp(2 /* esquerda frente*/));
+  Serial.print(robo.getSharp(SH2));
   Serial.print(" S3: ");
-  Serial.print(robo.getSharp(3 /* esquerda tras*/));
+  Serial.print(robo.getSharp(SH3));
   Serial.print(" S4: ");
-  Serial.print(robo.getSharp(4 /* direita frente*/));
+  Serial.print(robo.getSharp(SH4));
   Serial.print(" S5: ");
-  Serial.println(robo.getSharp(5 /* direita tras*/));
-  delay(500);
+  Serial.println(robo.getSharp(SH5));
+  delay(500);*/
   // ###
 
-}
-# 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/segueParede.ino"
 
-# 3 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/segueParede.ino" 2
-# 4 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/segueParede.ino" 2
+  robo.follow_wall_to_cup();
 
-Motor esquerdo(3 /*Esquerdo*/, 5);
-Motor direito(6 /*Direito*/, 9);
-GIMu robo (direito, esquerdo);
-
-void setup() {
-
-}
-
-void loop() {
-    robo.follow_wall();
 }

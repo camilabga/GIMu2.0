@@ -59,36 +59,38 @@ void GIMu::getSharps(){
     sharpsBase[5] = getSharp(SH5);
 }
 
-void GIMu::follow_wall() {
+void GIMu::follow_wall_to_cup() {
     bool found_wall = false;
-    while (1){
+    bool found_terrine_area = false;
+    while (!found_terrine_area){
         getSharps();
         if (!found_wall){
-            if (abs(sharpsBase[0] - sharpsBase[1]) <= SHARP_DIFF && 
-                (sharpsBase[0] > DIST_TURN0 && sharpsBase[1] > DIST_TURN0)) {
-                    
-                moveFrente(LOOKING_SPEED);
-
-            } else { 
-                if (abs(sharpsBase[0] - sharpsBase[1]) <= SHARP_DIFF) {
+            if (sharpsBase[0] > DIST_TURN0 && sharpsBase[1] > DIST_TURN0) {
+                if (abs(sharpsBase[0] - sharpsBase[1]) > SHARP_DIFF){
                     if (sharpsBase[0] > sharpsBase[1]){
                         moveTank(ADJUSTING_SPEED2, ADJUSTING_SPEED1);
                     } else {
                         moveTank(ADJUSTING_SPEED1, ADJUSTING_SPEED2);
                     }
-                } else {
-                    moveTras(LOOKING_SPEED);
-                    delay(TEMPO_DE_RE);
-                    do {
-                        moveTank(TURNING_SPEED, 0);
-                    } while(abs(sharpsBase[2] - sharpsBase[3]) <= SHARP_DIFF);
-
-                    found_wall = true;
                 }
-            }
+            } else {
+                moveTras(LOOKING_SPEED);
+                delay(TEMPO_DE_RE);
+                do {
+                    moveTank(TURNING_SPEED, 0);
+                    getSharps();
+                } while(abs(sharpsBase[2] - sharpsBase[3]) > SHARP_DIFF);
+            }           
 
         } else {
-            
+            if (abs(sharpsBase[2] - sharpsBase[3]) <= SHARP_DIFF) {
+                moveFrente(LOOKING_SPEED);
+                if (sharpsBase[2] > sharpsBase[3]){
+                    moveTank(ADJUSTING_SPEED2, ADJUSTING_SPEED1);
+                } else {
+                    moveTank(ADJUSTING_SPEED1, ADJUSTING_SPEED2);
+                }
+            }
         }
     }
 }
@@ -101,7 +103,7 @@ Motor direito(DC21, DC22);
 GIMu robo (direito, esquerdo);
 
 void setup() {
-  Serial.begin(9600);
+  //Serial.begin(9600);
 }
 
 void loop() {
@@ -115,7 +117,7 @@ void loop() {
   // ###
 
   // ### Teste dos sensores Sharps:
-  Serial.print(" S0: ");
+  /*Serial.print(" S0: ");
   Serial.print(robo.getSharp(SH0));
   Serial.print(" S1: ");
   Serial.print(robo.getSharp(SH1));
@@ -127,24 +129,11 @@ void loop() {
   Serial.print(robo.getSharp(SH4));
   Serial.print(" S5: ");
   Serial.println(robo.getSharp(SH5));
-  delay(500);
+  delay(500);*/
   // ###
 
+  
+  robo.follow_wall_to_cup();  
+
 }
 
-#line 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/segueParede.ino"
-#include "GIMu.h"
-#include "Pins.cpp"
-#include "variables.cpp"
-
-Motor esquerdo(DC11, DC12);
-Motor direito(DC21, DC22);
-GIMu robo (direito, esquerdo);
-
-void setup() {
-    
-}
-
-void loop() {
-    robo.follow_wall();
-}
