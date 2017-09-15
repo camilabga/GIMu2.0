@@ -7,9 +7,9 @@
 # define SH5 5 // direita tras
 
 // ### Pinagem Sharps Garra
-# define SH6 6
-# define SH7 7
-# define SH8 8
+# define SH6 6 // garra do copo
+# define SH7 7 
+# define SH8 8 
 
 // ### Pinagem Motor DC Movimentação
 #define DC11 3 //Esquerdo

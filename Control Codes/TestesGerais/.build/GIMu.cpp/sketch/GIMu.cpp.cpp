@@ -83,13 +83,23 @@ void GIMu::follow_wall_to_cup() {
             }           
 
         } else {
-            if (abs(sharpsBase[2] - sharpsBase[3]) <= SHARP_DIFF) {
-                moveFrente(LOOKING_SPEED);
-                if (sharpsBase[2] > sharpsBase[3]){
-                    moveTank(ADJUSTING_SPEED2, ADJUSTING_SPEED1);
-                } else {
-                    moveTank(ADJUSTING_SPEED1, ADJUSTING_SPEED2);
+            if (sharpsBase[0] > DIST_TURN0 && sharpsBase[1] > DIST_TURN0) {
+                if (abs(sharpsBase[2] - sharpsBase[3]) <= SHARP_DIFF) {
+                    moveFrente(LOOKING_SPEED);
+                    if (sharpsBase[2] > sharpsBase[3]){
+                        moveTank(ADJUSTING_SPEED2, ADJUSTING_SPEED1);
+                    } else {
+                        moveTank(ADJUSTING_SPEED1, ADJUSTING_SPEED2);
+                    }
                 }
+            } else {
+                moveTras(LOOKING_SPEED);
+                delay(TEMPO_DE_RE);
+                do {
+                    moveTank(TURNING_SPEED, 0);
+                    getSharps();
+                } while(abs(sharpsBase[2] - sharpsBase[3]) > SHARP_DIFF);
+                found_terrine_area = true;
             }
         }
     }
