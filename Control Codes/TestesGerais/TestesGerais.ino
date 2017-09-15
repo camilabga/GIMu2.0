@@ -21,17 +21,17 @@ void loop() {
 
   // ### Teste dos sensores Sharps:
   Serial.print(" S0: ");
-  Serial.print(robo.getDist(SH0));
+  Serial.print(robo.getSharp(SH0));
   Serial.print(" S1: ");
-  Serial.print(robo.getDist(SH1));
+  Serial.print(robo.getSharp(SH1));
   Serial.print(" S2: ");
-  Serial.print(robo.getDist(SH2));
+  Serial.print(robo.getSharp(SH2));
   Serial.print(" S3: ");
-  Serial.print(robo.getDist(SH3));
+  Serial.print(robo.getSharp(SH3));
   Serial.print(" S4: ");
-  Serial.print(robo.getDist(SH4));
+  Serial.print(robo.getSharp(SH4));
   Serial.print(" S5: ");
-  Serial.println(robo.getDist(SH5));
+  Serial.println(robo.getSharp(SH5));
   delay(500);
   // ###
 

@@ -1,10 +1,10 @@
 // ### Pinagem Sharps Base 
-# define SH0 0
-# define SH1 1
-# define SH2 2
-# define SH3 3
-# define SH4 4
-# define SH5 5
+# define SH0 0 // frente direita 
+# define SH1 1 // frente esquerda
+# define SH2 2 // esquerda frente
+# define SH3 3 // esquerda tras
+# define SH4 4 // direita frente
+# define SH5 5 // direita tras
 
 // ### Pinagem Sharps Garra
 # define SH6 6

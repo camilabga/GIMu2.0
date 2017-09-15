@@ -23,7 +23,7 @@ void GIMu::moveTank(int pwm_esquerdo, int pwm_direito){
     Mleft.moveMotor(pwm_esquerdo, 1);
 }
 
-int GIMu::getDist(int porta){
+int GIMu::getSharp(int porta){
     SharpIR SharpIR(porta, 1080);
     byte media = 10;
     long unsigned soma=0;
@@ -41,4 +41,39 @@ int GIMu::getDist(int porta){
         cont++;
     }
     return (total / media);*/
+}
+
+void GIMu::getSharps(){
+    sharpsBase[0] = getSharp(SH0);
+    sharpsBase[1] = getSharp(SH1);
+    sharpsBase[2] = getSharp(SH2);
+    sharpsBase[3] = getSharp(SH3);
+    sharpsBase[4] = getSharp(SH4);
+    sharpsBase[5] = getSharp(SH5);
+}
+
+bool GIMu::follow_wall() {
+    getSharps();
+    if (abs(sharpsBase[0] - sharpsBase[1]) < SHARP_DIFF && 
+        (sharpsBase[0] > DIST_TURN0 && sharpsBase[1] > DIST_TURN0)) {
+            
+        moveFrente(LOOKING_SPEED);
+
+    } else if (abs(sharpsBase[0] - sharpsBase[1]) < SHARP_DIFF) {
+        if (sharpsBase[0] > sharpsBase[1]) {
+            
+        } else {
+
+        }
+    } else {
+
+    }
+
+    if () {
+
+    }
+
+    if () {
+
+    }
 }
