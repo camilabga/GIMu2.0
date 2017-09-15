@@ -53,27 +53,31 @@ void GIMu::getSharps(){
 }
 
 bool GIMu::follow_wall() {
-    getSharps();
-    if (abs(sharpsBase[0] - sharpsBase[1]) < SHARP_DIFF && 
-        (sharpsBase[0] > DIST_TURN0 && sharpsBase[1] > DIST_TURN0)) {
-            
-        moveFrente(LOOKING_SPEED);
+    bool found_wall = false;
+    while (1){
+        getSharps();
+        if (!found_wall){
+            if (abs(sharpsBase[0] - sharpsBase[1]) <= SHARP_DIFF && 
+                (sharpsBase[0] > DIST_TURN0 && sharpsBase[1] > DIST_TURN0)) {
+                    
+                moveFrente(LOOKING_SPEED);
 
-    } else if (abs(sharpsBase[0] - sharpsBase[1]) < SHARP_DIFF) {
-        if (sharpsBase[0] > sharpsBase[1]) {
-            
+            } else { 
+                if (abs(sharpsBase[0] - sharpsBase[1]) <= SHARP_DIFF) {
+                    if (sharpsBase[0] > sharpsBase[1]){
+                        moveTank(ADJUSTING_SPEED2, ADJUSTING_SPEED1);
+                    } else {
+                        moveTank(ADJUSTING_SPEED1, ADJUSTING_SPEED2);
+                    }
+                } else {
+                    moveTras(LOOKING_SPEED);
+                    delay(TEMPO_DE_RE);
+                    moveTank(TURNING_SPEED, 0);
+                    delay(TURNING_TIME);
+                }
+            }
         } else {
-
+            
         }
-    } else {
-
-    }
-
-    if () {
-
-    }
-
-    if () {
-
     }
 }
