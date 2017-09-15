@@ -15,7 +15,7 @@ class GIMu{
     void getSharps();
     inline int getDistancia(int i){return sharpsBase[i]}
 
-    bool follow_wall();
+    void follow_wall();
 
   private:
     Motor Mright;

@@ -77,30 +77,35 @@ void Cow::searchSquares(){
     RNG rng(12345);
     
     Canny(ROI, canny_output, thresh, thresh*2, 3);
-    findContours(canny_output, contours, hierarchy, RETR_EXTERNAL ,CHAIN_APPROX_SIMPLE);
-    Mat drawing = Mat::zeros(ROI.size(), CV_8UC3 );
+    findContours(canny_output, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
+    
+    cout << contours.size() << endl;
 
-    vector<vector<Point> > contours_poly( contours.size() );
-    vector<Rect> boundRect( contours.size() );
+    vector<vector<Point> > contours_poly;
+    vector<Rect> boundRect;
     vector<Point2f>center( contours.size() );
     vector<float>radius( contours.size() );
+    vector<Point> temp;
   
     for(unsigned i = 0; i < contours.size(); i++ ){ 
-        approxPolyDP( Mat(contours[i]), contours_poly[i], 3, true );
-        boundRect[i] = boundingRect( Mat(contours_poly[i]) );
-        minEnclosingCircle( (Mat)contours_poly[i], center[i], radius[i] );
-    }  
+        if (contours[i].size() == 4) {
+            approxPolyDP( Mat(contours[i]), temp, 3, true );
+            contours_poly.append(temp);
+            boundRect.append(boundingRect( Mat(temp) ));
+            minEnclosingCircle( (Mat)temp, center[i], radius[i] );
+        }
+    }
   
     /// Draw polygonal contour + bonding rects + circles
     for(unsigned i = 0; i< contours.size(); i++ ){
          Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
-         drawContours( drawing, contours_poly, i, color, 1, 8, vector<Vec4i>(), 0, Point() );
-         rectangle( drawing, boundRect[i].tl(), boundRect[i].br(), color, 2, 8, 0 );
-         circle( drawing, center[i], (int)radius[i], color, 2, 8, 0 );
+         drawContours(ROI, contours_poly, i, color, 1, 8, vector<Vec4i>(), 0, Point() );
+         rectangle(ROI, boundRect[i].tl(), boundRect[i].br(), color, 2, 8, 0 );
+         circle(ROI, center[i], (int)radius[i], color, 2, 8, 0 );
     }
 
     namedWindow( "Contours", WINDOW_AUTOSIZE );
-    imshow( "Contours", drawing );
+    imshow( "Contours", ROI);
 
     /*vector<vector<Point> > squares;
     findSquares(squares);

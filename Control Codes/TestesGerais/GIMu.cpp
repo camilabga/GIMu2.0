@@ -52,7 +52,7 @@ void GIMu::getSharps(){
     sharpsBase[5] = getSharp(SH5);
 }
 
-bool GIMu::follow_wall() {
+void GIMu::follow_wall() {
     bool found_wall = false;
     while (1){
         getSharps();
@@ -74,8 +74,11 @@ bool GIMu::follow_wall() {
                     delay(TEMPO_DE_RE);
                     moveTank(TURNING_SPEED, 0);
                     delay(TURNING_TIME);
+
+                    found_wall = true;
                 }
             }
+            
         } else {
             
         }
