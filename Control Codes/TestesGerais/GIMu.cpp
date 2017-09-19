@@ -25,7 +25,7 @@ void GIMu::moveTank(int pwm_esquerdo, int pwm_direito){
 
 int GIMu::getSharp(int porta){
     SharpIR SharpIR(porta, 1080);
-    byte media = 10;
+    byte media = 20;
     long unsigned soma=0;
     for(int i=0;i<media;i++)
         soma += SharpIR.distance();  // this returns the distance to the object you're measuring
@@ -58,21 +58,13 @@ void GIMu::follow_wall_to_cup() {
     while (!found_terrine_area){
         getSharps();
         if (!found_wall){
-            if (sharpsBase[0] > DIST_TURN0 && sharpsBase[1] > DIST_TURN0) {
-                if (abs(sharpsBase[0] - sharpsBase[1]) > SHARP_DIFF){
-                    if (sharpsBase[0] > sharpsBase[1]){
-                        moveTank(ADJUSTING_SPEED2, ADJUSTING_SPEED1);
-                    } else {
-                        moveTank(ADJUSTING_SPEED1, ADJUSTING_SPEED2);
-                    }
-                }
-            } else {
-                moveTras(LOOKING_SPEED);
-                delay(TEMPO_DE_RE);
-                do {
-                    moveTank(TURNING_SPEED, 0);
-                    getSharps();
-                } while(abs(sharpsBase[2] - sharpsBase[3]) > SHARP_DIFF);
+            if (sharpsBase[0] > DIST_TURN0 && sharpsBase[1] <= DIST_TURN0) {
+              moveTras(LOOKING_SPEED);
+              delay(TEMPO_DE_RE);
+              do {
+                moveTank(TURNING_SPEED, 0);
+                getSharps();
+              } while(abs(sharpsBase[2] - sharpsBase[3]) > SHARP_DIFF);
             }           
 
         } else {

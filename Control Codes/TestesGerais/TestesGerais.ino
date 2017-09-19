@@ -6,25 +6,26 @@ Motor direito(DC21, DC22);
 GIMu robo (direito, esquerdo);
 
 void setup() {
-  //Serial.begin(9600);
+  Serial.begin(9600);
 }
 
 void loop() {
-  // ### Teste de Movimentação:
-  // robo.moveFrente(255);
-  // delay(1000);
-  // robo.moveTras(255);
-  // delay(1000);
-  // robo.moveTank(120, 240);
-  // delay(1000);
-  // ###
+  /* ### Teste de Movimentação:*/
+   /*robo.moveFrente(255);
+   delay(2000);
+   robo.moveTras(255);
+   delay(2000);
+   robo.moveTank(120, 240);
+   delay(2000);*/
+  /* ###*/
 
   // ### Teste dos sensores Sharps:
-  /*Serial.print(" S0: ");
-  Serial.print(robo.getSharp(SH0));
-  Serial.print(" S1: ");
+  Serial.print(" S0: ");
   Serial.print(robo.getSharp(SH1));
-  Serial.print(" S2: ");
+  Serial.print(" S1: ");
+  Serial.println(robo.getSharp(SH0));
+
+  /*Serial.print(" S2: ");
   Serial.print(robo.getSharp(SH2));
   Serial.print(" S3: ");
   Serial.print(robo.getSharp(SH3));
@@ -36,6 +37,6 @@ void loop() {
   // ###
 
   
-  robo.follow_wall_to_cup();  
+  //robo.follow_wall_to_cup();  
 
 }

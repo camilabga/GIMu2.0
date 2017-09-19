@@ -19,12 +19,14 @@ class GIMu{
 
     void follow_wall_to_cup();
 
+    int getSharp(int porta);
+
   private:
     Motor Mright;
     Motor Mleft;
     int sharpsBase[6];
 
-    int getSharp(int porta);
+    
 };
 
 #endif
