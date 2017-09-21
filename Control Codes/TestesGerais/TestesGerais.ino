@@ -20,10 +20,10 @@ void loop() {
   /* ###*/
 
   // ### Teste dos sensores Sharps:
-  Serial.print(" S0: ");
-  Serial.print(robo.getSharp(SH1));
+  /*Serial.print(" S0: ");
+  Serial.print(robo.getSharp(SH0));
   Serial.print(" S1: ");
-  Serial.println(robo.getSharp(SH0));
+  Serial.println(robo.getSharp(SH1));*/
 
   /*Serial.print(" S2: ");
   Serial.print(robo.getSharp(SH2));
@@ -37,6 +37,6 @@ void loop() {
   // ###
 
   
-  //robo.follow_wall_to_cup();  
+  robo.follow_wall_to_cup(); 
 
 }

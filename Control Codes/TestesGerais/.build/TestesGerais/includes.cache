@@ -1,0 +1,42 @@
+[
+  {
+    "Sourcefile": "",
+    "Include": "",
+    "Includepath": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/hardware/arduino/avr/cores/arduino"
+  },
+  {
+    "Sourcefile": "",
+    "Include": "",
+    "Includepath": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/hardware/arduino/avr/variants/standard"
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/.build/TestesGerais/sketch/TestesGerais.ino.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/.build/TestesGerais/sketch/GIMu.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/.build/TestesGerais/sketch/Motor.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/.build/TestesGerais/sketch/Pins.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/.build/TestesGerais/sketch/SharpIR.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/.build/TestesGerais/sketch/variables.cpp",
+    "Include": "",
+    "Includepath": ""
+  }
+]
