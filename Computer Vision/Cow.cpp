@@ -1,7 +1,7 @@
 #include "Cow.h"
 
 int THRESH = 150;
-int max1 = 500;
+#define max1 500
 #define MIN_THRESH 1
 #define MAX_THRESH 100
 
@@ -133,7 +133,7 @@ void Cow::searchSquares(){
         }
 
         namedWindow("Teste", WINDOW_NORMAL);
-        resizeWindow("Teste", 640, 480);
+        resizeWindow("Teste", WIDTH, HEIGHT);
         imshow("Teste", ROI);
 
         for(unsigned int i = 0; i < lines.size(); i++){
@@ -154,7 +154,7 @@ void Cow::searchSquares(){
         }*/
     
         /*namedWindow("Teste1", WINDOW_NORMAL);
-        resizeWindow("Teste1", 640, 480);
+        resizeWindow("Teste1", WIDTH, HEIGHT);
         imshow("Teste1", ROI);*/
 
     squares.clear();
@@ -208,7 +208,7 @@ void Cow::searchSquares(){
     }
 
     /*namedWindow("Teste1", WINDOW_NORMAL);
-    resizeWindow("Teste1", 640, 480);
+    resizeWindow("Teste1", WIDTH, HEIGHT);
     imshow("Teste1", ROI);*/
 
     //#endif
@@ -225,7 +225,7 @@ void Cow::searchSquares(){
     }
 
     namedWindow("Squares", WINDOW_NORMAL);
-    resizeWindow("Squares", 640, 480);
+    resizeWindow("Squares", WIDTH, HEIGHT);
     imshow("Squares", ROI);*/
 
     // #### TESTE 02 ####
@@ -282,5 +282,11 @@ void Cow::drawCenter(Mat &frame){
 }
 
 void Cow::sendPID(){
-    
+    if (detected) {
+        if (center.x != 0 && center.y != 0) {
+            // copiar pid do ano passado
+        }
+    } else {
+
+    }
 }

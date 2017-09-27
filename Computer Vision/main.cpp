@@ -3,6 +3,9 @@
 using namespace std;
 using namespace cv;
 
+#define HEIGHT 480
+#define WIDTH 640
+
 int main(){
     //open webcam
     VideoCapture capture(1);
@@ -36,7 +39,7 @@ int main(){
         }
 
         namedWindow("Original", WINDOW_NORMAL);
-        resizeWindow("Original", 640, 480);
+        resizeWindow("Original", WIDTH, HEIGHT);
         imshow("Original", frame);
 
         if (waitKey(1) == 27){
