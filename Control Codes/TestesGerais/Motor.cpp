@@ -18,8 +18,16 @@ void Motor::moveMotor(int velocidade, bool direcao){
   if (direcao) {
     analogWrite(pinFrente, velocidade);
     analogWrite(pinTras, 0);
+
+    Serial.print("VEL: ");
+    Serial.print(velocidade);
+
   } else {
     analogWrite(pinFrente, 0);
     analogWrite(pinTras, velocidade);
+
+    Serial.print("VEL: ");
+    Serial.print(velocidade);
   }
 }
+

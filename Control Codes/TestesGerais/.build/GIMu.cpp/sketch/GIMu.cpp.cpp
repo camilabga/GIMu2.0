@@ -57,7 +57,7 @@ int GIMu::getSharp(int porta){
 
     desvio = soma/n;
 
-    if (desvio > VALID_SHARP) {
+    if (desvio > VALID_SHARP || media > 99) {
       return -1; // é ruido
     } else {
       return media; // n é ruido
@@ -76,12 +76,12 @@ int GIMu::getSharp(int porta){
 }
 
 void GIMu::getSharps(){
-    sharpsBase[0] = getSharp(SH0);
-    sharpsBase[1] = getSharp(SH1);
-    sharpsBase[2] = getSharp(SH2);
-    sharpsBase[3] = getSharp(SH3);
-    sharpsBase[4] = getSharp(SH4);
-    sharpsBase[5] = getSharp(SH5);
+    sharpsBase[0] = getSharp(SH_DIREITA_TRAS);
+    sharpsBase[1] = getSharp(SH_DIREITA_FRENTE);
+    sharpsBase[2] = getSharp(SH_FRENTE_DIREITA);
+    sharpsBase[3] = getSharp(SH_FRENTE_ESQUERDA);
+    sharpsBase[4] = getSharp(SH_ESQUERDA_FRENTE);
+    sharpsBase[5] = getSharp(SH_ESQUERDA_TRAS);
 }
 
 void GIMu::follow_wall_to_cup() {
@@ -90,25 +90,30 @@ void GIMu::follow_wall_to_cup() {
     while (!found_terrine_area){
         getSharps(); // pega os valores dos sharps
         if (!found_wall){
-            if ((sharpsBase[0] == -1 || sharpsBase[1] == -1) || (sharpsBase[0] >= DIST_TURN01 || sharpsBase[1] >= DIST_TURN01)) {
+            if ((sharpsBase[2] == -1 || sharpsBase[3] == -1) || (sharpsBase[2] >= DIST_TURN01 || sharpsBase[3] >= DIST_TURN01)) {
                 moveFrente(LOOKING_SPEED);
                 Serial.println("Segue em frente");
-            } else if (sharpsBase[0] < DIST_TURN01 || sharpsBase[1] < DIST_TURN01) {
+            } else if (sharpsBase[2] < DIST_TURN01 || sharpsBase[3] < DIST_TURN01) {
                 Serial.println("Achou Parede");
+                moveTras(LOOKING_SPEED);
+                delay(250);
                 moveFrente(0);
+                delay(250);
                 do {
                     getSharps();
                     moveTank(TURNING_SPEED, -TURNING_SPEED);
                     Serial.print(" S2: ");
-                    Serial.print(sharpsBase[2]);
+                    Serial.print(sharpsBase[4]);
                     Serial.print(" S3: ");
-                    Serial.println(sharpsBase[3]);
-                } while(!(sharpsBase[2] != -1 || sharpsBase[3] != -1) || (abs(sharpsBase[2]-sharpsBase[3]) > SHARP_DIFF));
-                moveFrente(0);
+                    Serial.println(sharpsBase[5]);
+                } while(!(sharpsBase[4] != -1 || sharpsBase[5] != -1) || (abs(sharpsBase[4]-sharpsBase[5]) > SHARP_DIFF));
+                
                 found_wall = true;
+                moveFrente(0);
+                delay(500);
             }
 
-        } else {
+        } /*else {
             if ((sharpsBase[0] != -1 || sharpsBase[1] != -1) && (sharpsBase[0] <= DIST_TURN01 || sharpsBase[1] <= DIST_TURN01)) {
                 found_terrine_area = true;
                 moveFrente(0);
@@ -116,7 +121,7 @@ void GIMu::follow_wall_to_cup() {
             } else {
                 moveFrente(LOOKING_SPEED);
             }
-        }
+        }*/
     }
 }
 
@@ -138,29 +143,29 @@ void loop() {
    delay(2000);
    robo.moveTras(255);
    delay(2000);
-   robo.moveTank(120, 240);
-   delay(2000);*/
+   robo.moveTank(200, -200);
+   delay(2000);
   /* ###*/
 
   // ### Teste dos sensores Sharps:
   /*Serial.print(" S0: ");
-  Serial.print(robo.getSharp(SH0));
+  Serial.print(robo.getSharp(SH_DIREITA_TRAS));
   Serial.print(" S1: ");
-  Serial.println(robo.getSharp(SH1));*/
+  Serial.println(robo.getSharp(SH_DIREITA_FRENTE));*/
 
   /*Serial.print(" S2: ");
-  Serial.print(robo.getSharp(SH2));
+  Serial.print(robo.getSharp(SH_FRENTE_DIREITA));
   Serial.print(" S3: ");
-  Serial.print(robo.getSharp(SH3));
-  Serial.print(" S4: ");
-  Serial.print(robo.getSharp(SH4));
+  Serial.println(robo.getSharp(SH_FRENTE_ESQUERDA));*/
+  /*Serial.print(" S4: ");
+  Serial.print(robo.getSharp(SH_ESQUERDA_FRENTE));
   Serial.print(" S5: ");
-  Serial.println(robo.getSharp(SH5));
-  delay(500);*/
+  Serial.println(robo.getSharp(SH_ESQUERDA_TRAS));*/
+  
   // ###
 
+  robo.follow_wall_to_cup();
   
-  robo.follow_wall_to_cup(); 
 
 }
 

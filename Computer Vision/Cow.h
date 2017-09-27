@@ -17,8 +17,11 @@ class Cow{
 private:
     Point2f center;
     bool detected;
-    vector<Point2f> centers;
+    vector<vector<Point> > squares;
     Mat ROI;
+    Mat transformedROI;
+
+    double angle(Point pt1, Point pt2, Point pt0);
 
 public:
     Cow();
