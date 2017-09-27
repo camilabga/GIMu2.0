@@ -34,21 +34,34 @@ Cow::Cow(){
     squares.clear();
 }
 
-Cow::Cow(const Cow &C){
-    
-}
-
 bool Cow::find(){
+    center.x = 0;
+    center.y = 0;
+    int n = 0;
     if (detected) { // tratamento com ROI e centro anterior
-        return true;
-    } else { // tratamento com a matriz completa
+        for (size_t i = 0; i < squares.size(); i++){
+            for(size_t j = 0; j < squares[i].size(); j++){
+                n++;
+                center.x = center.x + squares[i][j].x;
+                center.y = center.y + squares[i][j].y;
+            }
+        }
+
+        if (n != 0) {
+            center.x = center.x/n;
+            center.y = center.y/n;
+            return true;
+        } else {
+            return false;
+        }
+    } else {
         return false;
     }
 }
 
 void Cow::setROI(const Mat &R){
     if (detected) {
-
+        ROI = R.clone();
     } else {
         ROI = R.clone();
     }
@@ -79,9 +92,6 @@ void Cow::transformImage(){
     
     transformedROI.convertTo(transformedROI, CV_8UC1);
 }
-
-/*int thresh = 50, N = 11;
-const char* wndname = "Square Detection Demo";*/
 
 //finds a cosine between 3 points
 double Cow::angle( Point pt1, Point pt2, Point pt0 ){
@@ -147,66 +157,62 @@ void Cow::searchSquares(){
         resizeWindow("Teste1", 640, 480);
         imshow("Teste1", ROI);*/
 
-        squares.clear();
+    squares.clear();
 
     //for (unsigned t = MIN_THRESH; t < MAX_THRESH; t++) {
         //threshold(transformedROI, transformedROI, THRESH, 255, THRESH_BINARY );
-        vector<vector<Point> > contours;
-        findContours(transformedROI, contours, RETR_LIST, CHAIN_APPROX_SIMPLE);
-        vector<Point> approx;
-        
-        for( size_t i = 0; i < contours.size(); i++ ){
-            // approximate contour with accuracy proportional
-            // to the contour perimeter
-            approxPolyDP(Mat(contours[i]), approx, arcLength(Mat(contours[i]), true)*0.02, true);
+    vector<vector<Point>> contours;
+    findContours(transformedROI, contours, RETR_LIST, CHAIN_APPROX_SIMPLE);
+    vector<Point> approx;
 
-            // square contours should have 4 vertices after approximation
-            // relatively large area (to filter out noisy contours)
-            // and be convex.
-            // Note: absolute value of an area is used because
-            // area may be positive or negative - in accordance with the
-            // contour orientation
-            if( approx.size() == 4 &&
-                fabs(contourArea(Mat(approx))) > 600 &&
-                isContourConvex(Mat(approx)) ) {
+    for (size_t i = 0; i < contours.size(); i++){
+        // approximate contour with accuracy proportional
+        // to the contour perimeter
+        approxPolyDP(Mat(contours[i]), approx, arcLength(Mat(contours[i]), true) * 0.02, true);
+
+        // square contours should have 4 vertices after approximation
+        // relatively large area (to filter out noisy contours)
+        // and be convex.
+        // Note: absolute value of an area is used because
+        // area may be positive or negative - in accordance with the
+        // contour orientation
+        if (approx.size() == 4 &&
+            fabs(contourArea(Mat(approx))) > 600 &&
+            isContourConvex(Mat(approx))){
+            
                 double maxCosine = 0;
 
-                for( int j = 2; j < 5; j++ ){
-                    // find the maximum cosine of the angle between joint edges
-                    double cosine = fabs(angle(approx[j%4], approx[j-2], approx[j-1]));
-                    maxCosine = MAX(maxCosine, cosine);
-                }
-
-                // if cosines of all angles are small
-                // (all angles are ~90 degree) then write quandrange
-                // vertices to resultant sequence
-                if( maxCosine < 0.3 )
-                    squares.push_back(approx);
+            for (int j = 2; j < 5; j++){
+                // find the maximum cosine of the angle between joint edges
+                double cosine = fabs(angle(approx[j % 4], approx[j - 2], approx[j - 1]));
+                maxCosine = MAX(maxCosine, cosine);
             }
-        }
 
-        
-
-        for( size_t i = 0; i < squares.size(); i++ ){
-            const Point* p = &squares[i][0];
-            int n = (int)squares[i].size();
-            polylines(ROI, &p, &n, 1, true, Scalar(0,255,0), 3, LINE_AA);
+            // if cosines of all angles are small
+            // (all angles are ~90 degree) then write quandrange
+            // vertices to resultant sequence
+            if (maxCosine < 0.3)
+                squares.push_back(approx);
         }
+    }
+
+    for (size_t i = 0; i < squares.size(); i++){
+        const Point *p = &squares[i][0];
+        int n = (int)squares[i].size();
+        polylines(ROI, &p, &n, 1, true, Scalar(0, 255, 0), 3, LINE_AA);
+    }
     //}
 
-    cout << squares.size() << endl;
-    
-        namedWindow("Teste1", WINDOW_NORMAL);
-        resizeWindow("Teste1", 640, 480);
-        imshow("Teste1", ROI);
+    if (!detected && squares.size() >= 6) {
+        detected = true;
+    }
+
+    /*namedWindow("Teste1", WINDOW_NORMAL);
+    resizeWindow("Teste1", 640, 480);
+    imshow("Teste1", ROI);*/
 
     //#endif
 
-    
-
-
-
-    
     // #### TESTE 01 ####
     /*vector<vector<Point>> contours;
     findContours(ROI,contours,RETR_CCOMP,CHAIN_APPROX_SIMPLE);
@@ -271,5 +277,10 @@ void Cow::searchSquares(){
 }
 
 void Cow::drawCenter(Mat &frame){
+    circle(frame, center, 5, Scalar(0,255,0), 2, 8, 0 );
+    circle(frame, center, 5, Scalar(0,255,0), 2, 8, 0 );
+}
 
+void Cow::sendPID(){
+    
 }

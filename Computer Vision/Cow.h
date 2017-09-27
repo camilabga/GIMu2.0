@@ -15,7 +15,7 @@ using namespace std;
 
 class Cow{
 private:
-    Point2f center;
+    Point center;
     bool detected;
     vector<vector<Point> > squares;
     Mat ROI;
@@ -25,7 +25,6 @@ private:
 
 public:
     Cow();
-    Cow(const Cow &C);
 
     void setROI(const Mat &R);
 
@@ -34,5 +33,6 @@ public:
 
     bool find();
     void drawCenter(Mat &frame);
-    
+
+    void sendPID();    
 };

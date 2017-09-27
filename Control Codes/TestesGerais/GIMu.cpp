@@ -89,40 +89,24 @@ void GIMu::follow_wall_to_cup() {
     bool found_wall = false;
     bool found_terrine_area = false;
     while (!found_terrine_area){
-                   long int init = micros();
+                   //long int init = micros();
         getSharps(); // pega os valores dos sharps
-                   Serial.println((float)(micros() - init)/1000000);
+                  //Serial.println((float)(micros() - init)/1000000);
         if (!found_wall){
             if ((sharpsBase[2] == -1 || sharpsBase[3] == -1) || (sharpsBase[2] >= DIST_TURN01 || sharpsBase[3] >= DIST_TURN01)) {
                 moveFrente(LOOKING_SPEED);
                 Serial.println("Segue em frente");
             } else if (sharpsBase[2] < DIST_TURN01 || sharpsBase[3] < DIST_TURN01) {
                 Serial.println("Achou Parede");
-                
-                moveFrente(0);
-                   analogWrite(3,200);
-                   analogWrite(5,0);
-                   analogWrite(6,200);
-                   analogWrite(9,0);
-  
+
                 do {
                    getSharps();
-                   
-                   // moveTras(TURNING_SPEED);
-                } 
-                while(1);
-                //while(!(sharpsBase[4] != -1 || sharpsBase[5] != -1) || (abs(sharpsBase[4]-sharpsBase[5]) > SHARP_DIFF));
-
-
-
-
-
-
-
+                   moveTras(TURNING_SPEED);
+                } while(!(sharpsBase[4] != -1 || sharpsBase[5] != -1) || (abs(sharpsBase[4]-sharpsBase[5]) > SHARP_DIFF));
                 
                 found_wall = true;
                 moveFrente(0);
-
+                delay(1000);
             }
 
         } /*else {

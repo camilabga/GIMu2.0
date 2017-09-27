@@ -26,12 +26,13 @@ int main(){
 
         cow.setROI(frame);
         cow.transformImage(); 
-        cow.searchSquares(); // 24/08 SHAME
+        cow.searchSquares();
 
         if (cow.find()){
             cow.drawCenter(frame);
+            cow.sendPID(); 
         } else {
-            //send command to look again
+            cow.sendPID();
         }
 
         namedWindow("Original", WINDOW_NORMAL);
