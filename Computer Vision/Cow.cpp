@@ -2,6 +2,9 @@
 
 int THRESH = 150;
 int max1 = 500;
+#define MIN_THRESH 1
+#define MAX_THRESH 100
+
 const string trackbarWindowName = "Trackbars";
 
 void on_trackbar( int, void* )
@@ -94,7 +97,7 @@ void Cow::searchSquares(){
     vector<Vec4i> lines0;
 
     //TRANSFORMADA DE HOUGH --- ACHAR LINHAS
-	#if 0
+	/*#if 0
     HoughLines(transformedROI, lines0, 1, CV_PI/180, 100 );
 
     for( size_t i = 0; i < lines0.size(); i++ )
@@ -119,11 +122,11 @@ void Cow::searchSquares(){
                 Point(lines[i][2], lines[i][3]), Scalar(0,0,255), 3, 8 );
         }
 
-        /*namedWindow("Teste", WINDOW_NORMAL);
+        namedWindow("Teste", WINDOW_NORMAL);
         resizeWindow("Teste", 640, 480);
-        imshow("Teste", ROI);*/
+        imshow("Teste", ROI);
 
-        /*for(unsigned int i = 0; i < lines.size(); i++){
+        for(unsigned int i = 0; i < lines.size(); i++){
             if (abs(angle(Point(lines[i][0], lines[i][1]), Point(lines[i][2], lines[i][3]), Point(lines[i+1][0], lines[i+1][1])) < 0.05)){
                 points.push_back(Point(lines[i][0], lines[i][1]));
                 points.push_back(Point(lines[i][2], lines[i][3]));
@@ -138,17 +141,20 @@ void Cow::searchSquares(){
     
         for (unsigned int i = 0; i < points.size(); i++){
             circle(ROI, points[i], 5, Scalar(255,0,0), 2, 8, 0 );
-        }
+        }*/
     
-        namedWindow("Teste1", WINDOW_NORMAL);
+        /*namedWindow("Teste1", WINDOW_NORMAL);
         resizeWindow("Teste1", 640, 480);
         imshow("Teste1", ROI);*/
 
+        squares.clear();
+
+    //for (unsigned t = MIN_THRESH; t < MAX_THRESH; t++) {
+        //threshold(transformedROI, transformedROI, THRESH, 255, THRESH_BINARY );
         vector<vector<Point> > contours;
         findContours(transformedROI, contours, RETR_LIST, CHAIN_APPROX_SIMPLE);
         vector<Point> approx;
-        squares.clear();
-
+        
         for( size_t i = 0; i < contours.size(); i++ ){
             // approximate contour with accuracy proportional
             // to the contour perimeter
@@ -161,7 +167,7 @@ void Cow::searchSquares(){
             // area may be positive or negative - in accordance with the
             // contour orientation
             if( approx.size() == 4 &&
-                fabs(contourArea(Mat(approx))) > 1000 &&
+                fabs(contourArea(Mat(approx))) > 600 &&
                 isContourConvex(Mat(approx)) ) {
                 double maxCosine = 0;
 
@@ -179,20 +185,22 @@ void Cow::searchSquares(){
             }
         }
 
-        cout << squares.size() << endl;
+        
 
-        for( size_t i = 0; i < squares.size(); i++ )
-        {
+        for( size_t i = 0; i < squares.size(); i++ ){
             const Point* p = &squares[i][0];
             int n = (int)squares[i].size();
             polylines(ROI, &p, &n, 1, true, Scalar(0,255,0), 3, LINE_AA);
         }
+    //}
+
+    cout << squares.size() << endl;
     
         namedWindow("Teste1", WINDOW_NORMAL);
         resizeWindow("Teste1", 640, 480);
         imshow("Teste1", ROI);
 
-    #endif
+    //#endif
 
     
 
