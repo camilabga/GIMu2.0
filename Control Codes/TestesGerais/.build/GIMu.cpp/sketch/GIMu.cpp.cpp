@@ -103,11 +103,20 @@ void GIMu::getSharps(){
     sharpsBase[5] = getSharp(SH_ESQUERDA_TRAS);
 }
 
-void GIMu::taxear(int i1, int i2){
-
+void GIMu::taxearDireita(){
+    if (sharpsBase[4] > DIST_TAX && sharpsBase[5] > DIST_TAX) {
+        moveTank(MINOR_TAX_SPEED, MAJOR_TAX_SPEED);
+    } else if (sharpsBase[4] > sharpsBase[5] + 3) {
+        moveTank(MINOR_TAX_SPEED, MAJOR_TAX_SPEED);
+    } else if (sharpsBase[4] + 3 < sharpsBase[5]) {
+        moveTank(MAJOR_TAX_SPEED, MINOR_TAX_SPEED);
+    } else if (abs(sharpsBase[4] - sharpsBase[5]) < 3){
+        moveTank(MINOR_TAX_SPEED, MINOR_TAX_SPEED);
+    }
 }
 
 void GIMu::follow_wall_to_cup() {
+    unsigned aux = 0;
     bool found_wall = false;
     bool found_terrine_area = false;
     while (!found_terrine_area){
@@ -136,8 +145,12 @@ void GIMu::follow_wall_to_cup() {
             }
 
         } else {
-            sharpsBase[2] = getSharp(SH_FRENTE_DIREITA);
-            sharpsBase[3] = getSharp(SH_FRENTE_ESQUERDA);
+            sharpsBase[2*aux%2 + 2] = getSharp(SH_FRENTE_DIREITA);
+            sharpsBase[2*aux%2 + 3] = getSharp(SH_FRENTE_ESQUERDA);
+            aux++;
+            if (aux == 10) {
+                aux = 0;
+            }
             Serial.print(" S2: ");
             Serial.print(sharpsBase[2]);
             Serial.print(" S3: ");
@@ -147,7 +160,7 @@ void GIMu::follow_wall_to_cup() {
                 moveFrente(0);
                 Serial.println("Achei o caralho todo");
             } else {
-                moveFrente(LOOKING_SPEED);
+                taxearDireita();
             }
         }
     }

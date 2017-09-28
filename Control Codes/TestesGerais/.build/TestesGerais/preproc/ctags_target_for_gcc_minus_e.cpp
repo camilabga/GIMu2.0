@@ -8,6 +8,8 @@ GIMu robo (direito, esquerdo);
 
 void setup() {
   Serial.begin(115200);
+  robo.follow_wall_to_cup();
+
 }
 
 void loop() {
@@ -37,7 +39,6 @@ void loop() {
 
   // ###
 
-  //robo.follow_wall_to_cup();
 
   /* ### Teste mov + sharp ### */
 

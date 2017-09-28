@@ -98,11 +98,20 @@ void GIMu::getSharps(){
     sharpsBase[5] = getSharp(7 /* [4]*/);
 }
 
-void GIMu::taxear(int i1, int i2){
-
+void GIMu::taxearDireita(){
+    if (sharpsBase[4] > 12 && sharpsBase[5] > 12) {
+        moveTank(180, 150);
+    } else if (sharpsBase[4] > sharpsBase[5] + 3) {
+        moveTank(180, 150);
+    } else if (sharpsBase[4] + 3 < sharpsBase[5]) {
+        moveTank(150, 180);
+    } else if (((sharpsBase[4] - sharpsBase[5])>0?(sharpsBase[4] - sharpsBase[5]):-(sharpsBase[4] - sharpsBase[5])) < 3){
+        moveTank(180, 180);
+    }
 }
 
 void GIMu::follow_wall_to_cup() {
+    unsigned aux = 0;
     bool found_wall = false;
     bool found_terrine_area = false;
     while (!found_terrine_area){
@@ -113,7 +122,7 @@ void GIMu::follow_wall_to_cup() {
             sharpsBase[2] = getSharp(2 /* [2]*/);
             sharpsBase[3] = getSharp(3 /* [3]*/);
             if ((sharpsBase[2] == -1 || sharpsBase[3] == -1) || (sharpsBase[2] >= 10 /* distancia que identifica q o robo achou a parede*/ || sharpsBase[3] >= 10 /* distancia que identifica q o robo achou a parede*/)) {
-                moveFrente(255 /* velocidade para seguir em frente como se n houvesse amanha (ou parede)*/);
+                moveFrente(200 /* velocidade para seguir em frente como se n houvesse amanha (ou parede)*/);
                 Serial.println("Segue em frente");
             } else if (sharpsBase[2] < 10 /* distancia que identifica q o robo achou a parede*/ || sharpsBase[3] < 10 /* distancia que identifica q o robo achou a parede*/) {
                 Serial.println("Achou Parede");
@@ -122,8 +131,8 @@ void GIMu::follow_wall_to_cup() {
                    //getSharps();
                    sharpsBase[4] = getSharp(6 /* [5]*/);
                    sharpsBase[5] = getSharp(7 /* [4]*/);
-                   moveTank(255 /* velocidade de giro do robo*/, -255 /* velocidade de giro do robo*/);
-                } while(!(sharpsBase[4] != -1 || sharpsBase[5] != -1) || (((sharpsBase[4]-sharpsBase[5])>0?(sharpsBase[4]-sharpsBase[5]):-(sharpsBase[4]-sharpsBase[5])) > 5 /* diferenca entre os valores de sharps q ainda serao considerados iguais*/));
+                   moveTank(180 /* velocidade de giro do robo*/, -180 /* velocidade de giro do robo*/);
+                } while(!(sharpsBase[4] != -1 || sharpsBase[5] != -1) || (((sharpsBase[4]-sharpsBase[5])>0?(sharpsBase[4]-sharpsBase[5]):-(sharpsBase[4]-sharpsBase[5])) > 3 /* diferenca entre os valores de sharps q ainda serao considerados iguais*/));
 
                 found_wall = true;
                 moveFrente(0);
@@ -131,8 +140,12 @@ void GIMu::follow_wall_to_cup() {
             }
 
         } else {
-            sharpsBase[2] = getSharp(2 /* [2]*/);
-            sharpsBase[3] = getSharp(3 /* [3]*/);
+            sharpsBase[2*aux%2 + 2] = getSharp(2 /* [2]*/);
+            sharpsBase[2*aux%2 + 3] = getSharp(3 /* [3]*/);
+            aux++;
+            if (aux == 10) {
+                aux = 0;
+            }
             Serial.print(" S2: ");
             Serial.print(sharpsBase[2]);
             Serial.print(" S3: ");
@@ -142,7 +155,7 @@ void GIMu::follow_wall_to_cup() {
                 moveFrente(0);
                 Serial.println("Achei o caralho todo");
             } else {
-                moveFrente(255 /* velocidade para seguir em frente como se n houvesse amanha (ou parede)*/);
+                taxearDireita();
             }
         }
     }

@@ -39,22 +39,14 @@ void GIMu::moveTras(int velocidade){
 
 void GIMu::moveTank(int pwm_esquerdo, int pwm_direito){
     if (pwm_esquerdo < 0) {
-        Serial.print("ME: ");
-        Serial.print(-pwm_esquerdo);
         Mleft.moveMotor(-pwm_esquerdo, 0);
     } else {
-        Serial.print("ME: ");
-        Serial.print(pwm_esquerdo);
         Mleft.moveMotor(pwm_esquerdo, 1);
     }
 
     if (pwm_direito < 0) {
-        Serial.print(" MD: ");
-        Serial.println(-pwm_direito);
         Mright.moveMotor(-pwm_direito, 0);
     } else {
-        Serial.print(" MD: ");
-        Serial.println(pwm_direito);
         Mright.moveMotor(pwm_direito, 1);
     }
 }
@@ -104,7 +96,20 @@ void GIMu::getSharps(){
     sharpsBase[5] = getSharp(SH_ESQUERDA_TRAS);
 }
 
+void GIMu::taxearDireita(){
+    if (sharpsBase[4] > DIST_TAX && sharpsBase[5] > DIST_TAX) {
+        moveTank(MINOR_TAX_SPEED, MAJOR_TAX_SPEED);
+    } else if (sharpsBase[4] > sharpsBase[5] + 3) {
+        moveTank(MINOR_TAX_SPEED, MAJOR_TAX_SPEED);
+    } else if (sharpsBase[4] + 3 < sharpsBase[5]) {
+        moveTank(MAJOR_TAX_SPEED, MINOR_TAX_SPEED);
+    } else if (abs(sharpsBase[4] - sharpsBase[5]) < 3){
+        moveTank(MINOR_TAX_SPEED, MINOR_TAX_SPEED);
+    }
+}
+
 void GIMu::follow_wall_to_cup() {
+    unsigned aux = 0;
     bool found_wall = false;
     bool found_terrine_area = false;
     while (!found_terrine_area){
@@ -133,12 +138,22 @@ void GIMu::follow_wall_to_cup() {
             }
 
         } else {
-            if ((sharpsBase[2] != -1 || sharpsBase[3] != -1) && (sharpsBase[2] <= DIST_TURN01 || sharpsBase[3] <= DIST_TURN01)) {
+            sharpsBase[2*aux%2 + 2] = getSharp(SH_FRENTE_DIREITA);
+            sharpsBase[2*aux%2 + 3] = getSharp(SH_FRENTE_ESQUERDA);
+            aux++;
+            if (aux == 10) {
+                aux = 0;
+            }
+            Serial.print(" S2: ");
+            Serial.print(sharpsBase[2]);
+            Serial.print(" S3: ");
+            Serial.println(sharpsBase[3]);
+            if ((sharpsBase[2] <= DIST_TURN01 && sharpsBase[2] != -1) || (sharpsBase[3] <= DIST_TURN01 && sharpsBase[3] != -1)) {
                 found_terrine_area = true;
                 moveFrente(0);
                 Serial.println("Achei o caralho todo");
             } else {
-                moveFrente(LOOKING_SPEED);
+                taxearDireita();
             }
         }
     }

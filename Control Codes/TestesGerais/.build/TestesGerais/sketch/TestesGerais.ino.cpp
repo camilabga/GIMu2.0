@@ -9,11 +9,13 @@ GIMu robo (direito, esquerdo);
 
 #line 7 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void setup();
-#line 11 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
+#line 13 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void loop();
 #line 7 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void setup() {
   Serial.begin(115200);
+  robo.follow_wall_to_cup();
+
 }
 
 void loop() {
@@ -43,8 +45,7 @@ void loop() {
   
   // ###
 
-  //robo.follow_wall_to_cup();
-
+  
   /* ### Teste mov + sharp ### */
 
   /*Serial.print(" S0: ");
