@@ -9,16 +9,12 @@
 #include <math.h>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/videoio.hpp>
-#include "libi2c/pi2c.cpp"
 
 using namespace cv;
 using namespace std;
 
 #define HEIGHT 480
 #define WIDTH 640
-#define BYTES 10
-
-Pi2c arduino(4);
 
 class Cow{
 private:

@@ -282,7 +282,6 @@ void Cow::drawCenter(Mat &frame){
 }
 
 void Cow::sendPID(){
-    
     if (detected) {
         if (center.x != 0 && center.y != 0) {
             float erro = center.x - (WIDTH/2);
