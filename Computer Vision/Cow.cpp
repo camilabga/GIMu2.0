@@ -315,7 +315,8 @@ void Cow::sendPID(){
             int to_show;
         
             if (erro < 0.01) { // go left
-                to_show = (int)(-100*erro);
+                to_show = (int
+                )(-100*erro);
                 line(ROI,Point((WIDTH/2),center.y),Point(center.x,center.y),Scalar(0,255,0),to_show);
                 conectI2C(1, 50, 150);
             } else if (erro > 0.01) { // go right
