@@ -16,7 +16,7 @@ using namespace std;
 
 #define HEIGHT 480
 #define WIDTH 640
-#define BYTES 10
+
 
 Pi2c arduino(4);
 
@@ -41,5 +41,6 @@ public:
     bool find();
     void drawCenter(Mat &frame);
 
-    void sendPID();    
+    void sendPID();
+    void conectI2C(bool ok, int velE, int velD);
 };
