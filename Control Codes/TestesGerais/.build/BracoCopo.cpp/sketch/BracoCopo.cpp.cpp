@@ -3,16 +3,22 @@
 #line 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/BracoCopo.cpp"
 #include "BracoCopo.h"
 
-int BracoCopo::getSharp(int porta){
-    SharpIR SharpIR(porta, 1080);
-    byte n = 20;
-    int media, desvio;
-    int x[20];
+BracoCopo::BracoCopo(int servoPulso, int servoGarra, int sharpGarra){
+  pulso.attach(servoPulso);
+  garra.attach(servoGarra);
+  this->sharpGarra = sharpGarra;
+}
 #line 8 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void setup();
 #line 12 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void loop();
 #line 8 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
+
+int BracoCopo::getSharp(int porta){
+    SharpIR SharpIR(porta, 1080);
+    byte n = 20;
+    int media, desvio;
+    int x[20];
     long unsigned soma=0;
     for(int i=0;i<n;i++){
         x[i] = SharpIR.distance();
