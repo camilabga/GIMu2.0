@@ -13,6 +13,9 @@
 using namespace cv;
 using namespace std;
 
+#define HEIGHT 480
+#define WIDTH 640
+
 class Cow{
 private:
     Point center;

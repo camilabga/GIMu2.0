@@ -13,6 +13,8 @@
 class GIMu{
   public:
     GIMu(Motor d, Motor e);
+    GIMu(BracoCopo b);
+    GIMu(Motor d, Motor e, BracoCopo b);
 
     void moveFrente(int velocidade);
     void moveTras(int velocidade);
@@ -28,8 +30,7 @@ class GIMu{
     Motor Mright;
     Motor Mleft;
     int sharpsBase[6];
-
-
+    BracoCopo bracoCopo;
 };
 # 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 # 2 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino" 2

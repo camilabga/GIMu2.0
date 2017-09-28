@@ -32,3 +32,4 @@ int BracoCopo::getSharp(int porta){
       return media; // n é ruido
     }
 }
+

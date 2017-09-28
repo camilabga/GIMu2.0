@@ -1,5 +1,4 @@
 #include "GIMu.h"
-#include "Pins.cpp"
 
 Motor esquerdo(DC11, DC12);
 Motor direito(DC21, DC22);

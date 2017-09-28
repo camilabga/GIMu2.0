@@ -3,12 +3,9 @@
 using namespace std;
 using namespace cv;
 
-#define HEIGHT 480
-#define WIDTH 640
-
 int main(){
     //open webcam
-    VideoCapture capture(0);
+    VideoCapture capture(1);
     if ( !capture.isOpened() ){
       cout << "Cannot open the video file" << endl;
       return -1;

@@ -1,5 +1,13 @@
 #include "BracoCopo.h"
 
+BracoCopo::BracoCopo(){}
+
+BracoCopo::BracoCopo(int servoPulso, int servoGarra, int sharpGarra){
+  pulso.attach(servoPulso);
+  garra.attach(servoGarra);
+  this->sharpGarra = sharpGarra;
+}
+
 int BracoCopo::getSharp(int porta){
     SharpIR SharpIR(porta, 1080);
     byte n = 20;
@@ -24,3 +32,4 @@ int BracoCopo::getSharp(int porta){
       return media; // n é ruido
     }
 }
+

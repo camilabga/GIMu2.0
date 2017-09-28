@@ -8,6 +8,25 @@ GIMu::GIMu(Motor d, Motor e){
     Mleft.setPinTras(e.getPinTras());
 }
 
+GIMu::GIMu(BracoCopo b){
+    bracoCopo.setPulso(b.getPulso());
+    bracoCopo.setGarra(b.getGarra());
+    bracoCopo.setSharpGarra(b.setSharpGarra());
+    bracoCopo.setMotorPasso(b.getMotorPasso());
+}
+
+GIMu::GIMu(Motor d, Motor e, BracoCopo b){
+    Mright.setPinFrente(d.getPinFrente());
+    Mright.setPinTras(d.getPinTras());
+    Mleft.setPinFrente(e.getPinFrente());
+    Mleft.setPinTras(e.getPinTras());
+
+    bracoCopo.setPulso(b.getPulso());
+    bracoCopo.setGarra(b.getGarra());
+    bracoCopo.setSharpGarra(b.setSharpGarra());
+    bracoCopo.setMotorPasso(b.getMotorPasso());
+}
+
 void GIMu::moveFrente(int velocidade){
     Mright.moveMotor(velocidade, 1);
     Mleft.moveMotor(velocidade, 1);

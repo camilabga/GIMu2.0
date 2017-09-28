@@ -284,9 +284,23 @@ void Cow::drawCenter(Mat &frame){
 void Cow::sendPID(){
     if (detected) {
         if (center.x != 0 && center.y != 0) {
-            // copiar pid do ano passado
+            float erro = center.x - (WIDTH/2);
+            erro = erro/(WIDTH/2);
+            int to_show;
+        
+            if (erro < 0.01) { // go left
+                to_show = (int)(-100*erro);
+                line(ROI,Point((WIDTH/2),center.y),Point(center.x,center.y),Scalar(0,255,0),to_show);
+            } else if (erro > 0.01) { // go right
+                to_show = (int)(100*erro);
+                line(ROI,Point((WIDTH/2),center.y),Point(center.x,center.y),Scalar(0,0,255),to_show);
+            }
         }
     } else {
 
     }
+
+    namedWindow("PID", WINDOW_NORMAL);
+    resizeWindow("PID", WIDTH, HEIGHT);
+    imshow("PID", ROI);
 }
