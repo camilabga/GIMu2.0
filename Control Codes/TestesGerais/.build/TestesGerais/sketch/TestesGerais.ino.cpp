@@ -38,7 +38,7 @@ void loop() {
   Serial.print(robo.getSharp(SH_FRENTE_DIREITA));
   Serial.print(" S3: ");
   Serial.println(robo.getSharp(SH_FRENTE_ESQUERDA));*/
-  /*Serial.print(" S4: ");
+  /*erial.print(" S4: ");
   Serial.print(robo.getSharp(SH_ESQUERDA_FRENTE));
   Serial.print(" S5: ");
   Serial.println(robo.getSharp(SH_ESQUERDA_TRAS));*/
