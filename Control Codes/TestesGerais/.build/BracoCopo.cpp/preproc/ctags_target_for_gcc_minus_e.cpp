@@ -2,10 +2,13 @@
 # 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/BracoCopo.cpp"
 # 2 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/BracoCopo.cpp" 2
 
-BracoCopo::BracoCopo(int servoPulso, int servoGarra, int sharpGarra){
+BracoCopo::BracoCopo(){}
+
+BracoCopo::BracoCopo(int servoPulso, int servoGarra, int sharpGarra, Stepper_M motorPasso){
   pulso.attach(servoPulso);
   garra.attach(servoGarra);
   this->sharpGarra = sharpGarra;
+
 }
 
 int BracoCopo::getSharp(int porta){
@@ -34,7 +37,6 @@ int BracoCopo::getSharp(int porta){
 }
 # 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 # 2 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino" 2
-# 3 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino" 2
 
 Motor esquerdo(9 /*Esquerdo*/, 6);
 Motor direito(5 /*Direito*/, 3);

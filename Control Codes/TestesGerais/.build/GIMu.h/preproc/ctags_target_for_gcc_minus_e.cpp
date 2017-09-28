@@ -34,7 +34,6 @@ class GIMu{
 };
 # 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 # 2 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino" 2
-# 3 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino" 2
 
 Motor esquerdo(9 /*Esquerdo*/, 6);
 Motor direito(5 /*Direito*/, 3);

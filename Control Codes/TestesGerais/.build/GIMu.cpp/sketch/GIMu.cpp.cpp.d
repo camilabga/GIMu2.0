@@ -18,4 +18,5 @@
  /home/barbosa/Documentos/GIMu\ 2.0/Control\ Codes/TestesGerais/.build/GIMu.cpp/sketch/variables.cpp \
  /home/barbosa/Documentos/GIMu\ 2.0/Control\ Codes/TestesGerais/.build/GIMu.cpp/sketch/BracoCopo.h \
  /home/barbosa/Downloads/Executáveis/arduino-1.8.3/libraries/Servo/src/Servo.h \
- /home/barbosa/Downloads/Executáveis/arduino-1.8.3/libraries/Servo/src/avr/ServoTimers.h
+ /home/barbosa/Downloads/Executáveis/arduino-1.8.3/libraries/Servo/src/avr/ServoTimers.h \
+ /home/barbosa/Documentos/GIMu\ 2.0/Control\ Codes/TestesGerais/.build/GIMu.cpp/sketch/Stepper_M.h

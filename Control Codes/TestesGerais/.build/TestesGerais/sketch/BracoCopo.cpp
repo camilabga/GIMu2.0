@@ -2,10 +2,11 @@
 
 BracoCopo::BracoCopo(){}
 
-BracoCopo::BracoCopo(int servoPulso, int servoGarra, int sharpGarra){
+BracoCopo::BracoCopo(int servoPulso, int servoGarra, int sharpGarra, Stepper_M motorPasso){
   pulso.attach(servoPulso);
   garra.attach(servoGarra);
   this->sharpGarra = sharpGarra;
+  
 }
 
 int BracoCopo::getSharp(int porta){
@@ -32,4 +33,3 @@ int BracoCopo::getSharp(int porta){
       return media; // n é ruido
     }
 }
-

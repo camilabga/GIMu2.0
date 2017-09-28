@@ -5,37 +5,37 @@
 
 #include "Arduino.h"
 #include <Servo.h>
+#include "Stepper_M.h"
 #include "SharpIR.h"
 #include "variables.cpp"
 
 class BracoCopo{
 public:
     BracoCopo();
-    BracoCopo(int servoPulso, int servoGarra, int sharpGarra);
+    BracoCopo(int servoPulso, int servoGarra, int sharpGarra, Stepper_M motorPasso);
 
     int getSharp(int porta);
 
     inline Servo getPulso(){return pulso;}
     inline Servo getGarra(){return garra;}
     inline int getSharpGarra(){return sharpGarra;}
-    inline int getMotorPasso(){return motorPasso;}
+    inline Stepper_M getMotorPasso(){return motorPasso;}
 
     inline void setPulso(Servo pulso){this->pulso = pulso;}
     inline void setGarra(Servo garra){this->garra = garra;}
     inline void setSharpGarra(int sharpGarra){this->sharpGarra = sharpGarra;}
-    inline void setMotorPasso(int motorPasso){this->motorPasso = motorPasso;}    
+    inline void setMotorPasso(Stepper_M motorPasso){this->motorPasso = motorPasso;}    
     
 private:
     Servo pulso;
     Servo garra;
     int sharpGarra;
-    int motorPasso;
+    Stepper_M motorPasso;
 };
 
 #endif
 #line 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 #include "GIMu.h"
-#include "Pins.cpp"
 
 Motor esquerdo(DC11, DC12);
 Motor direito(DC21, DC22);

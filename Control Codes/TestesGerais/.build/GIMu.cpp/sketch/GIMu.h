@@ -17,6 +17,8 @@ class GIMu{
     void moveFrente(int velocidade);
     void moveTras(int velocidade);
     void moveTank(int pwm_esquerdo, int pwm_direito);
+    void taxear(int i1, int i2);
+
     void getSharps();
     inline int getDistancia(int i){return sharpsBase[i];}
 

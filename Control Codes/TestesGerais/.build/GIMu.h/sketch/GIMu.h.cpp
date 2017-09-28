@@ -6,12 +6,12 @@
 #include "Arduino.h"
 #include "Motor.h"
 #include "SharpIR.h"
-#include "Pins.cpp"
-#line 8 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
+#line 7 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void setup();
-#line 12 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
+#line 11 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void loop();
-#line 8 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
+#line 7 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
+#include "Pins.cpp"
 #include "variables.cpp"
 #include "BracoCopo.h"
 
@@ -42,7 +42,6 @@ class GIMu{
 
 #line 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 #include "GIMu.h"
-#include "Pins.cpp"
 
 Motor esquerdo(DC11, DC12);
 Motor direito(DC21, DC22);

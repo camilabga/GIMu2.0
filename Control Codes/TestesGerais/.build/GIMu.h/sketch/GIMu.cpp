@@ -11,7 +11,7 @@ GIMu::GIMu(Motor d, Motor e){
 GIMu::GIMu(BracoCopo b){
     bracoCopo.setPulso(b.getPulso());
     bracoCopo.setGarra(b.getGarra());
-    bracoCopo.setSharpGarra(b.setSharpGarra());
+    bracoCopo.setSharpGarra(b.getSharpGarra());
     bracoCopo.setMotorPasso(b.getMotorPasso());
 }
 
@@ -23,7 +23,7 @@ GIMu::GIMu(Motor d, Motor e, BracoCopo b){
 
     bracoCopo.setPulso(b.getPulso());
     bracoCopo.setGarra(b.getGarra());
-    bracoCopo.setSharpGarra(b.setSharpGarra());
+    bracoCopo.setSharpGarra(b.getSharpGarra());
     bracoCopo.setMotorPasso(b.getMotorPasso());
 }
 

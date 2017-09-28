@@ -2,17 +2,16 @@
 #line 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 #line 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 #include "GIMu.h"
-#include "Pins.cpp"
 
 Motor esquerdo(DC11, DC12);
 Motor direito(DC21, DC22);
 GIMu robo (direito, esquerdo);
 
-#line 8 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
+#line 7 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void setup();
-#line 12 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
+#line 11 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void loop();
-#line 8 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
+#line 7 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void setup() {
   Serial.begin(115200);
 }
@@ -44,7 +43,16 @@ void loop() {
   
   // ###
 
-  robo.follow_wall_to_cup();
+  //robo.follow_wall_to_cup();
+
+  /* ### Teste mov + sharp ### */
+
+  /*Serial.print(" S0: ");
+  Serial.print(robo.getSharp(SH_DIREITA_TRAS));
+  Serial.print(" S1: ");
+  Serial.println(robo.getSharp(SH_DIREITA_FRENTE));
+
+  robo.moveTank(LOOKING_SPEED, -LOOKING_SPEED); */ 
   
 
 }

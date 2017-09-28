@@ -41,22 +41,14 @@ void GIMu::moveTras(int velocidade){
 
 void GIMu::moveTank(int pwm_esquerdo, int pwm_direito){
     if (pwm_esquerdo < 0) {
-        Serial.print("ME: ");
-        Serial.print(-pwm_esquerdo);
         Mleft.moveMotor(-pwm_esquerdo, 0);
     } else {
-        Serial.print("ME: ");
-        Serial.print(pwm_esquerdo);
         Mleft.moveMotor(pwm_esquerdo, 1);
     }
 
     if (pwm_direito < 0) {
-        Serial.print(" MD: ");
-        Serial.println(-pwm_direito);
         Mright.moveMotor(-pwm_direito, 0);
     } else {
-        Serial.print(" MD: ");
-        Serial.println(pwm_direito);
         Mright.moveMotor(pwm_direito, 1);
     }
 }
@@ -106,14 +98,20 @@ void GIMu::getSharps(){
     sharpsBase[5] = getSharp(7 /* [4]*/);
 }
 
+void GIMu::taxear(int i1, int i2){
+
+}
+
 void GIMu::follow_wall_to_cup() {
     bool found_wall = false;
     bool found_terrine_area = false;
     while (!found_terrine_area){
                    //long int init = micros();
-        getSharps(); // pega os valores dos sharps
+        //getSharps(); // pega os valores dos sharps
                   //Serial.println((float)(micros() - init)/1000000);
         if (!found_wall){
+            sharpsBase[2] = getSharp(2 /* [2]*/);
+            sharpsBase[3] = getSharp(3 /* [3]*/);
             if ((sharpsBase[2] == -1 || sharpsBase[3] == -1) || (sharpsBase[2] >= 10 /* distancia que identifica q o robo achou a parede*/ || sharpsBase[3] >= 10 /* distancia que identifica q o robo achou a parede*/)) {
                 moveFrente(255 /* velocidade para seguir em frente como se n houvesse amanha (ou parede)*/);
                 Serial.println("Segue em frente");
@@ -121,8 +119,10 @@ void GIMu::follow_wall_to_cup() {
                 Serial.println("Achou Parede");
 
                 do {
-                   getSharps();
-                   moveTras(255 /* velocidade de giro do robo*/);
+                   //getSharps();
+                   sharpsBase[4] = getSharp(6 /* [5]*/);
+                   sharpsBase[5] = getSharp(7 /* [4]*/);
+                   moveTank(255 /* velocidade de giro do robo*/, -255 /* velocidade de giro do robo*/);
                 } while(!(sharpsBase[4] != -1 || sharpsBase[5] != -1) || (((sharpsBase[4]-sharpsBase[5])>0?(sharpsBase[4]-sharpsBase[5]):-(sharpsBase[4]-sharpsBase[5])) > 5 /* diferenca entre os valores de sharps q ainda serao considerados iguais*/));
 
                 found_wall = true;
@@ -130,20 +130,25 @@ void GIMu::follow_wall_to_cup() {
                 delay(1000);
             }
 
-        } /*else {
-            if ((sharpsBase[0] != -1 || sharpsBase[1] != -1) && (sharpsBase[0] <= DIST_TURN01 || sharpsBase[1] <= DIST_TURN01)) {
+        } else {
+            sharpsBase[2] = getSharp(2 /* [2]*/);
+            sharpsBase[3] = getSharp(3 /* [3]*/);
+            Serial.print(" S2: ");
+            Serial.print(sharpsBase[2]);
+            Serial.print(" S3: ");
+            Serial.println(sharpsBase[3]);
+            if ((sharpsBase[2] <= 10 /* distancia que identifica q o robo achou a parede*/ && sharpsBase[2] != -1) || (sharpsBase[3] <= 10 /* distancia que identifica q o robo achou a parede*/ && sharpsBase[3] != -1)) {
                 found_terrine_area = true;
                 moveFrente(0);
                 Serial.println("Achei o caralho todo");
             } else {
-                moveFrente(LOOKING_SPEED);
+                moveFrente(255 /* velocidade para seguir em frente como se n houvesse amanha (ou parede)*/);
             }
-        }*/
+        }
     }
 }
 # 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 
-# 3 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino" 2
 
 Motor esquerdo(9 /*Esquerdo*/, 6);
 Motor direito(5 /*Direito*/, 3);
@@ -151,6 +156,8 @@ GIMu robo (direito, esquerdo);
 
 void setup() {
   Serial.begin(115200);
+  robo.follow_wall_to_cup();
+
 }
 
 void loop() {
@@ -180,7 +187,15 @@ void loop() {
 
   // ###
 
-  robo.follow_wall_to_cup();
+
+  /* ### Teste mov + sharp ### */
+
+  /*Serial.print(" S0: ");
+  Serial.print(robo.getSharp(SH_DIREITA_TRAS));
+  Serial.print(" S1: ");
+  Serial.println(robo.getSharp(SH_DIREITA_FRENTE));
+
+  robo.moveTank(LOOKING_SPEED, -LOOKING_SPEED); */
 
 
 }

@@ -6,10 +6,13 @@
 #include "SharpIR.h"
 #include "Pins.cpp"
 #include "variables.cpp"
+#include "BracoCopo.h"
 
 class GIMu{
   public:
     GIMu(Motor d, Motor e);
+    GIMu(BracoCopo b);
+    GIMu(Motor d, Motor e, BracoCopo b);
 
     void moveFrente(int velocidade);
     void moveTras(int velocidade);
@@ -25,8 +28,7 @@ class GIMu{
     Motor Mright;
     Motor Mleft;
     int sharpsBase[6];
-
-    
+    BracoCopo bracoCopo;
 };
 
 #endif

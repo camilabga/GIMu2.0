@@ -1,7 +1,6 @@
 # 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 # 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 # 2 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino" 2
-# 3 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino" 2
 
 Motor esquerdo(9 /*Esquerdo*/, 6);
 Motor direito(5 /*Direito*/, 3);
@@ -38,7 +37,16 @@ void loop() {
 
   // ###
 
-  robo.follow_wall_to_cup();
+  //robo.follow_wall_to_cup();
+
+  /* ### Teste mov + sharp ### */
+
+  /*Serial.print(" S0: ");
+  Serial.print(robo.getSharp(SH_DIREITA_TRAS));
+  Serial.print(" S1: ");
+  Serial.println(robo.getSharp(SH_DIREITA_FRENTE));
+
+  robo.moveTank(LOOKING_SPEED, -LOOKING_SPEED); */
 
 
 }
