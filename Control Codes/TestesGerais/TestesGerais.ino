@@ -2,13 +2,16 @@
 
 Motor esquerdo(DC11, DC12);
 Motor direito(DC21, DC22);
+Motor mbraco(MBRACO1, MBRACO2);
+BracoCopo braco(SERVOG_PULSO, SERVOG_DEDO, SH_GARRA, mbraco);
 
-GIMu robo (direito, esquerdo);
+GIMu robo (direito, esquerdo, braco);
 
 void setup() {
   Serial.begin(115200);
-  robo.follow_wall_to_cup();
 
+  //teste seguir parede
+  robo.follow_wall_to_cup();
 }
 
 void loop() {

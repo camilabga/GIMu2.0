@@ -5,13 +5,16 @@
 
 Motor esquerdo(DC11, DC12);
 Motor direito(DC21, DC22);
+Motor mbraco(MBRACO1, MBRACO2);
+BracoCopo braco(SERVOG_PULSO, SERVOG_DEDO, SH_GARRA, mbraco);
+
 GIMu robo (direito, esquerdo);
 
-#line 7 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
+#line 10 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void setup();
-#line 13 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
+#line 16 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void loop();
-#line 7 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
+#line 10 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void setup() {
   Serial.begin(115200);
   robo.follow_wall_to_cup();

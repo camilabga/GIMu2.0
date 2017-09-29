@@ -2,15 +2,22 @@
 
 BracoCopo::BracoCopo(){}
 
-BracoCopo::BracoCopo(int servoPulso, int servoGarra, int sharpGarra, Stepper_M motorPasso){
+BracoCopo::BracoCopo(int servoPulso, int servoGarra, int sharpGarra, Motor m){
   pulso.attach(servoPulso);
   garra.attach(servoGarra);
   this->sharpGarra = sharpGarra;
-  
+
+  motorBraco.setPinFrente(m.getPinFrente());
+  motorBraco.setPinTras(m.getPinTras());
 }
 
-int BracoCopo::getSharp(int porta){
-    SharpIR SharpIR(porta, 1080);
+void BracoCopo::attachMotor(Motor m){
+  motorBraco.setPinFrente(m.getPinFrente());
+  motorBraco.setPinTras(m.getPinTras());
+}
+
+int BracoCopo::getSharp(){
+    SharpIR SharpIR(sharpGarra, 1080);
     byte n = 20;
     int media, desvio;
     int x[20];

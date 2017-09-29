@@ -3,32 +3,32 @@
 
 #include "Arduino.h"
 #include <Servo.h>
-#include "Stepper_M.h"
 #include "SharpIR.h"
+#include "Motor.h"
 #include "variables.cpp"
 
 class BracoCopo{
 public:
     BracoCopo();
-    BracoCopo(int servoPulso, int servoGarra, int sharpGarra, Stepper_M motorPasso);
+    BracoCopo(int servoPulso, int servoGarra, int sharpGarra, Motor m);
 
-    int getSharp(int porta);
+    int getSharp();
 
+    inline void setSharpGarra(int sharpGarra){this->sharpGarra = sharpGarra;}
+    inline void attachPulso(int porta){pulso.attach(porta);}
+    inline void attachGarra(int porta){garra.attach(porta);}
+    void attachMotor(Motor m);
+
+    inline int getSharpGarra(){return sharpGarra;}
+    inline Motor getMotor(){return motorBraco;}
     inline Servo getPulso(){return pulso;}
     inline Servo getGarra(){return garra;}
-    inline int getSharpGarra(){return sharpGarra;}
-    inline Stepper_M getMotorPasso(){return motorPasso;}
-
-    inline void setPulso(Servo pulso){this->pulso = pulso;}
-    inline void setGarra(Servo garra){this->garra = garra;}
-    inline void setSharpGarra(int sharpGarra){this->sharpGarra = sharpGarra;}
-    inline void setMotorPasso(Stepper_M motorPasso){this->motorPasso = motorPasso;}    
     
 private:
     Servo pulso;
     Servo garra;
     int sharpGarra;
-    Stepper_M motorPasso;
+    Motor motorBraco;
 };
 
 #endif

@@ -4,6 +4,9 @@
 
 Motor esquerdo(9 /*Esquerdo*/, 6);
 Motor direito(5 /*Direito*/, 3);
+Motor mbraco(4, 5);
+BracoCopo braco(3, 2, 7, mbraco);
+
 GIMu robo (direito, esquerdo);
 
 void setup() {

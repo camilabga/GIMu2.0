@@ -9,10 +9,10 @@ GIMu::GIMu(Motor d, Motor e){
 }
 
 GIMu::GIMu(BracoCopo b){
-    bracoCopo.setPulso(b.getPulso());
-    bracoCopo.setGarra(b.getGarra());
     bracoCopo.setSharpGarra(b.getSharpGarra());
-    bracoCopo.setMotorPasso(b.getMotorPasso());
+    bracoCopo.attachMotor(b.getMotor());
+    bracoCopo.getPulso().attach(SERVOG_PULSO);
+    bracoCopo.getGarra().attach(SERVOG_DEDO);    
 }
 
 GIMu::GIMu(Motor d, Motor e, BracoCopo b){
@@ -21,10 +21,10 @@ GIMu::GIMu(Motor d, Motor e, BracoCopo b){
     Mleft.setPinFrente(e.getPinFrente());
     Mleft.setPinTras(e.getPinTras());
 
-    bracoCopo.setPulso(b.getPulso());
-    bracoCopo.setGarra(b.getGarra());
     bracoCopo.setSharpGarra(b.getSharpGarra());
-    bracoCopo.setMotorPasso(b.getMotorPasso());
+    bracoCopo.attachMotor(b.getMotor());
+    bracoCopo.getPulso().attach(SERVOG_PULSO);
+    bracoCopo.getGarra().attach(SERVOG_DEDO);
 }
 
 void GIMu::moveFrente(int velocidade){
