@@ -17,9 +17,6 @@ using namespace std;
 #define HEIGHT 480
 #define WIDTH 640
 
-
-Pi2c arduino(4);
-
 class Cow{
 private:
     Point center;

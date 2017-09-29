@@ -1,3 +1,6 @@
+#ifndef COW_H
+#define COW_H
+
 #include <sstream>
 #include <string>
 #include <iostream>
@@ -15,6 +18,8 @@ using namespace std;
 
 #define HEIGHT 480
 #define WIDTH 640
+
+Pi2c arduino(4);
 
 class Cow{
 private:
@@ -39,3 +44,5 @@ public:
 
     void sendPID();    
 };
+
+#endif

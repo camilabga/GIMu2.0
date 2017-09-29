@@ -282,30 +282,6 @@ void Cow::drawCenter(Mat &frame){
     circle(frame, center, 5, Scalar(0,255,0), 2, 8, 0 );
 }
 
-void Cow::conectI2C(bool ok, int velE, int velD){
-    char buf[BYTES*4];
-    for(int i=0;i<BYTES*4;i++){
-        buf[i] = '\0';
-    }
-    char cmd[BYTES+1] = {"012345678;"};
-
-    cmd[0] = (char) ok;
-    cmd[1] = (char) velE;
-    cmd[2] = (char) velD;
-
-    //Enviar comando:
-    arduino.i2cWrite(cmd, BYTES);
-    usleep(10000);
-
-    //Receber resposta:
-    if(arduino.i2cRead(buf, BYTES) == BYTES){
-        buf[(BYTES*4)-1] = '\0';
-        cout << "Retorno: " << buf << endl;
-    }else{
-        cout << "Erro !" << endl;
-    }
-}
-
 void Cow::sendPID(){
 
     if (detected) {
@@ -315,18 +291,15 @@ void Cow::sendPID(){
             int to_show;
         
             if (erro < 0.01) { // go left
-                to_show = (int
-                )(-100*erro);
+                to_show = (int)(-100*erro);
                 line(ROI,Point((WIDTH/2),center.y),Point(center.x,center.y),Scalar(0,255,0),to_show);
-                conectI2C(1, 50, 150);
             } else if (erro > 0.01) { // go right
                 to_show = (int)(100*erro);
                 line(ROI,Point((WIDTH/2),center.y),Point(center.x,center.y),Scalar(0,0,255),to_show);
-                conectI2C(1, 150, 50);
             }
         }
     } else {
-        conectI2C(0,0,0);
+        
     }
 
     namedWindow("PID", WINDOW_NORMAL);
