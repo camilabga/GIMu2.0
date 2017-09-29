@@ -2,6 +2,7 @@
 
 Motor esquerdo(DC11, DC12);
 Motor direito(DC21, DC22);
+
 GIMu robo (direito, esquerdo);
 
 void setup() {
