@@ -1,0 +1,97 @@
+[
+  {
+    "Sourcefile": "",
+    "Include": "",
+    "Includepath": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/hardware/arduino/avr/cores/arduino"
+  },
+  {
+    "Sourcefile": "",
+    "Include": "",
+    "Includepath": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/hardware/arduino/avr/variants/standard"
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Integration Codes/.build/follow_vaca/sketch/follow_vaca.ino.cpp",
+    "Include": "Wire.h",
+    "Includepath": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/hardware/arduino/avr/libraries/Wire/src"
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Integration Codes/.build/follow_vaca/sketch/follow_vaca.ino.cpp",
+    "Include": "Servo.h",
+    "Includepath": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/libraries/Servo/src"
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Integration Codes/.build/follow_vaca/sketch/follow_vaca.ino.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Integration Codes/.build/follow_vaca/sketch/BracoCopo.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Integration Codes/.build/follow_vaca/sketch/GIMu.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Integration Codes/.build/follow_vaca/sketch/Motor.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Integration Codes/.build/follow_vaca/sketch/Pins.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Integration Codes/.build/follow_vaca/sketch/SharpIR.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Integration Codes/.build/follow_vaca/sketch/Stepper_M.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Integration Codes/.build/follow_vaca/sketch/variables.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/hardware/arduino/avr/libraries/Wire/src/Wire.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/hardware/arduino/avr/libraries/Wire/src/utility/twi.c",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/libraries/Servo/src/avr/Servo.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/libraries/Servo/src/nrf52/Servo.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/libraries/Servo/src/sam/Servo.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/libraries/Servo/src/samd/Servo.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/libraries/Servo/src/stm32f4/Servo.cpp",
+    "Include": "",
+    "Includepath": ""
+  }
+]

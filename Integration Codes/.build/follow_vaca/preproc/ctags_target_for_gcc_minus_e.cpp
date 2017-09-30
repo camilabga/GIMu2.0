@@ -1,20 +1,22 @@
-#include <Wire.h>
-#include "GIMu.h"
+# 1 "/home/barbosa/Documentos/GIMu 2.0/Integration Tests/follow_vaca/follow_vaca.ino"
+# 1 "/home/barbosa/Documentos/GIMu 2.0/Integration Tests/follow_vaca/follow_vaca.ino"
+# 2 "/home/barbosa/Documentos/GIMu 2.0/Integration Tests/follow_vaca/follow_vaca.ino" 2
+# 3 "/home/barbosa/Documentos/GIMu 2.0/Integration Tests/follow_vaca/follow_vaca.ino" 2
 
-Motor esquerdo(DC11, DC12);
-Motor direito(DC21, DC22);
+Motor esquerdo(9 /*Esquerdo*/, 6);
+Motor direito(5 /*Direito*/, 3);
 GIMu robo (direito, esquerdo);
 
-#define SLAVE_ADDRESS 0x04
-#define BYTES 10
 
-char in[BYTES*4];
-char out[BYTES] = {"Falei....;"};
+
+
+char in[10*4];
+char out[10] = {"Falei....;"};
 int qtdErro = 0;
 
 void setup() {
   Wire.setTimeout(10);
-  Wire.begin(SLAVE_ADDRESS);
+  Wire.begin(0x04);
 
   Wire.onReceive(receiveData);
   Wire.onRequest(sendData);
@@ -22,12 +24,12 @@ void setup() {
 }
 
 void loop() {
-  receiveData(BYTES);
+  receiveData(10);
   sendData();
 }
 
 void receiveData(int byteCount) {
-  if(byteCount != BYTES){
+  if(byteCount != 10){
     while(Wire.available()) {
       Wire.read();
     }
@@ -45,7 +47,7 @@ void receiveData(int byteCount) {
       } else if (in[0] == 0) {
         robo.moveFrente(0);
       } else if (in[0] == 2) {
-        robo.moveTank(-LOOKING_SPEED, LOOKING_SPEED);
+        robo.moveTank(-200 /* velocidade para seguir em frente como se n houvesse amanha (ou parede)*/, 200 /* velocidade para seguir em frente como se n houvesse amanha (ou parede)*/);
       }
     }
 //    Serial.println(in);
@@ -56,5 +58,5 @@ void receiveData(int byteCount) {
 }
 
 void sendData() {
-  Wire.write(out, BYTES);
+  Wire.write(out, 10);
 }

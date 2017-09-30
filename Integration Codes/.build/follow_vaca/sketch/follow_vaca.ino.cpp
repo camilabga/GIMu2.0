@@ -1,3 +1,6 @@
+#include <Arduino.h>
+#line 1 "/home/barbosa/Documentos/GIMu 2.0/Integration Tests/follow_vaca/follow_vaca.ino"
+#line 1 "/home/barbosa/Documentos/GIMu 2.0/Integration Tests/follow_vaca/follow_vaca.ino"
 #include <Wire.h>
 #include "GIMu.h"
 
@@ -12,6 +15,15 @@ char in[BYTES*4];
 char out[BYTES] = {"Falei....;"};
 int qtdErro = 0;
 
+#line 15 "/home/barbosa/Documentos/GIMu 2.0/Integration Tests/follow_vaca/follow_vaca.ino"
+void setup();
+#line 24 "/home/barbosa/Documentos/GIMu 2.0/Integration Tests/follow_vaca/follow_vaca.ino"
+void loop();
+#line 29 "/home/barbosa/Documentos/GIMu 2.0/Integration Tests/follow_vaca/follow_vaca.ino"
+void receiveData(int byteCount);
+#line 58 "/home/barbosa/Documentos/GIMu 2.0/Integration Tests/follow_vaca/follow_vaca.ino"
+void sendData();
+#line 15 "/home/barbosa/Documentos/GIMu 2.0/Integration Tests/follow_vaca/follow_vaca.ino"
 void setup() {
   Wire.setTimeout(10);
   Wire.begin(SLAVE_ADDRESS);

@@ -34,6 +34,9 @@ void receiveData(int byteCount) {
   }else{
     while (Wire.available()) {
       Wire.readBytesUntil(';', in, byteCount);
+
+      
+      
     }
 //    Serial.println(in);
 //    for(int i=0;i<BYTES*4;i++){
