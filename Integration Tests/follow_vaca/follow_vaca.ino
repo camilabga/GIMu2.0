@@ -1,4 +1,4 @@
-#include <Wire.h>
+//#include <Wire.h>
 #include "GIMu.h"
 
 Motor esquerdo(DC11, DC12);
@@ -8,25 +8,46 @@ GIMu robo (direito, esquerdo);
 #define SLAVE_ADDRESS 0x04
 #define BYTES 10
 
-char in[BYTES*4];
-char out[BYTES] = {"Falei....;"};
-int qtdErro = 0;
+unsigned char S[10];
+
+/*char in[BYTES*4];
+char out[BYTES] = {"01234567;"};
+int qtdErro = 0;*/
 
 void setup() {
-  Wire.setTimeout(10);
+  Serial.begin(9600);
+  /*Wire.setTimeout(10);
   Wire.begin(SLAVE_ADDRESS);
 
   Wire.onReceive(receiveData);
-  Wire.onRequest(sendData);
-  Serial.begin(9600);
+  Wire.onRequest(sendData);*/
 }
 
 void loop() {
-  receiveData(BYTES);
+  /*receiveData(BYTES);
   sendData();
+  delay(10);*/
+
+  Serial.readBytesUntil(';', S, 7);
+  if(S[0]=='r'){
+      int velDir = map((int)S[1],100,200,LOOKING_SPEED,255);
+      int velEsq = LOOKING_SPEED;
+      Serial.println(velEsq, velDir);
+      robo.moveTank(velEsq, velDir);
+
+  } else if (S[0]=='f') {
+    robo.moveTank(-LOOKING_SPEED, LOOKING_SPEED);
+    Serial.println("girar");
+
+  } else if (S[0]=='p') {
+    robo.moveFrente(0);
+    Serial.println("parado");
+  }
+
+  
 }
 
-void receiveData(int byteCount) {
+/*void receiveData(int byteCount) {
   if(byteCount != BYTES){
     while(Wire.available()) {
       Wire.read();
@@ -39,22 +60,25 @@ void receiveData(int byteCount) {
   }else{
     while (Wire.available()) {
       Wire.readBytesUntil(';', in, byteCount);
-
+      Serial.println(in);
       if (in[0] == 1) {
         robo.moveTank(in[1], in[2]);
+        Serial.println("mexe p um lado");
       } else if (in[0] == 0) {
+        Serial.println("para");
         robo.moveFrente(0);
       } else if (in[0] == 2) {
+        Serial.println("procura");
         robo.moveTank(-LOOKING_SPEED, LOOKING_SPEED);
       }
     }
-//    Serial.println(in);
-//    for(int i=0;i<BYTES*4;i++){
-//      in[i] = '\0';
-//    }
+    
+    for(int i=0;i<BYTES*4;i++){
+      in[i] = '\0';
+    }
   }
 }
 
 void sendData() {
   Wire.write(out, BYTES);
-}
+}*/

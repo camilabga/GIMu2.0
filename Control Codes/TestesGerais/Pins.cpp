@@ -15,8 +15,8 @@
 
 // ### Pinagem Braco Garra
 #define SH_GARRA 7
-#define MSH_GARRA01 8
-#define MSH_GARRA02 9
+#define MSH_GARRA_D 8
+#define MSH_GARRA_E 9
 
 #define SERVOG_DEDO 2
 #define SERVOG_PULSO 3

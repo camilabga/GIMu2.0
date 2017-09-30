@@ -7,7 +7,7 @@ int THRESH = 150;
 #define SPEED 180
 #define BYTES 10
 
-char buf[BYTES*4];
+//char buf[BYTES*4];
 
 const string trackbarWindowName = "Trackbars";
 
@@ -308,6 +308,35 @@ void Cow::conectI2C(bool ok, int velE, int velD){
     }
 }
 
+void Cow::sendSerial(float erro, unsigned i){
+    int to_send = (int)(erro*100+100);
+    char to_send_char [3];
+    switch(i){
+        case 1:
+        to_send_char = {'r', (char)to_send, ';'};
+        break;
+
+        case 2:
+        to_send_char = {'f', '0', ';'};
+        break;
+
+        case 3:
+        to_send_char = {'p', '0', ';'};
+        break;
+
+    }
+    
+
+    FILE * pFile;
+
+    pFile = fopen ("/dev/ttyUSB0", "w");
+
+    cout<< to_send_char <<endl;
+
+    fputs(to_send_char, pFile);
+    fclose(pFile);
+}
+
 void Cow::sendPID(){
     if (detected) {
         if (center.x != 0 && center.y != 0) {
@@ -318,18 +347,23 @@ void Cow::sendPID(){
             if (erro < 0.01) { // go left
                 to_show = (int)(-100*erro);
                 line(ROI,Point((WIDTH/2),center.y),Point(center.x,center.y),Scalar(0,255,0),to_show);
-                conectI2C(1, -SPEED*erro, SPEED);
+                //conectI2C(1, -SPEED*erro, SPEED);
+                
             } else if (erro > 0.01) { // go right
                 to_show = (int)(100*erro);
                 line(ROI,Point((WIDTH/2),center.y),Point(center.x,center.y),Scalar(0,0,255),to_show);
-                conectI2C(1, SPEED, SPEED*erro);
+                //conectI2C(1, SPEED, SPEED*erro);
             }
+
+            sendSerial(erro, 1);
+
         } else {
-            conectI2C(0,0,0);            
+            sendSerial(0, 3);         
         }
 
     } else {
-        conectI2C(2,0,0);
+        //conectI2C(2,0,0);
+        sendSerial(0,2);
     }
 
     namedWindow("PID", WINDOW_NORMAL);

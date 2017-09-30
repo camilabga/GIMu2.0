@@ -19,7 +19,7 @@ using namespace std;
 #define HEIGHT 480
 #define WIDTH 640
 
-Pi2c arduino(4);
+//Pi2c arduino(4);
 
 class Cow{
 private:
@@ -30,6 +30,7 @@ private:
     Mat transformedROI;
 
     double angle(Point pt1, Point pt2, Point pt0);
+    void sendSerial(float erro, unsigned i);
 
 public:
     Cow();

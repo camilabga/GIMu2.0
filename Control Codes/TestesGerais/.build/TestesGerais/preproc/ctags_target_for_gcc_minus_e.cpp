@@ -5,14 +5,15 @@
 Motor esquerdo(9 /*Esquerdo*/, 6);
 Motor direito(5 /*Direito*/, 3);
 Motor mbraco(4, 5);
-BracoCopo braco(3, 2, 7, mbraco);
+BracoCopo braco(3, 2, 7, 8, 9, mbraco);
 
-GIMu robo (direito, esquerdo);
+GIMu robo (direito, esquerdo, braco);
 
 void setup() {
   Serial.begin(115200);
-  robo.follow_wall_to_cup();
 
+  //teste seguir parede
+  robo.follow_wall_to_cup();
 }
 
 void loop() {

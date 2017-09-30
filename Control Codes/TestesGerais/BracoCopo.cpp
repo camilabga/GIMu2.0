@@ -11,6 +11,17 @@ BracoCopo::BracoCopo(int servoPulso, int servoGarra, int sharpGarra, Motor m){
   motorBraco.setPinTras(m.getPinTras());
 }
 
+BracoCopo::BracoCopo(int servoPulso, int servoGarra, int sharpGarra, int mSharp_D, int mSharp_E, Motor m){
+  pulso.attach(servoPulso);
+  garra.attach(servoGarra);
+  this->sharpGarra = sharpGarra;
+  this->mSharp_D = mSharp_D;
+  this->mSharp_E = mSharp_E;
+
+  motorBraco.setPinFrente(m.getPinFrente());
+  motorBraco.setPinTras(m.getPinTras());
+}
+
 void BracoCopo::attachMotor(Motor m){
   motorBraco.setPinFrente(m.getPinFrente());
   motorBraco.setPinTras(m.getPinTras());

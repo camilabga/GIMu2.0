@@ -22,6 +22,8 @@ GIMu::GIMu(Motor d, Motor e, BracoCopo b){
     Mleft.setPinTras(e.getPinTras());
 
     bracoCopo.setSharpGarra(b.getSharpGarra());
+    bracoCopo.set_mSharp_D(b.get_mSharp_D());
+    bracoCopo.set_mSharp_E(b.get_mSharp_E());
     bracoCopo.attachMotor(b.getMotor());
     bracoCopo.getPulso().attach(SERVOG_PULSO);
     bracoCopo.getGarra().attach(SERVOG_DEDO);
