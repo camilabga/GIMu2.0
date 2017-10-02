@@ -28,6 +28,8 @@ public:
     inline Motor getMotor(){return motorBraco;}
     inline Servo getPulso(){return pulso;}
     inline Servo getGarra(){return garra;}
+
+    inline bool isFDC(int porta){return digitalRead(porta);}
     
 private:
     Servo pulso;

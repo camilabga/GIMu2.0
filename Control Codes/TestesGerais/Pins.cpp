@@ -24,5 +24,5 @@
 #define MBRACO1 4
 #define MBRACO2 5
 
-#define FDC_EXPANDIDO 24 
-#define FDC_RECOLHIDO 25
+#define FDC_FRENTE 24 
+#define FDC_TRAS 25

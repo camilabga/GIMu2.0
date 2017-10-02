@@ -4,7 +4,6 @@ int THRESH = 150;
 #define max1 500
 #define MIN_THRESH 1
 #define MAX_THRESH 100
-#define BYTES 10
 
 const string trackbarWindowName = "Trackbars";
 
