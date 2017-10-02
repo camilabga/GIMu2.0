@@ -11,8 +11,6 @@
  /home/barbosa/Downloads/Executáveis/arduino-1.8.3/hardware/arduino/avr/cores/arduino/USBAPI.h \
  /home/barbosa/Downloads/Executáveis/arduino-1.8.3/hardware/arduino/avr/cores/arduino/Arduino.h \
  /home/barbosa/Downloads/Executáveis/arduino-1.8.3/hardware/arduino/avr/variants/standard/pins_arduino.h \
- /home/barbosa/Downloads/Executáveis/arduino-1.8.3/hardware/arduino/avr/libraries/Wire/src/Wire.h \
- /home/barbosa/Downloads/Executáveis/arduino-1.8.3/hardware/arduino/avr/cores/arduino/Stream.h \
  /home/barbosa/Documentos/GIMu\ 2.0/Integration\ Tests/follow_vaca/.build/follow_vaca/sketch/GIMu.h \
  /home/barbosa/Documentos/GIMu\ 2.0/Integration\ Tests/follow_vaca/.build/follow_vaca/sketch/Motor.h \
  /home/barbosa/Documentos/GIMu\ 2.0/Integration\ Tests/follow_vaca/.build/follow_vaca/sketch/SharpIR.h \

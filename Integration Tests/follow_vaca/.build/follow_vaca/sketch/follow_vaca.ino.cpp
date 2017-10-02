@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #line 1 "/home/barbosa/Documentos/GIMu 2.0/Integration Tests/follow_vaca/follow_vaca.ino"
 #line 1 "/home/barbosa/Documentos/GIMu 2.0/Integration Tests/follow_vaca/follow_vaca.ino"
-#include <Wire.h>
+//#include <Wire.h>
 #include "GIMu.h"
 
 Motor esquerdo(DC11, DC12);
@@ -11,35 +11,58 @@ GIMu robo (direito, esquerdo);
 #define SLAVE_ADDRESS 0x04
 #define BYTES 10
 
-char in[BYTES*4];
-char out[BYTES] = {"Falei....;"};
-int qtdErro = 0;
+unsigned char S[10];
 
-#line 15 "/home/barbosa/Documentos/GIMu 2.0/Integration Tests/follow_vaca/follow_vaca.ino"
+/*char in[BYTES*4];
+char out[BYTES] = {"01234567;"};
+int qtdErro = 0;*/
+
+#line 17 "/home/barbosa/Documentos/GIMu 2.0/Integration Tests/follow_vaca/follow_vaca.ino"
 void setup();
-#line 25 "/home/barbosa/Documentos/GIMu 2.0/Integration Tests/follow_vaca/follow_vaca.ino"
+#line 26 "/home/barbosa/Documentos/GIMu 2.0/Integration Tests/follow_vaca/follow_vaca.ino"
 void loop();
-#line 30 "/home/barbosa/Documentos/GIMu 2.0/Integration Tests/follow_vaca/follow_vaca.ino"
-void receiveData(int byteCount);
-#line 62 "/home/barbosa/Documentos/GIMu 2.0/Integration Tests/follow_vaca/follow_vaca.ino"
-void sendData();
-#line 15 "/home/barbosa/Documentos/GIMu 2.0/Integration Tests/follow_vaca/follow_vaca.ino"
+#line 17 "/home/barbosa/Documentos/GIMu 2.0/Integration Tests/follow_vaca/follow_vaca.ino"
 void setup() {
   Serial.begin(9600);
-  Wire.setTimeout(10);
+  /*Wire.setTimeout(10);
   Wire.begin(SLAVE_ADDRESS);
 
   Wire.onReceive(receiveData);
-  Wire.onRequest(sendData);
-  Serial.begin(9600);
+  Wire.onRequest(sendData);*/
 }
 
 void loop() {
-  receiveData(BYTES);
+  /*receiveData(BYTES);
   sendData();
+  delay(10);*/
+
+  Serial.readBytesUntil(';', S, 7);
+  if(S[0]=='r'){
+      if ((int)S[1] > 100) {
+        
+      } else {
+        
+      }
+      int velDir = 100;
+      int velEsq = (int)S[1];
+      Serial.print(velEsq);
+      Serial.print(" ");
+      Serial.println(velDir);
+      robo.moveTank(velEsq, velDir);
+
+  } else if (S[0]=='f') {
+    robo.moveTank(-LOOKING_SPEED, LOOKING_SPEED);
+    Serial.println("girar");
+
+  } else if (S[0]=='p') {
+    robo.moveFrente(0);
+    Serial.println("parado");
+  }
+
+  
 }
 
-void receiveData(int byteCount) {
+/*void receiveData(int byteCount) {
   if(byteCount != BYTES){
     while(Wire.available()) {
       Wire.read();
@@ -52,7 +75,7 @@ void receiveData(int byteCount) {
   }else{
     while (Wire.available()) {
       Wire.readBytesUntil(';', in, byteCount);
-
+      Serial.println(in);
       if (in[0] == 1) {
         robo.moveTank(in[1], in[2]);
         Serial.println("mexe p um lado");
@@ -64,13 +87,14 @@ void receiveData(int byteCount) {
         robo.moveTank(-LOOKING_SPEED, LOOKING_SPEED);
       }
     }
-//    Serial.println(in);
-//    for(int i=0;i<BYTES*4;i++){
-//      in[i] = '\0';
-//    }
+    
+    for(int i=0;i<BYTES*4;i++){
+      in[i] = '\0';
+    }
   }
 }
 
 void sendData() {
   Wire.write(out, BYTES);
-}
+}*/
+

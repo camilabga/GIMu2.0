@@ -30,9 +30,16 @@ void loop() {
 
   Serial.readBytesUntil(';', S, 7);
   if(S[0]=='r'){
-      int velDir = map((int)S[1],100,200,LOOKING_SPEED,255);
-      int velEsq = LOOKING_SPEED;
-      Serial.println(velEsq, velDir);
+      if ((int)S[1] > 100) {
+        
+      } else {
+        
+      }
+      int velDir = 100;
+      int velEsq = (int)S[1];
+      Serial.print(velEsq);
+      Serial.print(" ");
+      Serial.println(velDir);
       robo.moveTank(velEsq, velDir);
 
   } else if (S[0]=='f') {
