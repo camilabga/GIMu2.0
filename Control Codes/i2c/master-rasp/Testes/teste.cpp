@@ -1,6 +1,7 @@
 #include "libi2c/pi2c.cpp"
-#include  "extras.h"
 #include <iostream>
+#include <string>
+#include <fstream>  
 #include <stdio.h>
 #include <sys/stat.h>
 
@@ -8,8 +9,31 @@ using namespace std;
 
 #define BYTES 10
 
+void logCsv(std::string data, std::string filename, std::string header) {
+    ofstream myfile;
+
+    while (true) {
+        myfile.open(filename.c_str(), ios::in);
+        if (myfile.is_open() && myfile.good()) {
+            myfile.close();
+            myfile.open(filename.c_str(), ios::app);
+            myfile << data <<endl;
+            return;
+        } else {
+            myfile.open(filename.c_str(), ios::app);
+            if (myfile.is_open() && myfile.good()) {
+                myfile << header << endl;
+                myfile.close();
+            }
+
+        }
+
+    }
+
+
+}
+
 int main(){
-Extras extras;
 string data  =  "";
 string csvHeader = "motor1,motor2,sensor1,sensor2,sensor3,sensor4,sensor5,sensor6";
 string filename = "teste.csv";
@@ -104,7 +128,7 @@ string filename = "teste.csv";
 			*/
 			cout << endl;
 
-			extras.logCsv(data.c_str(),filename.c_str() ,csvHeader.c_str());
+			logCsv(data.c_str(),filename.c_str() ,csvHeader.c_str());
 		}else{		
 			cout << "Erro : " << endl;
 		}
