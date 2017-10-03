@@ -31,10 +31,6 @@ void loop() {
     robo.moveFrente(0);
     flag = false;
   }
-  // robo.getSharps();
-  // Serial.print(robo.sharpsBase[3]);
-  // Serial.print(" ");
-  // Serial.println(robo.sharpsBase[5]);
   
 }
 
@@ -53,49 +49,52 @@ void receiveData(int byteCount) {
       Wire.readBytesUntil(';', in, byteCount);
     }
     int teste;
-    switch(in[0]){
-      case 'F':
-        // Serial.println("F");  
-        robo.moveFrente(150);
-        flag = true;
-        for(int i=0;i<6;i++){
-          out[i] = 0;
-        }
-      break;
-      case 'T':
-        // Serial.println("T");
-        robo.moveTras(150);
-        flag = true;
-        for(int i=0;i<6;i++){
-          out[i] = 0;
-        }
-      break;
-      case 'D':
-        // Serial.println("D");
-        robo.moveTank(150,-150);
-        flag = true;
-        for(int i=0;i<6;i++){
-          out[i] = 0;
-        }
-      break;
-      case 'E':
-        // Serial.println("E");
-        robo.moveTank(-150,150);
-        flag = true;
-        for(int i=0;i<6;i++){
-          out[i] = 0;
-        }
-      break;
-      case 'I':
-        robo.getSharps();
-        for(int i=0;i<6;i++){
-          out[i] = robo.sharpsBase[i];
-        }
-      break;
-      default:
+
+    robo.moveTank(in[0], in[1]);
+
+    // switch(in[0]){
+    //   case 'F':
+    //     // Serial.println("F");  
+    //     robo.moveFrente(150);
+    //     flag = true;
+    //     for(int i=0;i<6;i++){
+    //       out[i] = 0;
+    //     }
+    //   break;
+    //   case 'T':
+    //     // Serial.println("T");
+    //     robo.moveTras(150);
+    //     flag = true;
+    //     for(int i=0;i<6;i++){
+    //       out[i] = 0;
+    //     }
+    //   break;
+    //   case 'D':
+    //     // Serial.println("D");
+    //     robo.moveTank(150,-150);
+    //     flag = true;
+    //     for(int i=0;i<6;i++){
+    //       out[i] = 0;
+    //     }
+    //   break;
+    //   case 'E':
+    //     // Serial.println("E");
+    //     robo.moveTank(-150,150);
+    //     flag = true;
+    //     for(int i=0;i<6;i++){
+    //       out[i] = 0;
+    //     }
+    //   break;
+    //   case 'I':
+    //     robo.getSharps();
+    //     for(int i=0;i<6;i++){
+    //       out[i] = robo.sharpsBase[i];
+    //     }
+    //   break;
+    //   default:
         
-      break;
-    }
+    //   break;
+    // }
   }
 }
 
