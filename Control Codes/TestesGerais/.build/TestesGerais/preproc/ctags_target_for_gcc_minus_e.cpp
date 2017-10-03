@@ -2,19 +2,19 @@
 # 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 # 2 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino" 2
 
-Motor esquerdo(9 /*Esquerdo*/, 6);
-Motor direito(5 /*Direito*/, 3);
+Motor esquerdo(11 /*Esquerdo*/, 10);
+Motor direito(8 /*Direito*/, 9);
 
 Motor mbraco(4, 5);
 BracoCopo braco(3, 2, 7, 8, 9, mbraco);
 
 Motor mElevator(12, 13);
-Elevador elevador(mElevator, 1);
+Elevador elevador(mElevator, 3);
 
 GIMu robo (direito, esquerdo, braco, elevador);
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
 }
 
 void loop() {
@@ -24,7 +24,7 @@ void loop() {
    robo.moveTras(255);
    delay(2000);
    robo.moveTank(200, -200);
-   delay(2000);
+   delay(2000);*/
   /* ###*/
 
   // ### Teste dos sensores Sharps:
@@ -59,6 +59,11 @@ void loop() {
   //robo.follow_wall_to_cup();
 
   // ### teste pegar copo ###
-  robo.getTerrine();
+  //robo.getTerrine();
+
+  // ### TESTE ELEVADOR ###
+  elevador.goToStage02();
+
+
 
 }

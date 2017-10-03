@@ -10,7 +10,7 @@ Motor mbraco(MBRACO1, MBRACO2);
 BracoCopo braco(SERVOG_PULSO, SERVOG_DEDO, SH_GARRA, MSH_GARRA_D, MSH_GARRA_E, mbraco);
 
 Motor mElevator(DC_ELEVADOR1, DC_ELEVADOR0);
-Elevador elevador(mElevator, 1);
+Elevador elevador(mElevator, 3);
 
 GIMu robo (direito, esquerdo, braco, elevador);
 
@@ -20,7 +20,7 @@ void setup();
 void loop();
 #line 14 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
 }
 
 void loop() {
@@ -30,7 +30,7 @@ void loop() {
    robo.moveTras(255);
    delay(2000);
    robo.moveTank(200, -200);
-   delay(2000);
+   delay(2000);*/
   /* ###*/
 
   // ### Teste dos sensores Sharps:
@@ -65,7 +65,12 @@ void loop() {
   //robo.follow_wall_to_cup();
 
   // ### teste pegar copo ###
-  robo.getTerrine();
+  //robo.getTerrine();
+
+  // ### TESTE ELEVADOR ###
+  elevador.goToStage02();
+
+  
 
 }
 

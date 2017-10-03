@@ -37,6 +37,8 @@ GIMu::GIMu(Motor d, Motor e, BracoCopo b, Elevador l){
     Mleft.setPinFrente(e.getPinFrente());
     Mleft.setPinTras(e.getPinTras());
 
+    moveFrente(0);
+
     bracoCopo.setSharpGarra(b.getSharpGarra());
     bracoCopo.set_mSharp_D(b.get_mSharp_D());
     bracoCopo.set_mSharp_E(b.get_mSharp_E());
@@ -48,14 +50,6 @@ GIMu::GIMu(Motor d, Motor e, BracoCopo b, Elevador l){
 
     elevador.attachMotor(l.getMotor());
     elevador.setStage(l.getStage());
-
-    if (elevador.getStage() == 1) {
-        elevador.goToStage01();
-    } else if (elevador.getStage() == 2) {
-        elevador.goToStage02();
-    } else {
-        elevador.goToStage03();
-    }
 }
 
 GIMu::GIMu(Elevador e){

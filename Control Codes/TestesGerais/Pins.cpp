@@ -7,11 +7,11 @@
 #define SH_ESQUERDA_FRENTE 5 // [5]
 
 // ### Pinagem Motor DC Movimentação
-#define DC11 9 //Esquerdo
-#define DC12 6
+#define DC11 11 //Esquerdo
+#define DC12 10
 
-#define DC21 5 //Direito
-#define DC22 3
+#define DC21 8 //Direito
+#define DC22 9
 
 // ### Pinagem Braco Garra
 #define SH_GARRA 7
