@@ -1,7 +1,7 @@
 #include "libi2c/pi2c.cpp"
-#include  "extras.h"
 #include <iostream>
 #include <string>
+#include <fstream>  
 #include <stdio.h>
 #include <sys/stat.h>
 
@@ -9,10 +9,34 @@ using namespace std;
 
 #define BYTES 10
 
+void logCsv(std::string data, std::string filename, std::string header) {
+    ofstream myfile;
+
+    while (true) {
+        myfile.open(filename.c_str(), ios::in);
+        if (myfile.is_open() && myfile.good()) {
+            myfile.close();
+            myfile.open(filename.c_str(), ios::app);
+            myfile << data <<endl;
+            return;
+        } else {
+            myfile.open(filename.c_str(), ios::app);
+            if (myfile.is_open() && myfile.good()) {
+                myfile << header << endl;
+                myfile.close();
+            }
+
+        }
+
+    }
+
+
+}
+
 int main(){
-Extras extras;
 string data  =  "";
-string csvHeader "sensor1,sensor2,sensor3,sensor6,
+string csvHeader = "motor1,motor2,sensor1,sensor2,sensor3,sensor4,sensor5,sensor6";
+string filename = "teste.csv";
     	Pi2c arduino(4);
    	int qtdErro = 0;
     
@@ -37,21 +61,25 @@ string csvHeader "sensor1,sensor2,sensor3,sensor6,
 				for(int i=0;i<BYTES+1;i++){
 					cmdS[i]=cmdF[i];
 				}
+				data+= "150,150";
 			break;
 			case 's':
 				for(int i=0;i<BYTES+1;i++){
 					cmdS[i]=cmdT[i];
 				}
+				data+= "-150,-150";
 			break;
 			case 'd':
 				for(int i=0;i<BYTES+1;i++){
 					cmdS[i]=cmdD[i];
 				}
+				data+= "150,-150";
 			break;
 			case 'a':
 				for(int i=0;i<BYTES+1;i++){
 					cmdS[i]=cmdE[i];
 				}
+				data+= "-150,150";
 			break;
 			case 'i':
 				for(int i=0;i<BYTES+1;i++){
@@ -85,10 +113,13 @@ string csvHeader "sensor1,sensor2,sensor3,sensor6,
 		arduino.i2cWrite(cmdS, BYTES);
 		usleep(10000);
 
+		int aux;
 		if(arduino.i2cRead(buf,BYTES) == BYTES){
 			buf[(BYTES*4)-1] = '\0';
 			for(int i=0;i<6;i++){
 				cout << " " << i << ": " << (int)buf[i];
+				aux = (int)buf[i];
+				data+=  "," + to_string(aux);
 			}
 			/*
 			0 e 1 -> Frente
@@ -96,12 +127,17 @@ string csvHeader "sensor1,sensor2,sensor3,sensor6,
 			4 e 5 -> Direita
 			*/
 			cout << endl;
+
+			logCsv(data.c_str(),filename.c_str() ,csvHeader.c_str());
+			data.clear();
 		}else{		
 			cout << "Erro : " << endl;
 		}
 		for(int i=0;i<BYTES*4;i++){
 			buf[i] = '\0';
 		}
+
+		
 
 	}
     return 0;
