@@ -4,7 +4,7 @@
 
 #define SLAVE_ADDRESS 0x04
 #define BYTES 10
-
+// TEste
 char in[BYTES*4];
 char out[BYTES] = {"Falei....;"};
 int qtdErro = 0;
