@@ -30,7 +30,8 @@ void loop() {
     while((millis() - tempo) <1000){  }
     robo.moveFrente(0);
     flag = false;
-  }
+
+   }
   
 }
 
