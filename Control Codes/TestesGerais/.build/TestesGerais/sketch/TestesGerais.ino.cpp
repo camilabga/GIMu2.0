@@ -19,7 +19,7 @@ void setup() {
   Serial.begin(115200);
 
   //teste seguir parede
-  robo.follow_wall_to_cup();
+  //robo.follow_wall_to_cup();
 }
 
 void loop() {
@@ -42,7 +42,7 @@ void loop() {
   Serial.print(robo.getSharp(SH_FRENTE_DIREITA));
   Serial.print(" S3: ");
   Serial.println(robo.getSharp(SH_FRENTE_ESQUERDA));*/
-  /*erial.print(" S4: ");
+  /*Serial.print(" S4: ");
   Serial.print(robo.getSharp(SH_ESQUERDA_FRENTE));
   Serial.print(" S5: ");
   Serial.println(robo.getSharp(SH_ESQUERDA_TRAS));*/
@@ -59,6 +59,8 @@ void loop() {
 
   robo.moveTank(LOOKING_SPEED, -LOOKING_SPEED); */ 
   
+  // teste pegar copo
+  robo.getTerrine();
 
 }
 
