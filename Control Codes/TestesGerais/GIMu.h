@@ -21,10 +21,11 @@ class GIMu{
 
     void getSharps();
     inline int getDistancia(int i){return sharpsBase[i];}
-
+    int getSharp(int porta);
+    
     void follow_wall_to_cup();
 
-    int getSharp(int porta);
+    void getTerrine();
 
   private:
     Motor Mright;

@@ -27,6 +27,8 @@ GIMu::GIMu(Motor d, Motor e, BracoCopo b){
     bracoCopo.attachMotor(b.getMotor());
     bracoCopo.getPulso().attach(SERVOG_PULSO);
     bracoCopo.getGarra().attach(SERVOG_DEDO);
+    bracoCopo.getPulso().write(POSICAO_INICIAL_PULSO);
+    bracoCopo.getGarra().write(POSICAO_INICIAL_GARRA);
 }
 
 void GIMu::moveFrente(int velocidade){
@@ -159,4 +161,9 @@ void GIMu::follow_wall_to_cup() {
             }
         }
     }
+}
+
+void GIMu::getTerrine(){
+    bracoCopo.tryGetTerrine();
+    bracoCopo.recolherBraco();
 }

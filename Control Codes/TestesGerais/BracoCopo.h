@@ -5,6 +5,7 @@
 #include <Servo.h>
 #include "SharpIR.h"
 #include "Motor.h"
+#include "Pins.cpp"
 #include "variables.cpp"
 
 class BracoCopo{
@@ -30,6 +31,9 @@ public:
     inline Servo getGarra(){return garra;}
 
     inline bool isFDC(int porta){return digitalRead(porta);}
+
+    void tryGetTerrine();
+    void recolherBraco();
     
 private:
     Servo pulso;

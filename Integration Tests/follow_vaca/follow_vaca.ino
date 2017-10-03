@@ -30,11 +30,6 @@ void loop() {
 
   Serial.readBytesUntil(';', S, 7);
   if(S[0]=='r'){
-      if ((int)S[1] > 100) {
-        
-      } else {
-        
-      }
       int velDir = 100;
       int velEsq = (int)S[1];
       Serial.print(velEsq);
