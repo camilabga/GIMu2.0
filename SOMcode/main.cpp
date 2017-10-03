@@ -1,15 +1,49 @@
 #include "libi2c/pi2c.cpp"
+#include <SOM.h>
 #include <fstream>
 #include <iostream>
 #include <stdio.h>
 #include <string>
 #include <sys/stat.h>
-#include <SOM.h>
-#include <sys/stat.h>
 
 using namespace std;
 
 #define BYTES 10
+
+void traingSOM(int size, std::string filename);
+void logCsv(std::string data, std::string filename, std::string header);
+void collectDataforNetWork(std::string filename);
+
+
+
+int main() {
+  //collectDataforNetWork("teste.csv");
+
+  
+  
+
+  return 0;
+}
+
+void logCsv(std::string data, std::string filename, std::string header) {
+  ofstream myfile;
+
+  while (true) {
+    myfile.open(filename.c_str(), ios::in);
+    if (myfile.is_open() && myfile.good()) {
+      myfile.close();
+      myfile.open(filename.c_str(), ios::app);
+      myfile << data << endl;
+      return;
+    } else {
+      myfile.open(filename.c_str(), ios::app);
+      if (myfile.is_open() && myfile.good()) {
+        myfile << header << endl;
+        myfile.close();
+      }
+    }
+  }
+}
 void traingSOM(int size, std::string filename) {
 
   // setando posiçoes de leitura e escrita
@@ -52,31 +86,11 @@ void traingSOM(int size, std::string filename) {
   delete data;
 }
 
-void logCsv(std::string data, std::string filename, std::string header) {
-  ofstream myfile;
-
-  while (true) {
-    myfile.open(filename.c_str(), ios::in);
-    if (myfile.is_open() && myfile.good()) {
-      myfile.close();
-      myfile.open(filename.c_str(), ios::app);
-      myfile << data << endl;
-      return;
-    } else {
-      myfile.open(filename.c_str(), ios::app);
-      if (myfile.is_open() && myfile.good()) {
-        myfile << header << endl;
-        myfile.close();
-      }
-    }
-  }
-}
-
-int main() {
+void collectDataforNetWork(std::string filename) {
   string data = "";
   string csvHeader =
       "motor1,motor2,sensor1,sensor2,sensor3,sensor4,sensor5,sensor6";
-  string filename = "teste.csv";
+
   Pi2c arduino(4);
   int qtdErro = 0;
 
@@ -125,7 +139,7 @@ int main() {
       }
       break;
     default:
-      return 0;
+      return;
       break;
     }
     cin.ignore();
@@ -175,5 +189,4 @@ int main() {
       buf[i] = '\0';
     }
   }
-  return 0;
 }

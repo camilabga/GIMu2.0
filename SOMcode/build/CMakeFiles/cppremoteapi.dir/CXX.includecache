@@ -44,13 +44,13 @@ string
 sstream
 -
 
-/home/samuel/Documentos/Repositories/SOMcode/SOM/DataSet.cpp
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/DataSet.cpp
 DataSet.h
-/home/samuel/Documentos/Repositories/SOMcode/SOM/DataSet.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/DataSet.h
 
-/home/samuel/Documentos/Repositories/SOMcode/SOM/DataSet.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/DataSet.h
 Sample.h
-/home/samuel/Documentos/Repositories/SOMcode/SOM/Sample.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/Sample.h
 cstdlib
 -
 limits
@@ -62,25 +62,25 @@ fstream
 algorithm
 -
 
-/home/samuel/Documentos/Repositories/SOMcode/SOM/Node.cpp
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/Node.cpp
 Node.h
-/home/samuel/Documentos/Repositories/SOMcode/SOM/Node.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/Node.h
 sstream
 -
 
-/home/samuel/Documentos/Repositories/SOMcode/SOM/Node.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/Node.h
 iostream
 -
 Sample.h
-/home/samuel/Documentos/Repositories/SOMcode/SOM/Sample.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/Sample.h
 list
 -
 
-/home/samuel/Documentos/Repositories/SOMcode/SOM/SOM.cpp
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/SOM.cpp
 SOM.h
-/home/samuel/Documentos/Repositories/SOMcode/SOM/SOM.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/SOM.h
 Utils.h
-/home/samuel/Documentos/Repositories/SOMcode/SOM/Utils.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/Utils.h
 list
 -
 cmath
@@ -88,25 +88,25 @@ cmath
 exception
 -
 
-/home/samuel/Documentos/Repositories/SOMcode/SOM/SOM.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/SOM.h
 Node.h
-/home/samuel/Documentos/Repositories/SOMcode/SOM/Node.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/Node.h
 DataSet.h
-/home/samuel/Documentos/Repositories/SOMcode/SOM/DataSet.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/DataSet.h
 string
 -
 
-/home/samuel/Documentos/Repositories/SOMcode/SOM/Sample.cpp
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/Sample.cpp
 Sample.h
-/home/samuel/Documentos/Repositories/SOMcode/SOM/Sample.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/Sample.h
 cmath
 -
 exception
 -
 Utils.h
-/home/samuel/Documentos/Repositories/SOMcode/SOM/Utils.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/Utils.h
 
-/home/samuel/Documentos/Repositories/SOMcode/SOM/Sample.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/Sample.h
 vector
 -
 string
@@ -114,7 +114,7 @@ string
 sstream
 -
 
-/home/samuel/Documentos/Repositories/SOMcode/SOM/Utils.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/Utils.h
 sstream
 -
 iostream
@@ -132,11 +132,11 @@ vector
 values.h
 -
 
-/home/samuel/Documentos/Repositories/SOMcode/libi2c/pi2c.cpp
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/libi2c/pi2c.cpp
 pi2c.h
-/home/samuel/Documentos/Repositories/SOMcode/libi2c/pi2c.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/libi2c/pi2c.h
 
-/home/samuel/Documentos/Repositories/SOMcode/libi2c/pi2c.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/libi2c/pi2c.h
 iostream
 -
 linux/i2c-dev.h
@@ -148,9 +148,11 @@ unistd.h
 sys/ioctl.h
 -
 
-/home/samuel/Documentos/Repositories/SOMcode/main.cpp
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/main.cpp
 libi2c/pi2c.cpp
-/home/samuel/Documentos/Repositories/SOMcode/libi2c/pi2c.cpp
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/libi2c/pi2c.cpp
+SOM.h
+-
 fstream
 -
 iostream
@@ -158,10 +160,6 @@ iostream
 stdio.h
 -
 string
--
-sys/stat.h
--
-SOM.h
 -
 sys/stat.h
 -
