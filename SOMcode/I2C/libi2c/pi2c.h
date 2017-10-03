@@ -16,12 +16,11 @@
 // Example Usage:                                                             //
 // Please see https://bitbucket.org/JohnnySheppard/pi2c for example usage.    //
 ////////////////////////////////////////////////////////////////////////////////
+#ifndef PI2C_H //pi2c
+#define PI2C_H
 
-#include <iostream>
-#include <linux/i2c-dev.h>
-#include <fcntl.h>    /* For O_RDWR */
-#include <unistd.h>   /* For open(), */
-#include <sys/ioctl.h>
+
+
 
 class Pi2c {
 		//Var to hold the i2c communications handle, 
@@ -56,3 +55,5 @@ class Pi2c {
 		//...Returns: Error value. > 0 is ok. < 0 means there was an error.
 		int i2cWriteArduinoInt(int input);
 };
+
+#endif //PI2C_H

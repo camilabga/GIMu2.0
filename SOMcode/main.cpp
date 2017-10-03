@@ -1,11 +1,11 @@
-#include "libi2c/pi2c.cpp"
+//#include "libi2c/pi2c.cpp"
 #include <SOM.h>
 #include <fstream>
 #include <iostream>
 #include <stdio.h>
 #include <string>
 #include <sys/stat.h>
-
+#include <I2C.h>
 using namespace std;
 
 #define BYTES 10
@@ -91,52 +91,30 @@ void collectDataforNetWork(std::string filename) {
   string csvHeader =
       "motor1,motor2,sensor1,sensor2,sensor3,sensor4,sensor5,sensor6";
 
-  Pi2c arduino(4);
-  int qtdErro = 0;
-
-  char buf[BYTES * 4];
-  for (int i = 0; i < BYTES * 4; i++) {
-    buf[i] = '\0';
-  }
-
-  char cmdF[BYTES + 1] = {"F........;"};
-  char cmdT[BYTES + 1] = {"T........;"};
-  char cmdD[BYTES + 1] = {"D........;"};
-  char cmdE[BYTES + 1] = {"E........;"};
-  char cmdI[BYTES + 1] = {"I........;"};
-  char cmdS[BYTES + 1];
-
+      I2C arduino;
+  //Pi2c arduino(4);
+  
   while (1) {
     char input = getchar();
     switch (input) {
     case 'w':
-      for (int i = 0; i < BYTES + 1; i++) {
-        cmdS[i] = cmdF[i];
-      }
+      arduino.cmdS[0] = 'F';
       data += "150,150";
       break;
     case 's':
-      for (int i = 0; i < BYTES + 1; i++) {
-        cmdS[i] = cmdT[i];
-      }
+    arduino.cmdS[0] = 'T';
       data += "-150,-150";
       break;
     case 'd':
-      for (int i = 0; i < BYTES + 1; i++) {
-        cmdS[i] = cmdD[i];
-      }
+    arduino.cmdS[0] = 'D';
       data += "150,-150";
       break;
     case 'a':
-      for (int i = 0; i < BYTES + 1; i++) {
-        cmdS[i] = cmdE[i];
-      }
+      arduino.cmdS[0] = 'E';
       data += "-150,150";
       break;
     case 'i':
-      for (int i = 0; i < BYTES + 1; i++) {
-        cmdS[i] = cmdI[i];
-      }
+     arduino.cmdS[0] = 'I';
       break;
     default:
       return;
@@ -145,32 +123,16 @@ void collectDataforNetWork(std::string filename) {
     cin.ignore();
 
     // Comando para Andar:
-    arduino.i2cWrite(cmdS, BYTES);
-    usleep(10000);
-
-    if (arduino.i2cRead(buf, BYTES) == BYTES) {
-      buf[(BYTES * 4) - 1] = '\0';
-    } else {
-      cout << "Erro : " << endl;
-    }
-    for (int i = 0; i < BYTES * 4; i++) {
-      buf[i] = '\0';
-    }
+    arduino.sendData();
+    usleep(1100000);
 
     // Receber Dados:
-    usleep(1100000);
-    for (int i = 0; i < BYTES + 1; i++) {
-      cmdS[i] = cmdI[i];
-    }
-    arduino.i2cWrite(cmdS, BYTES);
-    usleep(10000);
-
+    arduino.getData();
     int aux;
-    if (arduino.i2cRead(buf, BYTES) == BYTES) {
-      buf[(BYTES * 4) - 1] = '\0';
+
       for (int i = 0; i < 6; i++) {
-        cout << " " << i << ": " << (int)buf[i];
-        aux = (int)buf[i];
+        cout << " " << i << ": " << (int)arduino.buf[i];
+        aux = (int)arduino.buf[i];
         data += "," + to_string(aux);
       }
       /*
@@ -182,11 +144,6 @@ void collectDataforNetWork(std::string filename) {
 
       logCsv(data.c_str(), filename.c_str(), csvHeader.c_str());
       data.clear();
-    } else {
-      cout << "Erro : " << endl;
-    }
-    for (int i = 0; i < BYTES * 4; i++) {
-      buf[i] = '\0';
-    }
-  }
+    } 
+  
 }

@@ -3,7 +3,7 @@
 int main(){
     I2C arduino;
 	while(1){
-		arduino.getSharp();
+		arduino.getData();
 		cout << arduino.buf[0] << endl;
 
 		int val = 110;
