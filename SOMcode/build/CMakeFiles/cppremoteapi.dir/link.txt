@@ -1,0 +1,1 @@
+/usr/bin/c++   -Wall -std=c++0x -DBUILD_SHARED_LIBS=OFF  -rdynamic CMakeFiles/cppremoteapi.dir/main.cpp.o CMakeFiles/cppremoteapi.dir/SOM/DataSet.cpp.o CMakeFiles/cppremoteapi.dir/SOM/SOM.cpp.o CMakeFiles/cppremoteapi.dir/SOM/Node.cpp.o CMakeFiles/cppremoteapi.dir/SOM/Sample.cpp.o  -o cppremoteapi -lpthread 
