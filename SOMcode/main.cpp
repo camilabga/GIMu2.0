@@ -13,7 +13,7 @@ using namespace std;
 void traingSOM(int size, std::string filename);
 void logCsv(std::string data, std::string filename, std::string header);
 void collectDataforNetWork(std::string filename);
-
+void get
 
 
 int main() {
