@@ -6,6 +6,8 @@
         "bitset": "cpp",
         "initializer_list": "cpp",
         "utility": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "fstream": "cpp",
+        "string": "cpp"
     }
 }

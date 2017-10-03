@@ -1,11 +1,11 @@
 //#include "libi2c/pi2c.cpp"
+#include <I2C.h>
 #include <SOM.h>
 #include <fstream>
 #include <iostream>
 #include <stdio.h>
 #include <string>
 #include <sys/stat.h>
-#include <I2C.h>
 using namespace std;
 
 #define BYTES 10
@@ -15,13 +15,8 @@ void logCsv(std::string data, std::string filename, std::string header);
 void collectDataforNetWork(std::string filename);
 void seguirParedeSOM(std::string output);
 
-
-
 int main() {
-  //collectDataforNetWork("Coleta/teste2.csv");
-
-  
-  
+  // collectDataforNetWork("Coleta/teste2.csv");
 
   return 0;
 }
@@ -92,10 +87,10 @@ void collectDataforNetWork(std::string filename) {
   string csvHeader =
       "motor1,motor2,sensor1,sensor2,sensor3,sensor4,sensor5,sensor6";
 
-      I2C arduino;
-  //Pi2c arduino(4);
-	arduino.cmdS[9] = ';' ;
-  
+  I2C arduino;
+  // Pi2c arduino(4);
+  arduino.cmdS[9] = ';';
+
   while (1) {
     char input = getchar();
     switch (input) {
@@ -104,11 +99,11 @@ void collectDataforNetWork(std::string filename) {
       data += "150,150";
       break;
     case 's':
-    arduino.cmdS[0] = 'T';
+      arduino.cmdS[0] = 'T';
       data += "-150,-150";
       break;
     case 'd':
-    arduino.cmdS[0] = 'D';
+      arduino.cmdS[0] = 'D';
       data += "150,-150";
       break;
     case 'a':
@@ -116,7 +111,7 @@ void collectDataforNetWork(std::string filename) {
       data += "-150,150";
       break;
     case 'i':
-     arduino.cmdS[0] = 'I';
+      arduino.cmdS[0] = 'I';
       break;
     default:
       return;
@@ -132,20 +127,56 @@ void collectDataforNetWork(std::string filename) {
     arduino.getData();
     int aux;
 
-      for (int i = 0; i < 6; i++) {
-        cout << " " << i << ": " << (int)arduino.buf[i];
-        aux = (int)arduino.buf[i];
-        data += "," + to_string(aux);
-      }
-      /*
-      0 e 1 -> Frente
-      2 e 3 -> Esquerda
-      4 e 5 -> Direita
-      */
-      cout << endl;
+    for (int i = 0; i < 6; i++) {
+      cout << " " << i << ": " << (int)arduino.buf[i];
+      aux = (int)arduino.buf[i];
+      data += "," + to_string(aux);
+    }
+    /*
+    0 e 1 -> Frente
+    2 e 3 -> Esquerda
+    4 e 5 -> Direita
+    */
+    cout << endl;
 
-      logCsv(data.c_str(), filename.c_str(), csvHeader.c_str());
-      data.clear();
-    } 
-  
+    logCsv(data.c_str(), filename.c_str(), csvHeader.c_str());
+    data.clear();
+  }
+}
+void seguirParedeSOM(std::string output) {
+
+  SOM som(30);
+  som.loadNodes(output.c_str());
+  I2C arduino;
+
+  std::vector<double> input{0, 0, 0, 0, 0, 0, 0, 0};
+
+  while (true) {
+    arduino.getData();
+    int aux;
+    int val;
+    for (int i = 0; i < 6; i++) {
+
+      aux = (int)arduino.buf[i];
+      input[i] = aux;
+    }
+    som.findBest(input, 0, 5);
+
+    aux = (int)input[0];
+    val = (int)input[1];
+
+    val /= 2;
+    aux /= 2;
+
+    arduino.cmdS[0] = (char)val;
+    arduino.cmdS[1] = (char)val;
+
+    arduino.sendData();
+    /*
+    0 e 1 -> Frente
+    2 e 3 -> Esquerda
+    4 e 5 -> Direita
+    */
+  }
+
 }
