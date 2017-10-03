@@ -12,14 +12,11 @@ GIMu robo (direito, esquerdo, braco);
 
 #line 10 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void setup();
-#line 17 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
+#line 14 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void loop();
 #line 10 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void setup() {
   Serial.begin(115200);
-
-  //teste seguir parede
-  //robo.follow_wall_to_cup();
 }
 
 void loop() {
@@ -59,7 +56,11 @@ void loop() {
 
   robo.moveTank(LOOKING_SPEED, -LOOKING_SPEED); */ 
   
-  // teste pegar copo
+  // ### teste seguir parede ###
+ 
+  //robo.follow_wall_to_cup();
+
+  // ### teste pegar copo ###
   robo.getTerrine();
 
 }

@@ -26,3 +26,8 @@
 
 #define FDC_FRENTE 24 
 #define FDC_TRAS 25
+
+// ### Pinagem Elevador
+#define DC_ELEVADOR1 12
+#define DC_ELEVADOR0 13
+#define FDC_ELEVADOR 10

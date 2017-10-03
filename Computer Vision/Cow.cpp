@@ -7,8 +7,7 @@ int THRESH = 150;
 
 const string trackbarWindowName = "Trackbars";
 
-void on_trackbar( int, void* )
-{//This function gets called whenever a
+void on_trackbar( int, void* ){//This function gets called whenever a
 	// trackbar position is changed
 }
 
