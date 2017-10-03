@@ -1,5 +1,6 @@
 #include <Wire.h>
-
+#include "GIMu.h"
+#include "Pins.cpp"
 
 #define SLAVE_ADDRESS 0x04
 #define BYTES 10
@@ -7,6 +8,12 @@
 char in[BYTES*4];
 char out[BYTES] = {"Falei....;"};
 int qtdErro = 0;
+unsigned long tempo;
+bool flag = false;
+
+Motor esquerdo(DC11, DC12);
+Motor direito(DC21, DC22);
+GIMu robo (direito, esquerdo);
 
 void setup() {
   Wire.setTimeout(10);
@@ -18,7 +25,17 @@ void setup() {
 }
 
 void loop() {
-  delay(10);
+  if(flag){
+    tempo = millis();
+    while((millis() - tempo) <1000){  }
+    robo.moveFrente(0);
+    flag = false;
+  }
+  // robo.getSharps();
+  // Serial.print(robo.sharpsBase[3]);
+  // Serial.print(" ");
+  // Serial.println(robo.sharpsBase[5]);
+  
 }
 
 void receiveData(int byteCount) {
@@ -34,14 +51,51 @@ void receiveData(int byteCount) {
   }else{
     while (Wire.available()) {
       Wire.readBytesUntil(';', in, byteCount);
-
-      
-      
     }
-//    Serial.println(in);
-//    for(int i=0;i<BYTES*4;i++){
-//      in[i] = '\0';
-//    }
+    int teste;
+    switch(in[0]){
+      case 'F':
+        // Serial.println("F");  
+        robo.moveFrente(150);
+        flag = true;
+        for(int i=0;i<6;i++){
+          out[i] = 0;
+        }
+      break;
+      case 'T':
+        // Serial.println("T");
+        robo.moveTras(150);
+        flag = true;
+        for(int i=0;i<6;i++){
+          out[i] = 0;
+        }
+      break;
+      case 'D':
+        // Serial.println("D");
+        robo.moveTank(150,-150);
+        flag = true;
+        for(int i=0;i<6;i++){
+          out[i] = 0;
+        }
+      break;
+      case 'E':
+        // Serial.println("E");
+        robo.moveTank(-150,150);
+        flag = true;
+        for(int i=0;i<6;i++){
+          out[i] = 0;
+        }
+      break;
+      case 'I':
+        robo.getSharps();
+        for(int i=0;i<6;i++){
+          out[i] = robo.sharpsBase[i];
+        }
+      break;
+      default:
+        
+      break;
+    }
   }
 }
 
