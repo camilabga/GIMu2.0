@@ -2,10 +2,14 @@
 
 Motor esquerdo(DC11, DC12);
 Motor direito(DC21, DC22);
+
 Motor mbraco(MBRACO1, MBRACO2);
 BracoCopo braco(SERVOG_PULSO, SERVOG_DEDO, SH_GARRA, MSH_GARRA_D, MSH_GARRA_E, mbraco);
 
-GIMu robo (direito, esquerdo, braco);
+Motor mElevator(DC_ELEVADOR1, DC_ELEVADOR0);
+Elevador elevador(mElevator, 1);
+
+GIMu robo (direito, esquerdo, braco, elevador);
 
 void setup() {
   Serial.begin(115200);

@@ -284,7 +284,7 @@ void Cow::drawCenter(Mat &frame){
     circle(frame, center, 5, Scalar(0,255,0), 2, 8, 0 );
 }
 
-void Cow::conectI2C(bool ok, int velE, int velD){
+/*void Cow::conectI2C(bool ok, int velE, int velD){
     for(int i=0;i<BYTES*4;i++){
         buf[i] = '\0';
     }
@@ -306,22 +306,28 @@ void Cow::conectI2C(bool ok, int velE, int velD){
     }else{
         cout << "Erro !" << endl;
     }
-}
+}*/
 
 void Cow::sendSerial(float erro, unsigned i){
     int to_send = (int)(erro*100+100);
     char to_send_char [3];
     switch(i){
         case 1:
-        to_send_char = {'r', (char)to_send, ';'};
+        to_send_char[0] = 'r';
+        to_send_char[0] = (char)to_send;
+        to_send_char[0] = ';';
         break;
 
         case 2:
-        to_send_char = {'f', '0', ';'};
+        to_send_char[0] = 'f';
+        to_send_char[0] = '0';
+        to_send_char[0] = ';';
         break;
 
         case 3:
-        to_send_char = {'p', '0', ';'};
+        to_send_char[0] = 'p';
+        to_send_char[0] = '0';
+        to_send_char[0] = ';';
         break;
 
     }
@@ -342,7 +348,7 @@ void Cow::sendPID(){
         if (center.x != 0 && center.y != 0) {
             float erro = center.x - (WIDTH/2);
             erro = erro/(WIDTH/2);
-            int to_send, to_show;
+            int to_show;
         
             if (erro < 0.01) { // go left
                 to_show = (int)(-100*erro);
