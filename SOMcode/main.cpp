@@ -17,6 +17,7 @@ void seguirParedeSOM(std::string output);
 
 int main() {
   // collectDataforNetWork("Coleta/teste2.csv");
+  seguirParedeSOM("output20000.csv");
 
   return 0;
 }
