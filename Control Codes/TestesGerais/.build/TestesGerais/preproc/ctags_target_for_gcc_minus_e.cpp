@@ -4,10 +4,14 @@
 
 Motor esquerdo(9 /*Esquerdo*/, 6);
 Motor direito(5 /*Direito*/, 3);
+
 Motor mbraco(4, 5);
 BracoCopo braco(3, 2, 7, 8, 9, mbraco);
 
-GIMu robo (direito, esquerdo, braco);
+Motor mElevator(12, 13);
+Elevador elevador(mElevator, 1);
+
+GIMu robo (direito, esquerdo, braco, elevador);
 
 void setup() {
   Serial.begin(115200);

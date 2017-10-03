@@ -31,6 +31,7 @@ private:
 
     double angle(Point pt1, Point pt2, Point pt0);
     void sendSerial(float erro, unsigned i);
+    //void conectI2C(bool ok, int velE, int velD);
 
 public:
     Cow();

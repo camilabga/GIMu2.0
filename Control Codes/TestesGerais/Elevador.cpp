@@ -17,7 +17,7 @@ Elevador::Elevador(Motor m, int stage){
 }
 
 Elevador::Elevador(){
-    stage = 0;
+    stage = 1;
 }
 
 void Elevador::attachMotor(Motor m){

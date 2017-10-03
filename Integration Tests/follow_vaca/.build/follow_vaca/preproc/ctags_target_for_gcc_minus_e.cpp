@@ -32,11 +32,6 @@ void loop() {
 
   Serial.readBytesUntil(';', S, 7);
   if(S[0]=='r'){
-      if ((int)S[1] > 100) {
-
-      } else {
-
-      }
       int velDir = 100;
       int velEsq = (int)S[1];
       Serial.print(velEsq);
@@ -45,7 +40,7 @@ void loop() {
       robo.moveTank(velEsq, velDir);
 
   } else if (S[0]=='f') {
-    robo.moveTank(-200 /* velocidade para seguir em frente como se n houvesse amanha (ou parede)*/, 200 /* velocidade para seguir em frente como se n houvesse amanha (ou parede)*/);
+    robo.moveTank(-100, 100);
     Serial.println("girar");
 
   } else if (S[0]=='p') {

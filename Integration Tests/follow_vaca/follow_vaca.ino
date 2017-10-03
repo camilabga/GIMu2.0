@@ -38,15 +38,13 @@ void loop() {
       robo.moveTank(velEsq, velDir);
 
   } else if (S[0]=='f') {
-    robo.moveTank(-LOOKING_SPEED, LOOKING_SPEED);
+    robo.moveTank(-100, 100);
     Serial.println("girar");
 
   } else if (S[0]=='p') {
     robo.moveFrente(0);
     Serial.println("parado");
   }
-
-  
 }
 
 /*void receiveData(int byteCount) {
