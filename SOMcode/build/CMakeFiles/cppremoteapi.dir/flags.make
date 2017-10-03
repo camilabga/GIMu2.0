@@ -6,5 +6,5 @@ CXX_FLAGS =  -Wall -std=c++0x -DBUILD_SHARED_LIBS=OFF
 
 CXX_DEFINES = -DMAX_EXT_API_CONNECTIONS=255 -DNON_MATLAB_PARSING
 
-CXX_INCLUDES = -I/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM 
+CXX_INCLUDES = -I/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM -I/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/I2C -I/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/I2C/libi2c 
 

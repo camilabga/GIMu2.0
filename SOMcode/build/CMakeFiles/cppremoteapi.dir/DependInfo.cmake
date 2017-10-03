@@ -4,6 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/I2C/I2C.cpp" "/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/build/CMakeFiles/cppremoteapi.dir/I2C/I2C.cpp.o"
+  "/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/I2C/libi2c/pi2c.cpp" "/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/build/CMakeFiles/cppremoteapi.dir/I2C/libi2c/pi2c.cpp.o"
   "/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/DataSet.cpp" "/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/build/CMakeFiles/cppremoteapi.dir/SOM/DataSet.cpp.o"
   "/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/Node.cpp" "/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/build/CMakeFiles/cppremoteapi.dir/SOM/Node.cpp.o"
   "/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/SOM.cpp" "/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/build/CMakeFiles/cppremoteapi.dir/SOM/SOM.cpp.o"
@@ -21,6 +23,8 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "../SOM"
+  "../I2C"
+  "../I2C/libi2c"
   )
 
 # Targets to which this target links.

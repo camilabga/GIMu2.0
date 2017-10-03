@@ -169,6 +169,60 @@ cppremoteapi/fast:
 	$(MAKE) -f CMakeFiles/cppremoteapi.dir/build.make CMakeFiles/cppremoteapi.dir/build
 .PHONY : cppremoteapi/fast
 
+I2C/I2C.o: I2C/I2C.cpp.o
+
+.PHONY : I2C/I2C.o
+
+# target to build an object file
+I2C/I2C.cpp.o:
+	$(MAKE) -f CMakeFiles/cppremoteapi.dir/build.make CMakeFiles/cppremoteapi.dir/I2C/I2C.cpp.o
+.PHONY : I2C/I2C.cpp.o
+
+I2C/I2C.i: I2C/I2C.cpp.i
+
+.PHONY : I2C/I2C.i
+
+# target to preprocess a source file
+I2C/I2C.cpp.i:
+	$(MAKE) -f CMakeFiles/cppremoteapi.dir/build.make CMakeFiles/cppremoteapi.dir/I2C/I2C.cpp.i
+.PHONY : I2C/I2C.cpp.i
+
+I2C/I2C.s: I2C/I2C.cpp.s
+
+.PHONY : I2C/I2C.s
+
+# target to generate assembly for a file
+I2C/I2C.cpp.s:
+	$(MAKE) -f CMakeFiles/cppremoteapi.dir/build.make CMakeFiles/cppremoteapi.dir/I2C/I2C.cpp.s
+.PHONY : I2C/I2C.cpp.s
+
+I2C/libi2c/pi2c.o: I2C/libi2c/pi2c.cpp.o
+
+.PHONY : I2C/libi2c/pi2c.o
+
+# target to build an object file
+I2C/libi2c/pi2c.cpp.o:
+	$(MAKE) -f CMakeFiles/cppremoteapi.dir/build.make CMakeFiles/cppremoteapi.dir/I2C/libi2c/pi2c.cpp.o
+.PHONY : I2C/libi2c/pi2c.cpp.o
+
+I2C/libi2c/pi2c.i: I2C/libi2c/pi2c.cpp.i
+
+.PHONY : I2C/libi2c/pi2c.i
+
+# target to preprocess a source file
+I2C/libi2c/pi2c.cpp.i:
+	$(MAKE) -f CMakeFiles/cppremoteapi.dir/build.make CMakeFiles/cppremoteapi.dir/I2C/libi2c/pi2c.cpp.i
+.PHONY : I2C/libi2c/pi2c.cpp.i
+
+I2C/libi2c/pi2c.s: I2C/libi2c/pi2c.cpp.s
+
+.PHONY : I2C/libi2c/pi2c.s
+
+# target to generate assembly for a file
+I2C/libi2c/pi2c.cpp.s:
+	$(MAKE) -f CMakeFiles/cppremoteapi.dir/build.make CMakeFiles/cppremoteapi.dir/I2C/libi2c/pi2c.cpp.s
+.PHONY : I2C/libi2c/pi2c.cpp.s
+
 SOM/DataSet.o: SOM/DataSet.cpp.o
 
 .PHONY : SOM/DataSet.o
@@ -317,6 +371,12 @@ help:
 	@echo "... list_install_components"
 	@echo "... install/local"
 	@echo "... install"
+	@echo "... I2C/I2C.o"
+	@echo "... I2C/I2C.i"
+	@echo "... I2C/I2C.s"
+	@echo "... I2C/libi2c/pi2c.o"
+	@echo "... I2C/libi2c/pi2c.i"
+	@echo "... I2C/libi2c/pi2c.s"
 	@echo "... SOM/DataSet.o"
 	@echo "... SOM/DataSet.i"
 	@echo "... SOM/DataSet.s"

@@ -177,13 +177,63 @@ CMakeFiles/cppremoteapi.dir/SOM/Sample.cpp.o.provides: CMakeFiles/cppremoteapi.d
 CMakeFiles/cppremoteapi.dir/SOM/Sample.cpp.o.provides.build: CMakeFiles/cppremoteapi.dir/SOM/Sample.cpp.o
 
 
+CMakeFiles/cppremoteapi.dir/I2C/I2C.cpp.o: CMakeFiles/cppremoteapi.dir/flags.make
+CMakeFiles/cppremoteapi.dir/I2C/I2C.cpp.o: ../I2C/I2C.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/cppremoteapi.dir/I2C/I2C.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppremoteapi.dir/I2C/I2C.cpp.o -c /home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/I2C/I2C.cpp
+
+CMakeFiles/cppremoteapi.dir/I2C/I2C.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cppremoteapi.dir/I2C/I2C.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/I2C/I2C.cpp > CMakeFiles/cppremoteapi.dir/I2C/I2C.cpp.i
+
+CMakeFiles/cppremoteapi.dir/I2C/I2C.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppremoteapi.dir/I2C/I2C.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/I2C/I2C.cpp -o CMakeFiles/cppremoteapi.dir/I2C/I2C.cpp.s
+
+CMakeFiles/cppremoteapi.dir/I2C/I2C.cpp.o.requires:
+
+.PHONY : CMakeFiles/cppremoteapi.dir/I2C/I2C.cpp.o.requires
+
+CMakeFiles/cppremoteapi.dir/I2C/I2C.cpp.o.provides: CMakeFiles/cppremoteapi.dir/I2C/I2C.cpp.o.requires
+	$(MAKE) -f CMakeFiles/cppremoteapi.dir/build.make CMakeFiles/cppremoteapi.dir/I2C/I2C.cpp.o.provides.build
+.PHONY : CMakeFiles/cppremoteapi.dir/I2C/I2C.cpp.o.provides
+
+CMakeFiles/cppremoteapi.dir/I2C/I2C.cpp.o.provides.build: CMakeFiles/cppremoteapi.dir/I2C/I2C.cpp.o
+
+
+CMakeFiles/cppremoteapi.dir/I2C/libi2c/pi2c.cpp.o: CMakeFiles/cppremoteapi.dir/flags.make
+CMakeFiles/cppremoteapi.dir/I2C/libi2c/pi2c.cpp.o: ../I2C/libi2c/pi2c.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/cppremoteapi.dir/I2C/libi2c/pi2c.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppremoteapi.dir/I2C/libi2c/pi2c.cpp.o -c /home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/I2C/libi2c/pi2c.cpp
+
+CMakeFiles/cppremoteapi.dir/I2C/libi2c/pi2c.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cppremoteapi.dir/I2C/libi2c/pi2c.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/I2C/libi2c/pi2c.cpp > CMakeFiles/cppremoteapi.dir/I2C/libi2c/pi2c.cpp.i
+
+CMakeFiles/cppremoteapi.dir/I2C/libi2c/pi2c.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppremoteapi.dir/I2C/libi2c/pi2c.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/I2C/libi2c/pi2c.cpp -o CMakeFiles/cppremoteapi.dir/I2C/libi2c/pi2c.cpp.s
+
+CMakeFiles/cppremoteapi.dir/I2C/libi2c/pi2c.cpp.o.requires:
+
+.PHONY : CMakeFiles/cppremoteapi.dir/I2C/libi2c/pi2c.cpp.o.requires
+
+CMakeFiles/cppremoteapi.dir/I2C/libi2c/pi2c.cpp.o.provides: CMakeFiles/cppremoteapi.dir/I2C/libi2c/pi2c.cpp.o.requires
+	$(MAKE) -f CMakeFiles/cppremoteapi.dir/build.make CMakeFiles/cppremoteapi.dir/I2C/libi2c/pi2c.cpp.o.provides.build
+.PHONY : CMakeFiles/cppremoteapi.dir/I2C/libi2c/pi2c.cpp.o.provides
+
+CMakeFiles/cppremoteapi.dir/I2C/libi2c/pi2c.cpp.o.provides.build: CMakeFiles/cppremoteapi.dir/I2C/libi2c/pi2c.cpp.o
+
+
 # Object files for target cppremoteapi
 cppremoteapi_OBJECTS = \
 "CMakeFiles/cppremoteapi.dir/main.cpp.o" \
 "CMakeFiles/cppremoteapi.dir/SOM/DataSet.cpp.o" \
 "CMakeFiles/cppremoteapi.dir/SOM/SOM.cpp.o" \
 "CMakeFiles/cppremoteapi.dir/SOM/Node.cpp.o" \
-"CMakeFiles/cppremoteapi.dir/SOM/Sample.cpp.o"
+"CMakeFiles/cppremoteapi.dir/SOM/Sample.cpp.o" \
+"CMakeFiles/cppremoteapi.dir/I2C/I2C.cpp.o" \
+"CMakeFiles/cppremoteapi.dir/I2C/libi2c/pi2c.cpp.o"
 
 # External object files for target cppremoteapi
 cppremoteapi_EXTERNAL_OBJECTS =
@@ -193,9 +243,11 @@ cppremoteapi: CMakeFiles/cppremoteapi.dir/SOM/DataSet.cpp.o
 cppremoteapi: CMakeFiles/cppremoteapi.dir/SOM/SOM.cpp.o
 cppremoteapi: CMakeFiles/cppremoteapi.dir/SOM/Node.cpp.o
 cppremoteapi: CMakeFiles/cppremoteapi.dir/SOM/Sample.cpp.o
+cppremoteapi: CMakeFiles/cppremoteapi.dir/I2C/I2C.cpp.o
+cppremoteapi: CMakeFiles/cppremoteapi.dir/I2C/libi2c/pi2c.cpp.o
 cppremoteapi: CMakeFiles/cppremoteapi.dir/build.make
 cppremoteapi: CMakeFiles/cppremoteapi.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable cppremoteapi"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable cppremoteapi"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/cppremoteapi.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -208,6 +260,8 @@ CMakeFiles/cppremoteapi.dir/requires: CMakeFiles/cppremoteapi.dir/SOM/DataSet.cp
 CMakeFiles/cppremoteapi.dir/requires: CMakeFiles/cppremoteapi.dir/SOM/SOM.cpp.o.requires
 CMakeFiles/cppremoteapi.dir/requires: CMakeFiles/cppremoteapi.dir/SOM/Node.cpp.o.requires
 CMakeFiles/cppremoteapi.dir/requires: CMakeFiles/cppremoteapi.dir/SOM/Sample.cpp.o.requires
+CMakeFiles/cppremoteapi.dir/requires: CMakeFiles/cppremoteapi.dir/I2C/I2C.cpp.o.requires
+CMakeFiles/cppremoteapi.dir/requires: CMakeFiles/cppremoteapi.dir/I2C/libi2c/pi2c.cpp.o.requires
 
 .PHONY : CMakeFiles/cppremoteapi.dir/requires
 
