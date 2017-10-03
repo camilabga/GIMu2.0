@@ -11,9 +11,6 @@ GIMu robo (direito, esquerdo, braco);
 
 void setup() {
   Serial.begin(115200);
-
-  //teste seguir parede
-  //robo.follow_wall_to_cup();
 }
 
 void loop() {
@@ -53,7 +50,11 @@ void loop() {
 
   robo.moveTank(LOOKING_SPEED, -LOOKING_SPEED); */
 
-  // teste pegar copo
+  // ### teste seguir parede ###
+
+  //robo.follow_wall_to_cup();
+
+  // ### teste pegar copo ###
   robo.getTerrine();
 
 }
