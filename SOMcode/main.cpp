@@ -13,11 +13,12 @@ using namespace std;
 void traingSOM(int size, std::string filename);
 void logCsv(std::string data, std::string filename, std::string header);
 void collectDataforNetWork(std::string filename);
+void seguirParedeSOM(std::string output);
 
 
 
 int main() {
-  //collectDataforNetWork("teste.csv");
+  //collectDataforNetWork("Coleta/teste2.csv");
 
   
   
@@ -93,6 +94,7 @@ void collectDataforNetWork(std::string filename) {
 
       I2C arduino;
   //Pi2c arduino(4);
+	arduino.cmdS[9] = ';' ;
   
   while (1) {
     char input = getchar();

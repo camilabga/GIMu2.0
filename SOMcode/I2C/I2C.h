@@ -18,7 +18,7 @@ public:
     I2C();
 
     char buf[BYTES*4];
-    char cmdS[BYTES+1] = {"I........;"};
+    char cmdS[BYTES+1];
 
     void clearBuf();
     void getData();

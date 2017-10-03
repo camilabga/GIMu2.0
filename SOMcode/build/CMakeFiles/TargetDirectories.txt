@@ -1,7 +1,1 @@
-/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/build/CMakeFiles/install/strip.dir
-/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/build/CMakeFiles/edit_cache.dir
-/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/build/CMakeFiles/cppremoteapi.dir
-/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/build/CMakeFiles/rebuild_cache.dir
-/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/build/CMakeFiles/list_install_components.dir
-/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/build/CMakeFiles/install/local.dir
-/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/build/CMakeFiles/install.dir
+/home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/GImu.dir

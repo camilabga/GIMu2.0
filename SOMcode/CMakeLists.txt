@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.6)
-project(cppremoteapi)
+project(GImu)
 
 INCLUDE(FindPkgConfig)
 
@@ -41,12 +41,12 @@ include_directories("I2C/libi2c")
 find_package (Threads)
 
 
-add_executable(cppremoteapi
+add_executable(GImu
                main.cpp
                ${SOURCES}
 	       ${HEADERS})
 
-target_link_libraries (cppremoteapi ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries (GImu ${CMAKE_THREAD_LIBS_INIT})
 
 
-install(TARGETS cppremoteapi RUNTIME DESTINATION bin)
+install(TARGETS GImu RUNTIME DESTINATION bin)
