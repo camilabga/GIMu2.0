@@ -10,7 +10,7 @@ void I2C::clearBuf(){
 	}
 }
 
-void I2C::getSharp(){
+void I2C::getData(){
     Pi2c* ard = new Pi2c(4);
 	char cmdI[BYTES+1] = {"I........;"};
 	

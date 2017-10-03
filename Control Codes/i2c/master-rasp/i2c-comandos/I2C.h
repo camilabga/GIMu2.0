@@ -20,7 +20,7 @@ public:
     char cmdS[BYTES+1];
 
     void clearBuf();
-    void getSharp();
+    void getData();
     void enviarDados();
 
 };
