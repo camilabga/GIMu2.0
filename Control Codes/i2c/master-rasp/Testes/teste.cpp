@@ -129,12 +129,15 @@ string filename = "teste.csv";
 			cout << endl;
 
 			logCsv(data.c_str(),filename.c_str() ,csvHeader.c_str());
+			data.clear();
 		}else{		
 			cout << "Erro : " << endl;
 		}
 		for(int i=0;i<BYTES*4;i++){
 			buf[i] = '\0';
 		}
+
+		
 
 	}
     return 0;
