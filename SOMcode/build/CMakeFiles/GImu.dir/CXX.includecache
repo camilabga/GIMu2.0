@@ -1,4 +1,4 @@
-#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
 
 #IncludeRegexScan: ^.*$
 
@@ -62,13 +62,13 @@ string
 sstream
 -
 
-/home/pi/Documents/Teste2/GIMu2.0/SOMcode/I2C/I2C.cpp
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/I2C/I2C.cpp
 I2C.h
-/home/pi/Documents/Teste2/GIMu2.0/SOMcode/I2C/I2C.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/I2C/I2C.h
 
-/home/pi/Documents/Teste2/GIMu2.0/SOMcode/I2C/I2C.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/I2C/I2C.h
 libi2c/pi2c.h
-/home/pi/Documents/Teste2/GIMu2.0/SOMcode/I2C/libi2c/pi2c.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/I2C/libi2c/pi2c.h
 iostream
 -
 string
@@ -82,7 +82,7 @@ sys/stat.h
 unistd.h
 -
 
-/home/pi/Documents/Teste2/GIMu2.0/SOMcode/I2C/libi2c/pi2c.cpp
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/I2C/libi2c/pi2c.cpp
 pi2c.h
 -
 iostream
@@ -96,15 +96,15 @@ unistd.h
 sys/ioctl.h
 -
 
-/home/pi/Documents/Teste2/GIMu2.0/SOMcode/I2C/libi2c/pi2c.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/I2C/libi2c/pi2c.h
 
-/home/pi/Documents/Teste2/GIMu2.0/SOMcode/SOM/DataSet.cpp
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/DataSet.cpp
 DataSet.h
-/home/pi/Documents/Teste2/GIMu2.0/SOMcode/SOM/DataSet.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/DataSet.h
 
-/home/pi/Documents/Teste2/GIMu2.0/SOMcode/SOM/DataSet.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/DataSet.h
 Sample.h
-/home/pi/Documents/Teste2/GIMu2.0/SOMcode/SOM/Sample.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/Sample.h
 cstdlib
 -
 limits
@@ -116,25 +116,25 @@ fstream
 algorithm
 -
 
-/home/pi/Documents/Teste2/GIMu2.0/SOMcode/SOM/Node.cpp
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/Node.cpp
 Node.h
-/home/pi/Documents/Teste2/GIMu2.0/SOMcode/SOM/Node.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/Node.h
 sstream
 -
 
-/home/pi/Documents/Teste2/GIMu2.0/SOMcode/SOM/Node.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/Node.h
 iostream
 -
 Sample.h
-/home/pi/Documents/Teste2/GIMu2.0/SOMcode/SOM/Sample.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/Sample.h
 list
 -
 
-/home/pi/Documents/Teste2/GIMu2.0/SOMcode/SOM/SOM.cpp
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/SOM.cpp
 SOM.h
-/home/pi/Documents/Teste2/GIMu2.0/SOMcode/SOM/SOM.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/SOM.h
 Utils.h
-/home/pi/Documents/Teste2/GIMu2.0/SOMcode/SOM/Utils.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/Utils.h
 list
 -
 cmath
@@ -142,25 +142,25 @@ cmath
 exception
 -
 
-/home/pi/Documents/Teste2/GIMu2.0/SOMcode/SOM/SOM.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/SOM.h
 Node.h
-/home/pi/Documents/Teste2/GIMu2.0/SOMcode/SOM/Node.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/Node.h
 DataSet.h
-/home/pi/Documents/Teste2/GIMu2.0/SOMcode/SOM/DataSet.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/DataSet.h
 string
 -
 
-/home/pi/Documents/Teste2/GIMu2.0/SOMcode/SOM/Sample.cpp
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/Sample.cpp
 Sample.h
-/home/pi/Documents/Teste2/GIMu2.0/SOMcode/SOM/Sample.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/Sample.h
 cmath
 -
 exception
 -
 Utils.h
-/home/pi/Documents/Teste2/GIMu2.0/SOMcode/SOM/Utils.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/Utils.h
 
-/home/pi/Documents/Teste2/GIMu2.0/SOMcode/SOM/Sample.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/Sample.h
 vector
 -
 string
@@ -168,7 +168,7 @@ string
 sstream
 -
 
-/home/pi/Documents/Teste2/GIMu2.0/SOMcode/SOM/Utils.h
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/SOM/Utils.h
 sstream
 -
 iostream
@@ -186,7 +186,9 @@ vector
 values.h
 -
 
-/home/pi/Documents/Teste2/GIMu2.0/SOMcode/main.cpp
+/home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/main.cpp
+I2C.h
+-
 SOM.h
 -
 fstream
@@ -198,7 +200,5 @@ stdio.h
 string
 -
 sys/stat.h
--
-I2C.h
 -
 
