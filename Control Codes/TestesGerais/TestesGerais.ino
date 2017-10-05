@@ -12,7 +12,7 @@ Elevador elevador(mElevator, 3);
 GIMu robo (direito, esquerdo, braco, elevador);
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(300);
 }
 
 void loop() {
@@ -60,6 +60,11 @@ void loop() {
   //robo.getTerrine();
 
   // ### TESTE ELEVADOR ###
-  elevador.goToStage01();  
+  /*elevador.goToStage01(); 
+  elevador.goToStage03();*/
 
+  // ### TESTE GARRA ###
+  braco.tryGetTerrine();
+  braco.recolherBraco();
+  
 }
