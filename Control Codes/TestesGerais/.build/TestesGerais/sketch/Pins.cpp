@@ -14,9 +14,9 @@
 #define DC22 9
 
 // ### Pinagem Braco Garra
-#define SH_GARRA 7
-#define MSH_GARRA_D 8
-#define MSH_GARRA_E 9
+#define SH_GARRA 8
+#define MSH_GARRA_D 9
+#define MSH_GARRA_E 10
 
 #define SERVOG_DEDO 2
 #define SERVOG_PULSO 3
@@ -30,4 +30,4 @@
 // ### Pinagem Elevador
 #define DC_ELEVADOR1 12
 #define DC_ELEVADOR0 13
-#define FDC_ELEVADOR 10
+#define FDC_ELEVADOR 11

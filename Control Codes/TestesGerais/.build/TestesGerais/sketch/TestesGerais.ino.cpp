@@ -20,7 +20,7 @@ void setup();
 void loop();
 #line 14 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(300);
 }
 
 void loop() {
@@ -68,9 +68,12 @@ void loop() {
   //robo.getTerrine();
 
   // ### TESTE ELEVADOR ###
-  elevador.goToStage02();
+  /*elevador.goToStage01(); 
+  elevador.goToStage03();*/
 
+  // ### TESTE GARRA ###
+  braco.tryGetTerrine();
+  braco.recolherBraco();
   
-
 }
 

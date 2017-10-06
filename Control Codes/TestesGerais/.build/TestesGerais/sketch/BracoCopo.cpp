@@ -56,7 +56,8 @@ int BracoCopo::getSharp(){
 void BracoCopo::tryGetTerrine(){
   do {
     motorBraco.moveMotor(255, 1);
-  } while(isFDC(FDC_FRENTE) && analogRead(MSH_GARRA_D) > ANALOG_SENSOR_COPO);
+  } while(isFDC(FDC_FRENTE));
+  // && analogRead(MSH_GARRA_D) > ANALOG_SENSOR_COPO
   motorBraco.moveMotor(0,1);
   garra.write(POSICAO_GARRA_FECHADA);
 

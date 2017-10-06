@@ -30,12 +30,16 @@ class GIMu{
 
     void getTerrine();
 
+    void ordenhar();
+
   private:
     Motor Mright;
     Motor Mleft;
     int sharpsBase[6];
     BracoCopo bracoCopo;
     Elevador elevador;
+
+    inline int getMSharp(){return analogRead(MSH_ORDENHADOR);}
 };
 
 #endif

@@ -6,7 +6,7 @@ Motor esquerdo(11 /*Esquerdo*/, 10);
 Motor direito(8 /*Direito*/, 9);
 
 Motor mbraco(4, 5);
-BracoCopo braco(3, 2, 7, 8, 9, mbraco);
+BracoCopo braco(3, 2, 8, 9, 10, mbraco);
 
 Motor mElevator(12, 13);
 Elevador elevador(mElevator, 3);
@@ -14,7 +14,7 @@ Elevador elevador(mElevator, 3);
 GIMu robo (direito, esquerdo, braco, elevador);
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(300);
 }
 
 void loop() {
@@ -62,8 +62,11 @@ void loop() {
   //robo.getTerrine();
 
   // ### TESTE ELEVADOR ###
-  elevador.goToStage02();
+  /*elevador.goToStage01(); 
+  elevador.goToStage03();*/
 
-
+  // ### TESTE GARRA ###
+  braco.tryGetTerrine();
+  braco.recolherBraco();
 
 }

@@ -22,6 +22,10 @@
 
 // #### ELEVADOR ####
 #define POSICAO01 350
-#define POSICAO02 650
+#define POSICAO02 550
 #define POSICAO03 1000
-#define CONSIDER_NULL 30
+#define CONSIDER_NULL 100
+
+// #### ORDENHAR ####
+#define TEM_DEDO 200
+#define TEM_TETA 300

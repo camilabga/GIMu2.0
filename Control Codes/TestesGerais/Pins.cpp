@@ -31,3 +31,7 @@
 #define DC_ELEVADOR1 12
 #define DC_ELEVADOR0 13
 #define FDC_ELEVADOR 11
+
+// ### Ordenhador ###
+#define SH_ORDENHADOR 6
+#define MSH_ORDENHADOR 7

@@ -201,3 +201,30 @@ void GIMu::getTerrine(){
     bracoCopo.tryGetTerrine();
     bracoCopo.recolherBraco();
 }
+
+void GIMu::ordenhar(){
+    bool found_teta = false, found_dedo = false;
+    goToStage02();
+    while (!found_teta) {
+        moveFrente(LOOKING_SPEED);
+        if (getSharp(SH_ORDENHADOR) <= TEM_TETA && 
+            getSharp(SH_ORDENHADOR) != -1) {
+            found_teta = true;
+            moveFrente(0);
+        }
+    }
+
+    while (!found_dedo) {
+        if (stage == 3) {
+            elevador.downToStage02();
+        } else if () {
+            elevador.upToStage03();
+        }
+        elevador.upToStage03();
+        if (getMSharp() <= TEM_DEDO) {
+            found_dedo = true;
+            elevador.stop();
+        }
+    }
+
+}
