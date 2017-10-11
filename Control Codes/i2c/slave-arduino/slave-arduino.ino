@@ -50,9 +50,12 @@ void receiveData(int byteCount) {
     }
     int teste;
 
-    robo.moveTank(in[0], in[1]);
+    robo.moveTank(((int)in[1])*2, ((int)in[2])*2);
+    Serial.print((int)in[1]);
+    Serial.print(" ");
+    Serial.println((int)in[2]);
 
-    // switch(in[0]){
+     switch(in[0]){
     //   case 'F':
     //     // Serial.println("F");  
     //     robo.moveFrente(150);
@@ -85,16 +88,16 @@ void receiveData(int byteCount) {
     //       out[i] = 0;
     //     }
     //   break;
-    //   case 'I':
-    //     robo.getSharps();
-    //     for(int i=0;i<6;i++){
-    //       out[i] = robo.sharpsBase[i];
-    //     }
-    //   break;
-    //   default:
+       case 'I':
+         robo.getSharps();
+         for(int i=0;i<6;i++){
+           out[i] = robo.sharpsBase[i];
+         }
+       break;
+       default:
         
-    //   break;
-    // }
+       break;
+     }
   }
 }
 
