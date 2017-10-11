@@ -31,6 +31,40 @@ GIMu::GIMu(Motor d, Motor e, BracoCopo b){
     bracoCopo.getGarra().write(POSICAO_INICIAL_GARRA);
 }
 
+GIMu::GIMu(Motor d, Motor e, BracoCopo b, Elevador l){
+    Mright.setPinFrente(d.getPinFrente());
+    Mright.setPinTras(d.getPinTras());
+    Mleft.setPinFrente(e.getPinFrente());
+    Mleft.setPinTras(e.getPinTras());
+
+    moveFrente(0);
+
+    bracoCopo.setSharpGarra(b.getSharpGarra());
+    bracoCopo.set_mSharp_D(b.get_mSharp_D());
+    bracoCopo.set_mSharp_E(b.get_mSharp_E());
+    bracoCopo.attachMotor(b.getMotor());
+    bracoCopo.getPulso().attach(SERVOG_PULSO);
+    bracoCopo.getGarra().attach(SERVOG_DEDO);
+    bracoCopo.getPulso().write(POSICAO_INICIAL_PULSO);
+    bracoCopo.getGarra().write(POSICAO_INICIAL_GARRA);
+
+    elevador.attachMotor(l.getMotor());
+    elevador.setStage(l.getStage());
+}
+
+GIMu::GIMu(Elevador e){
+    elevador.attachMotor(e.getMotor());
+    elevador.setStage(e.getStage());
+
+    if (elevador.getStage() == 1) {
+        elevador.goToStage01();
+    } else if (elevador.getStage() == 2) {
+        elevador.goToStage02();
+    } else {
+        elevador.goToStage03();
+    }
+}
+
 void GIMu::moveFrente(int velocidade){
     Mright.moveMotor(velocidade, 1);
     Mleft.moveMotor(velocidade, 1);

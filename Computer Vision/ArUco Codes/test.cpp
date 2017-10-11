@@ -1,5 +1,5 @@
 #include <opencv2/highgui.hpp>
-#include <opencv2/aruco.hpp>
+#include "/home/barbosa/Libraries/aruco-2.0.19/src/aruco.h"
 #include <iostream>
 
 using namespace std;

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.6)
-project(cppremoteapi)
+project(GImu)
 
 INCLUDE(FindPkgConfig)
 
@@ -18,6 +18,9 @@ set(SOURCES
     SOM/SOM.cpp
     SOM/Node.cpp
     SOM/Sample.cpp
+    I2C/I2C.cpp
+    I2C/libi2c/pi2c.cpp
+   
    
 )
 
@@ -28,19 +31,22 @@ set(HEADERS
     SOM/Node.h
     SOM/Sample.h
     SOM/Utils.h
-    
+    I2C/I2C.h
+    I2C/libi2c/pi2c.h
 )
-include_directories("SOM/")
+include_directories("SOM")
+include_directories("I2C")
+include_directories("I2C/libi2c")
 
 find_package (Threads)
 
 
-add_executable(cppremoteapi
+add_executable(GImu
                main.cpp
                ${SOURCES}
 	       ${HEADERS})
 
-target_link_libraries (cppremoteapi ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries (GImu ${CMAKE_THREAD_LIBS_INIT})
 
 
-install(TARGETS cppremoteapi RUNTIME DESTINATION bin)
+install(TARGETS GImu RUNTIME DESTINATION bin)

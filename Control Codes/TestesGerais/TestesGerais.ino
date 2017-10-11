@@ -2,16 +2,17 @@
 
 Motor esquerdo(DC11, DC12);
 Motor direito(DC21, DC22);
+
 Motor mbraco(MBRACO1, MBRACO2);
 BracoCopo braco(SERVOG_PULSO, SERVOG_DEDO, SH_GARRA, MSH_GARRA_D, MSH_GARRA_E, mbraco);
 
-GIMu robo (direito, esquerdo, braco);
+Motor mElevator(DC_ELEVADOR1, DC_ELEVADOR0);
+Elevador elevador(mElevator, 3);
+
+GIMu robo (direito, esquerdo, braco, elevador);
 
 void setup() {
-  Serial.begin(115200);
-
-  //teste seguir parede
-  //robo.follow_wall_to_cup();
+  Serial.begin(9600);
 }
 
 void loop() {
@@ -21,7 +22,7 @@ void loop() {
    robo.moveTras(255);
    delay(2000);
    robo.moveTank(200, -200);
-   delay(2000);
+   delay(2000);*/
   /* ###*/
 
   // ### Teste dos sensores Sharps:
@@ -51,7 +52,20 @@ void loop() {
 
   robo.moveTank(LOOKING_SPEED, -LOOKING_SPEED); */ 
   
-  // teste pegar copo
-  robo.getTerrine();
+  // ### teste seguir parede ###
+ 
+  //robo.follow_wall_to_cup();
 
+  // ### teste pegar copo ###
+  //robo.getTerrine();
+
+  // ### TESTE ELEVADOR ###
+  elevador.goToStage03();
+  elevador.goToStage01();
+  elevador.goToStage02();
+
+  // ### TESTE GARRA ###
+  /*braco.tryGetTerrine();
+  braco.recolherBraco();*/
+  
 }

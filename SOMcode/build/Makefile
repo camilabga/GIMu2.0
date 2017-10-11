@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/samuel/Documentos/Repositories/SOMcode
+CMAKE_SOURCE_DIR = /home/samuel/Documentos/Repositories/GIMu2.0/SOMcode
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/samuel/Documentos/Repositories/SOMcode/build
+CMAKE_BINARY_DIR = /home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -126,9 +126,9 @@ install/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/samuel/Documentos/Repositories/SOMcode/build/CMakeFiles /home/samuel/Documentos/Repositories/SOMcode/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/build/CMakeFiles /home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/samuel/Documentos/Repositories/SOMcode/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/samuel/Documentos/Repositories/GIMu2.0/SOMcode/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -157,17 +157,71 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named cppremoteapi
+# Target rules for targets named GImu
 
 # Build rule for target.
-cppremoteapi: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 cppremoteapi
-.PHONY : cppremoteapi
+GImu: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 GImu
+.PHONY : GImu
 
 # fast build rule for target.
-cppremoteapi/fast:
-	$(MAKE) -f CMakeFiles/cppremoteapi.dir/build.make CMakeFiles/cppremoteapi.dir/build
-.PHONY : cppremoteapi/fast
+GImu/fast:
+	$(MAKE) -f CMakeFiles/GImu.dir/build.make CMakeFiles/GImu.dir/build
+.PHONY : GImu/fast
+
+I2C/I2C.o: I2C/I2C.cpp.o
+
+.PHONY : I2C/I2C.o
+
+# target to build an object file
+I2C/I2C.cpp.o:
+	$(MAKE) -f CMakeFiles/GImu.dir/build.make CMakeFiles/GImu.dir/I2C/I2C.cpp.o
+.PHONY : I2C/I2C.cpp.o
+
+I2C/I2C.i: I2C/I2C.cpp.i
+
+.PHONY : I2C/I2C.i
+
+# target to preprocess a source file
+I2C/I2C.cpp.i:
+	$(MAKE) -f CMakeFiles/GImu.dir/build.make CMakeFiles/GImu.dir/I2C/I2C.cpp.i
+.PHONY : I2C/I2C.cpp.i
+
+I2C/I2C.s: I2C/I2C.cpp.s
+
+.PHONY : I2C/I2C.s
+
+# target to generate assembly for a file
+I2C/I2C.cpp.s:
+	$(MAKE) -f CMakeFiles/GImu.dir/build.make CMakeFiles/GImu.dir/I2C/I2C.cpp.s
+.PHONY : I2C/I2C.cpp.s
+
+I2C/libi2c/pi2c.o: I2C/libi2c/pi2c.cpp.o
+
+.PHONY : I2C/libi2c/pi2c.o
+
+# target to build an object file
+I2C/libi2c/pi2c.cpp.o:
+	$(MAKE) -f CMakeFiles/GImu.dir/build.make CMakeFiles/GImu.dir/I2C/libi2c/pi2c.cpp.o
+.PHONY : I2C/libi2c/pi2c.cpp.o
+
+I2C/libi2c/pi2c.i: I2C/libi2c/pi2c.cpp.i
+
+.PHONY : I2C/libi2c/pi2c.i
+
+# target to preprocess a source file
+I2C/libi2c/pi2c.cpp.i:
+	$(MAKE) -f CMakeFiles/GImu.dir/build.make CMakeFiles/GImu.dir/I2C/libi2c/pi2c.cpp.i
+.PHONY : I2C/libi2c/pi2c.cpp.i
+
+I2C/libi2c/pi2c.s: I2C/libi2c/pi2c.cpp.s
+
+.PHONY : I2C/libi2c/pi2c.s
+
+# target to generate assembly for a file
+I2C/libi2c/pi2c.cpp.s:
+	$(MAKE) -f CMakeFiles/GImu.dir/build.make CMakeFiles/GImu.dir/I2C/libi2c/pi2c.cpp.s
+.PHONY : I2C/libi2c/pi2c.cpp.s
 
 SOM/DataSet.o: SOM/DataSet.cpp.o
 
@@ -175,7 +229,7 @@ SOM/DataSet.o: SOM/DataSet.cpp.o
 
 # target to build an object file
 SOM/DataSet.cpp.o:
-	$(MAKE) -f CMakeFiles/cppremoteapi.dir/build.make CMakeFiles/cppremoteapi.dir/SOM/DataSet.cpp.o
+	$(MAKE) -f CMakeFiles/GImu.dir/build.make CMakeFiles/GImu.dir/SOM/DataSet.cpp.o
 .PHONY : SOM/DataSet.cpp.o
 
 SOM/DataSet.i: SOM/DataSet.cpp.i
@@ -184,7 +238,7 @@ SOM/DataSet.i: SOM/DataSet.cpp.i
 
 # target to preprocess a source file
 SOM/DataSet.cpp.i:
-	$(MAKE) -f CMakeFiles/cppremoteapi.dir/build.make CMakeFiles/cppremoteapi.dir/SOM/DataSet.cpp.i
+	$(MAKE) -f CMakeFiles/GImu.dir/build.make CMakeFiles/GImu.dir/SOM/DataSet.cpp.i
 .PHONY : SOM/DataSet.cpp.i
 
 SOM/DataSet.s: SOM/DataSet.cpp.s
@@ -193,7 +247,7 @@ SOM/DataSet.s: SOM/DataSet.cpp.s
 
 # target to generate assembly for a file
 SOM/DataSet.cpp.s:
-	$(MAKE) -f CMakeFiles/cppremoteapi.dir/build.make CMakeFiles/cppremoteapi.dir/SOM/DataSet.cpp.s
+	$(MAKE) -f CMakeFiles/GImu.dir/build.make CMakeFiles/GImu.dir/SOM/DataSet.cpp.s
 .PHONY : SOM/DataSet.cpp.s
 
 SOM/Node.o: SOM/Node.cpp.o
@@ -202,7 +256,7 @@ SOM/Node.o: SOM/Node.cpp.o
 
 # target to build an object file
 SOM/Node.cpp.o:
-	$(MAKE) -f CMakeFiles/cppremoteapi.dir/build.make CMakeFiles/cppremoteapi.dir/SOM/Node.cpp.o
+	$(MAKE) -f CMakeFiles/GImu.dir/build.make CMakeFiles/GImu.dir/SOM/Node.cpp.o
 .PHONY : SOM/Node.cpp.o
 
 SOM/Node.i: SOM/Node.cpp.i
@@ -211,7 +265,7 @@ SOM/Node.i: SOM/Node.cpp.i
 
 # target to preprocess a source file
 SOM/Node.cpp.i:
-	$(MAKE) -f CMakeFiles/cppremoteapi.dir/build.make CMakeFiles/cppremoteapi.dir/SOM/Node.cpp.i
+	$(MAKE) -f CMakeFiles/GImu.dir/build.make CMakeFiles/GImu.dir/SOM/Node.cpp.i
 .PHONY : SOM/Node.cpp.i
 
 SOM/Node.s: SOM/Node.cpp.s
@@ -220,7 +274,7 @@ SOM/Node.s: SOM/Node.cpp.s
 
 # target to generate assembly for a file
 SOM/Node.cpp.s:
-	$(MAKE) -f CMakeFiles/cppremoteapi.dir/build.make CMakeFiles/cppremoteapi.dir/SOM/Node.cpp.s
+	$(MAKE) -f CMakeFiles/GImu.dir/build.make CMakeFiles/GImu.dir/SOM/Node.cpp.s
 .PHONY : SOM/Node.cpp.s
 
 SOM/SOM.o: SOM/SOM.cpp.o
@@ -229,7 +283,7 @@ SOM/SOM.o: SOM/SOM.cpp.o
 
 # target to build an object file
 SOM/SOM.cpp.o:
-	$(MAKE) -f CMakeFiles/cppremoteapi.dir/build.make CMakeFiles/cppremoteapi.dir/SOM/SOM.cpp.o
+	$(MAKE) -f CMakeFiles/GImu.dir/build.make CMakeFiles/GImu.dir/SOM/SOM.cpp.o
 .PHONY : SOM/SOM.cpp.o
 
 SOM/SOM.i: SOM/SOM.cpp.i
@@ -238,7 +292,7 @@ SOM/SOM.i: SOM/SOM.cpp.i
 
 # target to preprocess a source file
 SOM/SOM.cpp.i:
-	$(MAKE) -f CMakeFiles/cppremoteapi.dir/build.make CMakeFiles/cppremoteapi.dir/SOM/SOM.cpp.i
+	$(MAKE) -f CMakeFiles/GImu.dir/build.make CMakeFiles/GImu.dir/SOM/SOM.cpp.i
 .PHONY : SOM/SOM.cpp.i
 
 SOM/SOM.s: SOM/SOM.cpp.s
@@ -247,7 +301,7 @@ SOM/SOM.s: SOM/SOM.cpp.s
 
 # target to generate assembly for a file
 SOM/SOM.cpp.s:
-	$(MAKE) -f CMakeFiles/cppremoteapi.dir/build.make CMakeFiles/cppremoteapi.dir/SOM/SOM.cpp.s
+	$(MAKE) -f CMakeFiles/GImu.dir/build.make CMakeFiles/GImu.dir/SOM/SOM.cpp.s
 .PHONY : SOM/SOM.cpp.s
 
 SOM/Sample.o: SOM/Sample.cpp.o
@@ -256,7 +310,7 @@ SOM/Sample.o: SOM/Sample.cpp.o
 
 # target to build an object file
 SOM/Sample.cpp.o:
-	$(MAKE) -f CMakeFiles/cppremoteapi.dir/build.make CMakeFiles/cppremoteapi.dir/SOM/Sample.cpp.o
+	$(MAKE) -f CMakeFiles/GImu.dir/build.make CMakeFiles/GImu.dir/SOM/Sample.cpp.o
 .PHONY : SOM/Sample.cpp.o
 
 SOM/Sample.i: SOM/Sample.cpp.i
@@ -265,7 +319,7 @@ SOM/Sample.i: SOM/Sample.cpp.i
 
 # target to preprocess a source file
 SOM/Sample.cpp.i:
-	$(MAKE) -f CMakeFiles/cppremoteapi.dir/build.make CMakeFiles/cppremoteapi.dir/SOM/Sample.cpp.i
+	$(MAKE) -f CMakeFiles/GImu.dir/build.make CMakeFiles/GImu.dir/SOM/Sample.cpp.i
 .PHONY : SOM/Sample.cpp.i
 
 SOM/Sample.s: SOM/Sample.cpp.s
@@ -274,7 +328,7 @@ SOM/Sample.s: SOM/Sample.cpp.s
 
 # target to generate assembly for a file
 SOM/Sample.cpp.s:
-	$(MAKE) -f CMakeFiles/cppremoteapi.dir/build.make CMakeFiles/cppremoteapi.dir/SOM/Sample.cpp.s
+	$(MAKE) -f CMakeFiles/GImu.dir/build.make CMakeFiles/GImu.dir/SOM/Sample.cpp.s
 .PHONY : SOM/Sample.cpp.s
 
 main.o: main.cpp.o
@@ -283,7 +337,7 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) -f CMakeFiles/cppremoteapi.dir/build.make CMakeFiles/cppremoteapi.dir/main.cpp.o
+	$(MAKE) -f CMakeFiles/GImu.dir/build.make CMakeFiles/GImu.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -292,7 +346,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) -f CMakeFiles/cppremoteapi.dir/build.make CMakeFiles/cppremoteapi.dir/main.cpp.i
+	$(MAKE) -f CMakeFiles/GImu.dir/build.make CMakeFiles/GImu.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -301,7 +355,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) -f CMakeFiles/cppremoteapi.dir/build.make CMakeFiles/cppremoteapi.dir/main.cpp.s
+	$(MAKE) -f CMakeFiles/GImu.dir/build.make CMakeFiles/GImu.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 # Help Target
@@ -312,11 +366,17 @@ help:
 	@echo "... depend"
 	@echo "... install/strip"
 	@echo "... edit_cache"
-	@echo "... cppremoteapi"
+	@echo "... GImu"
 	@echo "... rebuild_cache"
 	@echo "... list_install_components"
 	@echo "... install/local"
 	@echo "... install"
+	@echo "... I2C/I2C.o"
+	@echo "... I2C/I2C.i"
+	@echo "... I2C/I2C.s"
+	@echo "... I2C/libi2c/pi2c.o"
+	@echo "... I2C/libi2c/pi2c.i"
+	@echo "... I2C/libi2c/pi2c.s"
 	@echo "... SOM/DataSet.o"
 	@echo "... SOM/DataSet.i"
 	@echo "... SOM/DataSet.s"

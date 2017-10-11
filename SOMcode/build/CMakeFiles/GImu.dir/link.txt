@@ -1,0 +1,1 @@
+/usr/bin/c++   -Wall -std=c++0x -DBUILD_SHARED_LIBS=OFF  -rdynamic CMakeFiles/GImu.dir/main.cpp.o CMakeFiles/GImu.dir/SOM/DataSet.cpp.o CMakeFiles/GImu.dir/SOM/SOM.cpp.o CMakeFiles/GImu.dir/SOM/Node.cpp.o CMakeFiles/GImu.dir/SOM/Sample.cpp.o CMakeFiles/GImu.dir/I2C/I2C.cpp.o CMakeFiles/GImu.dir/I2C/libi2c/pi2c.cpp.o  -o GImu -lpthread 

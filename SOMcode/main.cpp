@@ -1,15 +1,46 @@
-#include "libi2c/pi2c.cpp"
+//#include "libi2c/pi2c.cpp"
+#include <I2C.h>
+#include <SOM.h>
 #include <fstream>
 #include <iostream>
 #include <stdio.h>
 #include <string>
 #include <sys/stat.h>
-#include <SOM.h>
-#include <sys/stat.h>
-
 using namespace std;
 
 #define BYTES 10
+
+void traingSOM(int size, std::string filename);
+void logCsv(std::string data, std::string filename, std::string header);
+void collectDataforNetWork(std::string filename);
+void seguirParedeSOM(std::string output);
+
+int main() {
+  // collectDataforNetWork("Coleta/teste2.csv");
+  seguirParedeSOM("output20000.csv");
+
+  return 0;
+}
+
+void logCsv(std::string data, std::string filename, std::string header) {
+  ofstream myfile;
+
+  while (true) {
+    myfile.open(filename.c_str(), ios::in);
+    if (myfile.is_open() && myfile.good()) {
+      myfile.close();
+      myfile.open(filename.c_str(), ios::app);
+      myfile << data << endl;
+      return;
+    } else {
+      myfile.open(filename.c_str(), ios::app);
+      if (myfile.is_open() && myfile.good()) {
+        myfile << header << endl;
+        myfile.close();
+      }
+    }
+  }
+}
 void traingSOM(int size, std::string filename) {
 
   // setando posiçoes de leitura e escrita
@@ -52,128 +83,101 @@ void traingSOM(int size, std::string filename) {
   delete data;
 }
 
-void logCsv(std::string data, std::string filename, std::string header) {
-  ofstream myfile;
-
-  while (true) {
-    myfile.open(filename.c_str(), ios::in);
-    if (myfile.is_open() && myfile.good()) {
-      myfile.close();
-      myfile.open(filename.c_str(), ios::app);
-      myfile << data << endl;
-      return;
-    } else {
-      myfile.open(filename.c_str(), ios::app);
-      if (myfile.is_open() && myfile.good()) {
-        myfile << header << endl;
-        myfile.close();
-      }
-    }
-  }
-}
-
-int main() {
+void collectDataforNetWork(std::string filename) {
   string data = "";
   string csvHeader =
       "motor1,motor2,sensor1,sensor2,sensor3,sensor4,sensor5,sensor6";
-  string filename = "teste.csv";
-  Pi2c arduino(4);
-  int qtdErro = 0;
 
-  char buf[BYTES * 4];
-  for (int i = 0; i < BYTES * 4; i++) {
-    buf[i] = '\0';
-  }
-
-  char cmdF[BYTES + 1] = {"F........;"};
-  char cmdT[BYTES + 1] = {"T........;"};
-  char cmdD[BYTES + 1] = {"D........;"};
-  char cmdE[BYTES + 1] = {"E........;"};
-  char cmdI[BYTES + 1] = {"I........;"};
-  char cmdS[BYTES + 1];
+  I2C arduino;
+  // Pi2c arduino(4);
+  arduino.cmdS[9] = ';';
 
   while (1) {
     char input = getchar();
     switch (input) {
     case 'w':
-      for (int i = 0; i < BYTES + 1; i++) {
-        cmdS[i] = cmdF[i];
-      }
+      arduino.cmdS[0] = 'F';
       data += "150,150";
       break;
     case 's':
-      for (int i = 0; i < BYTES + 1; i++) {
-        cmdS[i] = cmdT[i];
-      }
+      arduino.cmdS[0] = 'T';
       data += "-150,-150";
       break;
     case 'd':
-      for (int i = 0; i < BYTES + 1; i++) {
-        cmdS[i] = cmdD[i];
-      }
+      arduino.cmdS[0] = 'D';
       data += "150,-150";
       break;
     case 'a':
-      for (int i = 0; i < BYTES + 1; i++) {
-        cmdS[i] = cmdE[i];
-      }
+      arduino.cmdS[0] = 'E';
       data += "-150,150";
       break;
     case 'i':
-      for (int i = 0; i < BYTES + 1; i++) {
-        cmdS[i] = cmdI[i];
-      }
+      arduino.cmdS[0] = 'I';
       break;
     default:
-      return 0;
+      return;
       break;
     }
     cin.ignore();
 
     // Comando para Andar:
-    arduino.i2cWrite(cmdS, BYTES);
-    usleep(10000);
-
-    if (arduino.i2cRead(buf, BYTES) == BYTES) {
-      buf[(BYTES * 4) - 1] = '\0';
-    } else {
-      cout << "Erro : " << endl;
-    }
-    for (int i = 0; i < BYTES * 4; i++) {
-      buf[i] = '\0';
-    }
+    arduino.sendData();
+    usleep(1100000);
 
     // Receber Dados:
-    usleep(1100000);
-    for (int i = 0; i < BYTES + 1; i++) {
-      cmdS[i] = cmdI[i];
-    }
-    arduino.i2cWrite(cmdS, BYTES);
-    usleep(10000);
-
+    arduino.getData();
     int aux;
-    if (arduino.i2cRead(buf, BYTES) == BYTES) {
-      buf[(BYTES * 4) - 1] = '\0';
-      for (int i = 0; i < 6; i++) {
-        cout << " " << i << ": " << (int)buf[i];
-        aux = (int)buf[i];
-        data += "," + to_string(aux);
-      }
-      /*
-      0 e 1 -> Frente
-      2 e 3 -> Esquerda
-      4 e 5 -> Direita
-      */
-      cout << endl;
 
-      logCsv(data.c_str(), filename.c_str(), csvHeader.c_str());
-      data.clear();
-    } else {
-      cout << "Erro : " << endl;
+    for (int i = 0; i < 6; i++) {
+      cout << " " << i << ": " << (int)arduino.buf[i];
+      aux = (int)arduino.buf[i];
+      data += "," + to_string(aux);
     }
-    for (int i = 0; i < BYTES * 4; i++) {
-      buf[i] = '\0';
-    }
+    /*
+    0 e 1 -> Frente
+    2 e 3 -> Esquerda
+    4 e 5 -> Direita
+    */
+    cout << endl;
+
+    logCsv(data.c_str(), filename.c_str(), csvHeader.c_str());
+    data.clear();
   }
-  return 0;
+}
+void seguirParedeSOM(std::string output) {
+
+  SOM som(30);
+  som.loadNodes(output.c_str());
+  I2C arduino;
+
+  std::vector<double> input{0, 0, 0, 0, 0, 0, 0, 0};
+
+  while (true) {
+    arduino.getData();
+    int aux;
+    int val;
+    for (int i = 0; i < 6; i++) {
+
+      aux = (int)arduino.buf[i];
+      input[i] = aux;
+    }
+    som.findBest(input, 0, 5);
+
+    aux = (int)input[0];
+    val = (int)input[1];
+
+    val /= 2;
+    aux /= 2;
+
+    arduino.cmdS[0] = (char)val;
+    arduino.cmdS[1] = (char)val;
+
+    arduino.sendData();
+    /*
+    0 e 1 -> Frente
+    2 e 3 -> Esquerda
+    4 e 5 -> Direita
+    */
+  }
+
 }

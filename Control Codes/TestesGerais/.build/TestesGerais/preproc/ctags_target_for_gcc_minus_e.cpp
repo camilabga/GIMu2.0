@@ -2,18 +2,19 @@
 # 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 # 2 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino" 2
 
-Motor esquerdo(9 /*Esquerdo*/, 6);
-Motor direito(5 /*Direito*/, 3);
-Motor mbraco(4, 5);
-BracoCopo braco(3, 2, 7, 8, 9, mbraco);
+Motor esquerdo(11 /*Esquerdo*/, 10);
+Motor direito(8 /*Direito*/, 9);
 
-GIMu robo (direito, esquerdo, braco);
+Motor mbraco(4, 5);
+BracoCopo braco(3, 2, 8, 9, 10, mbraco);
+
+Motor mElevator(12, 13);
+Elevador elevador(mElevator, 3);
+
+GIMu robo (direito, esquerdo, braco, elevador);
 
 void setup() {
-  Serial.begin(115200);
-
-  //teste seguir parede
-  //robo.follow_wall_to_cup();
+  Serial.begin(300);
 }
 
 void loop() {
@@ -23,7 +24,7 @@ void loop() {
    robo.moveTras(255);
    delay(2000);
    robo.moveTank(200, -200);
-   delay(2000);
+   delay(2000);*/
   /* ###*/
 
   // ### Teste dos sensores Sharps:
@@ -53,7 +54,19 @@ void loop() {
 
   robo.moveTank(LOOKING_SPEED, -LOOKING_SPEED); */
 
-  // teste pegar copo
-  robo.getTerrine();
+  // ### teste seguir parede ###
+
+  //robo.follow_wall_to_cup();
+
+  // ### teste pegar copo ###
+  //robo.getTerrine();
+
+  // ### TESTE ELEVADOR ###
+  /*elevador.goToStage01(); 
+  elevador.goToStage03();*/
+
+  // ### TESTE GARRA ###
+  braco.tryGetTerrine();
+  braco.recolherBraco();
 
 }
