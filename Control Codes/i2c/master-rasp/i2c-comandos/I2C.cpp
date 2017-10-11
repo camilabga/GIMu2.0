@@ -15,6 +15,7 @@ void I2C::getData(){
 	char cmdI[BYTES+1] = {"I........;"};
 	
     //Receber Dados:
+	clearBuf();
 	ard->i2cWrite(cmdI, BYTES);
 	usleep(10000);
 
@@ -28,7 +29,7 @@ void I2C::getData(){
 	}else{		
 		cout << "Erro : " << endl;
 	}
-	clearBuf();
+	
     ard->~Pi2c();
 }
 

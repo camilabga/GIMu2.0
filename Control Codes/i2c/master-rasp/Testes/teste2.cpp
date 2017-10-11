@@ -17,7 +17,7 @@ int main(){
     
 	char buf[BYTES*4];
 	clearBuf(buf);
-    	char cmd[BYTES+1] = {"012345678;"};
+    	char cmd[BYTES+1] = {"I12345678;"};
      	
 	//
 	while(1){		
@@ -28,7 +28,7 @@ int main(){
 		//Receber respostas:
 		if(arduino.i2cRead(buf,BYTES) == BYTES){
 			buf[(BYTES*4)-1] = '\0';
-			cout << "Retorno: " << buf << endl;
+			cout << "Retorno: " << (int)buf[2] << endl;
 		}else{		
 			cout << "Erro!" << endl;
 		}

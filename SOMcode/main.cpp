@@ -16,7 +16,7 @@ void collectDataforNetWork(std::string filename);
 void seguirParedeSOM(std::string output);
 
 int main() {
-  // collectDataforNetWork("Coleta/teste2.csv");
+  //collectDataforNetWork("Coleta/teste3.csv");
   seguirParedeSOM("output20000.csv");
 
   return 0;
@@ -156,19 +156,26 @@ void seguirParedeSOM(std::string output) {
     arduino.getData();
     int aux;
     int val;
+    std::cout << "Sensor: ";
     for (int i = 0; i < 6; i++) {
 
       aux = (int)arduino.buf[i];
+      std::cout << aux << " ";
       input[i] = aux;
     }
+    std::cout << std::endl;
     som.findBest(input, 0, 5);
+
 
     aux = (int)input[0];
     val = (int)input[1];
 
+
+    
+
     val /= 2;
     aux /= 2;
-
+    std::cout << "Saida: " << val << " " << aux << std::endl;
     arduino.cmdS[0] = (char)val;
     arduino.cmdS[1] = (char)val;
 

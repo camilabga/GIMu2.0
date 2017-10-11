@@ -4,7 +4,7 @@ int main(){
     I2C arduino;
 	while(1){
 		arduino.getData();
-		cout << arduino.buf[0] << endl;
+		cout << (int)arduino.buf[0] << " " << (int)arduino.buf[1] << " " << (int)arduino.buf[2] << endl;
 
 		int val = 110;
 		arduino.cmdS[0] = (char) val;
