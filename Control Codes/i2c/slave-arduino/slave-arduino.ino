@@ -21,7 +21,6 @@ void setup() {
 
   Wire.onReceive(receiveData);
   Wire.onRequest(sendData);
-  Serial.begin(9600);
 }
 
 void loop() {
@@ -41,59 +40,57 @@ void receiveData(int byteCount) {
       Wire.read();
     }
     qtdErro++;
-    Serial.print("Erro : ");
-    Serial.print(qtdErro);
-    Serial.print(" - Qtd Bytes: ");
-    Serial.println(byteCount);
+    // Serial.print("Erro : ");
+    // Serial.print(qtdErro);
+    // Serial.print(" - Qtd Bytes: ");
+    // Serial.println(byteCount);
   }else{
     while (Wire.available()) {
       Wire.readBytesUntil(';', in, byteCount);
     }
-    int teste;
+    // int teste;
 
     robo.moveTank(((int)in[1])*2, ((int)in[2])*2);
-    Serial.print((int)in[1]);
-    Serial.print(" ");
-    Serial.println((int)in[2]);
 
      switch(in[0]){
-    //   case 'F':
-    //     // Serial.println("F");  
-    //     robo.moveFrente(150);
-    //     flag = true;
-    //     for(int i=0;i<6;i++){
-    //       out[i] = 0;
-    //     }
-    //   break;
-    //   case 'T':
-    //     // Serial.println("T");
-    //     robo.moveTras(150);
-    //     flag = true;
-    //     for(int i=0;i<6;i++){
-    //       out[i] = 0;
-    //     }
-    //   break;
-    //   case 'D':
-    //     // Serial.println("D");
-    //     robo.moveTank(150,-150);
-    //     flag = true;
-    //     for(int i=0;i<6;i++){
-    //       out[i] = 0;
-    //     }
-    //   break;
-    //   case 'E':
-    //     // Serial.println("E");
-    //     robo.moveTank(-150,150);
-    //     flag = true;
-    //     for(int i=0;i<6;i++){
-    //       out[i] = 0;
-    //     }
-    //   break;
+      // case 'F':
+      //   // Serial.println("F");  
+      //   robo.moveFrente(150);
+      //   flag = true;
+      //   for(int i=0;i<6;i++){
+      //     out[i] = 0;
+      //   }
+      // break;
+      // case 'T':
+      //   // Serial.println("T");
+      //   robo.moveTras(150);
+      //   flag = true;
+      //   for(int i=0;i<6;i++){
+      //     out[i] = 0;
+      //   }
+      // break;
+      // case 'D':
+      //   // Serial.println("D");
+      //   robo.moveTank(150,-150);
+      //   flag = true;
+      //   for(int i=0;i<6;i++){
+      //     out[i] = 0;
+      //   }
+      // break;
+      // case 'E':
+      //   // Serial.println("E");
+      //   robo.moveTank(-150,150);
+      //   flag = true;
+      //   for(int i=0;i<6;i++){
+      //     out[i] = 0;
+      //   }
+      // break;
        case 'I':
          robo.getSharps();
          for(int i=0;i<6;i++){
            out[i] = robo.sharpsBase[i];
          }
+         robo.moveTank(0,0);
        break;
        default:
         
