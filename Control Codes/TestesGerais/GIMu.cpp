@@ -107,22 +107,12 @@ int GIMu::getSharp(int porta){
 
     desvio = soma/n;
  
-    if (porta == SH_FRENTE_DIREITA || porta == SH_FRENTE_ESQUERDA) {
-        if (desvio > VALID_SHARP_FRENTE || media > 80) {
-            return -1; // é ruido
-        } else {
-            return media; // n é ruido
-        }
+    if (desvio > VALID_SHARP || media > 80) {
+        return -1; // é ruido
     } else {
-        if (desvio > VALID_SHARP || media > 80) {
-            return -1; // é ruido
-        } else {
-            return media; // n é ruido
-        }
+        return media; // n é ruido
     }
 
-    
-     
     /*const int media = 50;
     int valueSensorAux = 0;
     int total = 0;

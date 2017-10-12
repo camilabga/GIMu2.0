@@ -31,16 +31,15 @@ void loop() {
   Serial.print(" S0: ");
   Serial.print(robo.getSharp(0 /* [0]*/));
   Serial.print(" S1: ");
-  Serial.println(robo.getSharp(1 /* [1]*/));
-
-  /*Serial.print(" S2: ");
-  Serial.print(robo.getSharp(SH_FRENTE_DIREITA));
+  Serial.print(robo.getSharp(1 /* [1]*/));
+  Serial.print(" S2: ");
+  Serial.print(robo.getSharp(2 /* [2]*/));
   Serial.print(" S3: ");
-  Serial.println(robo.getSharp(SH_FRENTE_ESQUERDA));*/
-  /*Serial.print(" S4: ");
-  Serial.print(robo.getSharp(SH_ESQUERDA_FRENTE));
+  Serial.print(robo.getSharp(3 /* [3]*/));
+  Serial.print(" S4: ");
+  Serial.print(robo.getSharp(5 /* [5]*/));
   Serial.print(" S5: ");
-  Serial.println(robo.getSharp(SH_ESQUERDA_TRAS));*/
+  Serial.println(robo.getSharp(4 /* [4]*/));
 
   // ###
 
@@ -62,9 +61,9 @@ void loop() {
   //robo.getTerrine();
 
   // ### TESTE ELEVADOR ###
-  /*elevador.goToStage03();
-  elevador.goToStage01();
-  elevador.goToStage02();*/
+  // elevador.goToStage03();
+  // elevador.goToStage01();
+  // elevador.goToStage02();
 
   // ### TESTE GARRA ###
   /*braco.tryGetTerrine();

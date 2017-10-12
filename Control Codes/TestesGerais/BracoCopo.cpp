@@ -5,7 +5,7 @@ BracoCopo::BracoCopo(){}
 BracoCopo::BracoCopo(int servoPulso, int servoGarra, int sharpGarra, Motor m){
   pulso.attach(servoPulso);
   garra.attach(servoGarra);
-  pulso.write(0);
+
   this->sharpGarra = sharpGarra;
 
   motorBraco.setPinFrente(m.getPinFrente());
@@ -54,13 +54,14 @@ int BracoCopo::getSharp(){
 }
 
 void BracoCopo::tryGetTerrine(){
+  pulso.write(POSICAO_INICIAL_PULSO);
+  garra.write(POSICAO_INICIAL_GARRA);
   do {
     motorBraco.moveMotor(255, 1);
   } while(isFDC(FDC_FRENTE));
   // && analogRead(MSH_GARRA_D) > ANALOG_SENSOR_COPO
-  motorBraco.moveMotor(0,1);
+  motorBraco.moveMotor(0,0);
   garra.write(POSICAO_GARRA_FECHADA);
-
 }
 
 void BracoCopo::recolherBraco(){
