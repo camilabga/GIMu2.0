@@ -18,7 +18,7 @@ void teclado(I2C &arduino, std::string &data);
 void setData(std::string &data, I2C &arduino);
 
 int main() {
-  collectDataforNetWork("Coleta/teste3.csv");
+  collectDataforNetWork("Coleta/teste1.csv");
   //seguirParedeSOM("output20000.csv");
 
   return 0;
@@ -132,11 +132,16 @@ void seguirParedeSOM(std::string output) {
 
   while (true) {
     arduino.getData();
+    for(int i = 0; i<6; i++){
+      input [i]=  arduino.buf[i];
+    }
+   
     int aux;
     int val;
     
     som.findBest(input, 0, 5);
 
+      std::cout << "input: " << input[6] << " " << input[7] << std::endl;
 
     aux = (int)input[6];
     val = (int)input[7];
@@ -146,11 +151,12 @@ void seguirParedeSOM(std::string output) {
 
     val /= 2;
     aux /= 2;
-    std::cout << "Saida: " << val << " " << aux << std::endl;
+   // std::cout << "Saida: " << val << " " << aux << std::endl;
     arduino.cmdS[0] = (char)val;
     arduino.cmdS[1] = (char)val;
 
     arduino.sendData();
+    usleep(1100000);
     /*
     0 e 1 -> Frente
     2 e 3 -> Esquerda
@@ -167,19 +173,19 @@ void teclado (I2C &arduino, std::string &data){
   switch (input) {
   case 'w':
     arduino.cmdS[0] = 'F';
-    data += "150,150";
+    data += "1,1";
     break;
   case 's':
     arduino.cmdS[0] = 'T';
-    data += "-150,-150";
+    data += "-1,-1";
     break;
   case 'd':
     arduino.cmdS[0] = 'D';
-    data += "150,-150";
+    data += "1,-1";
     break;
   case 'a':
     arduino.cmdS[0] = 'E';
-    data += "-150,150";
+    data += "-1,1";
     break;
   case 'i':
     arduino.cmdS[0] = 'I';
@@ -194,10 +200,11 @@ void teclado (I2C &arduino, std::string &data){
 }
 
 void setData(std::string &data, I2C &arduino){
-  int aux;
+  double aux;
 
   for (int i = 0; i < 6; i++) {
       aux = (int)arduino.buf[i];
+      aux/= 35;
       data +=  to_string(aux) + "," ;
     }
 
