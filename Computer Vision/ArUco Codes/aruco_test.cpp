@@ -110,7 +110,7 @@ int main(int argc, char **argv) {
         if (TheCameraParameters.isValid())
             TheCameraParameters.resize(TheInputImage.size());
 
-        MDetector.setDictionary(cml("-d","ARTOOLKIT"));//sets the dictionary to be employed (ARUCO,APRILTAGS,ARTOOLKIT,etc)
+        MDetector.setDictionary(cml("-d","CHILITAGS"));//sets the dictionary to be employed (ARUCO,APRILTAGS,ARTOOLKIT,etc)
         MDetector.setThresholdParams(7, 7);
         MDetector.setThresholdParamRange(2, 0);
        //  MDetector.setCornerRefinementMethod(aruco::MarkerDetector::SUBPIX);
