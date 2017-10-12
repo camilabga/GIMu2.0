@@ -132,14 +132,7 @@ void seguirParedeSOM(std::string output) {
     arduino.getData();
     int aux;
     int val;
-    std::cout << "Sensor: ";
-    for (int i = 0; i < 6; i++) {
-
-      aux = (int)arduino.buf[i];
-      std::cout << aux << " ";
-      input[i] = aux;
-    }
-    std::cout << std::endl;
+    
     som.findBest(input, 0, 5);
 
 

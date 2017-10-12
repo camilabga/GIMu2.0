@@ -23,6 +23,7 @@ public:
     void clearBuf();
     void getData();
     void sendData();
+    void print();
 
 };
 
