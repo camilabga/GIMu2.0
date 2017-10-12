@@ -14,6 +14,7 @@ void traingSOM(int size, std::string filename);
 void logCsv(std::string data, std::string filename, std::string header);
 void collectDataforNetWork(std::string filename);
 void seguirParedeSOM(std::string output);
+void teclado(I2C &arduino, std::string &data);
 
 int main() {
   //collectDataforNetWork("Coleta/teste3.csv");
@@ -93,33 +94,8 @@ void collectDataforNetWork(std::string filename) {
   arduino.cmdS[9] = ';';
 
   while (1) {
-    char input = getchar();
-    switch (input) {
-    case 'w':
-      arduino.cmdS[0] = 'F';
-      data += "150,150";
-      break;
-    case 's':
-      arduino.cmdS[0] = 'T';
-      data += "-150,-150";
-      break;
-    case 'd':
-      arduino.cmdS[0] = 'D';
-      data += "150,-150";
-      break;
-    case 'a':
-      arduino.cmdS[0] = 'E';
-      data += "-150,150";
-      break;
-    case 'i':
-      arduino.cmdS[0] = 'I';
-      break;
-    default:
-      return;
-      break;
-    }
-    cin.ignore();
-
+   
+    teclado (arduino,data);
     // Comando para Andar:
     arduino.sendData();
     usleep(1100000);
@@ -186,5 +162,35 @@ void seguirParedeSOM(std::string output) {
     4 e 5 -> Direita
     */
   }
+
+}
+
+void teclado (I2C &arduino, std::string &data){
+  char input = getchar();
+  switch (input) {
+  case 'w':
+    arduino.cmdS[0] = 'F';
+    data += "150,150";
+    break;
+  case 's':
+    arduino.cmdS[0] = 'T';
+    data += "-150,-150";
+    break;
+  case 'd':
+    arduino.cmdS[0] = 'D';
+    data += "150,-150";
+    break;
+  case 'a':
+    arduino.cmdS[0] = 'E';
+    data += "-150,150";
+    break;
+  case 'i':
+    arduino.cmdS[0] = 'I';
+    break;
+  default:
+    return;
+    break;
+  }
+  cin.ignore();
 
 }
