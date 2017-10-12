@@ -1,0 +1,82 @@
+[
+  {
+    "Sourcefile": "",
+    "Include": "",
+    "Includepath": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/hardware/arduino/avr/cores/arduino"
+  },
+  {
+    "Sourcefile": "",
+    "Include": "",
+    "Includepath": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/hardware/arduino/avr/variants/standard"
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/.build/GIMu.cpp/sketch/GIMu.cpp.cpp",
+    "Include": "Servo.h",
+    "Includepath": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/libraries/Servo/src"
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/.build/GIMu.cpp/sketch/GIMu.cpp.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/.build/GIMu.cpp/sketch/BracoCopo.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/.build/GIMu.cpp/sketch/Elevador.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/.build/GIMu.cpp/sketch/Motor.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/.build/GIMu.cpp/sketch/Pins.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/.build/GIMu.cpp/sketch/SharpIR.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/.build/GIMu.cpp/sketch/Stepper_M.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/.build/GIMu.cpp/sketch/variables.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/libraries/Servo/src/avr/Servo.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/libraries/Servo/src/nrf52/Servo.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/libraries/Servo/src/sam/Servo.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/libraries/Servo/src/samd/Servo.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/libraries/Servo/src/stm32f4/Servo.cpp",
+    "Include": "",
+    "Includepath": ""
+  }
+]
