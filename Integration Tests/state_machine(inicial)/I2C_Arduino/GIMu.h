@@ -7,15 +7,12 @@
 #include "Pins.cpp"
 #include "variables.cpp"
 #include "BracoCopo.h"
-#include "Elevador.h"
 
 class GIMu{
   public:
     GIMu(Motor d, Motor e);
     GIMu(BracoCopo b);
     GIMu(Motor d, Motor e, BracoCopo b);
-    GIMu(Motor d, Motor e, BracoCopo b, Elevador l);
-    GIMu(Elevador e);
 
     void moveFrente(int velocidade);
     void moveTras(int velocidade);
@@ -29,17 +26,12 @@ class GIMu{
     void follow_wall_to_cup();
 
     void getTerrine();
-
-    void ordenhar();
-
+    int sharpsBase[6];
   private:
     Motor Mright;
     Motor Mleft;
-    int sharpsBase[6];
+    
     BracoCopo bracoCopo;
-    Elevador elevador;
-
-    inline int getMSharp(){return analogRead(MSH_ORDENHADOR);}
 };
 
 #endif

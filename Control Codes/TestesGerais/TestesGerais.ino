@@ -26,19 +26,18 @@ void loop() {
   /* ###*/
 
   // ### Teste dos sensores Sharps:
-  /*Serial.print(" S0: ");
+  Serial.print(" S0: ");
   Serial.print(robo.getSharp(SH_DIREITA_TRAS));
   Serial.print(" S1: ");
-  Serial.println(robo.getSharp(SH_DIREITA_FRENTE));*/
-
-  /*Serial.print(" S2: ");
+  Serial.print(robo.getSharp(SH_DIREITA_FRENTE));
+  Serial.print(" S2: ");
   Serial.print(robo.getSharp(SH_FRENTE_DIREITA));
   Serial.print(" S3: ");
-  Serial.println(robo.getSharp(SH_FRENTE_ESQUERDA));*/
-  /*Serial.print(" S4: ");
+  Serial.print(robo.getSharp(SH_FRENTE_ESQUERDA));
+  Serial.print(" S4: ");
   Serial.print(robo.getSharp(SH_ESQUERDA_FRENTE));
   Serial.print(" S5: ");
-  Serial.println(robo.getSharp(SH_ESQUERDA_TRAS));*/
+  Serial.println(robo.getSharp(SH_ESQUERDA_TRAS));
   
   // ###
 
@@ -60,9 +59,9 @@ void loop() {
   //robo.getTerrine();
 
   // ### TESTE ELEVADOR ###
-  elevador.goToStage03();
-  elevador.goToStage01();
-  elevador.goToStage02();
+  // elevador.goToStage03();
+  // elevador.goToStage01();
+  // elevador.goToStage02();
 
   // ### TESTE GARRA ###
   /*braco.tryGetTerrine();

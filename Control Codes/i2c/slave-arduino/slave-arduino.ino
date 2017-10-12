@@ -88,7 +88,7 @@ void receiveData(int byteCount) {
        case 'I':
          robo.getSharps();
          for(int i=0;i<6;i++){
-           out[i] = robo.sharpsBase[i];
+           out[i] = robo.getDistancia(i);
          }
          robo.moveTank(0,0);
        break;
