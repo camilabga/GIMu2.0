@@ -107,8 +107,8 @@ int GIMu::getSharp(int porta){
 
     desvio = soma/n;
  
-    if (desvio > VALID_SHARP || media > 80) {
-        return -1; // é ruido
+    if (desvio > VALID_SHARP || media > 35) {
+        return 35; // é ruido
     } else {
         return media; // n é ruido
     }
