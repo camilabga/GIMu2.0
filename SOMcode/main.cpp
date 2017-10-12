@@ -15,10 +15,11 @@ void logCsv(std::string data, std::string filename, std::string header);
 void collectDataforNetWork(std::string filename);
 void seguirParedeSOM(std::string output);
 void teclado(I2C &arduino, std::string &data);
+void setData(std::string &data, I2C &arduino);
 
 int main() {
-  //collectDataforNetWork("Coleta/teste3.csv");
-  seguirParedeSOM("output20000.csv");
+  collectDataforNetWork("Coleta/teste3.csv");
+  //seguirParedeSOM("output20000.csv");
 
   return 0;
 }
@@ -87,38 +88,39 @@ void traingSOM(int size, std::string filename) {
 void collectDataforNetWork(std::string filename) {
   string data = "";
   string csvHeader =
-      "motor1,motor2,sensor1,sensor2,sensor3,sensor4,sensor5,sensor6";
+      "sensor1,sensor2,sensor3,sensor4,sensor5,sensor6,motor1,motor2";
 
   I2C arduino;
   // Pi2c arduino(4);
   arduino.cmdS[9] = ';';
 
+
   while (1) {
-   
+    // Receber Dados:
+    arduino.getData();
+
+    arduino.print();
+    // os valores do sensores
+    setData(data,arduino);
+    cout << data <<endl;
+    // inserindo uma direçao e sentido para  Totó
     teclado (arduino,data);
+    // olhando os Dados e guardando
+    cout << data <<endl;
+     logCsv(data.c_str(), filename.c_str(), csvHeader.c_str());
+    // limpando os dados temporarios
+    data.clear();
+    
     // Comando para Andar:
     arduino.sendData();
     usleep(1100000);
 
-    // Receber Dados:
-    arduino.getData();
-    int aux;
-
-    for (int i = 0; i < 6; i++) {
-      cout << " " << i << ": " << (int)arduino.buf[i];
-      aux = (int)arduino.buf[i];
-      data += "," + to_string(aux);
-    }
-    /*
-    0 e 1 -> Frente
-    2 e 3 -> Esquerda
-    4 e 5 -> Direita
-    */
-    cout << endl;
-
-    logCsv(data.c_str(), filename.c_str(), csvHeader.c_str());
-    data.clear();
+   
+    
   }
+
+ 
+ 
 }
 void seguirParedeSOM(std::string output) {
 
@@ -136,8 +138,8 @@ void seguirParedeSOM(std::string output) {
     som.findBest(input, 0, 5);
 
 
-    aux = (int)input[0];
-    val = (int)input[1];
+    aux = (int)input[6];
+    val = (int)input[7];
 
 
     
@@ -159,6 +161,8 @@ void seguirParedeSOM(std::string output) {
 }
 
 void teclado (I2C &arduino, std::string &data){
+  
+
   char input = getchar();
   switch (input) {
   case 'w':
@@ -180,10 +184,21 @@ void teclado (I2C &arduino, std::string &data){
   case 'i':
     arduino.cmdS[0] = 'I';
     break;
+  
   default:
     return;
     break;
   }
   cin.ignore();
+
+}
+
+void setData(std::string &data, I2C &arduino){
+  int aux;
+
+  for (int i = 0; i < 6; i++) {
+      aux = (int)arduino.buf[i];
+      data +=  to_string(aux) + "," ;
+    }
 
 }
