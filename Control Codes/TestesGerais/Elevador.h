@@ -35,7 +35,7 @@ public:
     void downToStage01();
     void downToStage02();
 
-    inline void stop(){mElevador(0,0);}
+    inline void stop(){mElevador.moveMotor(0,0);}
 
     inline int whatStage(){return analogRead(FDC_ELEVADOR);}
 };

@@ -26,10 +26,10 @@ void loop() {
   /* ###*/
 
   // ### Teste dos sensores Sharps:
-  /*Serial.print(" S0: ");
+  Serial.print(" S0: ");
   Serial.print(robo.getSharp(SH_DIREITA_TRAS));
   Serial.print(" S1: ");
-  Serial.println(robo.getSharp(SH_DIREITA_FRENTE));*/
+  Serial.println(robo.getSharp(SH_DIREITA_FRENTE));
 
   /*Serial.print(" S2: ");
   Serial.print(robo.getSharp(SH_FRENTE_DIREITA));
@@ -60,9 +60,9 @@ void loop() {
   //robo.getTerrine();
 
   // ### TESTE ELEVADOR ###
-  elevador.goToStage03();
+  /*elevador.goToStage03();
   elevador.goToStage01();
-  elevador.goToStage02();
+  elevador.goToStage02();*/
 
   // ### TESTE GARRA ###
   /*braco.tryGetTerrine();

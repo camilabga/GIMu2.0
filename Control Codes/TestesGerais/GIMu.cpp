@@ -204,7 +204,7 @@ void GIMu::getTerrine(){
 
 void GIMu::ordenhar(){
     bool found_teta = false, found_dedo = false;
-    goToStage02();
+    elevador.goToStage02();
     while (!found_teta) {
         moveFrente(LOOKING_SPEED);
         if (getSharp(SH_ORDENHADOR) <= TEM_TETA && 
@@ -215,12 +215,11 @@ void GIMu::ordenhar(){
     }
 
     while (!found_dedo) {
-        if (stage == 3) {
+        if (elevador.getStage() == 3) {
             elevador.downToStage02();
-        } else if () {
+        } else if (elevador.getStage() == 2) {
             elevador.upToStage03();
         }
-        elevador.upToStage03();
         if (getMSharp() <= TEM_DEDO) {
             found_dedo = true;
             elevador.stop();
