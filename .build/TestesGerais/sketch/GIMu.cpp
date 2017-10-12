@@ -176,8 +176,14 @@ void GIMu::follow_wall_to_cup() {
             }
 
         } else {
-            sharpsBase[2*aux%2 + 2] = getSharp(SH_FRENTE_DIREITA);
-            sharpsBase[2*aux%2 + 3] = getSharp(SH_FRENTE_ESQUERDA);
+            if (2*aux%2 + 2 < 4) {
+                sharpsBase[2*aux%2 + 2] = getSharp(SH_FRENTE_DIREITA);
+                sharpsBase[2*aux%2 + 3] = getSharp(SH_FRENTE_ESQUERDA);
+            } else {
+                sharpsBase[2*aux%2 + 2] = getSharp(SH_ESQUERDA_FRENTE);
+                sharpsBase[2*aux%2 + 3] = ggetSharp(SH_ESQUERDA_TRAS);
+            }
+            
             aux++;
             if (aux == 10) {
                 aux = 0;
