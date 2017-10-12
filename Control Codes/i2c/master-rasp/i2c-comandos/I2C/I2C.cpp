@@ -6,45 +6,70 @@ I2C::I2C(){
 
 void I2C::clearBuf(){
 	for(int i=0;i<QTD_BYTES_I2C*4;i++){
-		buf[i] = '\0';
+		in[i] = '\0';
 	}
 }
 
-void I2C::getData(){
-    Pi2c* ard = new Pi2c(4);
-	char cmdI[QTD_BYTES_I2C+1] = {"I........;"};
-	
-    //Receber Dados:
+bool I2C::getData(){
+	Pi2c* ard = new Pi2c(4);
 	clearBuf();
-	ard->i2cWrite(cmdI, QTD_BYTES_I2C);
+
+	//Enviar comando para receber resposta:
+	out[0] = 'I';
+	out[9] = ';';
+	ard->i2cWrite(out, QTD_BYTES_I2C);
 	usleep(10000);
 
-	if(ard->i2cRead(buf,QTD_BYTES_I2C) == QTD_BYTES_I2C){
-		/*
-		0 e 1 -> Frente
-		2 e 3 -> Esquerda
-		4 e 5 -> Direita
-		*/
-		cout << endl;
-	}else{		
-		cout << "Erro : " << endl;
+	//Recebe e checa se deu certo:
+	if(ard->i2cRead(in,QTD_BYTES_I2C) == QTD_BYTES_I2C && in[9] == ';'){
+		ard->~Pi2c();
+		return true;
+	}else{
+		ard->~Pi2c();
+		return false;
 	}
-	
-    ard->~Pi2c();
 }
 
-void I2C::enviarDados(){
+bool I2C::sendData(){
     Pi2c* ard = new Pi2c(4);
+	char inAux[QTD_BYTES_I2C*4];
 
-	//Comando para Andar:
-	ard->i2cWrite(cmdS, QTD_BYTES_I2C);
+	//Enviar dados para arduino:
+	ard->i2cWrite(out, QTD_BYTES_I2C);
 	usleep(10000);
 
-	if(ard->i2cRead(buf,QTD_BYTES_I2C) == QTD_BYTES_I2C){
-		buf[(QTD_BYTES_I2C*4)-1] = '\0';
-	}else{		
-		cout << "Erro : " << endl;
+	//Recebendo confirmação:
+	if(ard->i2cRead(inAux,QTD_BYTES_I2C) == QTD_BYTES_I2C && inAux[9] == ';'){
+		ard->~Pi2c();
+		return true;
+	}else{
+		ard->~Pi2c();
+		return false;
 	}
+}
+
+bool I2C::tradeData(int milisec){
+	Pi2c* ard = new Pi2c(4);
 	clearBuf();
-    ard->~Pi2c();
+
+	//Enviar dados para arduino:
+	ard->i2cWrite(out, QTD_BYTES_I2C);
+	usleep(milisec * 1000);
+
+	//Recebendo dados do arduino:
+	if(ard->i2cRead(in,QTD_BYTES_I2C) == QTD_BYTES_I2C && in[9] == ';'){
+		ard->~Pi2c();
+		return true;
+	}else{
+		ard->~Pi2c();
+		return false;
+	}
+}
+
+void I2C::printData(){
+	cout << "Dados recebidos-> " ;
+	for(int i=0;i<QTD_BYTES_I2C;i++){
+		cout << "B" << i << ": " << (int) in[i] << " " ;
+	}
+	cout << endl;
 }
