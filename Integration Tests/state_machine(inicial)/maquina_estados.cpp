@@ -1,3 +1,5 @@
+//Cópia do código de teste da clase I2C
+
 #include "I2C/I2C.h"
 
 int main(){

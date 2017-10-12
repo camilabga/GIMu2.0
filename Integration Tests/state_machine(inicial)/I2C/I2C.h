@@ -10,14 +10,14 @@
 
 using namespace std;
 
-#define BYTES 10
+#define QTD_BYTES_I2C 10
 
 class I2C{
 public:
     I2C();
 
-    char buf[BYTES*4];
-    char cmdS[BYTES+1];
+    char buf[QTD_BYTES_I2C*4];
+    char cmdS[QTD_BYTES_I2C+1];
 
     void clearBuf();
     void getData();

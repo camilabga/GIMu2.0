@@ -1,0 +1,18 @@
+-> Utilizando Makefile para ficar mais simples. Apenas usar "make nome_aquivo_sem_extensão" 
+(vulgo "make maquina_estados")
+
+-> Coloquei algumas flags iniciais do I2C e do opencv(2.7). 
+Não sei se as flags pro opencv3 é diferente do opencv2.7, verificar. 
+
+-> Como este é o código inicial da máquina de estados e geral vai por coisas,
+certeza que vai ter bagunça, mas vamos tentar deixar o mais simplificado possível,
+ para que seja fácil de arrumar depois para a versão final.
+
+-> O código para o arduino vou por nesta pasta também. 
+Tentar evitar de usá-lo para testes individuais, que deve ser feito na pasta Control Codes.
+Testar somente com versões proximas das finais.
+
+-> E o mais importante, este código vai ser usado por todos, logo, 
+vamos tentar deixar tudo comentado e organizado. O mesmo vale para o Git desta pasta,
+tomar cuidado sempre ao fazer commit e push para não apagar o que o colega fez.
+Antes de editar verificar se alguem que está/estava editando já fez o push e tals.
