@@ -2,6 +2,7 @@
 
 // ########## sharp #########
 #define VALID_SHARP 35
+#define VALID_SHARP_FRENTE 20
 
 // ###### seguir parede ######
 

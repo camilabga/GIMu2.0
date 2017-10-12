@@ -106,12 +106,14 @@ int GIMu::getSharp(int porta){
     }
 
     desvio = soma/n;
-
-    if (desvio > VALID_SHARP || media > 80) {
-      return -1; // é ruido
+ 
+    if (desvio > VALID_SHARP || media > 35) {
+        return 35; // é ruido
     } else {
-      return media; // n é ruido
+        return media; // n é ruido
     }
+
+    
      
     /*const int media = 50;
     int valueSensorAux = 0;
@@ -203,8 +205,8 @@ void GIMu::getTerrine(){
 }
 
 void GIMu::ordenhar(){
-    /*bool found_teta = false, found_dedo = false;
-    goToStage02();
+    bool found_teta = false, found_dedo = false;
+    elevador.goToStage02();
     while (!found_teta) {
         moveFrente(LOOKING_SPEED);
         if (getSharp(SH_ORDENHADOR) <= TEM_TETA && 
@@ -215,16 +217,15 @@ void GIMu::ordenhar(){
     }
 
     while (!found_dedo) {
-        if (stage == 3) {
+        if (elevador.getStage() == 3) {
             elevador.downToStage02();
-        } else if () {
+        } else if (elevador.getStage() == 2) {
             elevador.upToStage03();
         }
-        elevador.upToStage03();
         if (getMSharp() <= TEM_DEDO) {
             found_dedo = true;
             elevador.stop();
         }
-    }*/
+    }
 
 }
