@@ -71,6 +71,6 @@ void loop() {
   // ### TESTE GARRA ###
   braco.tryGetTerrine();
   delay(2000);
-  braco.recolherBraco();
+  //braco.recolherBraco();
   //teste.write(130);
 }
