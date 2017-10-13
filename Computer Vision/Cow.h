@@ -9,6 +9,7 @@
 #include <math.h>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/videoio.hpp>
+#include <queue>
 
 using namespace cv;
 using namespace std;
@@ -19,7 +20,9 @@ using namespace std;
 class Cow{
 private:
     Point center;
+    queue <Point> previous_centers;
     bool detected;
+    bool centered;
     vector<vector<Point> > squares;
     Mat ROI;
     Mat transformedROI;
@@ -35,7 +38,8 @@ public:
     void searchSquares();
 
     bool find();
-    void drawCenter(Mat &frame);
+    bool isCentered();
 
+    void drawCenter(Mat &frame);
     void sendPID();
 };
