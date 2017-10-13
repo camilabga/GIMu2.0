@@ -72,8 +72,8 @@ void loop() {
   // elevador.goToStage02();
 
   // ### TESTE GARRA ###
-  /*braco.tryGetTerrine();
-  braco.recolherBraco();*/
+  braco.tryGetTerrine();
+  //braco.recolherBraco();
   
 }
 

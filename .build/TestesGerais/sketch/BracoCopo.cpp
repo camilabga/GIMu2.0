@@ -58,8 +58,7 @@ void BracoCopo::tryGetTerrine(){
   garra.write(POSICAO_INICIAL_GARRA);
   do {
     motorBraco.moveMotor(255, 1);
-  } while(isFDC(FDC_FRENTE));
-  // && analogRead(MSH_GARRA_D) > ANALOG_SENSOR_COPO
+  } while(isFDC(FDC_FRENTE) && analogRead(MSH_GARRA_D) > ANALOG_SENSOR_COPO);
   motorBraco.moveMotor(0,0);
   garra.write(POSICAO_GARRA_FECHADA);
 }

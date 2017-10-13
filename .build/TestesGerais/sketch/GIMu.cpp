@@ -107,8 +107,8 @@ int GIMu::getSharp(int porta){
 
     desvio = soma/n;
  
-    if (desvio > VALID_SHARP || media > 80) {
-        return -1; // é ruido
+    if (desvio > VALID_SHARP || media > 35) {
+        return 35; // é ruido
     } else {
         return media; // n é ruido
     }
@@ -181,7 +181,7 @@ void GIMu::follow_wall_to_cup() {
                 sharpsBase[2*aux%2 + 3] = getSharp(SH_FRENTE_ESQUERDA);
             } else {
                 sharpsBase[2*aux%2 + 2] = getSharp(SH_ESQUERDA_FRENTE);
-                sharpsBase[2*aux%2 + 3] = ggetSharp(SH_ESQUERDA_TRAS);
+                sharpsBase[2*aux%2 + 3] = getSharp(SH_ESQUERDA_TRAS);
             }
             
             aux++;
