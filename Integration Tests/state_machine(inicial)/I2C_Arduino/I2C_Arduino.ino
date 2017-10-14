@@ -1,5 +1,5 @@
 #include <Wire.h>
-// #include "GIMu.h"
+#include "GIMu.h"
 // #include "Pins.cpp"
 
 //Definicoes I2C:

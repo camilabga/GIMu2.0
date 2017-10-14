@@ -10,6 +10,7 @@
 #define DIST_TURN01 10 // distancia que identifica q o robo achou a parede
 #define LOOKING_SPEED 200 // velocidade para seguir em frente como se n houvesse amanha (ou parede)
 #define TURNING_SPEED 180 // velocidade de giro do robo
+#define PARKING_SPEED 150
 
 #define DIST_TAX 12
 #define MAJOR_TAX_SPEED 150

@@ -54,7 +54,7 @@ void receiveData(int byteCount) {
 
      switch(in[0]){
       case 'F':
-        // Serial.println("F");  
+        Serial.println("F");  
         robo.moveFrente(150);
         flag = true;
         for(int i=0;i<6;i++){
@@ -62,7 +62,7 @@ void receiveData(int byteCount) {
         }
       break;
       case 'T':
-        // Serial.println("T");
+        Serial.println("T");
         robo.moveTras(150);
         flag = true;
         for(int i=0;i<6;i++){
@@ -70,7 +70,7 @@ void receiveData(int byteCount) {
         }
       break;
       case 'D':
-        // Serial.println("D");
+        Serial.println("D");
         robo.moveTank(150,-150);
         flag = true;
         for(int i=0;i<6;i++){
@@ -78,7 +78,7 @@ void receiveData(int byteCount) {
         }
       break;
       case 'E':
-        // Serial.println("E");
+        Serial.println("E");
         robo.moveTank(-150,150);
         flag = true;
         for(int i=0;i<6;i++){

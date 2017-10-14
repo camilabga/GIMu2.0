@@ -24,6 +24,8 @@ private:
     bool detected;
     bool centered;
     vector<vector<Point> > squares;
+    vector<vector<Point> > legs;
+    vector<vector<Point> > ;
     Mat ROI;
     Mat transformedROI;
 
