@@ -207,3 +207,9 @@ bool Cow::isCentered(){
     }
     return true;
 }
+
+bool Cow::isYchanging(){
+    if (detected && centered) {
+        
+    }
+}

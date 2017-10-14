@@ -6,14 +6,14 @@ Motor direito(DC21, DC22);
 Motor mbraco(MBRACO1, MBRACO2);
 BracoCopo braco(SERVOG_PULSO, SERVOG_DEDO, SH_GARRA, MSH_GARRA_D, MSH_GARRA_E, mbraco);
 
-/*Motor mElevator(DC_ELEVADOR1, DC_ELEVADOR0);
+Motor mElevator(DC_ELEVADOR1, DC_ELEVADOR0);
 Elevador elevador(mElevator, 3);
 
-GIMu robo (direito, esquerdo, braco, elevador);*/
-
-GIMu robo (braco);
+GIMu robo (direito, esquerdo, braco, elevador);
 
 Servo teste;
+
+char in;
 
 void setup() {
   Serial.begin(9600);
@@ -69,8 +69,69 @@ void loop() {
   // elevador.goToStage02();
 
   // ### TESTE GARRA ###
-  braco.tryGetTerrine();
-  delay(2000);
+  //braco.tryGetTerrine();
+  //delay(2000);
   //braco.recolherBraco();
   //teste.write(130);
+
+
+  
+  // TESTE ESTACIONAR (LER SENSORES)
+  in = ' ';
+
+  if (Serial.available() > 0) {
+    in = Serial.read();
+
+    switch(in){
+      case 'w':
+        robo.moveFrente(PARKING_SPEED);
+        delay(100);
+        robo.moveFrente(0);
+      break;
+
+      case 's':
+        robo.moveTras(PARKING_SPEED);
+        delay(100);
+        robo.moveFrente(0);
+      break;
+
+      case 'a':
+        robo.moveTank(-TURNING_SPEED, TURNING_SPEED);
+        delay(100);
+        robo.moveFrente(0);
+      break;
+
+      case 'd':
+        robo.moveTank(TURNING_SPEED, -TURNING_SPEED);
+        delay(100);
+        robo.moveFrente(0);
+      break;
+
+      case 'q':
+        robo.moveTank(LOOKING_SPEED, PARKING_SPEED);
+        delay(100);
+        robo.moveFrente(0);
+      break;
+
+      case 'e':
+        robo.moveTank(PARKING_SPEED, LOOKING_SPEED);
+        delay(100);
+        robo.moveFrente(0);
+      break;
+
+      case 'f':
+        Serial.print(" S2: ");
+        Serial.print(robo.getSharp(SH_FRENTE_DIREITA));
+        Serial.print(" S3: ");
+        Serial.print(robo.getSharp(SH_FRENTE_ESQUERDA));
+        Serial.print(" S4: ");
+        Serial.print(robo.getSharp(SH_ESQUERDA_FRENTE));
+        Serial.print(" S5: ");
+        Serial.println(robo.getSharp(SH_ESQUERDA_TRAS));
+      break;
+    }
+
+  }
+
+
 }

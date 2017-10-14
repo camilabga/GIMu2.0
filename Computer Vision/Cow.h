@@ -39,6 +39,7 @@ public:
 
     bool find();
     bool isCentered();
+    bool isYchanging();
 
     void drawCenter(Mat &frame);
     void sendPID();
