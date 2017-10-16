@@ -4,6 +4,7 @@ int THRESH = 150;
 #define max1 500
 #define MIN_THRESH 1
 #define MAX_THRESH 100
+#define MIN_SQUARE_AREA 400
 
 const string trackbarWindowName = "Trackbars";
 
@@ -133,9 +134,9 @@ void Cow::searchSquares(){
         // area may be positive or negative - in accordance with the
         // contour orientation
         if (approx.size() == 4 &&
-            fabs(contourArea(Mat(approx))) > 600 &&
+            fabs(contourArea(Mat(approx))) > MIN_SQUARE_AREA &&
             isContourConvex(Mat(approx))){
-            
+                
                 double maxCosine = 0;
 
             for (int j = 2; j < 5; j++){
@@ -147,8 +148,15 @@ void Cow::searchSquares(){
             // if cosines of all angles are small
             // (all angles are ~90 degree) then write quandrange
             // vertices to resultant sequence
-            if (maxCosine < 0.3)
+            if (maxCosine < 0.3) {
                 squares.push_back(approx);
+
+                cout << approx[0].x << " " <<  approx[0].y << " ||  "
+                     << approx[1].x << " " <<  approx[1].y << " ||  "
+                     << approx[2].x << " " <<  approx[2].y << " ||  "
+                     << approx[3].x << " " <<  approx[3].y << " " << endl;
+
+            }
         }
     }
 
@@ -161,6 +169,8 @@ void Cow::searchSquares(){
     if (!detected && squares.size() >= 6) {
         detected = true;
     }
+
+    cout << endl;
 }
 
 void Cow::drawCenter(Mat &frame){

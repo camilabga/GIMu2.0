@@ -15,6 +15,9 @@ GIMu::GIMu(BracoCopo b){
     bracoCopo.attachMotor(b.getMotor());
     /*bracoCopo.getPulso().attach(SERVOG_PULSO);
     bracoCopo.getGarra().attach(SERVOG_DEDO);    */
+
+    pinMode(FDC_TRAS, INPUT_PULLUP);
+    pinMode(FDC_FRENTE, INPUT_PULLUP);
 }
 
 GIMu::GIMu(Motor d, Motor e, BracoCopo b){
@@ -46,6 +49,9 @@ GIMu::GIMu(Motor d, Motor e, BracoCopo b, Elevador l){
 
     elevador.attachMotor(l.getMotor());
     elevador.setStage(l.getStage());
+
+    pinMode(FDC_TRAS, INPUT_PULLUP);
+    pinMode(FDC_FRENTE, INPUT_PULLUP);
 }
 
 GIMu::GIMu(Elevador e){
