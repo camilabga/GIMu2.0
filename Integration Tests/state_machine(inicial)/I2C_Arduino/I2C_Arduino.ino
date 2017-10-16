@@ -1,6 +1,4 @@
 #include <Wire.h>
-// #include "GIMu.h"
-// #include "Pins.cpp"
 
 //Definicoes I2C:
 #define SLAVE_ADDRESS 0x04
@@ -10,8 +8,12 @@ char out[QTD_BYTES_I2C];
 char msgPadrao[QTD_BYTES_I2C] = {".........;"};
 //
 
+//Definicoes estados:
+int estadoAtual = 0, estadoAntigo = 0;
+//
+
 //Outras definicoes:
-bool flag = false;
+// bool flag = false;
 //
 
 //Delay sem ser delay:
@@ -23,13 +25,15 @@ void delay2(int milsec){
 
 void setup() {
   //I2C:
-  Wire.setTimeout(10);
+  Wire.setTimeout(100);
   Wire.begin(SLAVE_ADDRESS);
   Wire.onReceive(receiveData);
   Wire.onRequest(sendData);
   //
 
+  //Serial:
   Serial.begin(9600);
+  //
 }
 
 void loop() {
@@ -41,6 +45,7 @@ void loop() {
 
 void receiveData(int byteCount) {
   if(byteCount != QTD_BYTES_I2C){
+    Serial.println("Erro!, Msg descartada!")
     while(Wire.available()) {
       Wire.read();
     }
@@ -48,18 +53,30 @@ void receiveData(int byteCount) {
     while (Wire.available()) {
       Wire.readBytesUntil(';', in, byteCount);
     }
-
     switch(in[0]){
-      
-      case 'I':
-        robo.getSharps();
-        for(int i=0;i<6;i++){
-          // out[i] = robo.sharpsBase[i];
-        }
-        // robo.moveTank(0,0);
+      case 1:
+        //Segue Parede:
+        estadoAntigo = estadoAtual;
+        estadoAtual = 1;
+
+      break;
+      case 2:
+        //Procura Copo:
+        estadoAntigo = estadoAtual;
+        estadoAtual = 2;
+
+      break;
+      case 3:
+        //Pega Copo:
+        estadoAntigo = estadoAtual;
+        estadoAtual = 3;
+
+      break;
+      case 99:
+
       break;
       default:
-        
+          
       break;
     }
   }
