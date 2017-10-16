@@ -8,7 +8,6 @@
 #include <opencv2/opencv.hpp>
 #include <math.h>
 #include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/videoio.hpp>
 #include <queue>
 
 using namespace cv;
@@ -25,7 +24,6 @@ private:
     bool centered;
     vector<vector<Point> > squares;
     vector<vector<Point> > legs;
-    vector<vector<Point> > ;
     Mat ROI;
     Mat transformedROI;
 

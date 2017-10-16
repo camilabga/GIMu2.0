@@ -1,6 +1,9 @@
 #include "BracoCopo.h"
 
-BracoCopo::BracoCopo(){}
+BracoCopo::BracoCopo(){
+  pinMode(FDC_TRAS, INPUT_PULLUP);
+  pinMode(FDC_FRENTE, INPUT_PULLUP);
+}
 
 BracoCopo::BracoCopo(int servoPulso, int servoGarra, int sharpGarra, Motor m){
   this->sharpGarra = sharpGarra;
@@ -27,9 +30,6 @@ BracoCopo::BracoCopo(int servoPulso, int servoGarra, int sharpGarra, int mSharp_
 void BracoCopo::attachMotor(Motor m){
   motorBraco.setPinFrente(m.getPinFrente());
   motorBraco.setPinTras(m.getPinTras());
-
-  pinMode(FDC_TRAS, INPUT_PULLUP);
-  pinMode(FDC_FRENTE, INPUT_PULLUP);
 }
 
 int BracoCopo::getSharp(){
@@ -62,9 +62,9 @@ void BracoCopo::tryGetTerrine(){
   garra.attach(SERVOG_DEDO);
   pulso.write(POSICAO_INICIAL_PULSO);
   garra.write(POSICAO_INICIAL_GARRA);
-  while (isFDC(FDC_FRENTE) /*&& analogRead(MSH_GARRA_D) < ANALOG_SENSOR_COPO*/) {
+  while (isFDC(FDC_FRENTE) && (analogRead(MSH_GARRA_D) > ANALOG_SENSOR_COPO)) {
     motorBraco.moveMotor(255, 1);
-    Serial.println(isFDC(FDC_FRENTE));
+    Serial.println(analogRead(MSH_GARRA_D));
   }
 
   Serial.println(isFDC(FDC_FRENTE));
