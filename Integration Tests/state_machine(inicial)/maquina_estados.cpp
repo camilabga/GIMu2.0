@@ -1,23 +1,27 @@
 #include "I2C/I2C.h"
 
-
-
 int main(){
-    I2C arduino;
-	while(1){
-		arduino.getData(); //Solicita ao arduino informações
+	//Variaveis I2C:
+	I2C arduino;
+	//
 
-		//Loop para imprimir os valores do buf de entrada "in";
-		for(int i=0;i<QTD_BYTES_I2C;i++){
-			cout << (int)arduino.buf[i] << " "; //Acessando os valores do buf de entrada; 
+	//Variaveis Máquina_Estado:
+	int estadoAtual = 1, estadoAnterior;
+	bool fim_geral = false;
+	//
+
+	while(!fim_geral){
+		switch(estadoAtual){
+			case 1:
+				//Segue Parede:
+			break;
+			case 2:
+				//Procura Copo:
+			break;
+			default:
+				//Erro:
+			break;
 		}
-		cout << endl;
-
-		int val = 110;
-		arduino.cmdS[0] = (char) val; //Preencher primeira posição do buf de bytes (char) de saida
-		arduino.enviarDados(); //Envia os valores contidos no buf de saida "out" para o Arduino
-
-		usleep(1000000); // Nao ha nescessidade, apenas para testes visuais.
 	}
     return 0;
 }
