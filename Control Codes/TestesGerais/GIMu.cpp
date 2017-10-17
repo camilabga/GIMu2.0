@@ -239,5 +239,4 @@ void GIMu::ordenhar(){
         }
         cont = (cont+1)/CICLE_TIME;
     }
-
 }
