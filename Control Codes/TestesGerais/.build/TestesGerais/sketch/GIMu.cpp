@@ -203,41 +203,27 @@ void GIMu::getTerrine(){
 }
 
 void GIMu::ordenhar(){
-    unsigned cont = 0;
     bool found_teta = false, found_dedo = false;
     elevador.goToStage02();
     while (!found_teta) {
         moveFrente(LOOKING_SPEED);
-        if (getSharp(SH_ORDENHADOR) <= TEM_TETA)) {
+        if (getSharp(SH_ORDENHADOR) <= TEM_TETA && 
+            getSharp(SH_ORDENHADOR) != -1) {
             found_teta = true;
             moveFrente(0);
         }
     }
 
     while (!found_dedo) {
-        if (cont < CICLE_TIME) {
-            if (elevador.getStage() == 3) {
-                elevador.downToStage02();
-            } else if (elevador.getStage() == 2) {
-                elevador.upToStage03();
-            }
-            if (getMSharp() <= TEM_DEDO) {
-                found_dedo = true;
-                elevador.stop();
-            }
-        } else {
-            found_teta = false;
-            elevador.goToStage02();
-
-            moveTank(-TURNING_SPEED, TURNING_SPEED);
-            delay(500);
-            moveTank(TURNING_SPEED, -TURNING_SPEED);
-            delay(700);
-            
-            cont = 0;
-            found_dedo = false;   
+        if (elevador.getStage() == 3) {
+            elevador.downToStage02();
+        } else if (elevador.getStage() == 2) {
+            elevador.upToStage03();
         }
-        cont = (cont+1)/CICLE_TIME;
+        if (getMSharp() <= TEM_DEDO) {
+            found_dedo = true;
+            elevador.stop();
+        }
     }
 
 }

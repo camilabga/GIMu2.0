@@ -1,12 +1,14 @@
-#include "GIMu.h"
+# 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
+# 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
+# 2 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino" 2
 
-Motor esquerdo(DC11, DC12);
-Motor direito(DC21, DC22);
+Motor esquerdo(10 /*Esquerdo*/, 9);
+Motor direito(7 /*Direito*/, 8);
 
-Motor mbraco(MBRACO1, MBRACO2);
-BracoCopo braco(SERVOG_PULSO, SERVOG_DEDO, SH_GARRA, MSH_GARRA_D, MSH_GARRA_E, mbraco);
+Motor mbraco(3, 2);
+BracoCopo braco(46, 44, 11, 9, 10, mbraco);
 
-Motor mElevator(DC_ELEVADOR1, DC_ELEVADOR0);
+Motor mElevator(11, 12);
 Elevador elevador(mElevator, 1);
 
 GIMu robo (direito, esquerdo, braco, elevador);
@@ -34,7 +36,7 @@ void loop() {
    delay(2000);*/
   /* ###*/
 
-  /* ### Teste dos sensores Sharps:*/
+  // ### Teste dos sensores Sharps:
   /*Serial.print(" S0: ");
   Serial.print(robo.getSharp(SH_DIREITA_TRAS));
   Serial.print(" S1: ");
@@ -47,18 +49,21 @@ void loop() {
   Serial.print(robo.getSharp(SH_ESQUERDA_FRENTE));
   Serial.print(" S5: ");
   Serial.println(robo.getSharp(SH_ESQUERDA_TRAS));*/
-  
+
   // ###
 
-  
+
   /* ### Teste mov + sharp ### */
+
   /*Serial.print(" S0: ");
   Serial.print(robo.getSharp(SH_DIREITA_TRAS));
   Serial.print(" S1: ");
   Serial.println(robo.getSharp(SH_DIREITA_FRENTE));
-  robo.moveTank(LOOKING_SPEED, -LOOKING_SPEED); */ 
-  
+
+  robo.moveTank(LOOKING_SPEED, -LOOKING_SPEED); */
+
   // ### teste seguir parede ###
+
   //robo.follow_wall_to_cup();
 
   // ### teste pegar copo ###
@@ -75,7 +80,7 @@ void loop() {
   braco.recolherBraco();
   delay(2000);*/
   //teste.write(130);
-  
+
   /*
   // TESTE ESTACIONAR (LER SENSORES)
   in = ' ';
@@ -133,8 +138,6 @@ void loop() {
     }
 
   }*/
-
-  
 
 
 }

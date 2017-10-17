@@ -31,4 +31,3 @@
 // #### ORDENHAR ####
 #define TEM_DEDO 200
 #define TEM_TETA 300
-#define CICLE_TIME 3000

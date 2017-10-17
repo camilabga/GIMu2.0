@@ -10,7 +10,7 @@ const string trackbarWindowName = "Trackbars";
 
 void on_trackbar( int, void* ){//This function gets called whenever a
 	// trackbar position is changed
-}
+}   
 
 void createTrackbars(){
 	//create window for trackbars
