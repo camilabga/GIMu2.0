@@ -5,6 +5,9 @@ int THRESH = 150;
 #define MIN_THRESH 1
 #define MAX_THRESH 100
 #define MIN_SQUARE_AREA 400
+#define FRACTION_CONSIDER_BODY 0.7
+#define FRACTION_CONSIDER_LEG 0.4
+
 
 const string trackbarWindowName = "Trackbars";
 
@@ -33,19 +36,33 @@ Cow::Cow(){
     center.x = 0;
     center.y = 0;
     squares.clear();
+    centers.clear();
+    legs.clear();
+    body.clear();
 }
 
 bool Cow::find(){
     center.x = 0;
     center.y = 0;
     int n = 0;
+    long aux_x = 0, aux_y = 0;
     if (detected) { // tratamento com ROI e centro anterior
         for (size_t i = 0; i < squares.size(); i++){
             for(size_t j = 0; j < squares[i].size(); j++){
                 n++;
                 center.x = center.x + squares[i][j].x;
                 center.y = center.y + squares[i][j].y;
+                aux_x = aux_x + squares[i][j].x;
+                aux_y = aux_y + squares[i][j].y;
             }
+            
+            aux_x = aux_x/4;
+            aux_y = aux_y/4;
+
+            centers.push_back(Point(aux_x, aux_y));
+
+            aux_x = 0;
+            aux_y = 0;
         }
 
         if (n != 0) {
@@ -116,7 +133,13 @@ void Cow::searchSquares(){
     vector<Vec4i> lines;
     vector<Vec4i> lines0;
 
-    squares.clear();
+    for (size_t i = 0; i < squares.size(); i++){
+        squares[i].clear();
+    }
+
+    centers.clear();
+    legs.clear();
+    body.clear();
 
     vector<vector<Point>> contours;
     findContours(transformedROI, contours, RETR_LIST, CHAIN_APPROX_SIMPLE);
@@ -151,10 +174,10 @@ void Cow::searchSquares(){
             if (maxCosine < 0.3) {
                 squares.push_back(approx);
 
-                cout << approx[0].x << " " <<  approx[0].y << " ||  "
+                /*cout << approx[0].x << " " <<  approx[0].y << " ||  "
                      << approx[1].x << " " <<  approx[1].y << " ||  "
                      << approx[2].x << " " <<  approx[2].y << " ||  "
-                     << approx[3].x << " " <<  approx[3].y << " " << endl;
+                     << approx[3].x << " " <<  approx[3].y << " " << endl;*/
 
             }
         }
@@ -170,7 +193,7 @@ void Cow::searchSquares(){
         detected = true;
     }
 
-    cout << endl;
+    //cout << endl;
 }
 
 void Cow::drawCenter(Mat &frame){
@@ -179,7 +202,6 @@ void Cow::drawCenter(Mat &frame){
 }
 
 void Cow::sendPID(){
-
     if (detected) {
         if (center.x != 0 && center.y != 0) {
             float erro = center.x - (WIDTH/2);
@@ -218,8 +240,22 @@ bool Cow::isCentered(){
     return true;
 }
 
-bool Cow::isYchanging(){
-    if (detected && centered) {
-        
+void Cow::distinguishParts(Mat &R){
+    for (size_t i = 0; i < squares.size(); i++){
+        if (abs(centers[i].x - squares[i][0].x) / 
+            abs(centers[i].y - squares[i][0].y) > FRACTION_CONSIDER_BODY) {
+                body.push_back(squares[i]);
+        }
+
+        if (abs(centers[i].x - squares[i][0].x) / 
+        abs(centers[i].y - squares[i][0].y) < FRACTION_CONSIDER_LEG) {
+            legs.push_back(squares[i]);
+        }
+    }
+
+    for (size_t i = 0; i < legs.size(); i++){
+        const Point *p = &legs[i][0];
+        int n = (int)legs[i].size();
+        polylines(R, &p, &n, 1, true, Scalar(0, 0, 255), 3, LINE_AA);
     }
 }

@@ -23,7 +23,9 @@ private:
     bool detected;
     bool centered;
     vector<vector<Point> > squares;
+    vector <Point> centers;
     vector<vector<Point> > legs;
+    vector<vector<Point> > body;
     Mat ROI;
     Mat transformedROI;
 
@@ -39,7 +41,8 @@ public:
 
     bool find();
     bool isCentered();
-    bool isYchanging();
+
+    void distinguishParts(Mat &R);
 
     void drawCenter(Mat &frame);
     void sendPID();
