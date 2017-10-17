@@ -42,7 +42,7 @@ void loop() {
    delay(2000);*/
   /* ###*/
 
-  // ### Teste dos sensores Sharps:
+  /* ### Teste dos sensores Sharps:*/
   /*Serial.print(" S0: ");
   Serial.print(robo.getSharp(SH_DIREITA_TRAS));
   Serial.print(" S1: ");
@@ -60,16 +60,13 @@ void loop() {
 
   
   /* ### Teste mov + sharp ### */
-
   /*Serial.print(" S0: ");
   Serial.print(robo.getSharp(SH_DIREITA_TRAS));
   Serial.print(" S1: ");
   Serial.println(robo.getSharp(SH_DIREITA_FRENTE));
-
   robo.moveTank(LOOKING_SPEED, -LOOKING_SPEED); */ 
   
   // ### teste seguir parede ###
- 
   //robo.follow_wall_to_cup();
 
   // ### teste pegar copo ###
@@ -144,6 +141,8 @@ void loop() {
     }
 
   }*/
+
+  
 
 
 }
