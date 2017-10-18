@@ -8,6 +8,7 @@
 char in[BYTES*4];
 char out[BYTES] = {"Falei....;"};
 int qtdErro = 0;
+int t = -1;
 unsigned long tempo;
 bool flag = false;
 
@@ -18,6 +19,7 @@ GIMu robo (direito, esquerdo);
 void setup() {
   Wire.setTimeout(10);
   Wire.begin(SLAVE_ADDRESS);
+  //Serial.begin(9600);
 
   Wire.onReceive(receiveData);
   Wire.onRequest(sendData);
@@ -46,45 +48,51 @@ void receiveData(int byteCount) {
     // Serial.println(byteCount);
   }else{
     while (Wire.available()) {
-      Wire.readBytesUntil(';', in, byteCount);
+     t=  Wire.readBytesUntil(';', in, byteCount);
     }
     // int teste;
-
-    // robo.moveTank(((int)in[1])*2, ((int)in[2])*2);
-
+    if(t >9 ){
+//     Serial.print("int[1]: ");
+//     Serial.print((int)in[1]*2);
+//     Serial.print(" int[2]: ");
+//     Serial.println((int)in[2]*2);
+//     Serial.println(t);
+    
+     robo.moveTank(((int)in[1])*2, ((int)in[2])*2);
+    }
      switch(in[0]){
-      case 'F':
-        Serial.println("F");  
-        robo.moveFrente(150);
-        flag = true;
-        for(int i=0;i<6;i++){
-          out[i] = 0;
-        }
-      break;
-      case 'T':
-        Serial.println("T");
-        robo.moveTras(150);
-        flag = true;
-        for(int i=0;i<6;i++){
-          out[i] = 0;
-        }
-      break;
-      case 'D':
-        Serial.println("D");
-        robo.moveTank(150,-150);
-        flag = true;
-        for(int i=0;i<6;i++){
-          out[i] = 0;
-        }
-      break;
-      case 'E':
-        Serial.println("E");
-        robo.moveTank(-150,150);
-        flag = true;
-        for(int i=0;i<6;i++){
-          out[i] = 0;
-        }//
-      break;
+//      case 'F':
+//        Serial.println("F");  
+//        robo.moveFrente(150);
+//        flag = true;
+//        for(int i=0;i<6;i++){
+//          out[i] = 0;
+//        }
+//      break;
+//      case 'T':
+//        Serial.println("T");
+//        robo.moveTras(150);
+//        flag = true;
+//        for(int i=0;i<6;i++){
+//          out[i] = 0;
+//        }
+//      break;
+//      case 'D':
+//        Serial.println("D");
+//        robo.moveTank(150,-150);
+//        flag = true;
+//        for(int i=0;i<6;i++){
+//          out[i] = 0;
+//        }
+//      break;
+//      case 'E':
+//        Serial.println("E");
+//        robo.moveTank(-150,150);
+//        flag = true;
+//        for(int i=0;i<6;i++){
+//          out[i] = 0;
+//        }//
+//      break;
        case 'I':
          
          out[0] = robo.getSharp(SH_DIREITA_TRAS);
