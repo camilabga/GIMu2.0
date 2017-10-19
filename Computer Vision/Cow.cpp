@@ -11,7 +11,6 @@ int THRESH = 150;
 #define CONSIDER_EQUAL 1
 #define PI 3.14159265
 
-
 const string trackbarWindowName = "Trackbars";
 
 void on_trackbar( int, void* ){//This function gets called whenever a
@@ -388,20 +387,26 @@ void Cow::getSlope(Point p1, Point p2, float slope[]){
 }
 
 void Cow::detectLimits(){
-    float slopeUp1[2];
-    float slopeDown1[2];
-    float slopeLeft1[2];
-    float slopeRight1[2];
+    float slopeUp[2];
+    float slopeDown[2];
+    float slopeLeft[2];
+    float slopeRight[2];
     for (size_t i = 0; i < squares.size(); i++) {
-        getSlope(squares[i][3], squares[i][0], slopeUp1);
-        getSlope(squares[i][0], squares[i][1], slopeLeft1);
-        getSlope(squares[i][1], squares[i][2], slopeDown1);
-        getSlope(squares[i][2], squares[i][3], slopeRight1);
+        getSlope(squares[i][3], squares[i][0], slopeUp);
+        getSlope(squares[i][0], squares[i][1], slopeLeft);
+        getSlope(squares[i][1], squares[i][2], slopeDown);
+        getSlope(squares[i][2], squares[i][3], slopeRight);
 
-        for(size_t j = i; j < squares.size(); j++){
-            if () {
-
+        for(size_t j = i+1; j < squares.size(); j++){
+            if (abs(squares[j][0].x * slopeUp[0] + slopeUp[1] - squares[j][0].y) <= CONSIDER_EQUAL 
+             || abs(squares[j][3].x * slopeUp[0] + slopeUp[1] - squares[j][3].y) 
+                    <= CONSIDER_EQUAL) {
+                        line(ROI, squares[i][0], squares[j][3], Scalar(0, 0, 255), 4, 8, 0);
             }
         }
     }
+
+    namedWindow("Limits", WINDOW_NORMAL);
+    resizeWindow("Limits", WIDTH, HEIGHT);
+    imshow("Limits", ROI);
 }
