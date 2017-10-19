@@ -428,10 +428,10 @@ void Cow::detectLimits(){
     imshow("Limits", ROI);
 }
 
-bool Cow::isAlign(){
+/*bool Cow::isAlign(){
     
 }
 
 void Cow::discoverAngle(){
 
-}
+}*/

@@ -23,7 +23,7 @@ private:
     bool detected;
     bool centered;
     bool aligned;
-    float angle;
+    //float angle;
     vector<vector<Point> > squares;
     vector <Point> centers;
     vector<vector<Point> > legs;
@@ -44,11 +44,11 @@ public:
 
     void transformImage();
     void searchSquares();
-    void discoverAngle();
+    //void discoverAngle();
 
     bool find();
     bool isCentered();
-    bool isAlign();
+    //bool isAlign();
 
     void distinguishParts(Mat &R);
     void getInclination(Mat &R);

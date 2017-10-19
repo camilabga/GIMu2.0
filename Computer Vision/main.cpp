@@ -6,7 +6,7 @@ using namespace cv;
 int main(){
     //open webcam
     //VideoCapture capture("arena.mp4");
-    VideoCapture capture(1);
+    VideoCapture capture(0);
     if ( !capture.isOpened() ){
       cout << "Cannot open the video file" << endl;
       return -1;
