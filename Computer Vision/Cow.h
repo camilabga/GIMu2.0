@@ -22,10 +22,13 @@ private:
     queue <Point> previous_centers;
     bool detected;
     bool centered;
+    bool aligned;
+    float angle;
     vector<vector<Point> > squares;
     vector <Point> centers;
     vector<vector<Point> > legs;
     vector<vector<Point> > body;
+    vector<vector<Point>> limits;
     Mat ROI;
     Mat transformedROI;
 
@@ -41,9 +44,11 @@ public:
 
     void transformImage();
     void searchSquares();
+    void discoverAngle();
 
     bool find();
     bool isCentered();
+    bool isAlign();
 
     void distinguishParts(Mat &R);
     void getInclination(Mat &R);

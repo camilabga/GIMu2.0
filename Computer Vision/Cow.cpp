@@ -387,6 +387,11 @@ void Cow::getSlope(Point p1, Point p2, float slope[]){
 }
 
 void Cow::detectLimits(){
+    for (size_t i = 0; i < limits.size(); i++){
+        limits[i].clear();
+    }
+    limits.clear();
+
     float slopeUp[2];
     float slopeDown[2];
     float slopeLeft[2];
@@ -421,4 +426,12 @@ void Cow::detectLimits(){
     namedWindow("Limits", WINDOW_NORMAL);
     resizeWindow("Limits", WIDTH, HEIGHT);
     imshow("Limits", ROI);
+}
+
+bool Cow::isAlign(){
+    
+}
+
+void Cow::discoverAngle(){
+
 }
