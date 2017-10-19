@@ -6,7 +6,10 @@ int THRESH = 150;
 #define MAX_THRESH 100
 #define MIN_SQUARE_AREA 400
 #define FRACTION_CONSIDER_BODY 0.7
-#define FRACTION_CONSIDER_LEG 0.4
+#define MAX_CONSIDER_BODY 1.4
+#define FRACTION_CONSIDER_LEG 0.3
+#define CONSIDER_EQUAL 1
+#define PI 3.14159265
 
 
 const string trackbarWindowName = "Trackbars";
@@ -47,6 +50,10 @@ bool Cow::find(){
     int n = 0;
     long aux_x = 0, aux_y = 0;
     if (detected) { // tratamento com ROI e centro anterior
+        
+        alignSquarePoints();
+        detectLimits();
+        
         for (size_t i = 0; i < squares.size(); i++){
             for(size_t j = 0; j < squares[i].size(); j++){
                 n++;
@@ -136,13 +143,22 @@ void Cow::searchSquares(){
     for (size_t i = 0; i < squares.size(); i++){
         squares[i].clear();
     }
+    squares.clear();
 
-    centers.clear();
+    for (size_t i = 0; i < legs.size(); i++){
+        legs[i].clear();
+    }
     legs.clear();
+
+    for (size_t i = 0; i < body.size(); i++){
+        body[i].clear();
+    }
     body.clear();
 
+    centers.clear();
+
     vector<vector<Point>> contours;
-    findContours(transformedROI, contours, RETR_LIST, CHAIN_APPROX_SIMPLE);
+    findContours(transformedROI, contours, CV_RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
     vector<Point> approx;
 
     for (size_t i = 0; i < contours.size(); i++){
@@ -174,11 +190,13 @@ void Cow::searchSquares(){
             if (maxCosine < 0.3) {
                 squares.push_back(approx);
 
+
+                //cout << lineInclination(approx[0], approx[1]) << endl;
                 /*cout << approx[0].x << " " <<  approx[0].y << " ||  "
                      << approx[1].x << " " <<  approx[1].y << " ||  "
                      << approx[2].x << " " <<  approx[2].y << " ||  "
-                     << approx[3].x << " " <<  approx[3].y << " " << endl;*/
-
+                     << approx[3].x << " " <<  approx[3].y << " " << endl;
+                */
             }
         }
     }
@@ -189,7 +207,7 @@ void Cow::searchSquares(){
         polylines(ROI, &p, &n, 1, true, Scalar(0, 255, 0), 3, LINE_AA);
     }
 
-    if (!detected && squares.size() >= 6) {
+    if (!detected && squares.size() >= 4) {
         detected = true;
     }
 
@@ -241,9 +259,13 @@ bool Cow::isCentered(){
 }
 
 void Cow::distinguishParts(Mat &R){
+    /*  LEG // BODY WITH COMPARED SIZES  */
+    
     for (size_t i = 0; i < squares.size(); i++){
         if (abs(centers[i].x - squares[i][0].x) / 
-            abs(centers[i].y - squares[i][0].y) > FRACTION_CONSIDER_BODY) {
+            abs(centers[i].y - squares[i][0].y) > FRACTION_CONSIDER_BODY 
+            && abs(centers[i].x - squares[i][0].x) / 
+            abs(centers[i].y - squares[i][0].y) < MAX_CONSIDER_BODY) {
                 body.push_back(squares[i]);
         }
 
@@ -257,5 +279,129 @@ void Cow::distinguishParts(Mat &R){
         const Point *p = &legs[i][0];
         int n = (int)legs[i].size();
         polylines(R, &p, &n, 1, true, Scalar(0, 0, 255), 3, LINE_AA);
+    }
+
+    for (size_t i = 0; i < body.size(); i++){
+        const Point *p = &body[i][0];
+        int n = (int)body[i].size();
+        polylines(R, &p, &n, 1, true, Scalar(255, 0, 0), 3, LINE_AA);
+    }
+
+    //getInclination(R);
+
+}
+
+double Cow::lineInclination(Point pt1, Point pt2){
+    float temp = atan((pt1.y-pt2.y)/(pt1.x-pt2.x + 0.000000001));
+    temp = temp*180.0/PI;
+    return temp;
+}
+
+void Cow::getInclination(Mat &R){
+    for (size_t i = 0; i < squares.size(); i++){
+        cout << lineInclination(Point(body[i][0].x, body[i][0].y), Point(body[i][1].x, body[i][1].y)) << endl;
+    }
+}
+
+void swap(int* a, int* b){
+    int t = *a;
+    *a = *b;
+    *b = t;
+}
+
+int partition (int allX[], int allY[], int low, int high){
+    int pivot = allX[high];    // pivot
+    int i = (low - 1);  // Index of smaller element
+ 
+    for (int j = low; j <= high- 1; j++)
+    {
+        // If current element is smaller than or
+        // equal to pivot
+        if (allX[j] <= pivot)
+        {
+            i++;    // increment index of smaller element
+            swap(&allX[i], &allX[j]);
+            swap(&allY[i], &allY[j]);
+        }
+    }
+    swap(&allX[i + 1], &allX[high]);
+    swap(&allY[i + 1], &allY[high]);
+    return (i + 1);
+}
+ 
+void quickSort(int allX[], int allY[], int low, int high){
+    if (low < high){
+        int pi = partition(allX, allY, low, high);
+ 
+        quickSort(allX, allY, low, pi - 1);
+        quickSort(allX, allY, pi + 1, high);
+    }
+}
+
+void Cow::alignSquarePoints(){
+    vector<vector<Point> > squaresOK;
+    vector <Point> quadrado;
+    int allX[4], allY[4]; 
+    for (size_t i = 0; i < squares.size(); i++) {
+        quadrado.clear();
+        allX[0]=squares[i][0].x;
+        allX[1]=squares[i][1].x;
+        allX[2]=squares[i][2].x;
+        allX[3]=squares[i][3].x;
+
+        allY[0]=squares[i][0].y;
+        allY[1]=squares[i][1].y;
+        allY[2]=squares[i][2].y;
+        allY[3]=squares[i][3].y;
+
+        int n = sizeof(allX)/sizeof(allX[0]);
+        
+        quickSort(allX, allY, 0, n-1);
+
+        if (allY[0] > allY[1]) {
+            swap(allX[0], allX[1]);
+            swap(allY[0], allY[1]);
+        }
+
+        if (allY[3] > allY[2]) {
+            swap(allX[3], allX[2]);
+            swap(allY[3], allY[2]);
+        }
+
+        quadrado.push_back(Point(allX[0], allY[0]));
+        quadrado.push_back(Point(allX[1], allY[1]));
+        quadrado.push_back(Point(allX[2], allY[2]));
+        quadrado.push_back(Point(allX[3], allY[3]));
+        squaresOK.push_back(quadrado);
+    }
+
+    squares.clear();
+    for (size_t i = 0; i < squaresOK.size(); i++) {
+        squares.push_back(squaresOK[i]);
+    }
+    //cout << endl;   
+}
+
+void Cow::getSlope(Point p1, Point p2, float slope[]){
+    slope[0] = (p1.y-p2.y)/(p1.x-p2.x+0.0000000000000001);
+    slope[1] = p1.y - slope[0]*p1.x;
+}
+
+void Cow::detectLimits(){
+    float slopeUp1[2];
+    float slopeDown1[2];
+    float slopeLeft1[2];
+    float slopeRight1[2];
+    for (size_t i = 0; i < squares.size(); i++) {
+        getSlope(squares[i][3], squares[i][0], slopeUp1);
+        getSlope(squares[i][0], squares[i][1], slopeLeft1);
+        getSlope(squares[i][1], squares[i][2], slopeDown1);
+        getSlope(squares[i][2], squares[i][3], slopeRight1);
+
+        for(size_t j = i; j < squares.size(); j++){
+            if () {
+
+            }
+        }
     }
 }

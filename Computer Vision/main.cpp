@@ -6,8 +6,7 @@ using namespace cv;
 int main(){
     //open webcam
     //VideoCapture capture("arena.mp4");
-    VideoCapture capture(0);
-
+    VideoCapture capture(1);
     if ( !capture.isOpened() ){
       cout << "Cannot open the video file" << endl;
       return -1;
@@ -24,13 +23,14 @@ int main(){
         if (!capture.read(frame)) {
             cout<<"\n Cannot read the video file. \n";
             break;
-        }
+        } 
 
         cow.setROI(frame);
         cow.transformImage(); 
         cow.searchSquares();
 
         if (cow.find()){
+            cow.detectLimits();
             cow.distinguishParts(frame);
             cow.drawCenter(frame);
             cow.sendPID(); 

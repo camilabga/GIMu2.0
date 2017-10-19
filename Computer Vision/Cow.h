@@ -30,7 +30,10 @@ private:
     Mat transformedROI;
 
     double angle(Point pt1, Point pt2, Point pt0);
-
+    double lineInclination(Point pt1, Point pt2);
+    void getSlope(Point p1, Point p2, float slope[]);
+    void alignSquarePoints();
+    
 public:
     Cow();
 
@@ -43,6 +46,8 @@ public:
     bool isCentered();
 
     void distinguishParts(Mat &R);
+    void getInclination(Mat &R);
+    void detectLimits();
 
     void drawCenter(Mat &frame);
     void sendPID();

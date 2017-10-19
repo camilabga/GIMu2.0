@@ -24,13 +24,13 @@ void setup() {
 }
 
 void loop() {
-  if(flag){
+  /*if(flag){
     tempo = millis();
-    while((millis() - tempo) <1000){  }
+    while((millis() - tempo) <100){  }
     robo.moveFrente(0);
     flag = false;
 
-   }
+   }*/
   
 }
 
@@ -48,12 +48,11 @@ void receiveData(int byteCount) {
     while (Wire.available()) {
       Wire.readBytesUntil(';', in, byteCount);
     }
-    // int teste;
 
-    // robo.moveTank(((int)in[1])*2, ((int)in[2])*2);
+     robo.moveTank(((int)in[1])*2, ((int)in[2])*2);
 
      switch(in[0]){
-      case 'F':
+      /*case 'F':
         Serial.println("F");  
         robo.moveFrente(150);
         flag = true;
@@ -84,7 +83,7 @@ void receiveData(int byteCount) {
         for(int i=0;i<6;i++){
           out[i] = 0;
         }//
-      break;
+      break;*/
        case 'I':
          
          out[0] = robo.getSharp(SH_DIREITA_TRAS);

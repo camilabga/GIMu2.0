@@ -65,9 +65,9 @@ void loop() {
   //robo.getTerrine();
 
   // ### TESTE ELEVADOR ###
-  /*elevador.goToStage03();
+  elevador.goToStage03();
   elevador.goToStage01();
-  elevador.goToStage02();*/
+  elevador.goToStage02();
 
   // ### TESTE GARRA ###
   /*braco.tryGetTerrine();

@@ -1,26 +1,30 @@
 #include "BracoCopo.h"
 
-BracoCopo::BracoCopo(){}
+BracoCopo::BracoCopo(){
+  pinMode(FDC_TRAS, INPUT_PULLUP);
+  pinMode(FDC_FRENTE, INPUT_PULLUP);
+}
 
 BracoCopo::BracoCopo(int servoPulso, int servoGarra, int sharpGarra, Motor m){
-  pulso.attach(servoPulso);
-  garra.attach(servoGarra);
-  pulso.write(0);
   this->sharpGarra = sharpGarra;
 
   motorBraco.setPinFrente(m.getPinFrente());
   motorBraco.setPinTras(m.getPinTras());
+
+  pinMode(FDC_TRAS, INPUT_PULLUP);
+  pinMode(FDC_FRENTE, INPUT_PULLUP);
 }
 
 BracoCopo::BracoCopo(int servoPulso, int servoGarra, int sharpGarra, int mSharp_D, int mSharp_E, Motor m){
-  pulso.attach(servoPulso);
-  garra.attach(servoGarra);
   this->sharpGarra = sharpGarra;
   this->mSharp_D = mSharp_D;
   this->mSharp_E = mSharp_E;
 
   motorBraco.setPinFrente(m.getPinFrente());
   motorBraco.setPinTras(m.getPinTras());
+
+  pinMode(FDC_TRAS, INPUT_PULLUP);
+  pinMode(FDC_FRENTE, INPUT_PULLUP);
 }
 
 void BracoCopo::attachMotor(Motor m){
@@ -54,17 +58,24 @@ int BracoCopo::getSharp(){
 }
 
 void BracoCopo::tryGetTerrine(){
-  do {
+  pulso.attach(SERVOG_PULSO);
+  garra.attach(SERVOG_DEDO);
+  pulso.write(POSICAO_INICIAL_PULSO);
+  garra.write(POSICAO_INICIAL_GARRA);
+  while (isFDC(FDC_FRENTE) && (analogRead(MSH_GARRA_D) > ANALOG_SENSOR_COPO)) {
     motorBraco.moveMotor(255, 1);
-  } while(isFDC(FDC_FRENTE));
-  // && analogRead(MSH_GARRA_D) > ANALOG_SENSOR_COPO
-  motorBraco.moveMotor(0,1);
-  garra.write(POSICAO_GARRA_FECHADA);
+    Serial.println(analogRead(MSH_GARRA_D));
+  }
 
+  Serial.println(isFDC(FDC_FRENTE));
+  
+  motorBraco.moveMotor(0,0);
+  garra.write(POSICAO_GARRA_FECHADA);
 }
 
 void BracoCopo::recolherBraco(){
-  do {
+  while(isFDC(FDC_TRAS)){
     motorBraco.moveMotor(255, 0);
-  } while(isFDC(FDC_TRAS));
+  }
+  motorBraco.moveMotor(0,0);
 }

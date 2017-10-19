@@ -10,9 +10,14 @@ GIMu::GIMu(Motor d, Motor e){
 
 GIMu::GIMu(BracoCopo b){
     bracoCopo.setSharpGarra(b.getSharpGarra());
+    bracoCopo.set_mSharp_D(b.get_mSharp_D());
+    bracoCopo.set_mSharp_E(b.get_mSharp_E());
     bracoCopo.attachMotor(b.getMotor());
-    bracoCopo.getPulso().attach(SERVOG_PULSO);
-    bracoCopo.getGarra().attach(SERVOG_DEDO);    
+    /*bracoCopo.getPulso().attach(SERVOG_PULSO);
+    bracoCopo.getGarra().attach(SERVOG_DEDO);    */
+
+    pinMode(FDC_TRAS, INPUT_PULLUP);
+    pinMode(FDC_FRENTE, INPUT_PULLUP);
 }
 
 GIMu::GIMu(Motor d, Motor e, BracoCopo b){
@@ -25,10 +30,8 @@ GIMu::GIMu(Motor d, Motor e, BracoCopo b){
     bracoCopo.set_mSharp_D(b.get_mSharp_D());
     bracoCopo.set_mSharp_E(b.get_mSharp_E());
     bracoCopo.attachMotor(b.getMotor());
-    bracoCopo.getPulso().attach(SERVOG_PULSO);
-    bracoCopo.getGarra().attach(SERVOG_DEDO);
-    bracoCopo.getPulso().write(POSICAO_INICIAL_PULSO);
-    bracoCopo.getGarra().write(POSICAO_INICIAL_GARRA);
+    /*bracoCopo.getPulso().attach(SERVOG_PULSO);
+    bracoCopo.getGarra().attach(SERVOG_DEDO);*/
 }
 
 GIMu::GIMu(Motor d, Motor e, BracoCopo b, Elevador l){
@@ -37,32 +40,23 @@ GIMu::GIMu(Motor d, Motor e, BracoCopo b, Elevador l){
     Mleft.setPinFrente(e.getPinFrente());
     Mleft.setPinTras(e.getPinTras());
 
-    moveFrente(0);
-
     bracoCopo.setSharpGarra(b.getSharpGarra());
     bracoCopo.set_mSharp_D(b.get_mSharp_D());
     bracoCopo.set_mSharp_E(b.get_mSharp_E());
     bracoCopo.attachMotor(b.getMotor());
-    bracoCopo.getPulso().attach(SERVOG_PULSO);
-    bracoCopo.getGarra().attach(SERVOG_DEDO);
-    bracoCopo.getPulso().write(POSICAO_INICIAL_PULSO);
-    bracoCopo.getGarra().write(POSICAO_INICIAL_GARRA);
+    /*bracoCopo.getPulso().attach(SERVOG_PULSO);
+    bracoCopo.getGarra().attach(SERVOG_DEDO);*/
 
     elevador.attachMotor(l.getMotor());
     elevador.setStage(l.getStage());
+
+    pinMode(FDC_TRAS, INPUT_PULLUP);
+    pinMode(FDC_FRENTE, INPUT_PULLUP);
 }
 
 GIMu::GIMu(Elevador e){
     elevador.attachMotor(e.getMotor());
     elevador.setStage(e.getStage());
-
-    if (elevador.getStage() == 1) {
-        elevador.goToStage01();
-    } else if (elevador.getStage() == 2) {
-        elevador.goToStage02();
-    } else {
-        elevador.goToStage03();
-    }
 }
 
 void GIMu::moveFrente(int velocidade){
@@ -113,8 +107,6 @@ int GIMu::getSharp(int porta){
         return media; // n é ruido
     }
 
-    
-     
     /*const int media = 50;
     int valueSensorAux = 0;
     int total = 0;
@@ -178,8 +170,14 @@ void GIMu::follow_wall_to_cup() {
             }
 
         } else {
-            sharpsBase[2*aux%2 + 2] = getSharp(SH_FRENTE_DIREITA);
-            sharpsBase[2*aux%2 + 3] = getSharp(SH_FRENTE_ESQUERDA);
+            if (2*aux%2 + 2 < 4) {
+                sharpsBase[2*aux%2 + 2] = getSharp(SH_FRENTE_DIREITA);
+                sharpsBase[2*aux%2 + 3] = getSharp(SH_FRENTE_ESQUERDA);
+            } else {
+                sharpsBase[2*aux%2 + 2] = getSharp(SH_ESQUERDA_FRENTE);
+                sharpsBase[2*aux%2 + 3] = getSharp(SH_ESQUERDA_TRAS);
+            }
+            
             aux++;
             if (aux == 10) {
                 aux = 0;
@@ -205,27 +203,40 @@ void GIMu::getTerrine(){
 }
 
 void GIMu::ordenhar(){
+    unsigned cont = 0;
     bool found_teta = false, found_dedo = false;
     elevador.goToStage02();
     while (!found_teta) {
         moveFrente(LOOKING_SPEED);
-        if (getSharp(SH_ORDENHADOR) <= TEM_TETA && 
-            getSharp(SH_ORDENHADOR) != -1) {
+        if (getSharp(SH_ORDENHADOR) <= TEM_TETA) {
             found_teta = true;
             moveFrente(0);
         }
     }
 
     while (!found_dedo) {
-        if (elevador.getStage() == 3) {
-            elevador.downToStage02();
-        } else if (elevador.getStage() == 2) {
-            elevador.upToStage03();
-        }
-        if (getMSharp() <= TEM_DEDO) {
-            found_dedo = true;
-            elevador.stop();
-        }
-    }
+        if (cont < CICLE_TIME) {
+            if (elevador.getStage() == 3) {
+                elevador.downToStage02();
+            } else if (elevador.getStage() == 2) {
+                elevador.upToStage03();
+            }
+            if (getMSharp() <= TEM_DEDO) {
+                found_dedo = true;
+                elevador.stop();
+            }
+        } else {
+            found_teta = false;
+            elevador.goToStage02();
 
+            moveTank(-TURNING_SPEED, TURNING_SPEED);
+            delay(500);
+            moveTank(TURNING_SPEED, -TURNING_SPEED);
+            delay(700);
+            
+            cont = 0;
+            found_dedo = false;   
+        }
+        cont = (cont+1)/CICLE_TIME;
+    }
 }
