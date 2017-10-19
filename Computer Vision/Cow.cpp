@@ -110,7 +110,7 @@ void Cow::transformImage(){
     
     cvtColor(transformedROI, transformedROI, CV_BGR2GRAY);
 
-    equalizeHist(transformedROI, transformedROI);    
+    //equalizeHist(transformedROI, transformedROI);    
 
     Mat ROI32;
     transformedROI.convertTo(ROI32, CV_32F);
