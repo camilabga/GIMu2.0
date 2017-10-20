@@ -19,8 +19,9 @@ public:
     char in[QTD_BYTES_I2C*4];   //Buf de entrada
     char out[QTD_BYTES_I2C+1];  //Buf de saida
 
-    //Limpa o bufer de entrada
-    void clearBuf();
+    //Limpa o bufers de entrada e saida
+    void clearBufIn();
+    void clearBufOut();
     
     //Usado para receber dados apenas (é enviando uma msg padrão de receber dados) - 10ms
     bool getData();

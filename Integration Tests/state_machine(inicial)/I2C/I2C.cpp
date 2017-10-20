@@ -1,18 +1,25 @@
 #include "I2C.h"
 
 I2C::I2C(){
-    clearBuf();
+    clearBufIn();
+	clearBufOut();
 }
 
-void I2C::clearBuf(){
+void I2C::clearBufIn(){
 	for(int i=0;i<QTD_BYTES_I2C*4;i++){
 		in[i] = '\0';
 	}
 }
+void I2C::clearBufOut(){
+	for(int i=0;i<QTD_BYTES_I2C;i++){
+		out[i]= '\0';
+	}
+	out[9] = ';';
+}
 
 bool I2C::getData(){
 	Pi2c* ard = new Pi2c(4);
-	clearBuf();
+	clearBufIn();
 
 	//Enviar comando para receber resposta:
 	out[0] = 'I';
@@ -23,9 +30,11 @@ bool I2C::getData(){
 	//Recebe e checa se deu certo:
 	if(ard->i2cRead(in,QTD_BYTES_I2C) == QTD_BYTES_I2C && in[9] == ';'){
 		ard->~Pi2c();
+		clearBufOut();
 		return true;
 	}else{
 		ard->~Pi2c();
+		clearBufOut();
 		return false;
 	}
 }
@@ -41,16 +50,18 @@ bool I2C::sendData(){
 	//Recebendo confirmação:
 	if(ard->i2cRead(inAux,QTD_BYTES_I2C) == QTD_BYTES_I2C && inAux[9] == ';'){
 		ard->~Pi2c();
+		clearBufOut();
 		return true;
 	}else{
 		ard->~Pi2c();
+		clearBufOut();
 		return false;
 	}
 }
 
 bool I2C::tradeData(int milisec){
 	Pi2c* ard = new Pi2c(4);
-	clearBuf();
+	clearBufIn();
 
 	//Enviar dados para arduino:
 	ard->i2cWrite(out, QTD_BYTES_I2C);
@@ -59,9 +70,11 @@ bool I2C::tradeData(int milisec){
 	//Recebendo dados do arduino:
 	if(ard->i2cRead(in,QTD_BYTES_I2C) == QTD_BYTES_I2C && in[9] == ';'){
 		ard->~Pi2c();
+		clearBufOut();
 		return true;
 	}else{
 		ard->~Pi2c();
+		clearBufOut();
 		return false;
 	}
 }
