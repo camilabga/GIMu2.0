@@ -44,11 +44,11 @@ public:
 
     void transformImage();
     void searchSquares();
-    //void discoverAngle();
+    void discoverAngle();
 
     bool find();
     bool isCentered();
-    //bool isAlign();
+    bool isAlign();
 
     void distinguishParts(Mat &R);
     void getInclination(Mat &R);

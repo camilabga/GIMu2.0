@@ -208,7 +208,7 @@ void GIMu::ordenhar(){
     elevador.goToStage02();
     while (!found_teta) {
         moveFrente(LOOKING_SPEED);
-        if (getSharp(SH_ORDENHADOR) <= TEM_TETA)) {
+        if (getSharp(SH_ORDENHADOR) <= TEM_TETA) {
             found_teta = true;
             moveFrente(0);
         }
