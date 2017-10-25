@@ -5,7 +5,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/GImu.dir/SOM/Node.cpp.o"
   "CMakeFiles/GImu.dir/SOM/Sample.cpp.o"
   "CMakeFiles/GImu.dir/I2C/I2C.cpp.o"
-  "CMakeFiles/GImu.dir/I2C/libi2c/pi2c.cpp.o"
+  "CMakeFiles/GImu.dir/I2C/libi2c/Pi2c.cpp.o"
   "GImu.pdb"
   "GImu"
 )

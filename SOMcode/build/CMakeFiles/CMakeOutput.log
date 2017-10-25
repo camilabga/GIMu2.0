@@ -1,4 +1,4 @@
-The system is: Linux - 4.4.21-v7+ - armv7l
+The system is: Linux - 4.9.52-v7+ - armv7l
 Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
 Compiler: /usr/bin/cc 
 Build flags: 
@@ -10,7 +10,7 @@ The output was:
 
 Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
 
-The C compiler identification is GNU, found in "/home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/3.0.2/CompilerIdC/a.out"
+The C compiler identification is GNU, found in "/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/3.6.2/CompilerIdC/a.out"
 
 Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
 Compiler: /usr/bin/c++ 
@@ -23,35 +23,33 @@ The output was:
 
 Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
 
-The CXX compiler identification is GNU, found in "/home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/3.0.2/CompilerIdCXX/a.out"
+The CXX compiler identification is GNU, found in "/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/3.6.2/CompilerIdCXX/a.out"
 
 Determining if the C compiler works passed with the following output:
-Change Dir: /home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp
+Change Dir: /home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTryCompileExec1444884511/fast"
-/usr/bin/make -f CMakeFiles/cmTryCompileExec1444884511.dir/build.make CMakeFiles/cmTryCompileExec1444884511.dir/build
-make[1]: Entering directory '/home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
-/usr/bin/cmake -E cmake_progress_report /home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building C object CMakeFiles/cmTryCompileExec1444884511.dir/testCCompiler.c.o
-/usr/bin/cc    -o CMakeFiles/cmTryCompileExec1444884511.dir/testCCompiler.c.o   -c /home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp/testCCompiler.c
-Linking C executable cmTryCompileExec1444884511
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1444884511.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTryCompileExec1444884511.dir/testCCompiler.c.o  -o cmTryCompileExec1444884511 -rdynamic 
-make[1]: Leaving directory '/home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_6baa8/fast"
+/usr/bin/make -f CMakeFiles/cmTC_6baa8.dir/build.make CMakeFiles/cmTC_6baa8.dir/build
+make[1]: Entering directory '/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_6baa8.dir/testCCompiler.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_6baa8.dir/testCCompiler.c.o   -c /home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp/testCCompiler.c
+Linking C executable cmTC_6baa8
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6baa8.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_6baa8.dir/testCCompiler.c.o  -o cmTC_6baa8 -rdynamic 
+make[1]: Leaving directory '/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
 
 
 Detecting C compiler ABI info compiled with the following output:
-Change Dir: /home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp
+Change Dir: /home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTryCompileExec469079170/fast"
-/usr/bin/make -f CMakeFiles/cmTryCompileExec469079170.dir/build.make CMakeFiles/cmTryCompileExec469079170.dir/build
-make[1]: Entering directory '/home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
-/usr/bin/cmake -E cmake_progress_report /home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building C object CMakeFiles/cmTryCompileExec469079170.dir/CMakeCCompilerABI.c.o
-/usr/bin/cc    -o CMakeFiles/cmTryCompileExec469079170.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-3.0/Modules/CMakeCCompilerABI.c
-Linking C executable cmTryCompileExec469079170
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec469079170.dir/link.txt --verbose=1
-/usr/bin/cc     -v CMakeFiles/cmTryCompileExec469079170.dir/CMakeCCompilerABI.c.o  -o cmTryCompileExec469079170 -rdynamic  
+Run Build Command:"/usr/bin/make" "cmTC_bed27/fast"
+/usr/bin/make -f CMakeFiles/cmTC_bed27.dir/build.make CMakeFiles/cmTC_bed27.dir/build
+make[1]: Entering directory '/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_bed27.dir/CMakeCCompilerABI.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_bed27.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-3.6/Modules/CMakeCCompilerABI.c
+Linking C executable cmTC_bed27
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_bed27.dir/link.txt --verbose=1
+/usr/bin/cc      -v CMakeFiles/cmTC_bed27.dir/CMakeCCompilerABI.c.o  -o cmTC_bed27 -rdynamic  
 Using built-in specs.
 COLLECT_GCC=/usr/bin/cc
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/arm-linux-gnueabihf/4.9/lto-wrapper
@@ -61,24 +59,23 @@ Thread model: posix
 gcc version 4.9.2 (Raspbian 4.9.2-10) 
 COMPILER_PATH=/usr/lib/gcc/arm-linux-gnueabihf/4.9/:/usr/lib/gcc/arm-linux-gnueabihf/4.9/:/usr/lib/gcc/arm-linux-gnueabihf/:/usr/lib/gcc/arm-linux-gnueabihf/4.9/:/usr/lib/gcc/arm-linux-gnueabihf/
 LIBRARY_PATH=/usr/lib/gcc/arm-linux-gnueabihf/4.9/:/usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf/:/usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../:/lib/arm-linux-gnueabihf/:/lib/:/usr/lib/arm-linux-gnueabihf/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec469079170' '-rdynamic' '-march=armv6' '-mfloat-abi=hard' '-mfpu=vfp' '-mtls-dialect=gnu'
- /usr/lib/gcc/arm-linux-gnueabihf/4.9/collect2 -plugin /usr/lib/gcc/arm-linux-gnueabihf/4.9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/arm-linux-gnueabihf/4.9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccTwfcm5.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/ --build-id --eh-frame-hdr -export-dynamic -dynamic-linker /lib/ld-linux-armhf.so.3 -X --hash-style=gnu -m armelf_linux_eabi -o cmTryCompileExec469079170 /usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf/crt1.o /usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf/crti.o /usr/lib/gcc/arm-linux-gnueabihf/4.9/crtbegin.o -L/usr/lib/gcc/arm-linux-gnueabihf/4.9 -L/usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf -L/usr/lib/gcc/arm-linux-gnueabihf/4.9/../../.. -L/lib/arm-linux-gnueabihf -L/usr/lib/arm-linux-gnueabihf CMakeFiles/cmTryCompileExec469079170.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/arm-linux-gnueabihf/4.9/crtend.o /usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf/crtn.o
-make[1]: Leaving directory '/home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_bed27' '-rdynamic' '-march=armv6' '-mfloat-abi=hard' '-mfpu=vfp' '-mtls-dialect=gnu'
+ /usr/lib/gcc/arm-linux-gnueabihf/4.9/collect2 -plugin /usr/lib/gcc/arm-linux-gnueabihf/4.9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/arm-linux-gnueabihf/4.9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccoINcID.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/ --build-id --eh-frame-hdr -export-dynamic -dynamic-linker /lib/ld-linux-armhf.so.3 -X --hash-style=gnu -m armelf_linux_eabi -o cmTC_bed27 /usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf/crt1.o /usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf/crti.o /usr/lib/gcc/arm-linux-gnueabihf/4.9/crtbegin.o -L/usr/lib/gcc/arm-linux-gnueabihf/4.9 -L/usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf -L/usr/lib/gcc/arm-linux-gnueabihf/4.9/../../.. -L/lib/arm-linux-gnueabihf -L/usr/lib/arm-linux-gnueabihf CMakeFiles/cmTC_bed27.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/arm-linux-gnueabihf/4.9/crtend.o /usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf/crtn.o
+make[1]: Leaving directory '/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
 
 
 Parsed C implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|([^/\]+-)?ld|collect2)[^/\]*( |$)]
-  ignore line: [Change Dir: /home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp]
+  ignore line: [Change Dir: /home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/usr/bin/make" "cmTryCompileExec469079170/fast"]
-  ignore line: [/usr/bin/make -f CMakeFiles/cmTryCompileExec469079170.dir/build.make CMakeFiles/cmTryCompileExec469079170.dir/build]
-  ignore line: [make[1]: Entering directory '/home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp']
-  ignore line: [/usr/bin/cmake -E cmake_progress_report /home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp/CMakeFiles 1]
-  ignore line: [Building C object CMakeFiles/cmTryCompileExec469079170.dir/CMakeCCompilerABI.c.o]
-  ignore line: [/usr/bin/cc    -o CMakeFiles/cmTryCompileExec469079170.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-3.0/Modules/CMakeCCompilerABI.c]
-  ignore line: [Linking C executable cmTryCompileExec469079170]
-  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec469079170.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/cc     -v CMakeFiles/cmTryCompileExec469079170.dir/CMakeCCompilerABI.c.o  -o cmTryCompileExec469079170 -rdynamic  ]
+  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_bed27/fast"]
+  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_bed27.dir/build.make CMakeFiles/cmTC_bed27.dir/build]
+  ignore line: [make[1]: Entering directory '/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp']
+  ignore line: [Building C object CMakeFiles/cmTC_bed27.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/usr/bin/cc     -o CMakeFiles/cmTC_bed27.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-3.6/Modules/CMakeCCompilerABI.c]
+  ignore line: [Linking C executable cmTC_bed27]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_bed27.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/cc      -v CMakeFiles/cmTC_bed27.dir/CMakeCCompilerABI.c.o  -o cmTC_bed27 -rdynamic  ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/cc]
   ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/arm-linux-gnueabihf/4.9/lto-wrapper]
@@ -88,13 +85,13 @@ Parsed C implicit link information from above output:
   ignore line: [gcc version 4.9.2 (Raspbian 4.9.2-10) ]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/arm-linux-gnueabihf/4.9/:/usr/lib/gcc/arm-linux-gnueabihf/4.9/:/usr/lib/gcc/arm-linux-gnueabihf/:/usr/lib/gcc/arm-linux-gnueabihf/4.9/:/usr/lib/gcc/arm-linux-gnueabihf/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/arm-linux-gnueabihf/4.9/:/usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf/:/usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../:/lib/arm-linux-gnueabihf/:/lib/:/usr/lib/arm-linux-gnueabihf/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec469079170' '-rdynamic' '-march=armv6' '-mfloat-abi=hard' '-mfpu=vfp' '-mtls-dialect=gnu']
-  link line: [ /usr/lib/gcc/arm-linux-gnueabihf/4.9/collect2 -plugin /usr/lib/gcc/arm-linux-gnueabihf/4.9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/arm-linux-gnueabihf/4.9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccTwfcm5.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/ --build-id --eh-frame-hdr -export-dynamic -dynamic-linker /lib/ld-linux-armhf.so.3 -X --hash-style=gnu -m armelf_linux_eabi -o cmTryCompileExec469079170 /usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf/crt1.o /usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf/crti.o /usr/lib/gcc/arm-linux-gnueabihf/4.9/crtbegin.o -L/usr/lib/gcc/arm-linux-gnueabihf/4.9 -L/usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf -L/usr/lib/gcc/arm-linux-gnueabihf/4.9/../../.. -L/lib/arm-linux-gnueabihf -L/usr/lib/arm-linux-gnueabihf CMakeFiles/cmTryCompileExec469079170.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/arm-linux-gnueabihf/4.9/crtend.o /usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf/crtn.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_bed27' '-rdynamic' '-march=armv6' '-mfloat-abi=hard' '-mfpu=vfp' '-mtls-dialect=gnu']
+  link line: [ /usr/lib/gcc/arm-linux-gnueabihf/4.9/collect2 -plugin /usr/lib/gcc/arm-linux-gnueabihf/4.9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/arm-linux-gnueabihf/4.9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccoINcID.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/ --build-id --eh-frame-hdr -export-dynamic -dynamic-linker /lib/ld-linux-armhf.so.3 -X --hash-style=gnu -m armelf_linux_eabi -o cmTC_bed27 /usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf/crt1.o /usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf/crti.o /usr/lib/gcc/arm-linux-gnueabihf/4.9/crtbegin.o -L/usr/lib/gcc/arm-linux-gnueabihf/4.9 -L/usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf -L/usr/lib/gcc/arm-linux-gnueabihf/4.9/../../.. -L/lib/arm-linux-gnueabihf -L/usr/lib/arm-linux-gnueabihf CMakeFiles/cmTC_bed27.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/arm-linux-gnueabihf/4.9/crtend.o /usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf/crtn.o]
     arg [/usr/lib/gcc/arm-linux-gnueabihf/4.9/collect2] ==> ignore
     arg [-plugin] ==> ignore
     arg [/usr/lib/gcc/arm-linux-gnueabihf/4.9/liblto_plugin.so] ==> ignore
     arg [-plugin-opt=/usr/lib/gcc/arm-linux-gnueabihf/4.9/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/ccTwfcm5.res] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/ccoINcID.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -111,7 +108,7 @@ Parsed C implicit link information from above output:
     arg [-m] ==> ignore
     arg [armelf_linux_eabi] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTryCompileExec469079170] ==> ignore
+    arg [cmTC_bed27] ==> ignore
     arg [/usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf/crt1.o] ==> ignore
     arg [/usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf/crti.o] ==> ignore
     arg [/usr/lib/gcc/arm-linux-gnueabihf/4.9/crtbegin.o] ==> ignore
@@ -120,7 +117,7 @@ Parsed C implicit link information from above output:
     arg [-L/usr/lib/gcc/arm-linux-gnueabihf/4.9/../../..] ==> dir [/usr/lib/gcc/arm-linux-gnueabihf/4.9/../../..]
     arg [-L/lib/arm-linux-gnueabihf] ==> dir [/lib/arm-linux-gnueabihf]
     arg [-L/usr/lib/arm-linux-gnueabihf] ==> dir [/usr/lib/arm-linux-gnueabihf]
-    arg [CMakeFiles/cmTryCompileExec469079170.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [CMakeFiles/cmTC_bed27.dir/CMakeCCompilerABI.c.o] ==> ignore
     arg [-lgcc] ==> lib [gcc]
     arg [--as-needed] ==> ignore
     arg [-lgcc_s] ==> lib [gcc_s]
@@ -146,33 +143,91 @@ Parsed C implicit link information from above output:
   implicit fwks: []
 
 
-Determining if the CXX compiler works passed with the following output:
-Change Dir: /home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTryCompileExec3691347672/fast"
-/usr/bin/make -f CMakeFiles/cmTryCompileExec3691347672.dir/build.make CMakeFiles/cmTryCompileExec3691347672.dir/build
-make[1]: Entering directory '/home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
-/usr/bin/cmake -E cmake_progress_report /home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building CXX object CMakeFiles/cmTryCompileExec3691347672.dir/testCXXCompiler.cxx.o
-/usr/bin/c++     -o CMakeFiles/cmTryCompileExec3691347672.dir/testCXXCompiler.cxx.o -c /home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
-Linking CXX executable cmTryCompileExec3691347672
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3691347672.dir/link.txt --verbose=1
-/usr/bin/c++        CMakeFiles/cmTryCompileExec3691347672.dir/testCXXCompiler.cxx.o  -o cmTryCompileExec3691347672 -rdynamic 
-make[1]: Leaving directory '/home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
+
+Detecting C [-std=c11] compiler features compiled with the following output:
+Change Dir: /home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_9f306/fast"
+/usr/bin/make -f CMakeFiles/cmTC_9f306.dir/build.make CMakeFiles/cmTC_9f306.dir/build
+make[1]: Entering directory '/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_9f306.dir/feature_tests.c.o
+/usr/bin/cc    -std=c11 -o CMakeFiles/cmTC_9f306.dir/feature_tests.c.o   -c /home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/feature_tests.c
+Linking C executable cmTC_9f306
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9f306.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_9f306.dir/feature_tests.c.o  -o cmTC_9f306 -rdynamic 
+make[1]: Leaving directory '/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
+
+
+    Feature record: C_FEATURE:1c_function_prototypes
+    Feature record: C_FEATURE:1c_restrict
+    Feature record: C_FEATURE:1c_static_assert
+    Feature record: C_FEATURE:1c_variadic_macros
+
+
+Detecting C [-std=c99] compiler features compiled with the following output:
+Change Dir: /home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_33140/fast"
+/usr/bin/make -f CMakeFiles/cmTC_33140.dir/build.make CMakeFiles/cmTC_33140.dir/build
+make[1]: Entering directory '/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_33140.dir/feature_tests.c.o
+/usr/bin/cc    -std=c99 -o CMakeFiles/cmTC_33140.dir/feature_tests.c.o   -c /home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/feature_tests.c
+Linking C executable cmTC_33140
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_33140.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_33140.dir/feature_tests.c.o  -o cmTC_33140 -rdynamic 
+make[1]: Leaving directory '/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
+
+
+    Feature record: C_FEATURE:1c_function_prototypes
+    Feature record: C_FEATURE:1c_restrict
+    Feature record: C_FEATURE:0c_static_assert
+    Feature record: C_FEATURE:1c_variadic_macros
+
+
+Detecting C [-std=c90] compiler features compiled with the following output:
+Change Dir: /home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_01af6/fast"
+/usr/bin/make -f CMakeFiles/cmTC_01af6.dir/build.make CMakeFiles/cmTC_01af6.dir/build
+make[1]: Entering directory '/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_01af6.dir/feature_tests.c.o
+/usr/bin/cc    -std=c90 -o CMakeFiles/cmTC_01af6.dir/feature_tests.c.o   -c /home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/feature_tests.c
+Linking C executable cmTC_01af6
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_01af6.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_01af6.dir/feature_tests.c.o  -o cmTC_01af6 -rdynamic 
+make[1]: Leaving directory '/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
+
+
+    Feature record: C_FEATURE:1c_function_prototypes
+    Feature record: C_FEATURE:0c_restrict
+    Feature record: C_FEATURE:0c_static_assert
+    Feature record: C_FEATURE:0c_variadic_macros
+Determining if the CXX compiler works passed with the following output:
+Change Dir: /home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_14cb6/fast"
+/usr/bin/make -f CMakeFiles/cmTC_14cb6.dir/build.make CMakeFiles/cmTC_14cb6.dir/build
+make[1]: Entering directory '/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_14cb6.dir/testCXXCompiler.cxx.o
+/usr/bin/c++      -o CMakeFiles/cmTC_14cb6.dir/testCXXCompiler.cxx.o -c /home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
+Linking CXX executable cmTC_14cb6
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_14cb6.dir/link.txt --verbose=1
+/usr/bin/c++        CMakeFiles/cmTC_14cb6.dir/testCXXCompiler.cxx.o  -o cmTC_14cb6 -rdynamic 
+make[1]: Leaving directory '/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
 
 
 Detecting CXX compiler ABI info compiled with the following output:
-Change Dir: /home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp
+Change Dir: /home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTryCompileExec3773978096/fast"
-/usr/bin/make -f CMakeFiles/cmTryCompileExec3773978096.dir/build.make CMakeFiles/cmTryCompileExec3773978096.dir/build
-make[1]: Entering directory '/home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
-/usr/bin/cmake -E cmake_progress_report /home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building CXX object CMakeFiles/cmTryCompileExec3773978096.dir/CMakeCXXCompilerABI.cpp.o
-/usr/bin/c++     -o CMakeFiles/cmTryCompileExec3773978096.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.0/Modules/CMakeCXXCompilerABI.cpp
-Linking CXX executable cmTryCompileExec3773978096
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3773978096.dir/link.txt --verbose=1
-/usr/bin/c++      -v CMakeFiles/cmTryCompileExec3773978096.dir/CMakeCXXCompilerABI.cpp.o  -o cmTryCompileExec3773978096 -rdynamic  
+Run Build Command:"/usr/bin/make" "cmTC_01762/fast"
+/usr/bin/make -f CMakeFiles/cmTC_01762.dir/build.make CMakeFiles/cmTC_01762.dir/build
+make[1]: Entering directory '/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_01762.dir/CMakeCXXCompilerABI.cpp.o
+/usr/bin/c++      -o CMakeFiles/cmTC_01762.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.6/Modules/CMakeCXXCompilerABI.cpp
+Linking CXX executable cmTC_01762
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_01762.dir/link.txt --verbose=1
+/usr/bin/c++       -v CMakeFiles/cmTC_01762.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_01762 -rdynamic  
 Using built-in specs.
 COLLECT_GCC=/usr/bin/c++
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/arm-linux-gnueabihf/4.9/lto-wrapper
@@ -182,24 +237,23 @@ Thread model: posix
 gcc version 4.9.2 (Raspbian 4.9.2-10) 
 COMPILER_PATH=/usr/lib/gcc/arm-linux-gnueabihf/4.9/:/usr/lib/gcc/arm-linux-gnueabihf/4.9/:/usr/lib/gcc/arm-linux-gnueabihf/:/usr/lib/gcc/arm-linux-gnueabihf/4.9/:/usr/lib/gcc/arm-linux-gnueabihf/
 LIBRARY_PATH=/usr/lib/gcc/arm-linux-gnueabihf/4.9/:/usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf/:/usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../:/lib/arm-linux-gnueabihf/:/lib/:/usr/lib/arm-linux-gnueabihf/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec3773978096' '-rdynamic' '-shared-libgcc' '-march=armv6' '-mfloat-abi=hard' '-mfpu=vfp' '-mtls-dialect=gnu'
- /usr/lib/gcc/arm-linux-gnueabihf/4.9/collect2 -plugin /usr/lib/gcc/arm-linux-gnueabihf/4.9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/arm-linux-gnueabihf/4.9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccwePgt6.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/ --build-id --eh-frame-hdr -export-dynamic -dynamic-linker /lib/ld-linux-armhf.so.3 -X --hash-style=gnu -m armelf_linux_eabi -o cmTryCompileExec3773978096 /usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf/crt1.o /usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf/crti.o /usr/lib/gcc/arm-linux-gnueabihf/4.9/crtbegin.o -L/usr/lib/gcc/arm-linux-gnueabihf/4.9 -L/usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf -L/usr/lib/gcc/arm-linux-gnueabihf/4.9/../../.. -L/lib/arm-linux-gnueabihf -L/usr/lib/arm-linux-gnueabihf CMakeFiles/cmTryCompileExec3773978096.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/arm-linux-gnueabihf/4.9/crtend.o /usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf/crtn.o
-make[1]: Leaving directory '/home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_01762' '-rdynamic' '-shared-libgcc' '-march=armv6' '-mfloat-abi=hard' '-mfpu=vfp' '-mtls-dialect=gnu'
+ /usr/lib/gcc/arm-linux-gnueabihf/4.9/collect2 -plugin /usr/lib/gcc/arm-linux-gnueabihf/4.9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/arm-linux-gnueabihf/4.9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccmzJ7Du.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/ --build-id --eh-frame-hdr -export-dynamic -dynamic-linker /lib/ld-linux-armhf.so.3 -X --hash-style=gnu -m armelf_linux_eabi -o cmTC_01762 /usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf/crt1.o /usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf/crti.o /usr/lib/gcc/arm-linux-gnueabihf/4.9/crtbegin.o -L/usr/lib/gcc/arm-linux-gnueabihf/4.9 -L/usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf -L/usr/lib/gcc/arm-linux-gnueabihf/4.9/../../.. -L/lib/arm-linux-gnueabihf -L/usr/lib/arm-linux-gnueabihf CMakeFiles/cmTC_01762.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/arm-linux-gnueabihf/4.9/crtend.o /usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf/crtn.o
+make[1]: Leaving directory '/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
 
 
 Parsed CXX implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|([^/\]+-)?ld|collect2)[^/\]*( |$)]
-  ignore line: [Change Dir: /home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp]
+  ignore line: [Change Dir: /home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/usr/bin/make" "cmTryCompileExec3773978096/fast"]
-  ignore line: [/usr/bin/make -f CMakeFiles/cmTryCompileExec3773978096.dir/build.make CMakeFiles/cmTryCompileExec3773978096.dir/build]
-  ignore line: [make[1]: Entering directory '/home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp']
-  ignore line: [/usr/bin/cmake -E cmake_progress_report /home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp/CMakeFiles 1]
-  ignore line: [Building CXX object CMakeFiles/cmTryCompileExec3773978096.dir/CMakeCXXCompilerABI.cpp.o]
-  ignore line: [/usr/bin/c++     -o CMakeFiles/cmTryCompileExec3773978096.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.0/Modules/CMakeCXXCompilerABI.cpp]
-  ignore line: [Linking CXX executable cmTryCompileExec3773978096]
-  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3773978096.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/c++      -v CMakeFiles/cmTryCompileExec3773978096.dir/CMakeCXXCompilerABI.cpp.o  -o cmTryCompileExec3773978096 -rdynamic  ]
+  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_01762/fast"]
+  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_01762.dir/build.make CMakeFiles/cmTC_01762.dir/build]
+  ignore line: [make[1]: Entering directory '/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp']
+  ignore line: [Building CXX object CMakeFiles/cmTC_01762.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [/usr/bin/c++      -o CMakeFiles/cmTC_01762.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.6/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [Linking CXX executable cmTC_01762]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_01762.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/c++       -v CMakeFiles/cmTC_01762.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_01762 -rdynamic  ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/c++]
   ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/arm-linux-gnueabihf/4.9/lto-wrapper]
@@ -209,13 +263,13 @@ Parsed CXX implicit link information from above output:
   ignore line: [gcc version 4.9.2 (Raspbian 4.9.2-10) ]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/arm-linux-gnueabihf/4.9/:/usr/lib/gcc/arm-linux-gnueabihf/4.9/:/usr/lib/gcc/arm-linux-gnueabihf/:/usr/lib/gcc/arm-linux-gnueabihf/4.9/:/usr/lib/gcc/arm-linux-gnueabihf/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/arm-linux-gnueabihf/4.9/:/usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf/:/usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../:/lib/arm-linux-gnueabihf/:/lib/:/usr/lib/arm-linux-gnueabihf/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec3773978096' '-rdynamic' '-shared-libgcc' '-march=armv6' '-mfloat-abi=hard' '-mfpu=vfp' '-mtls-dialect=gnu']
-  link line: [ /usr/lib/gcc/arm-linux-gnueabihf/4.9/collect2 -plugin /usr/lib/gcc/arm-linux-gnueabihf/4.9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/arm-linux-gnueabihf/4.9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccwePgt6.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/ --build-id --eh-frame-hdr -export-dynamic -dynamic-linker /lib/ld-linux-armhf.so.3 -X --hash-style=gnu -m armelf_linux_eabi -o cmTryCompileExec3773978096 /usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf/crt1.o /usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf/crti.o /usr/lib/gcc/arm-linux-gnueabihf/4.9/crtbegin.o -L/usr/lib/gcc/arm-linux-gnueabihf/4.9 -L/usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf -L/usr/lib/gcc/arm-linux-gnueabihf/4.9/../../.. -L/lib/arm-linux-gnueabihf -L/usr/lib/arm-linux-gnueabihf CMakeFiles/cmTryCompileExec3773978096.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/arm-linux-gnueabihf/4.9/crtend.o /usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf/crtn.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_01762' '-rdynamic' '-shared-libgcc' '-march=armv6' '-mfloat-abi=hard' '-mfpu=vfp' '-mtls-dialect=gnu']
+  link line: [ /usr/lib/gcc/arm-linux-gnueabihf/4.9/collect2 -plugin /usr/lib/gcc/arm-linux-gnueabihf/4.9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/arm-linux-gnueabihf/4.9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccmzJ7Du.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/ --build-id --eh-frame-hdr -export-dynamic -dynamic-linker /lib/ld-linux-armhf.so.3 -X --hash-style=gnu -m armelf_linux_eabi -o cmTC_01762 /usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf/crt1.o /usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf/crti.o /usr/lib/gcc/arm-linux-gnueabihf/4.9/crtbegin.o -L/usr/lib/gcc/arm-linux-gnueabihf/4.9 -L/usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf -L/usr/lib/gcc/arm-linux-gnueabihf/4.9/../../.. -L/lib/arm-linux-gnueabihf -L/usr/lib/arm-linux-gnueabihf CMakeFiles/cmTC_01762.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/arm-linux-gnueabihf/4.9/crtend.o /usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf/crtn.o]
     arg [/usr/lib/gcc/arm-linux-gnueabihf/4.9/collect2] ==> ignore
     arg [-plugin] ==> ignore
     arg [/usr/lib/gcc/arm-linux-gnueabihf/4.9/liblto_plugin.so] ==> ignore
     arg [-plugin-opt=/usr/lib/gcc/arm-linux-gnueabihf/4.9/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/ccwePgt6.res] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/ccmzJ7Du.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -232,7 +286,7 @@ Parsed CXX implicit link information from above output:
     arg [-m] ==> ignore
     arg [armelf_linux_eabi] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTryCompileExec3773978096] ==> ignore
+    arg [cmTC_01762] ==> ignore
     arg [/usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf/crt1.o] ==> ignore
     arg [/usr/lib/gcc/arm-linux-gnueabihf/4.9/../../../arm-linux-gnueabihf/crti.o] ==> ignore
     arg [/usr/lib/gcc/arm-linux-gnueabihf/4.9/crtbegin.o] ==> ignore
@@ -241,7 +295,7 @@ Parsed CXX implicit link information from above output:
     arg [-L/usr/lib/gcc/arm-linux-gnueabihf/4.9/../../..] ==> dir [/usr/lib/gcc/arm-linux-gnueabihf/4.9/../../..]
     arg [-L/lib/arm-linux-gnueabihf] ==> dir [/lib/arm-linux-gnueabihf]
     arg [-L/usr/lib/arm-linux-gnueabihf] ==> dir [/usr/lib/arm-linux-gnueabihf]
-    arg [CMakeFiles/cmTryCompileExec3773978096.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [CMakeFiles/cmTC_01762.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
     arg [-lstdc++] ==> lib [stdc++]
     arg [-lm] ==> lib [m]
     arg [-lgcc_s] ==> lib [gcc_s]
@@ -265,33 +319,250 @@ Parsed CXX implicit link information from above output:
   implicit fwks: []
 
 
-Determining if files pthread.h exist passed with the following output:
-Change Dir: /home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTryCompileExec3633708685/fast"
-/usr/bin/make -f CMakeFiles/cmTryCompileExec3633708685.dir/build.make CMakeFiles/cmTryCompileExec3633708685.dir/build
-make[1]: Entering directory '/home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
-/usr/bin/cmake -E cmake_progress_report /home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building C object CMakeFiles/cmTryCompileExec3633708685.dir/CheckIncludeFiles.c.o
-/usr/bin/cc    -o CMakeFiles/cmTryCompileExec3633708685.dir/CheckIncludeFiles.c.o   -c /home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp/CheckIncludeFiles.c
-Linking C executable cmTryCompileExec3633708685
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3633708685.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTryCompileExec3633708685.dir/CheckIncludeFiles.c.o  -o cmTryCompileExec3633708685 -rdynamic 
-make[1]: Leaving directory '/home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
+
+Detecting CXX [-std=c++14] compiler features compiled with the following output:
+Change Dir: /home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_a97f3/fast"
+/usr/bin/make -f CMakeFiles/cmTC_a97f3.dir/build.make CMakeFiles/cmTC_a97f3.dir/build
+make[1]: Entering directory '/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_a97f3.dir/feature_tests.cxx.o
+/usr/bin/c++     -std=c++14 -o CMakeFiles/cmTC_a97f3.dir/feature_tests.cxx.o -c /home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_a97f3
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a97f3.dir/link.txt --verbose=1
+/usr/bin/c++        CMakeFiles/cmTC_a97f3.dir/feature_tests.cxx.o  -o cmTC_a97f3 -rdynamic 
+make[1]: Leaving directory '/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
+
+
+    Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers
+    Feature record: CXX_FEATURE:1cxx_alias_templates
+    Feature record: CXX_FEATURE:1cxx_alignas
+    Feature record: CXX_FEATURE:1cxx_alignof
+    Feature record: CXX_FEATURE:1cxx_attributes
+    Feature record: CXX_FEATURE:1cxx_attribute_deprecated
+    Feature record: CXX_FEATURE:1cxx_auto_type
+    Feature record: CXX_FEATURE:1cxx_binary_literals
+    Feature record: CXX_FEATURE:1cxx_constexpr
+    Feature record: CXX_FEATURE:1cxx_contextual_conversions
+    Feature record: CXX_FEATURE:1cxx_decltype
+    Feature record: CXX_FEATURE:1cxx_decltype_auto
+    Feature record: CXX_FEATURE:1cxx_decltype_incomplete_return_types
+    Feature record: CXX_FEATURE:1cxx_default_function_template_args
+    Feature record: CXX_FEATURE:1cxx_defaulted_functions
+    Feature record: CXX_FEATURE:1cxx_defaulted_move_initializers
+    Feature record: CXX_FEATURE:1cxx_delegating_constructors
+    Feature record: CXX_FEATURE:1cxx_deleted_functions
+    Feature record: CXX_FEATURE:1cxx_digit_separators
+    Feature record: CXX_FEATURE:1cxx_enum_forward_declarations
+    Feature record: CXX_FEATURE:1cxx_explicit_conversions
+    Feature record: CXX_FEATURE:1cxx_extended_friend_declarations
+    Feature record: CXX_FEATURE:1cxx_extern_templates
+    Feature record: CXX_FEATURE:1cxx_final
+    Feature record: CXX_FEATURE:1cxx_func_identifier
+    Feature record: CXX_FEATURE:1cxx_generalized_initializers
+    Feature record: CXX_FEATURE:1cxx_generic_lambdas
+    Feature record: CXX_FEATURE:1cxx_inheriting_constructors
+    Feature record: CXX_FEATURE:1cxx_inline_namespaces
+    Feature record: CXX_FEATURE:1cxx_lambdas
+    Feature record: CXX_FEATURE:1cxx_lambda_init_captures
+    Feature record: CXX_FEATURE:1cxx_local_type_template_args
+    Feature record: CXX_FEATURE:1cxx_long_long_type
+    Feature record: CXX_FEATURE:1cxx_noexcept
+    Feature record: CXX_FEATURE:1cxx_nonstatic_member_init
+    Feature record: CXX_FEATURE:1cxx_nullptr
+    Feature record: CXX_FEATURE:1cxx_override
+    Feature record: CXX_FEATURE:1cxx_range_for
+    Feature record: CXX_FEATURE:1cxx_raw_string_literals
+    Feature record: CXX_FEATURE:1cxx_reference_qualified_functions
+    Feature record: CXX_FEATURE:0cxx_relaxed_constexpr
+    Feature record: CXX_FEATURE:1cxx_return_type_deduction
+    Feature record: CXX_FEATURE:1cxx_right_angle_brackets
+    Feature record: CXX_FEATURE:1cxx_rvalue_references
+    Feature record: CXX_FEATURE:1cxx_sizeof_member
+    Feature record: CXX_FEATURE:1cxx_static_assert
+    Feature record: CXX_FEATURE:1cxx_strong_enums
+    Feature record: CXX_FEATURE:1cxx_template_template_parameters
+    Feature record: CXX_FEATURE:1cxx_thread_local
+    Feature record: CXX_FEATURE:1cxx_trailing_return_types
+    Feature record: CXX_FEATURE:1cxx_unicode_literals
+    Feature record: CXX_FEATURE:1cxx_uniform_initialization
+    Feature record: CXX_FEATURE:1cxx_unrestricted_unions
+    Feature record: CXX_FEATURE:1cxx_user_literals
+    Feature record: CXX_FEATURE:0cxx_variable_templates
+    Feature record: CXX_FEATURE:1cxx_variadic_macros
+    Feature record: CXX_FEATURE:1cxx_variadic_templates
+
+
+Detecting CXX [-std=c++11] compiler features compiled with the following output:
+Change Dir: /home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_9c54c/fast"
+/usr/bin/make -f CMakeFiles/cmTC_9c54c.dir/build.make CMakeFiles/cmTC_9c54c.dir/build
+make[1]: Entering directory '/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_9c54c.dir/feature_tests.cxx.o
+/usr/bin/c++     -std=c++11 -o CMakeFiles/cmTC_9c54c.dir/feature_tests.cxx.o -c /home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_9c54c
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9c54c.dir/link.txt --verbose=1
+/usr/bin/c++        CMakeFiles/cmTC_9c54c.dir/feature_tests.cxx.o  -o cmTC_9c54c -rdynamic 
+make[1]: Leaving directory '/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
+
+
+    Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers
+    Feature record: CXX_FEATURE:1cxx_alias_templates
+    Feature record: CXX_FEATURE:1cxx_alignas
+    Feature record: CXX_FEATURE:1cxx_alignof
+    Feature record: CXX_FEATURE:1cxx_attributes
+    Feature record: CXX_FEATURE:0cxx_attribute_deprecated
+    Feature record: CXX_FEATURE:1cxx_auto_type
+    Feature record: CXX_FEATURE:0cxx_binary_literals
+    Feature record: CXX_FEATURE:1cxx_constexpr
+    Feature record: CXX_FEATURE:0cxx_contextual_conversions
+    Feature record: CXX_FEATURE:1cxx_decltype
+    Feature record: CXX_FEATURE:0cxx_decltype_auto
+    Feature record: CXX_FEATURE:1cxx_decltype_incomplete_return_types
+    Feature record: CXX_FEATURE:1cxx_default_function_template_args
+    Feature record: CXX_FEATURE:1cxx_defaulted_functions
+    Feature record: CXX_FEATURE:1cxx_defaulted_move_initializers
+    Feature record: CXX_FEATURE:1cxx_delegating_constructors
+    Feature record: CXX_FEATURE:1cxx_deleted_functions
+    Feature record: CXX_FEATURE:0cxx_digit_separators
+    Feature record: CXX_FEATURE:1cxx_enum_forward_declarations
+    Feature record: CXX_FEATURE:1cxx_explicit_conversions
+    Feature record: CXX_FEATURE:1cxx_extended_friend_declarations
+    Feature record: CXX_FEATURE:1cxx_extern_templates
+    Feature record: CXX_FEATURE:1cxx_final
+    Feature record: CXX_FEATURE:1cxx_func_identifier
+    Feature record: CXX_FEATURE:1cxx_generalized_initializers
+    Feature record: CXX_FEATURE:0cxx_generic_lambdas
+    Feature record: CXX_FEATURE:1cxx_inheriting_constructors
+    Feature record: CXX_FEATURE:1cxx_inline_namespaces
+    Feature record: CXX_FEATURE:1cxx_lambdas
+    Feature record: CXX_FEATURE:0cxx_lambda_init_captures
+    Feature record: CXX_FEATURE:1cxx_local_type_template_args
+    Feature record: CXX_FEATURE:1cxx_long_long_type
+    Feature record: CXX_FEATURE:1cxx_noexcept
+    Feature record: CXX_FEATURE:1cxx_nonstatic_member_init
+    Feature record: CXX_FEATURE:1cxx_nullptr
+    Feature record: CXX_FEATURE:1cxx_override
+    Feature record: CXX_FEATURE:1cxx_range_for
+    Feature record: CXX_FEATURE:1cxx_raw_string_literals
+    Feature record: CXX_FEATURE:1cxx_reference_qualified_functions
+    Feature record: CXX_FEATURE:0cxx_relaxed_constexpr
+    Feature record: CXX_FEATURE:0cxx_return_type_deduction
+    Feature record: CXX_FEATURE:1cxx_right_angle_brackets
+    Feature record: CXX_FEATURE:1cxx_rvalue_references
+    Feature record: CXX_FEATURE:1cxx_sizeof_member
+    Feature record: CXX_FEATURE:1cxx_static_assert
+    Feature record: CXX_FEATURE:1cxx_strong_enums
+    Feature record: CXX_FEATURE:1cxx_template_template_parameters
+    Feature record: CXX_FEATURE:1cxx_thread_local
+    Feature record: CXX_FEATURE:1cxx_trailing_return_types
+    Feature record: CXX_FEATURE:1cxx_unicode_literals
+    Feature record: CXX_FEATURE:1cxx_uniform_initialization
+    Feature record: CXX_FEATURE:1cxx_unrestricted_unions
+    Feature record: CXX_FEATURE:1cxx_user_literals
+    Feature record: CXX_FEATURE:0cxx_variable_templates
+    Feature record: CXX_FEATURE:1cxx_variadic_macros
+    Feature record: CXX_FEATURE:1cxx_variadic_templates
+
+
+Detecting CXX [-std=c++98] compiler features compiled with the following output:
+Change Dir: /home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_9c62d/fast"
+/usr/bin/make -f CMakeFiles/cmTC_9c62d.dir/build.make CMakeFiles/cmTC_9c62d.dir/build
+make[1]: Entering directory '/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_9c62d.dir/feature_tests.cxx.o
+/usr/bin/c++     -std=c++98 -o CMakeFiles/cmTC_9c62d.dir/feature_tests.cxx.o -c /home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_9c62d
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9c62d.dir/link.txt --verbose=1
+/usr/bin/c++        CMakeFiles/cmTC_9c62d.dir/feature_tests.cxx.o  -o cmTC_9c62d -rdynamic 
+make[1]: Leaving directory '/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
+
+
+    Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers
+    Feature record: CXX_FEATURE:0cxx_alias_templates
+    Feature record: CXX_FEATURE:0cxx_alignas
+    Feature record: CXX_FEATURE:0cxx_alignof
+    Feature record: CXX_FEATURE:0cxx_attributes
+    Feature record: CXX_FEATURE:0cxx_attribute_deprecated
+    Feature record: CXX_FEATURE:0cxx_auto_type
+    Feature record: CXX_FEATURE:0cxx_binary_literals
+    Feature record: CXX_FEATURE:0cxx_constexpr
+    Feature record: CXX_FEATURE:0cxx_contextual_conversions
+    Feature record: CXX_FEATURE:0cxx_decltype
+    Feature record: CXX_FEATURE:0cxx_decltype_auto
+    Feature record: CXX_FEATURE:0cxx_decltype_incomplete_return_types
+    Feature record: CXX_FEATURE:0cxx_default_function_template_args
+    Feature record: CXX_FEATURE:0cxx_defaulted_functions
+    Feature record: CXX_FEATURE:0cxx_defaulted_move_initializers
+    Feature record: CXX_FEATURE:0cxx_delegating_constructors
+    Feature record: CXX_FEATURE:0cxx_deleted_functions
+    Feature record: CXX_FEATURE:0cxx_digit_separators
+    Feature record: CXX_FEATURE:0cxx_enum_forward_declarations
+    Feature record: CXX_FEATURE:0cxx_explicit_conversions
+    Feature record: CXX_FEATURE:0cxx_extended_friend_declarations
+    Feature record: CXX_FEATURE:0cxx_extern_templates
+    Feature record: CXX_FEATURE:0cxx_final
+    Feature record: CXX_FEATURE:0cxx_func_identifier
+    Feature record: CXX_FEATURE:0cxx_generalized_initializers
+    Feature record: CXX_FEATURE:0cxx_generic_lambdas
+    Feature record: CXX_FEATURE:0cxx_inheriting_constructors
+    Feature record: CXX_FEATURE:0cxx_inline_namespaces
+    Feature record: CXX_FEATURE:0cxx_lambdas
+    Feature record: CXX_FEATURE:0cxx_lambda_init_captures
+    Feature record: CXX_FEATURE:0cxx_local_type_template_args
+    Feature record: CXX_FEATURE:0cxx_long_long_type
+    Feature record: CXX_FEATURE:0cxx_noexcept
+    Feature record: CXX_FEATURE:0cxx_nonstatic_member_init
+    Feature record: CXX_FEATURE:0cxx_nullptr
+    Feature record: CXX_FEATURE:0cxx_override
+    Feature record: CXX_FEATURE:0cxx_range_for
+    Feature record: CXX_FEATURE:0cxx_raw_string_literals
+    Feature record: CXX_FEATURE:0cxx_reference_qualified_functions
+    Feature record: CXX_FEATURE:0cxx_relaxed_constexpr
+    Feature record: CXX_FEATURE:0cxx_return_type_deduction
+    Feature record: CXX_FEATURE:0cxx_right_angle_brackets
+    Feature record: CXX_FEATURE:0cxx_rvalue_references
+    Feature record: CXX_FEATURE:0cxx_sizeof_member
+    Feature record: CXX_FEATURE:0cxx_static_assert
+    Feature record: CXX_FEATURE:0cxx_strong_enums
+    Feature record: CXX_FEATURE:1cxx_template_template_parameters
+    Feature record: CXX_FEATURE:0cxx_thread_local
+    Feature record: CXX_FEATURE:0cxx_trailing_return_types
+    Feature record: CXX_FEATURE:0cxx_unicode_literals
+    Feature record: CXX_FEATURE:0cxx_uniform_initialization
+    Feature record: CXX_FEATURE:0cxx_unrestricted_unions
+    Feature record: CXX_FEATURE:0cxx_user_literals
+    Feature record: CXX_FEATURE:0cxx_variable_templates
+    Feature record: CXX_FEATURE:0cxx_variadic_macros
+    Feature record: CXX_FEATURE:0cxx_variadic_templates
+Determining if the include file pthread.h exists passed with the following output:
+Change Dir: /home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_46392/fast"
+/usr/bin/make -f CMakeFiles/cmTC_46392.dir/build.make CMakeFiles/cmTC_46392.dir/build
+make[1]: Entering directory '/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_46392.dir/CheckIncludeFile.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_46392.dir/CheckIncludeFile.c.o   -c /home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_46392
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_46392.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_46392.dir/CheckIncludeFile.c.o  -o cmTC_46392 -rdynamic 
+make[1]: Leaving directory '/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
 
 
 Determining if the function pthread_create exists in the pthread passed with the following output:
-Change Dir: /home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp
+Change Dir: /home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTryCompileExec2218260939/fast"
-/usr/bin/make -f CMakeFiles/cmTryCompileExec2218260939.dir/build.make CMakeFiles/cmTryCompileExec2218260939.dir/build
-make[1]: Entering directory '/home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
-/usr/bin/cmake -E cmake_progress_report /home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building C object CMakeFiles/cmTryCompileExec2218260939.dir/CheckFunctionExists.c.o
-/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTryCompileExec2218260939.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.0/Modules/CheckFunctionExists.c
-Linking C executable cmTryCompileExec2218260939
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2218260939.dir/link.txt --verbose=1
-/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTryCompileExec2218260939.dir/CheckFunctionExists.c.o  -o cmTryCompileExec2218260939 -rdynamic -lpthread 
-make[1]: Leaving directory '/home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_da706/fast"
+/usr/bin/make -f CMakeFiles/cmTC_da706.dir/build.make CMakeFiles/cmTC_da706.dir/build
+make[1]: Entering directory '/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_da706.dir/CheckFunctionExists.c.o
+/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_da706.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.6/Modules/CheckFunctionExists.c
+Linking C executable cmTC_da706
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_da706.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTC_da706.dir/CheckFunctionExists.c.o  -o cmTC_da706 -rdynamic -lpthread 
+make[1]: Leaving directory '/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
 
 
