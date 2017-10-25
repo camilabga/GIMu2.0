@@ -1,1 +1,7 @@
-/home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/GImu.dir
+/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/edit_cache.dir
+/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/install/strip.dir
+/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/rebuild_cache.dir
+/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/list_install_components.dir
+/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/install.dir
+/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/install/local.dir
+/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/GImu.dir

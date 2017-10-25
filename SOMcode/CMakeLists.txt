@@ -19,7 +19,7 @@ set(SOURCES
     SOM/Node.cpp
     SOM/Sample.cpp
     I2C/I2C.cpp
-    I2C/libi2c/pi2c.cpp
+    I2C/libi2c/Pi2c.cpp
    
    
 )
@@ -32,7 +32,7 @@ set(HEADERS
     SOM/Sample.h
     SOM/Utils.h
     I2C/I2C.h
-    I2C/libi2c/pi2c.h
+    I2C/libi2c/Pi2c.h
 )
 include_directories("SOM")
 include_directories("I2C")

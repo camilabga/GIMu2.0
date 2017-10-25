@@ -18,7 +18,7 @@ void teclado(I2C &arduino, std::string &data);
 void setData(std::string &data, I2C &arduino);
 
 int main() {
-  collectDataforNetWork("Coleta/teste1.csv");
+  collectDataforNetWork("Coleta/teste_seguirParede.csv");
   //seguirParedeSOM("output20000.csv");
 
   return 0;
@@ -92,30 +92,29 @@ void collectDataforNetWork(std::string filename) {
 
   I2C arduino;
   // Pi2c arduino(4);
-  arduino.cmdS[9] = ';';
+  arduino.out[9] = ';';
 
 
   while (1) {
     // Receber Dados:
     arduino.getData();
 
-    arduino.print();
+    arduino.printData();
     // os valores do sensores
     setData(data,arduino);
     cout << data <<endl;
     // inserindo uma direçao e sentido para  Totó
     teclado (arduino,data);
     // olhando os Dados e guardando
-    cout << data <<endl;
+    //cout << data <<endl;
      logCsv(data.c_str(), filename.c_str(), csvHeader.c_str());
     // limpando os dados temporarios
     data.clear();
     
     // Comando para Andar:
     arduino.sendData();
-    usleep(1100000);
-
-   
+    
+    usleep(1200000);   
     
   }
 
@@ -133,7 +132,7 @@ void seguirParedeSOM(std::string output) {
   while (true) {
     arduino.getData();
     for(int i = 0; i<6; i++){
-      input [i]=  arduino.buf[i];
+      input [i]=  arduino.in[i];
     }
    
     int aux;
@@ -152,8 +151,8 @@ void seguirParedeSOM(std::string output) {
     val /= 2;
     aux /= 2;
    // std::cout << "Saida: " << val << " " << aux << std::endl;
-    arduino.cmdS[0] = (char)val;
-    arduino.cmdS[1] = (char)val;
+    arduino.out[0] = (char)val;
+    arduino.out[1] = (char)val;
 
     arduino.sendData();
     usleep(1100000);
@@ -172,23 +171,23 @@ void teclado (I2C &arduino, std::string &data){
   char input = getchar();
   switch (input) {
   case 'w':
-    arduino.cmdS[0] = 'F';
+    arduino.out[0] = 'F';
     data += "1,1";
     break;
   case 's':
-    arduino.cmdS[0] = 'T';
+    arduino.out[0] = 'T';
     data += "-1,-1";
     break;
   case 'd':
-    arduino.cmdS[0] = 'D';
+    arduino.out[0] = 'D';
     data += "1,-1";
     break;
   case 'a':
-    arduino.cmdS[0] = 'E';
+    arduino.out[0] = 'E';
     data += "-1,1";
     break;
   case 'i':
-    arduino.cmdS[0] = 'I';
+    arduino.out[0] = 'I';
     break;
   
   default:
@@ -203,9 +202,9 @@ void setData(std::string &data, I2C &arduino){
   double aux;
 
   for (int i = 0; i < 6; i++) {
-      aux = (int)arduino.buf[i];
+      aux = (int)arduino.in[i];
       aux/= 35;
       data +=  to_string(aux) + "," ;
-    }
+  }
 
 }

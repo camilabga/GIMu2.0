@@ -1,25 +1,24 @@
 Determining if the pthread_create exist failed with the following output:
-Change Dir: /home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp
+Change Dir: /home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTryCompileExec1392633771/fast"
-/usr/bin/make -f CMakeFiles/cmTryCompileExec1392633771.dir/build.make CMakeFiles/cmTryCompileExec1392633771.dir/build
-make[1]: Entering directory '/home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
-/usr/bin/cmake -E cmake_progress_report /home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building C object CMakeFiles/cmTryCompileExec1392633771.dir/CheckSymbolExists.c.o
-/usr/bin/cc    -o CMakeFiles/cmTryCompileExec1392633771.dir/CheckSymbolExists.c.o   -c /home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
-Linking C executable cmTryCompileExec1392633771
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1392633771.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTryCompileExec1392633771.dir/CheckSymbolExists.c.o  -o cmTryCompileExec1392633771 -rdynamic 
-CMakeFiles/cmTryCompileExec1392633771.dir/CheckSymbolExists.c.o: In function `main':
+Run Build Command:"/usr/bin/make" "cmTC_6c00c/fast"
+/usr/bin/make -f CMakeFiles/cmTC_6c00c.dir/build.make CMakeFiles/cmTC_6c00c.dir/build
+make[1]: Entering directory '/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_6c00c.dir/CheckSymbolExists.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_6c00c.dir/CheckSymbolExists.c.o   -c /home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_6c00c
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6c00c.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_6c00c.dir/CheckSymbolExists.c.o  -o cmTC_6c00c -rdynamic 
+CMakeFiles/cmTC_6c00c.dir/CheckSymbolExists.c.o: In function `main':
 CheckSymbolExists.c:(.text+0x38): undefined reference to `pthread_create'
 collect2: error: ld returned 1 exit status
-CMakeFiles/cmTryCompileExec1392633771.dir/build.make:88: recipe for target 'cmTryCompileExec1392633771' failed
-make[1]: *** [cmTryCompileExec1392633771] Error 1
-make[1]: Leaving directory '/home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
-Makefile:118: recipe for target 'cmTryCompileExec1392633771/fast' failed
-make: *** [cmTryCompileExec1392633771/fast] Error 2
+CMakeFiles/cmTC_6c00c.dir/build.make:97: recipe for target 'cmTC_6c00c' failed
+make[1]: *** [cmTC_6c00c] Error 1
+make[1]: Leaving directory '/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_6c00c/fast' failed
+make: *** [cmTC_6c00c/fast] Error 2
 
-File /home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+File /home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
 /* */
 #include <pthread.h>
 
@@ -35,23 +34,22 @@ int main(int argc, char** argv)
 }
 
 Determining if the function pthread_create exists in the pthreads failed with the following output:
-Change Dir: /home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp
+Change Dir: /home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTryCompileExec678679803/fast"
-/usr/bin/make -f CMakeFiles/cmTryCompileExec678679803.dir/build.make CMakeFiles/cmTryCompileExec678679803.dir/build
-make[1]: Entering directory '/home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
-/usr/bin/cmake -E cmake_progress_report /home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp/CMakeFiles 1
-Building C object CMakeFiles/cmTryCompileExec678679803.dir/CheckFunctionExists.c.o
-/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTryCompileExec678679803.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.0/Modules/CheckFunctionExists.c
-Linking C executable cmTryCompileExec678679803
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec678679803.dir/link.txt --verbose=1
-/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTryCompileExec678679803.dir/CheckFunctionExists.c.o  -o cmTryCompileExec678679803 -rdynamic -lpthreads 
+Run Build Command:"/usr/bin/make" "cmTC_09227/fast"
+/usr/bin/make -f CMakeFiles/cmTC_09227.dir/build.make CMakeFiles/cmTC_09227.dir/build
+make[1]: Entering directory '/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_09227.dir/CheckFunctionExists.c.o
+/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_09227.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.6/Modules/CheckFunctionExists.c
+Linking C executable cmTC_09227
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_09227.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTC_09227.dir/CheckFunctionExists.c.o  -o cmTC_09227 -rdynamic -lpthreads 
 /usr/bin/ld: cannot find -lpthreads
 collect2: error: ld returned 1 exit status
-CMakeFiles/cmTryCompileExec678679803.dir/build.make:88: recipe for target 'cmTryCompileExec678679803' failed
-make[1]: *** [cmTryCompileExec678679803] Error 1
-make[1]: Leaving directory '/home/pi/Documents/Teste2/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
-Makefile:118: recipe for target 'cmTryCompileExec678679803/fast' failed
-make: *** [cmTryCompileExec678679803/fast] Error 2
+CMakeFiles/cmTC_09227.dir/build.make:97: recipe for target 'cmTC_09227' failed
+make[1]: *** [cmTC_09227] Error 1
+make[1]: Leaving directory '/home/pi/Documents/GIMu2.0/SOMcode/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_09227/fast' failed
+make: *** [cmTC_09227/fast] Error 2
 
 
