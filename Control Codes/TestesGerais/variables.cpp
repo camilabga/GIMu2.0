@@ -29,6 +29,9 @@
 #define CONSIDER_NULL 100
 
 // #### ORDENHAR ####
-#define TEM_DEDO 200
-#define TEM_TETA 300
+#define TEM_DEDO 50
+#define TEM_TETA 9
 #define CICLE_TIME 3000
+#define ANGULO_INICIAL 0
+#define ANGULO_FINAL 30
+

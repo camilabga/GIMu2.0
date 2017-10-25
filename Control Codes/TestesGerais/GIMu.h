@@ -26,6 +26,7 @@ class GIMu{
     void getSharps();
     inline int getDistancia(int i){return sharpsBase[i];}
     int getSharp(int porta);
+    inline int getMSharp(){return analogRead(MSH_ORDENHADOR);}
     
     void follow_wall_to_cup();
 
@@ -39,8 +40,9 @@ class GIMu{
     int sharpsBase[6];
     BracoCopo bracoCopo;
     Elevador elevador;
+    Servo myservo;
 
-    inline int getMSharp(){return analogRead(MSH_ORDENHADOR);}
+    
 };
 
 #endif

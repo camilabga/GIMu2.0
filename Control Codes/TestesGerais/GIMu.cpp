@@ -203,39 +203,51 @@ void GIMu::getTerrine(){
 }
 
 void GIMu::ordenhar(){
+    myservo.attach(SERVOG_DEDO);
     unsigned cont = 0;
     bool found_teta = false, found_dedo = false;
     elevador.goToStage02();
     while (!found_teta) {
+      Serial.println("n achou");
         moveFrente(LOOKING_SPEED);
         if (getSharp(SH_ORDENHADOR) <= TEM_TETA) {
             found_teta = true;
             moveFrente(0);
         }
-    }
+      }
 
     while (!found_dedo) {
+      Serial.println("procurando dedo");
         if (cont < CICLE_TIME) {
             if (elevador.getStage() == 3) {
                 elevador.downToStage02();
             } else if (elevador.getStage() == 2) {
                 elevador.upToStage03();
             }
-            if (getMSharp() <= TEM_DEDO) {
+
+            Serial.println(getMSharp());
+            if (getMSharp() <= TEM_DEDO) {  
+               Serial.println("achou dedo");
                 found_dedo = true;
                 elevador.stop();
             }
         } else {
-            found_teta = false;
             elevador.goToStage02();
-
-            moveTank(-TURNING_SPEED, TURNING_SPEED);
-            delay(500);
-            moveTank(TURNING_SPEED, -TURNING_SPEED);
-            delay(700);
+            Serial.println("testando");
+            for(int pos = ANGULO_INICIAL; pos < ANGULO_FINAL; pos+=5){
+              myservo.write(pos);
+              
+              elevador.upToStage03();
+              if(getMSharp() < TEM_DEDO){
+                found_dedo = true;
+                elevador.stop();
+                break;
+              } else {
+                  elevador.goToStage02();
+              }
+            }
             
-            cont = 0;
-            found_dedo = false;   
+            cont = 0;  
         }
         cont = (cont+1)/CICLE_TIME;
     }

@@ -25,13 +25,20 @@ void setup() {
 }
 
 void loop() {
+  robo.ordenhar();
   /* ### Teste de Movimentação:*/
    /*robo.moveFrente(255);
    delay(2000);
    robo.moveTras(255);
    delay(2000);*/
-   robo.moveTank(200, -200);
-   delay(2000);
+   //robo.moveTank(200, -200);
+   //delay(2000);
+
+//--------------------
+  
+//----------------------
+ //Serial.println(robo.getMSharp());
+   
   /* ###*/
 
   /* ### Teste dos sensores Sharps:*/
@@ -65,9 +72,9 @@ void loop() {
   //robo.getTerrine();
 
   // ### TESTE ELEVADOR ###
-  /*elevador.goToStage03();
-  elevador.goToStage01();
-  elevador.goToStage02();*/
+  //elevador.goToStage03();
+  //elevador.goToStage01();
+  //elevador.goToStage02();
 
   // ### TESTE GARRA ###
   /*braco.tryGetTerrine();

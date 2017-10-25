@@ -17,9 +17,7 @@ void Elevador::attachMotor(Motor m){
 }
 
 void Elevador::goToStage01(){
-    Serial.println("indo pro 01");
     while (whatStage() > POSICAO01 || whatStage() < CONSIDER_NULL) {
-        Serial.println(whatStage());
         mElevador.moveMotor(255, 1);
     }
     mElevador.moveMotor(0, 0);
@@ -28,16 +26,13 @@ void Elevador::goToStage01(){
 }
 
 void Elevador::goToStage02(){
-  Serial.println("indo pro 02");
     if (stage == 1) {
         while (whatStage() < POSICAO02 || whatStage() < CONSIDER_NULL) {
-          Serial.println(whatStage());
             mElevador.moveMotor(255, 0);
         }
         mElevador.moveMotor(0, 0);
     } else if (stage == 3) {
         while (whatStage() > POSICAO02 || whatStage() < CONSIDER_NULL) {
-          Serial.println(whatStage());
             mElevador.moveMotor(255, 1);
         }
         mElevador.moveMotor(0, 0);
@@ -48,9 +43,7 @@ void Elevador::goToStage02(){
 }
 
 void Elevador::goToStage03(){
-  Serial.println("indo pro 03");
     while (whatStage() < POSICAO03 || whatStage() < CONSIDER_NULL) {
-      Serial.println(whatStage());
         mElevador.moveMotor(255, 0);
     }
     mElevador.moveMotor(0, 0);
