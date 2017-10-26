@@ -19,7 +19,6 @@ void Elevador::attachMotor(Motor m){
 void Elevador::goToStage01(){
     while (whatStage() > POSICAO01 || whatStage() < CONSIDER_NULL) {
         mElevador.moveMotor(255, 1);
-        Serial.println(whatStage());
     }
     mElevador.moveMotor(0, 0);
     delay(1000);
@@ -30,13 +29,11 @@ void Elevador::goToStage02(){
     if (stage == 1) {
         while (whatStage() < POSICAO02_2 || whatStage() < CONSIDER_NULL) {
             mElevador.moveMotor(255, 0);
-            Serial.println(whatStage());
         }
         mElevador.moveMotor(0, 0);
     } else if (stage == 3) {
         while (whatStage() > POSICAO02_1 || whatStage() < CONSIDER_NULL) {
             mElevador.moveMotor(255, 1);
-            Serial.println(whatStage());
         }
         mElevador.moveMotor(0, 0);
         delay(1000);
@@ -48,7 +45,6 @@ void Elevador::goToStage02(){
 void Elevador::goToStage03(){
     while (whatStage() < POSICAO03 || whatStage() < CONSIDER_NULL) {
         mElevador.moveMotor(255, 0);
-        Serial.println(whatStage());
     }
     mElevador.moveMotor(0, 0);
     delay(1000);

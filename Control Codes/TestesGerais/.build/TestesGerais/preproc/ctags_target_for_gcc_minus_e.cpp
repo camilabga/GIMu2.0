@@ -6,10 +6,10 @@ Motor esquerdo(9 /*Direita*/, 10);
 Motor direito(8 /*Esquerda*/, 7);
 
 Motor mbraco(3, 2);
-BracoCopo braco(46, 44, 11, 9, 10, mbraco);
+BracoCopo braco(46, 44, 9, 10, 11, mbraco);
 
 Motor mElevator(11, 12);
-Elevador elevador(mElevator, 1);
+Elevador elevador(mElevator, 3);
 
 GIMu robo (direito, esquerdo, braco, elevador);
 
@@ -24,10 +24,13 @@ char in;
 void setup() {
   Serial.begin(9600);
   //teste.attach(2);
+
+  /* AJUSTAR PARA COPO */
+  /*robo.follow_wall_to_terrine_area();
+  robo.adjust_to_get_cup();*/
 }
 
 void loop() {
-  //robo.ordenhar();
   /* ### Teste de Movimentação:*/
    /*robo.moveFrente(255);
    delay(2000);
@@ -67,17 +70,13 @@ void loop() {
   Serial.println(robo.getSharp(SH_DIREITA_FRENTE));
   robo.moveTank(LOOKING_SPEED, -LOOKING_SPEED); */
 
-  // ### teste seguir parede ###
-  //robo.follow_wall_to_cup();
-
   // ### teste pegar copo ###
   //robo.getTerrine();
 
   // ### TESTE ELEVADOR ###
-  //elevador.goToStage03();
-  elevador.goToStage02();
   elevador.goToStage01();
   elevador.goToStage02();
+
 
   //Serial.println(elevador.whatStage());
 
@@ -87,64 +86,6 @@ void loop() {
   braco.recolherBraco();
   delay(2000);*/
   //teste.write(130);
-
-  /*
-  // TESTE ESTACIONAR (LER SENSORES)
-  in = ' ';
-
-  if (Serial.available() > 0) {
-    in = Serial.read();
-
-    switch(in){
-      case 'w':
-        robo.moveFrente(PARKING_SPEED);
-        delay(100);
-        robo.moveFrente(0);
-      break;
-
-      case 's':
-        robo.moveTras(PARKING_SPEED);
-        delay(100);
-        robo.moveFrente(0);
-      break;
-
-      case 'a':
-        robo.moveTank(-TURNING_SPEED, TURNING_SPEED);
-        delay(100);
-        robo.moveFrente(0);
-      break;
-
-      case 'd':
-        robo.moveTank(TURNING_SPEED, -TURNING_SPEED);
-        delay(100);
-        robo.moveFrente(0);
-      break;
-
-      case 'q':
-        robo.moveTank(LOOKING_SPEED, PARKING_SPEED);
-        delay(100);
-        robo.moveFrente(0);
-      break;
-
-      case 'e':
-        robo.moveTank(PARKING_SPEED, LOOKING_SPEED);
-        delay(100);
-        robo.moveFrente(0);
-      break;
-
-      case 'f':
-        Serial.print(" S2: ");
-        Serial.print(robo.getSharp(SH_FRENTE_DIREITA));
-        Serial.print(" S3: ");
-        Serial.print(robo.getSharp(SH_FRENTE_ESQUERDA));
-        Serial.print(" S4: ");
-        Serial.print(robo.getSharp(SH_ESQUERDA_FRENTE));
-        Serial.print(" S5: ");
-        Serial.println(robo.getSharp(SH_ESQUERDA_TRAS));
-      break;
-    }
-
-  }*/
 
   /*  */
 

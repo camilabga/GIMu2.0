@@ -14,9 +14,9 @@
 #define DC22 7
 
 // ### Pinagem Braco Garra
-#define SH_GARRA 11
-#define MSH_GARRA_D 9
-#define MSH_GARRA_E 10
+#define SH_GARRA 9
+#define MSH_GARRA_D 10
+#define MSH_GARRA_E 11
 
 #define SERVOG_DEDO 44
 #define SERVOG_PULSO 46
@@ -33,5 +33,8 @@
 #define FDC_ELEVADOR 0
 
 // ### Ordenhador ###
-#define SH_ORDENHADOR 6
-#define MSH_ORDENHADOR 7
+#define SH_ORDENHADOR 7
+#define MSH_ORDENHADOR 8
+#define SERVO_ORDENHADOR 6
+#define DC_TIRALEITE1 5
+#define DC_TIRALEITE2 4

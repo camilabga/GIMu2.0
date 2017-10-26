@@ -41,7 +41,7 @@ class GIMu{
     int sharpsBase[6];
     BracoCopo bracoCopo;
     Elevador elevador;
-    Servo myservo;
+    Servo SM_Ordenhador;
 
     
 };
