@@ -2,8 +2,8 @@
 # 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 # 2 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino" 2
 
-Motor esquerdo(10 /*Esquerdo*/, 9);
-Motor direito(7 /*Direito*/, 8);
+Motor esquerdo(9 /*Direita*/, 10);
+Motor direito(8 /*Esquerda*/, 7);
 
 Motor mbraco(3, 2);
 BracoCopo braco(46, 44, 11, 9, 10, mbraco);
@@ -27,13 +27,20 @@ void setup() {
 }
 
 void loop() {
+  //robo.ordenhar();
   /* ### Teste de Movimentação:*/
    /*robo.moveFrente(255);
    delay(2000);
    robo.moveTras(255);
-   delay(2000);
-   robo.moveTank(200, -200);
    delay(2000);*/
+   //robo.moveTank(200, -200);
+   //delay(2000);
+
+//--------------------
+
+//----------------------
+ //Serial.println(robo.getMSharp());
+
   /* ###*/
 
   /* ### Teste dos sensores Sharps:*/
@@ -67,9 +74,12 @@ void loop() {
   //robo.getTerrine();
 
   // ### TESTE ELEVADOR ###
-  elevador.goToStage03();
+  //elevador.goToStage03();
+  elevador.goToStage02();
   elevador.goToStage01();
   elevador.goToStage02();
+
+  //Serial.println(elevador.whatStage());
 
   // ### TESTE GARRA ###
   /*braco.tryGetTerrine();

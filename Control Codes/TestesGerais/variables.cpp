@@ -24,7 +24,8 @@
 
 // #### ELEVADOR ####
 #define POSICAO01 350
-#define POSICAO02 550
+#define POSICAO02_1 550
+#define POSICAO02_2 450
 #define POSICAO03 1000
 #define CONSIDER_NULL 100
 

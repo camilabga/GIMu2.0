@@ -28,7 +28,8 @@ class GIMu{
     int getSharp(int porta);
     inline int getMSharp(){return analogRead(MSH_ORDENHADOR);}
     
-    void follow_wall_to_cup();
+    void follow_wall_to_terrine_area();
+    //void adjust_to_get_cup();
 
     void getTerrine();
 

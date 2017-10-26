@@ -3,15 +3,15 @@
 #define SH_DIREITA_FRENTE 2 // [1]
 #define SH_FRENTE_DIREITA 3 // [2]
 #define SH_FRENTE_ESQUERDA 4 // [3]
-#define SH_ESQUERDA_TRAS 5 // [4]
-#define SH_ESQUERDA_FRENTE 6 // [5]
+#define SH_ESQUERDA_TRAS 6 // [4]
+#define SH_ESQUERDA_FRENTE 5 // [5]
 
 // ### Pinagem Motor DC Movimentação
-#define DC11 10 //Esquerdo
-#define DC12 9
+#define DC11 9 //Direita
+#define DC12 10
 
-#define DC21 7 //Direito
-#define DC22 8
+#define DC21 8 //Esquerda
+#define DC22 7
 
 // ### Pinagem Braco Garra
 #define SH_GARRA 11

@@ -73,8 +73,10 @@ void loop() {
 
   // ### TESTE ELEVADOR ###
   //elevador.goToStage03();
-  //elevador.goToStage01();
   //elevador.goToStage02();
+  //elevador.goToStage03();
+
+  //Serial.println(elevador.whatStage());
 
   // ### TESTE GARRA ###
   /*braco.tryGetTerrine();

@@ -140,7 +140,7 @@ void GIMu::taxearDireita(){
     }
 }
 
-void GIMu::follow_wall_to_cup() {
+void GIMu::follow_wall_to_terrine_area() {
     unsigned aux = 0;
     bool found_wall = false;
     bool found_terrine_area = false;
@@ -151,7 +151,7 @@ void GIMu::follow_wall_to_cup() {
         if (!found_wall){
             sharpsBase[2] = getSharp(SH_FRENTE_DIREITA);
             sharpsBase[3] = getSharp(SH_FRENTE_ESQUERDA);
-            if ((sharpsBase[2] == -1 || sharpsBase[3] == -1) || (sharpsBase[2] >= DIST_TURN01 || sharpsBase[3] >= DIST_TURN01)) {
+            if ((sharpsBase[2] == VALID_SHARP || sharpsBase[3] == VALID_SHARP) || (sharpsBase[2] >= DIST_TURN01 || sharpsBase[3] >= DIST_TURN01)) {
                 moveFrente(LOOKING_SPEED);
                 Serial.println("Segue em frente");
             } else if (sharpsBase[2] < DIST_TURN01 || sharpsBase[3] < DIST_TURN01) {
@@ -162,7 +162,7 @@ void GIMu::follow_wall_to_cup() {
                    sharpsBase[4] = getSharp(SH_ESQUERDA_FRENTE);
                    sharpsBase[5] = getSharp(SH_ESQUERDA_TRAS);
                    moveTank(TURNING_SPEED, -TURNING_SPEED);
-                } while(!(sharpsBase[4] != -1 || sharpsBase[5] != -1) || (abs(sharpsBase[4]-sharpsBase[5]) > SHARP_DIFF));
+                } while(!(sharpsBase[4] != VALID_SHARP || sharpsBase[5] != VALID_SHARP) || (abs(sharpsBase[4]-sharpsBase[5]) > SHARP_DIFF));
                 
                 found_wall = true;
                 moveFrente(0);
@@ -179,6 +179,7 @@ void GIMu::follow_wall_to_cup() {
             }
             
             aux++;
+
             if (aux == 10) {
                 aux = 0;
             }
@@ -186,7 +187,7 @@ void GIMu::follow_wall_to_cup() {
             Serial.print(sharpsBase[2]);
             Serial.print(" S3: ");
             Serial.println(sharpsBase[3]);
-            if ((sharpsBase[2] <= DIST_TURN01 && sharpsBase[2] != -1) || (sharpsBase[3] <= DIST_TURN01 && sharpsBase[3] != -1)) {
+            if ((sharpsBase[2] <= DIST_TURN01 && sharpsBase[2] != VALID_SHARP) || (sharpsBase[3] <= DIST_TURN01 && sharpsBase[3] != VALID_SHARP)) {
                 found_terrine_area = true;
                 moveFrente(0);
                 Serial.println("Achei o caralho todo");
@@ -197,45 +198,80 @@ void GIMu::follow_wall_to_cup() {
     }
 }
 
+/*void GIMu::adjust_to_get_cup(){
+    unsigned aux = 0;
+    do{
+        
+        if (2*aux%2 + 2 < 4) {
+            sharpsBase[2*aux%2 + 2] = getSharp(SH_FRENTE_DIREITA);
+            sharpsBase[2*aux%2 + 3] = getSharp(SH_FRENTE_ESQUERDA);
+        } else {
+            sharpsBase[2*aux%2 + 2] = getSharp(SH_DIREITA_FRENTE);
+            sharpsBase[2*aux%2 + 3] = getSharp(SH_DIREITA_TRAS);
+        }
+        
+        aux++;
+
+        if (aux == 10) {
+            aux = 0;
+        }
+
+    } while(!(sharpsBase[0] != VALID_SHARP && sharpsBase[1] != VALID_SHARP 
+                && sharpsBase[2] != VALID_SHARP && sharpsBase[3] != VALID_SHARP));
+}*/
+
 void GIMu::getTerrine(){
     bracoCopo.tryGetTerrine();
     bracoCopo.recolherBraco();
 }
 
 void GIMu::ordenhar(){
+    myservo.attach(SERVOG_DEDO);
     unsigned cont = 0;
     bool found_teta = false, found_dedo = false;
-    elevador.goToStage02();
+    //elevador.goToStage02();
+    Serial.println("INICIO");
     while (!found_teta) {
+      Serial.println("n achou");
         moveFrente(LOOKING_SPEED);
         if (getSharp(SH_ORDENHADOR) <= TEM_TETA) {
             found_teta = true;
             moveFrente(0);
         }
-    }
+      }
 
     while (!found_dedo) {
+      Serial.println("procurando dedo");
         if (cont < CICLE_TIME) {
             if (elevador.getStage() == 3) {
                 elevador.downToStage02();
             } else if (elevador.getStage() == 2) {
                 elevador.upToStage03();
             }
-            if (getMSharp() <= TEM_DEDO) {
+
+            Serial.println(getMSharp());
+            if (getMSharp() <= TEM_DEDO) {  
+               Serial.println("achou dedo");
                 found_dedo = true;
                 elevador.stop();
             }
         } else {
-            found_teta = false;
             elevador.goToStage02();
-
-            moveTank(-TURNING_SPEED, TURNING_SPEED);
-            delay(500);
-            moveTank(TURNING_SPEED, -TURNING_SPEED);
-            delay(700);
+            Serial.println("testando");
+            for(int pos = ANGULO_INICIAL; pos < ANGULO_FINAL; pos+=5){
+              myservo.write(pos);
+              
+              elevador.upToStage03();
+              if(getMSharp() < TEM_DEDO){
+                found_dedo = true;
+                elevador.stop();
+                break;
+              } else {
+                  elevador.goToStage02();
+              }
+            }
             
-            cont = 0;
-            found_dedo = false;   
+            cont = 0;  
         }
         cont = (cont+1)/CICLE_TIME;
     }
