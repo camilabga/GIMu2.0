@@ -4,7 +4,7 @@ I2C::I2C(){
     clearBufIn();
 	clearBufOut();
 }
-
+//
 void I2C::clearBufIn(){
 	for(int i=0;i<QTD_BYTES_I2C*4;i++){
 		in[i] = '\0';
@@ -25,7 +25,7 @@ bool I2C::getData(){
 	out[0] = 'I';
 	out[9] = ';';
 	ard->i2cWrite(out, QTD_BYTES_I2C);
-	usleep(10000);
+	usleep(20000);
 
 	//Recebe e checa se deu certo:
 	if(ard->i2cRead(in,QTD_BYTES_I2C) == QTD_BYTES_I2C && in[9] == ';'){
@@ -38,6 +38,7 @@ bool I2C::getData(){
 		return false;
 	}
 }
+//
 
 bool I2C::sendData(){
 	
@@ -46,7 +47,7 @@ bool I2C::sendData(){
 
 	//Enviar dados para arduino:
 	ard->i2cWrite(out, QTD_BYTES_I2C);
-	usleep(10000);
+	usleep(20000);
 
 	//Recebendo confirmação:
 	if(ard->i2cRead(inAux,QTD_BYTES_I2C) == QTD_BYTES_I2C && inAux[9] == ';'){
