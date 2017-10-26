@@ -140,13 +140,10 @@ void seguirParedeSOM(std::string output) {
     
     som.findBest(input, 0, 5);
 
-      std::cout << "input: " << input[6] << " " << input[7] << std::endl;
+    std::cout << "input: " << input[6] << " " << input[7] << std::endl;
 
     aux = (int)input[6];
     val = (int)input[7];
-
-
-    
 
     val /= 2;
     aux /= 2;

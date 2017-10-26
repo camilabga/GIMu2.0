@@ -7,16 +7,15 @@ I2C::I2C(){
 
 void I2C::clearBufIn(){
 	for(int i=0;i<QTD_BYTES_I2C*4;i++){
-		in[i] = '\0';
+		in[i] = 0;
 	}
 }
 void I2C::clearBufOut(){
 	for(int i=0;i<QTD_BYTES_I2C;i++){
-		out[i]= '\0';
+		out[i]= 0;
 	}
 	out[9] = ';';
 }
-
 bool I2C::getData(){
 	Pi2c* ard = new Pi2c(ADD);
 	clearBufIn();
@@ -38,7 +37,6 @@ bool I2C::getData(){
 		return false;
 	}
 }
-
 bool I2C::sendData(){
     Pi2c* ard = new Pi2c(ADD);
 	char inAux[QTD_BYTES_I2C*4];
@@ -58,7 +56,6 @@ bool I2C::sendData(){
 		return false;
 	}
 }
-
 bool I2C::tradeData(int milisec){
 	Pi2c* ard = new Pi2c(ADD);
 	clearBufIn();
@@ -78,7 +75,6 @@ bool I2C::tradeData(int milisec){
 		return false;
 	}
 }
-
 void I2C::printData(){
 	cout << "-> " ;
 	for(int i=0;i<QTD_BYTES_I2C;i++){
