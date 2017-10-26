@@ -23,7 +23,7 @@ GIMu::GIMu(BracoCopo b){
 }
 #line 22 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void setup();
-#line 27 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
+#line 29 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void loop();
 #line 22 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 
@@ -190,42 +190,97 @@ void GIMu::follow_wall_to_terrine_area() {
             if (aux == 10) {
                 aux = 0;
             }
-            Serial.print(" S2: ");
-            Serial.print(sharpsBase[2]);
-            Serial.print(" S3: ");
-            Serial.println(sharpsBase[3]);
+            
             if ((sharpsBase[2] <= DIST_TURN01 && sharpsBase[2] != VALID_SHARP) || (sharpsBase[3] <= DIST_TURN01 && sharpsBase[3] != VALID_SHARP)) {
                 found_terrine_area = true;
                 moveFrente(0);
                 Serial.println("Achei o caralho todo");
             } else {
-                taxearDireita();
+                moveFrente(LOOKING_SPEED);
             }
         }
     }
 }
 
-/*void GIMu::adjust_to_get_cup(){
+void GIMu::adjust_to_get_cup(){
     unsigned aux = 0;
+    getSharps();
+    stop();
+    delay(1000);
     do{
-        
-        if (2*aux%2 + 2 < 4) {
-            sharpsBase[2*aux%2 + 2] = getSharp(SH_FRENTE_DIREITA);
-            sharpsBase[2*aux%2 + 3] = getSharp(SH_FRENTE_ESQUERDA);
-        } else {
-            sharpsBase[2*aux%2 + 2] = getSharp(SH_DIREITA_FRENTE);
-            sharpsBase[2*aux%2 + 3] = getSharp(SH_DIREITA_TRAS);
-        }
-        
-        aux++;
 
-        if (aux == 10) {
-            aux = 0;
+      Serial.println("GIRANDO");
+      
+        moveTank(-TURNING_SPEED, TURNING_SPEED);
+
+        if (aux%2 == 0) {
+            sharpsBase[aux%2] = getSharp(SH_DIREITA_FRENTE);
+            sharpsBase[aux%2 + 1] = getSharp(SH_DIREITA_TRAS);
+        } else {
+            sharpsBase[aux%2 + 1] = getSharp(SH_FRENTE_DIREITA);
+            sharpsBase[aux%2 + 2] = getSharp(SH_FRENTE_ESQUERDA);
         }
+
+        Serial.print(" S0: ");
+        Serial.print(sharpsBase[0]);
+        Serial.print(" S1: ");
+        Serial.print(sharpsBase[1]);
+        Serial.print("  || S2: ");
+        Serial.print(sharpsBase[2]);
+        Serial.print(" S3: ");
+        Serial.println(sharpsBase[3]);
+        
+        aux=(aux+1)%2;
 
     } while(!(sharpsBase[0] != VALID_SHARP && sharpsBase[1] != VALID_SHARP 
-                && sharpsBase[2] != VALID_SHARP && sharpsBase[3] != VALID_SHARP));
-}*/
+                && sharpsBase[2] != VALID_SHARP && sharpsBase[3] != VALID_SHARP)
+                || abs(sharpsBase[0] - sharpsBase[1]) > SHARP_DIFF);
+    Serial.println("POSICAO CERTA");
+    stop();
+    delay(1000);
+
+    aux=0;
+
+    do{
+        if (aux%2 == 0) {
+            sharpsBase[aux%2] = getSharp(SH_DIREITA_FRENTE);
+            sharpsBase[aux%2 + 1] = getSharp(SH_DIREITA_TRAS);
+        } else {
+            sharpsBase[aux%2 + 1] = getSharp(SH_FRENTE_DIREITA);
+            sharpsBase[aux%2 + 2] = getSharp(SH_FRENTE_ESQUERDA);
+        }
+
+        Serial.print(" S0: ");
+        Serial.print(sharpsBase[0]);
+        Serial.print(" S1: ");
+        Serial.print(sharpsBase[1]);
+        Serial.print("  || S2: ");
+        Serial.print(sharpsBase[2]);
+        Serial.print(" S3: ");
+        Serial.println(sharpsBase[3]);
+
+        aux=(aux+1)%2;
+
+        moveTank(-TURNING_SPEED, TURNING_SPEED);
+    } while (sharpsBase[0] > 9 && sharpsBase[2] > 7);
+
+    stop();
+    delay(500);
+
+    do {
+        moveTras(LOOKING_SPEED);
+    } while(sharpsBase[0] > 7);
+
+    stop();
+    delay(500);
+
+    do{
+        moveTank(TURNING_SPEED, -TURNING_SPEED);
+    }while(abs(sharpsBase[0] - sharpsBase[1]) > SHARP_DIFF);
+
+    stop();
+
+}
 
 void GIMu::getTerrine(){
     bracoCopo.tryGetTerrine();
@@ -309,6 +364,8 @@ char in;
 void setup() {
   Serial.begin(9600);
   //teste.attach(2);
+  robo.follow_wall_to_terrine_area();
+  robo.adjust_to_get_cup();
 }
 
 void loop() {
@@ -353,16 +410,15 @@ void loop() {
   robo.moveTank(LOOKING_SPEED, -LOOKING_SPEED); */ 
   
   // ### teste seguir parede ###
-  //robo.follow_wall_to_cup();
+  
 
   // ### teste pegar copo ###
   //robo.getTerrine();
 
   // ### TESTE ELEVADOR ###
-  elevador.goToStage03();
-  elevador.goToStage02();
-  elevador.goToStage01();
-  elevador.goToStage02();
+  //elevador.goToStage03();
+  //elevador.goToStage02();
+  //elevador.goToStage03();
 
   //Serial.println(elevador.whatStage());
 

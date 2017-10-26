@@ -20,7 +20,7 @@ class GIMu{
     void moveFrente(int velocidade);
     void moveTras(int velocidade);
     void moveTank(int pwm_esquerdo, int pwm_direito);
-    void stop();
+    inline void stop(){moveFrente(0);}
     void taxearDireita();
 
     void getSharps();
@@ -29,7 +29,7 @@ class GIMu{
     inline int getMSharp(){return analogRead(MSH_ORDENHADOR);}
     
     void follow_wall_to_terrine_area();
-    //void adjust_to_get_cup();
+    void adjust_to_get_cup();
 
     void getTerrine();
 

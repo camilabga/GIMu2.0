@@ -22,10 +22,12 @@ char in;
 void setup() {
   Serial.begin(9600);
   //teste.attach(2);
+  robo.follow_wall_to_terrine_area();
+  robo.adjust_to_get_cup();
 }
 
 void loop() {
-  robo.ordenhar();
+  //robo.ordenhar();
   /* ### Teste de Movimentação:*/
    /*robo.moveFrente(255);
    delay(2000);
@@ -66,7 +68,7 @@ void loop() {
   robo.moveTank(LOOKING_SPEED, -LOOKING_SPEED); */ 
   
   // ### teste seguir parede ###
-  //robo.follow_wall_to_cup();
+  
 
   // ### teste pegar copo ###
   //robo.getTerrine();
