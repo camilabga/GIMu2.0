@@ -314,12 +314,12 @@ void GIMu::adjust_to_get_cup(){
         Serial.print(" S3: ");
         Serial.println(sharpsBase[3]);
 
-        if(abs(sharpsBase[0] - sharpsBase[1]) > SHARP_DIFF) aligned = true;
-
         aux=(aux+1)%2;
         
         moveTank(TURNING_SPEED, -TURNING_SPEED);
     }while((abs(sharpsBase[0] - sharpsBase[1]) > SHARP_DIFF) && sharpsBase[2] != 35);
+
+    if(sharpsBase[0] < 9) aligned = true;
 
     stop();
     delay(500);
