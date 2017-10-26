@@ -18,8 +18,8 @@ void teclado(I2C &arduino, std::string &data);
 void setData(std::string &data, I2C &arduino);
 
 int main() {
-  collectDataforNetWork("Coleta/teste_seguirParede.csv");
-  //seguirParedeSOM("output20000.csv");
+  //collectDataforNetWork("Coleta/teste_seguirParede.csv");
+  seguirParedeSOM("Teste1_output20000.csv");
 
   return 0;
 }
@@ -125,37 +125,45 @@ void seguirParedeSOM(std::string output) {
 
   SOM som(30);
   som.loadNodes(output.c_str());
+ 
   I2C arduino;
+  
 
   std::vector<double> input{0, 0, 0, 0, 0, 0, 0, 0};
+   
 
   while (true) {
     arduino.getData();
+    usleep(100000);
+    arduino.printData();
     for(int i = 0; i<6; i++){
-      input [i]=  arduino.in[i];
+      input [i]=  arduino.in[i]/35.0;
+
+      cout << "input[ "<<i <<"] " <<input [i] << " " ;
     }
-   
+    cout << endl;
     int aux;
     int val;
     
     som.findBest(input, 0, 5);
 
-      std::cout << "input: " << input[6] << " " << input[7] << std::endl;
-
-    aux = (int)input[6];
-    val = (int)input[7];
-
+      
+    cout << "ouput: " << input[6] << " " << input[7] << std::endl;
+    aux = (int)(input[6]*100.0);
+    val = (int)(input[7]*100.0);
+    cout << "ouput x150: " << aux << " " << val << std::endl;
 
     
 
     val /= 2;
     aux /= 2;
    // std::cout << "Saida: " << val << " " << aux << std::endl;
-    arduino.out[0] = (char)val;
+    arduino.out[0] = 'M';
     arduino.out[1] = (char)val;
+    arduino.out[2] = (char)val;
 
     arduino.sendData();
-    usleep(1100000);
+    usleep(100000);
     /*
     0 e 1 -> Frente
     2 e 3 -> Esquerda

@@ -1,7 +1,9 @@
 #include "I2C.h"
 
 I2C::I2C(){
+	cout << "oi " <<endl;
     clearBuf();
+	cout << "thau" << endl;
 }
 
 void I2C::clearBuf(){
