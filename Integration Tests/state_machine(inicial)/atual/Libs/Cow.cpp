@@ -309,7 +309,7 @@ void Cow::drawCenter(Mat &frame){
 }*/
 
 void Cow::sendSerial(float erro, unsigned i, char &c1, char &c2){
-    int to_send = (int)(erro*100+100);
+    int to_send = (int)((erro*100+100) / 2);
     switch(i){
         case 1:
         c1 = 'r';

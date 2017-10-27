@@ -168,7 +168,7 @@ int main(){
 					if (waitKey(1) == 27){
 						break;
 					}
-					//
+					////
 
 					//Envia comando I2C: Movimentação
 					arduino.out[0] = 4; //Estado 4
