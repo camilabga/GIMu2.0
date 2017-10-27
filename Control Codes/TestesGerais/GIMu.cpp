@@ -367,7 +367,7 @@ void GIMu::getTerrine(){
     bracoCopo.recolherBraco();
 }
 
-void GIMu::ordenhar(){
+void GIMu::ordenhar01(){
     SM_Ordenhador.attach(SERVO_ORDENHADOR);
     unsigned cont = 0;
     bool found_teta = false, found_dedo = false;
@@ -428,6 +428,58 @@ void GIMu::ordenhar(){
               }
 
             }
+        }
+        cont++;
+    }
+}
+
+void GIMu::ordenhar02(){
+    SM_Ordenhador.attach(SERVO_ORDENHADOR);
+    unsigned cont = 0;
+    bool found_teta = false, found_dedo = false;
+    elevador.goToStage02();
+    Serial.println("INICIO");
+    while (!found_teta) {
+      Serial.println("n achou");
+        moveFrente(LOOKING_SPEED);
+        Serial.println(getSharp(SH_ORDENHADOR));
+        if (getSharp(SH_ORDENHADOR) <= TEM_TETA) {
+            found_teta = true;
+            moveFrente(0);
+        }
+    }
+
+    while (!found_dedo) {
+      Serial.println("procurando dedo");
+        if (cont < CICLE_TIME) {
+
+            for (int pos = ANGULO_INICIAL; pos < ANGULO_FINAL; pos+=15) {
+                SM_Ordenhador.write(pos);
+            }
+        
+            for (int pos = ANGULO_FINAL; pos > ANGULO_INICIAL; pos-=15) {
+                SM_Ordenhador.write(pos);
+            }
+
+            while(elevador.getStage() == 3) {
+                elevador.downToStage02();
+                if(getMSharp() < TEM_DEDO) {
+                    found_dedo = true;
+                    elevador.stop();
+                    break;
+                }
+            }
+
+            while(elevador.getStage() == 2) {
+                elevador.upToStage03();
+                if(getMSharp() < TEM_DEDO) {
+                    found_dedo = true;
+                    elevador.stop();
+                    break;
+                }
+            }
+        } else {
+            break;
         }
         cont++;
     }

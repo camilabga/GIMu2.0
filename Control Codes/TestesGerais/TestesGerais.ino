@@ -1,4 +1,5 @@
 #include "GIMu.h"
+#include <LiquidCrystal.h>
 
 Motor esquerdo(DC11, DC12);
 Motor direito(DC21, DC22);
@@ -18,12 +19,14 @@ GIMu robo (direito, esquerdo, braco, elevador);
 Servo teste;
 
 char in;
+LiquidCrystal lcd(28,30,32,34,36,38);
 
 void setup() {
   Serial.begin(9600);
   //teste.attach(6);
-
-  robo.ordenhar();
+  lcd.begin(16, 2);
+  lcd.print("hello, world!");
+  //robo.ordenhar01();
 
   /* AJUSTAR PARA COPO */
   /*robo.follow_wall_to_terrine_area();
@@ -83,6 +86,10 @@ void loop() {
   
   //Serial.println(robo.getSharp(SH_ORDENHADOR));
   //delay(100);
+  /*lcd.setCursor(0, 1);
+  lcd.print("BLA BLA BLA");*/
+
+  Serial.println(robo.getMSharp());
 
 
 }
