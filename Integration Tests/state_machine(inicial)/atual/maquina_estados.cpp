@@ -9,36 +9,139 @@ int main(){
 	//
 
 	//Variaveis Máquina_Estado:
-	int estadoAtual = 1, estadoAnterior;
+	int estadoAtual = 1;
 	bool fim_geral = false;
 	//
 
 	while(!fim_geral){
 		switch(estadoAtual){
-			case 1:
-				//Seguir parede:
-				//Comando iniciar:
+			
+			case 1:	//Seguir parede:
+				
+				//Envia comando I2C: Iniciando estado
 				arduino.out[0] = 1;
 				arduino.out[1] = 1;
 				arduino.tradeData();
 				usleep(100000);
+				//
+
 				while(1){
+
+					//Envia comando I2C: Perguntando se já acabou
 					arduino.out[0] = 1;
 					arduino.out[1] = 2;
 					arduino.tradeData();
-					cout << (int)arduino.in[0] << " " << (int)arduino.in[1] << " " << (int)arduino.in[3] << endl;
 					if(arduino.in[3] == 1){
 						break;
 					}
-					cout << "Acabou Nao." << endl;
+					//
+
+					cout << "N Acabou 01." << endl;
 					usleep(100000);
 				}
-				cout << "Acabou Sim." << endl;
-				fim_geral = true;
-			break;
-			case 2:
-				//Procura Copo:
 
+				//Fim de estado:
+				cout << "Acabou 01." << endl;
+				estadoAtual = 2;
+				//fim_geral = true;
+				//
+			break;
+			
+			case 2:	//Procura Copo:
+				
+				//Envia comando I2C: Iniciando estado
+				arduino.out[0] = 2;
+				arduino.out[1] = 1;
+				arduino.tradeData();
+				usleep(100000);
+				//
+
+				while(1){
+					
+					//Envia comando I2C: Perguntando se já acabou
+					arduino.out[0] = 2;
+					arduino.out[1] = 2;
+					arduino.tradeData();
+					if(arduino.in[3] == 1){
+						break;
+					}
+					//
+
+					cout << "N Acabou 02." << endl;
+					usleep(100000);
+				}
+
+				//Fim de estado:
+				cout << "Acabou 02." << endl;
+				estadoAtual = 3;
+				// fim_geral = true;
+				//
+			break;
+			
+			case 3:	//Pega Copo
+
+				//Envia comando I2C: Iniciando estado
+				arduino.out[0] = 3;
+				arduino.out[1] = 1;
+				arduino.tradeData();
+				usleep(100000);
+				//
+
+				while(1){
+
+					//Envia comando I2C: Perguntando se já acabou
+					arduino.out[0] = 3;
+					arduino.out[1] = 2;
+					arduino.tradeData();
+					if(arduino.in[3] == 1){
+						break;
+					}
+					//
+
+					cout << "N Acabou 03." << endl;
+					usleep(100000);
+				}
+
+				//Fim de estado:
+				cout << "Acabou 03." << endl;
+				estadoAtual = 4;
+				// fim_geral = true;
+				//
+			break;
+				
+			case 4:	//Procura vaca:
+				
+				//Envia comando I2C: Iniciando estado
+				arduino.out[0] = 4;
+				arduino.out[1] = 1;
+				arduino.tradeData();
+				usleep(100000);
+				//
+
+				while(1){
+					char c1;
+					char c2;
+					//PROCESSO OPENCV:
+
+					//
+
+					//Envia comando I2C: Movimentação
+					arduino.out[0] = 4; //Estado 4
+					arduino.out[1] = 2;	//Subfunção 2: envio de comando.
+					arduino.out[3] = c1;//Comando 1
+					arduino.out[4] = c2;//Comando 2
+					arduino.tradeData();
+					//
+
+					cout << "N Acabou 04." << endl;
+					usleep(10000);
+				}
+
+				//Fim de estado:
+				cout << "Acabou 04." << endl;
+				// estadoAtual = 5;
+				fim_geral = true;
+				//
 			break;
 
 			default:
