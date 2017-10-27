@@ -1,7 +1,10 @@
 #include <iostream>
 #include "I2C/I2C.h"
+#include "Libs/Cow.h"
 
 using namespace std;
+using namespace cv;
+
 
 int main(){
 	//Variaveis I2C:
@@ -9,8 +12,25 @@ int main(){
 	//
 
 	//Variaveis Máquina_Estado:
-	int estadoAtual = 1;
+	int estadoAtual = 4;
 	bool fim_geral = false;
+	//
+
+	//Variaveis Opencv:
+	VideoCapture capture(0);
+	if ( !capture.isOpened() ){
+	cout << "Cannot open the video file" << endl;
+	return -1;
+	}
+
+	/*create Cow -> first initialization has no center
+	and the still scans the whole Mat, also, do not contain
+	any rectangle center defined */
+
+	Cow cow;
+	Mat frame;
+	char c1;
+	char c2;
 	//
 
 	while(!fim_geral){
@@ -111,6 +131,9 @@ int main(){
 				
 			case 4:	//Procura vaca:
 				
+				//open webcam
+				
+
 				//Envia comando I2C: Iniciando estado
 				arduino.out[0] = 4;
 				arduino.out[1] = 1;
@@ -119,10 +142,32 @@ int main(){
 				//
 
 				while(1){
-					char c1;
-					char c2;
-					//PROCESSO OPENCV:
+					
 
+					//PROCESSO OPENCV:
+					if (!capture.read(frame)) {
+						cout<<"\n Cannot read the video file. \n";
+						break;
+					}
+
+					cow.setROI(frame);
+					cow.transformImage(); 
+					cow.searchSquares();
+
+					if (cow.find()){
+						cow.drawCenter(frame);
+						cow.sendPID(c1,c2);
+					} else {
+						cow.sendPID(c1,c2);
+					}
+
+					namedWindow("Original", WINDOW_NORMAL);
+					resizeWindow("Original", WIDTH, HEIGHT);
+					imshow("Original", frame);
+
+					if (waitKey(1) == 27){
+						break;
+					}
 					//
 
 					//Envia comando I2C: Movimentação
