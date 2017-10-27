@@ -6,6 +6,7 @@
 char in[QTD_BYTES_I2C*4];
 char out[QTD_BYTES_I2C] = {".........;"};
 char msgPadrao[QTD_BYTES_I2C] = {".........;"};
+
 void clearBuf(){
   for (int i=0; i<QTD_BYTES_I2C; i++) {
     in[i]='\0';
@@ -15,11 +16,13 @@ void clearBuf(){
 //
 
 //Definicoes estados:
-int estadoAtual = 0, estadoAntigo = 0;
+int estadoAtual = 0;
+bool fimE1=true;
+bool fimE2=true;
 //
 
 //Outras definicoes:
-// bool flag = false;
+bool flag = false;
 bool erroCom = false;
 //
 
@@ -44,16 +47,33 @@ void setup() {
 }
 
 void loop() {
-  // if(flag){
-  //   delay2(1000);
-  //   flag = false;
-  // }
+  if(flag){
+    tempo = millis();
+    flag = false;
+  }else{
+    if((millis() - tempo) > 1000 && flag2){  
+      robo.moveTank(0,0);
+      Serial.println("Parando por inatividade..");
+      flag2 = false;
+    }
+  }
+  switch(estadoAtual){
+    case 1:
+      //Executa funcao segue parede
+
+      //
+      delay(2000);
+      fimE1 = true;
+      estadoAtual = 90
+    break;
+      //Executa funcao 
+  }
+
 }
 
 void receiveData(int byteCount) {
   if(byteCount != QTD_BYTES_I2C){
     Serial.println("Erro!, Msg descartada!");
-    clearBuf();
     while(Wire.available()) {
       Wire.read();
     }
@@ -67,36 +87,39 @@ void receiveData(int byteCount) {
     Serial.print("Recebido: ");
     Serial.println(in); 
     switch(in[0]){
+      //Segue Parede:
       case 1:
-        //Segue Parede:
-        estadoAntigo = estadoAtual;
-        estadoAtual = 1;
-
+        out[0]=1;
+        switch(in[1]){
+          case 1://Inicio
+            estadoAtual = 1;
+            out[1] = 1;
+            fimE1 = false;
+          break;
+          case 2://Achou?
+            out[1] = 2;
+            if(fimE1){
+              out[3] = 1;
+            }else{
+              out[3] = 2;
+            }
+          break;
+          default:
+            out[0] = 98;
+          break;
+        }
       break;
+      //Procura Copo:
       case 2:
-        //Procura Copo:
-        estadoAntigo = estadoAtual;
-        estadoAtual = 2;
+        
 
       break;
       case 3:
         //Pega Copo:
-        estadoAntigo = estadoAtual;
-        estadoAtual = 3;
 
       break;
-      case 'V':
-        out[0] = 'T';
-        out[1] = '0';
-        out[2] = '1';
-      break;
-      case 'D':
-        out[0] = 'T';
-        out[1] = '0';
-        out[2] = '2';
-      break;
       default:
-          
+        
       break;
     }
   }
