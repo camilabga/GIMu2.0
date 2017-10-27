@@ -33,8 +33,8 @@
 
 // #### ORDENHAR ####
 #define TEM_DEDO 50
-#define TEM_TETA 9
-#define CICLE_TIME 1000
-#define ANGULO_INICIAL 45
-#define ANGULO_FINAL 135
+#define TEM_TETA 7
+#define CICLE_TIME 5
+#define ANGULO_INICIAL 80
+#define ANGULO_FINAL 170
 

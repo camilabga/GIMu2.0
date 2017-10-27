@@ -435,7 +435,8 @@ void GIMu::ordenhar01(){
 
 void GIMu::ordenhar02(){
     SM_Ordenhador.attach(SERVO_ORDENHADOR);
-    unsigned cont = 0;
+    SM_Ordenhador.write(90);
+    unsigned cont = 0, pos = 90;
     bool found_teta = false, found_dedo = false;
     elevador.goToStage02();
     Serial.println("INICIO");
@@ -453,30 +454,42 @@ void GIMu::ordenhar02(){
       Serial.println("procurando dedo");
         if (cont < CICLE_TIME) {
 
-            for (int pos = ANGULO_INICIAL; pos < ANGULO_FINAL; pos+=15) {
+            for (int pos = ANGULO_INICIAL; pos < ANGULO_FINAL; pos+=5) {
+              if(getMSharp() < TEM_DEDO) {
+                    found_dedo = true;
+                    elevador.stop();
+                    break;
+                }
                 SM_Ordenhador.write(pos);
+                delay(500);
             }
         
-            for (int pos = ANGULO_FINAL; pos > ANGULO_INICIAL; pos-=15) {
+            for (int pos = ANGULO_FINAL; pos > ANGULO_INICIAL; pos-=5) {
+              if(getMSharp() < TEM_DEDO) {
+                    found_dedo = true;
+                    elevador.stop();
+                    break;
+                }
                 SM_Ordenhador.write(pos);
+                delay(500);
             }
 
             while(elevador.getStage() == 3) {
-                elevador.downToStage02();
                 if(getMSharp() < TEM_DEDO) {
                     found_dedo = true;
                     elevador.stop();
                     break;
                 }
+                elevador.downToStage02();
             }
 
             while(elevador.getStage() == 2) {
-                elevador.upToStage03();
                 if(getMSharp() < TEM_DEDO) {
                     found_dedo = true;
                     elevador.stop();
                     break;
                 }
+                elevador.upToStage03();
             }
         } else {
             break;

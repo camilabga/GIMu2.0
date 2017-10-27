@@ -8,7 +8,7 @@ Motor mbraco(MBRACO1, MBRACO2);
 BracoCopo braco(SERVOG_PULSO, SERVOG_DEDO, SH_GARRA, MSH_GARRA_D, MSH_GARRA_E, mbraco);
 
 Motor mElevator(DC_ELEVADOR1, DC_ELEVADOR0);
-Elevador elevador(mElevator, 3);
+Elevador elevador(mElevator, 2);
 
 GIMu robo (direito, esquerdo, braco, elevador);
 
@@ -24,9 +24,9 @@ LiquidCrystal lcd(28,30,32,34,36,38);
 void setup() {
   Serial.begin(9600);
   //teste.attach(6);
-  lcd.begin(16, 2);
-  lcd.print("hello, world!");
-  //robo.ordenhar01();
+  /*lcd.begin(16, 2);
+  lcd.print("hello, world!");*/
+  //robo.ordenhar02();
 
   /* AJUSTAR PARA COPO */
   /*robo.follow_wall_to_terrine_area();
@@ -34,6 +34,20 @@ void setup() {
 }
 
 void loop() {
+  /*for (unsigned a = 70; a < 110; a+=10) {
+    teste.write(a);
+    delay(1000);
+  }
+
+  for (unsigned a = 110; a >70; a-=10) {
+    teste.write(a);
+    delay(1000);
+  }*/
+
+  //teste.write(80);
+
+  //Serial.println(analogRead(A8));
+  
   /* ### Teste de Movimentação:*/
    /*robo.moveFrente(255);
    delay(2000);
@@ -69,8 +83,8 @@ void loop() {
   //robo.getTerrine();
 
   // ### TESTE ELEVADOR ###
-  /*elevador.goToStage02();
-  elevador.goToStage03();*/
+  elevador.goToStage01();
+  //elevador.goToStage03();
   
   //Serial.println(elevador.whatStage());
 
@@ -89,7 +103,9 @@ void loop() {
   /*lcd.setCursor(0, 1);
   lcd.print("BLA BLA BLA");*/
 
-  Serial.println(robo.getMSharp());
+  
+
+  //Serial.println(robo.getMSharp());
 
 
 }
