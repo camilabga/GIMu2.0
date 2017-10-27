@@ -1,7 +1,7 @@
 #include <Wire.h>
 
 //Definicoes I2C:
-#define SLAVE_ADDRESS 0x04
+#define SLAVE_ADDRESS 0x05
 #define QTD_BYTES_I2C 10
 char in[QTD_BYTES_I2C*4];
 char out[QTD_BYTES_I2C] = {".........;"};
@@ -22,8 +22,9 @@ bool fimE2=true;
 //
 
 //Outras definicoes:
-bool flag = false;
+bool flag = false, flag2 = false;
 bool erroCom = false;
+unsigned long tempo;
 //
 
 //Delay sem ser delay:
@@ -52,7 +53,7 @@ void loop() {
     flag = false;
   }else{
     if((millis() - tempo) > 1000 && flag2){  
-      robo.moveTank(0,0);
+      // robo.moveTank(0,0);
       Serial.println("Parando por inatividade..");
       flag2 = false;
     }
@@ -60,12 +61,13 @@ void loop() {
   switch(estadoAtual){
     case 1:
       //Executa funcao segue parede
-
+      delay(3000);
       //
-      delay(2000);
+      
       fimE1 = true;
-      estadoAtual = 90
+      estadoAtual = 90;
     break;
+    case
       //Executa funcao 
   }
 
@@ -85,18 +87,23 @@ void receiveData(int byteCount) {
       Wire.readBytesUntil(';', in, byteCount);
     }
     Serial.print("Recebido: ");
-    Serial.println(in); 
+    Serial.print(in[0]);
+    Serial.print(" ");
+    Serial.println(in[1]); 
     switch(in[0]){
       //Segue Parede:
       case 1:
         out[0]=1;
+        
         switch(in[1]){
-          case 1://Inicio
+          
+          case 1://Mandando arduino começar.
             estadoAtual = 1;
             out[1] = 1;
             fimE1 = false;
           break;
-          case 2://Achou?
+
+          case 2://Perguntando se ja terminou.
             out[1] = 2;
             if(fimE1){
               out[3] = 1;
@@ -104,6 +111,7 @@ void receiveData(int byteCount) {
               out[3] = 2;
             }
           break;
+          
           default:
             out[0] = 98;
           break;
