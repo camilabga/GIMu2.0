@@ -1,7 +1,21 @@
 #include <Wire.h>
+#include "GIMu.h"
+
+//Definições Robô:
+Motor esquerdo(DC11, DC12);
+Motor direito(DC21, DC22);
+
+Motor mbraco(MBRACO1, MBRACO2);
+BracoCopo braco(SERVOG_PULSO, SERVOG_DEDO, SH_GARRA, MSH_GARRA_D, MSH_GARRA_E, mbraco);
+
+Motor mElevator(DC_ELEVADOR1, DC_ELEVADOR0);
+Elevador elevador(mElevator, 3);
+
+GIMu robo (direito, esquerdo, braco, elevador);
+//
 
 //Definicoes I2C:
-#define SLAVE_ADDRESS 0x04
+#define SLAVE_ADDRESS 0x05
 #define QTD_BYTES_I2C 10
 char in[QTD_BYTES_I2C*4];
 char out[QTD_BYTES_I2C] = {".........;"};
@@ -16,14 +30,15 @@ void clearBuf(){
 //
 
 //Definicoes estados:
+#define QTD_ESTADOS 10
 int estadoAtual = 0;
-bool fimE1=true;
-bool fimE2=true;
+bool fimEstado[10];
 //
 
 //Outras definicoes:
-bool flag = false;
+bool flag = false, flag2 = false;
 bool erroCom = false;
+unsigned long tempo;
 //
 
 //Delay sem ser delay:
@@ -44,6 +59,13 @@ void setup() {
   //Serial:
   Serial.begin(9600);
   //
+
+  //Inicializando variaveis:
+  for(int i=0; i<QTD_ESTADOS;i++){
+    fimEstado[i] = true;
+  }
+  //
+
 }
 
 void loop() {
@@ -52,21 +74,60 @@ void loop() {
     flag = false;
   }else{
     if((millis() - tempo) > 1000 && flag2){  
-      robo.moveTank(0,0);
+      // robo.moveTank(0,0);
       Serial.println("Parando por inatividade..");
       flag2 = false;
     }
   }
   switch(estadoAtual){
+    
     case 1:
-      //Executa funcao segue parede
 
+      //Executa funcao segue parede
+      delay(3000);
       //
-      delay(2000);
-      fimE1 = true;
-      estadoAtual = 90
+      
+      //Fim estado:
+      fimEstado[1] = true;
+      estadoAtual = 90;
+      //
+
     break;
-      //Executa funcao 
+
+    case 2:
+    
+      //Executa funcao procura copo
+      delay(3000);
+      //
+      
+      //Fim estado:
+      fimEstado[2] = true;
+      estadoAtual = 90;
+      //
+    
+    break;
+
+    case 3:
+    
+      //Executa funcao pega copo
+      delay(3000);
+      //
+      
+      //Fim estado:
+      fimEstado[3] = true;
+      estadoAtual = 90;
+      //
+    
+    break;
+
+    case 4:
+    
+      //Executa funcao segue vaca
+      //delay(3000);
+      //
+      
+    break;
+
   }
 
 }
@@ -85,42 +146,150 @@ void receiveData(int byteCount) {
       Wire.readBytesUntil(';', in, byteCount);
     }
     Serial.print("Recebido: ");
-    Serial.println(in); 
+    Serial.print(in[0]);
+    Serial.print(" ");
+    Serial.println(in[1]); 
     switch(in[0]){
-      //Segue Parede:
+      
+      //  ####  Segue parede  #### 
       case 1:
         out[0]=1;
+        
         switch(in[1]){
-          case 1://Inicio
+          
+          case 1://Mandando arduino começar.
             estadoAtual = 1;
             out[1] = 1;
-            fimE1 = false;
+            fimEstado[1] = false;
           break;
-          case 2://Achou?
+
+          case 2://Perguntando se ja terminou.
             out[1] = 2;
-            if(fimE1){
+            if(fimEstado[1]){
               out[3] = 1;
             }else{
               out[3] = 2;
             }
           break;
+          
           default:
             out[0] = 98;
           break;
+
         }
+
       break;
-      //Procura Copo:
+      //  ####  
+      
+      //  ####  Procura copo  #### 
       case 2:
+      out[0]=2;
+      
+      switch(in[1]){
         
+        case 1://Mandando arduino começar.
+          estadoAtual = 2;
+          out[1] = 1;
+          fimEstado[2] = false;
+        break;
+
+        case 2://Perguntando se ja terminou.
+          out[1] = 2;
+          if(fimEstado[2]){
+            out[3] = 1;
+          }else{
+            out[3] = 2;
+          }
+        break;
+        
+        default:
+          out[0] = 98;
+        break;
+
+      }
 
       break;
+      //  ####
+
+      //  ####  Pega Copo  #### 
       case 3:
-        //Pega Copo:
+      out[0]=3;
+      
+      switch(in[1]){
+        
+        case 1://Mandando arduino começar.
+          estadoAtual = 3;
+          out[1] = 1;
+          fimEstado[3] = false;
+        break;
+
+        case 2://Perguntando se ja terminou.
+          out[1] = 2;
+          if(fimEstado[3]){
+            out[3] = 1;
+          }else{
+            out[3] = 2;
+          }
+        break;
+        
+        default:
+          out[0] = 98;
+        break;
+
+      }
 
       break;
-      default:
+      //  ####
+
+      //  ####  Procura/Segue vaca  #### 
+      case 4:
+        out[0]=4;
         
+        switch(in[1]){
+          
+          case 1://Mandando arduino começar.
+            estadoAtual = 4;
+            out[1] = 1;
+            fimEstado[4] = false;
+          break;
+
+          // case 2://Perguntando se ja terminou.
+          //   out[1] = 2;
+          //   if(fimEstado[4]){
+          //     out[3] = 1;
+          //   }else{
+          //     out[3] = 2;
+          //   }
+          // break;
+
+          case 2: //Recebendo comando 
+            if(in[3]=='r'){
+              int velDir = 100;
+              int velEsq = (int)in[4];
+              Serial.print(velEsq);
+              Serial.print(" ");
+              Serial.println(velDir);
+              robo.moveTank(velEsq, velDir);
+      
+            } else if (in[3]=='f') {
+              robo.moveTank(-100, 100);
+              Serial.println("girar");
+      
+            } else if (in[3]=='p') {
+              robo.moveFrente(0);
+              Serial.println("parado");
+            }
+          break;
+
+          default:
+            out[0] = 98;
+          break;
+
+        }
+
       break;
+      //  ####
+
     }
   }
 }

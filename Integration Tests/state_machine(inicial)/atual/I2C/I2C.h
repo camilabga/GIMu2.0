@@ -11,7 +11,7 @@
 using namespace std;
 
 #define QTD_BYTES_I2C 10
-#deinfe ADD_I2C 5
+#define ADD_I2C 5
 
 class I2C{
 public:
