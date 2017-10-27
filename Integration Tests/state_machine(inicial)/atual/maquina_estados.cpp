@@ -16,41 +16,29 @@ int main(){
 	while(!fim_geral){
 		switch(estadoAtual){
 			case 1:
-				//Segue Parede:
-				//Teste:
-				arduino.out[0] = 'V';
-				arduino.out[1] = 'D';
-				arduino.out[2] = 'C';
-				if(!arduino.tradeData()){
-					cout << "Erro ao enviar! " << endl;
-					return -1;
-				}
-				cout << "Enviado.. " << "Confirmacao: " << arduino.in << endl;
+				//Seguir parede:
+				//Comando iniciar:
+				arduino.out[0] = 1;
+				arduino.out[1] = 1;
+				arduino.tradeData();
 				usleep(100000);
-				// if(!arduino.sendData()){
-				// 	cout << "Erro ao enviar! " << endl;
-				// 	return -1;
-				// }
-				// //
-				// if(!arduino.getData()){
-				// 	cout << "Erro ao receber! " << endl;
-				// 	return -1;
-				// }
-				arduino.out[0] = 'D';
-				arduino.out[1] = 'E';
-				arduino.out[2] = 'U';
-				if(!arduino.tradeData()){
-					cout << "Erro ao enviar! " << endl;
-					return -1;
+				while(1){
+					arduino.out[0] = 1;
+					arduino.out[1] = 2;
+					arduino.tradeData();
+					cout << (int)arduino.in[0] << " " << (int)arduino.in[1] << " " << (int)arduino.in[3] << endl;
+					if(arduino.in[3] == 1){
+						break;
+					}
+					cout << "Acabou Nao." << endl;
+					usleep(100000);
 				}
-				//Teste
-				cout << "Enviado.. " << "Confirmacao: " << arduino.in << endl;
-				//TEste
-				usleep(100000);
-
+				cout << "Acabou Sim." << endl;
+				fim_geral = true;
 			break;
 			case 2:
 				//Procura Copo:
+
 			break;
 
 			default:
@@ -60,4 +48,3 @@ int main(){
 	}
     return 0;
 }
-//
