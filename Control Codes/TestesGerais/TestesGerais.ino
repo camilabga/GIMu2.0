@@ -8,7 +8,7 @@ Motor mbraco(MBRACO1, MBRACO2);
 BracoCopo braco(SERVOG_PULSO, SERVOG_DEDO, SH_GARRA, MSH_GARRA_D, MSH_GARRA_E, mbraco);
 
 Motor mElevator(DC_ELEVADOR1, DC_ELEVADOR0);
-Elevador elevador(mElevator, 2);
+Elevador elevador(mElevator, 3);
 
 GIMu robo (direito, esquerdo, braco, elevador);
 
@@ -23,10 +23,11 @@ LiquidCrystal lcd(28,30,32,34,36,38);
 
 void setup() {
   Serial.begin(9600);
-  //teste.attach(6);
+
+  //teste.attach(46);
   /*lcd.begin(16, 2);
   lcd.print("hello, world!");*/
-  //robo.ordenhar02();
+  //robo.ordenhar03();
 
   /* AJUSTAR PARA COPO */
   /*robo.follow_wall_to_terrine_area();
@@ -34,6 +35,31 @@ void setup() {
 }
 
 void loop() {
+  /*braco.tryGetTerrine();
+  braco.recolherBraco();*/
+
+  /* TESTE COMPONENTE POR COMPONENTE - BRACO */
+
+  /*Serial.print(digitalRead(FDC_FRENTE));
+  Serial.print(" | ");
+  Serial.println(digitalRead(FDC_TRAS));
+  delay(1000);*/
+
+  robo.follow_wall_to_terrine_area();
+  robo.adjust_to_get_cup();
+  robo.getTerrine();
+
+  //teste.write(0);
+  
+  /*mbraco.moveMotor(200, 1);
+  delay(1000);*/
+  /*mbraco.moveMotor(200, 0);
+  delay(1000);*/
+  /*teste.write(POSICAO_INICIAL_GARRA);
+  Serial.println(analogRead(MSH_GARRA_D));*/
+
+  //Serial.println(robo.getSharp(SH_GARRA));
+  
   /*for (unsigned a = 70; a < 110; a+=10) {
     teste.write(a);
     delay(1000);
@@ -44,9 +70,7 @@ void loop() {
     delay(1000);
   }*/
 
-  //teste.write(80);
-
-  //Serial.println(analogRead(A8));
+  //teste.write(90);
   
   /* ### Teste de Movimentação:*/
    /*robo.moveFrente(255);
@@ -83,8 +107,8 @@ void loop() {
   //robo.getTerrine();
 
   // ### TESTE ELEVADOR ###
-  elevador.goToStage01();
-  //elevador.goToStage03();
+  /*elevador.goToStage03();
+  elevador.goToStage01();*/
   
   //Serial.println(elevador.whatStage());
 

@@ -7,9 +7,10 @@
 // ###### seguir parede ######
 
 #define SHARP_DIFF 3 // diferenca entre os valores de sharps q ainda serao considerados iguais
-#define DIST_TURN01 9 // distancia que identifica q o robo achou a parede
+#define DIST_TURN01 12 // distancia que identifica q o robo achou a parede
+#define DIST_TURN02 8
 #define LOOKING_SPEED 200 // velocidade para seguir em frente como se n houvesse amanha (ou parede)
-#define TURNING_SPEED 180 // velocidade de giro do robo
+#define TURNING_SPEED 100 // velocidade de giro do robo
 #define PARKING_SPEED 150
 
 #define DIST_TAX 10
@@ -23,6 +24,8 @@
 #define POSICAO_INICIAL_GARRA 130
 #define POSICAO_INICIAL_PULSO 0
 #define POSICAO_GARRA_FECHADA 90
+#define TEM_COPO 15
+#define SEARCHING_SPEED 100
 
 // #### ELEVADOR ####
 #define POSICAO01 350
@@ -35,6 +38,6 @@
 #define TEM_DEDO 50
 #define TEM_TETA 7
 #define CICLE_TIME 5
-#define ANGULO_INICIAL 80
-#define ANGULO_FINAL 170
+#define ANGULO_INICIAL 60
+#define ANGULO_FINAL 120
 

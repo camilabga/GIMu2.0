@@ -162,7 +162,7 @@ void GIMu::follow_wall_to_terrine_area() {
                    sharpsBase[4] = getSharp(SH_ESQUERDA_FRENTE);
                    sharpsBase[5] = getSharp(SH_ESQUERDA_TRAS);
                    moveTank(TURNING_SPEED, -TURNING_SPEED);
-                } while(!(sharpsBase[4] != VALID_SHARP || sharpsBase[5] != VALID_SHARP) || (abs(sharpsBase[4]-sharpsBase[5]) > SHARP_DIFF));
+                } while(!(sharpsBase[4] != VALID_SHARP || sharpsBase[5] != VALID_SHARP) || (abs(sharpsBase[4]-sharpsBase[5]) > 2));
                 
                 found_wall = true;
                 moveFrente(0);
@@ -184,7 +184,7 @@ void GIMu::follow_wall_to_terrine_area() {
                 aux = 0;
             }
             
-            if ((sharpsBase[2] <= DIST_TURN01 && sharpsBase[2] != VALID_SHARP) || (sharpsBase[3] <= DIST_TURN01 && sharpsBase[3] != VALID_SHARP)) {
+            if ((sharpsBase[2] <= DIST_TURN02 && sharpsBase[2] != VALID_SHARP) || (sharpsBase[3] <= DIST_TURN02 && sharpsBase[3] != VALID_SHARP)) {
                 found_terrine_area = true;
                 moveFrente(0);
                 Serial.println("Achei o caralho todo");
@@ -226,8 +226,8 @@ void GIMu::adjust_to_get_cup(){
         
         aux=(aux+1)%2;
 
-    } while(!(sharpsBase[0] != VALID_SHARP && sharpsBase[1] != VALID_SHARP 
-                && sharpsBase[2] != VALID_SHARP && sharpsBase[3] != VALID_SHARP)
+    } while(!(sharpsBase[0] != VALID_SHARP && sharpsBase[1] != VALID_SHARP) 
+                || !(sharpsBase[2] != VALID_SHARP && sharpsBase[3] != VALID_SHARP)
                 || abs(sharpsBase[0] - sharpsBase[1]) > SHARP_DIFF);
 
     Serial.println("POSICAO CERTA");
@@ -363,19 +363,45 @@ void GIMu::adjust_to_get_cup(){
 }
 
 void GIMu::getTerrine(){
+    bool frente = false;
+    bracoCopo.iniciar();
+    Serial.println(getSharp(SH_GARRA));
+    while (getSharp(SH_GARRA) > TEM_COPO /*&& getSharp(SH_FRENTE_DIREITA) < 30*/) {
+        Serial.println(getSharp(SH_GARRA));
+        if (frente) {
+            if (getSharp(SH_FRENTE_DIREITA) > 10) {
+                moveFrente(SEARCHING_SPEED);
+            } else {
+                stop();
+                frente = false;
+            }
+        } else {
+            if (getSharp(SH_FRENTE_DIREITA) < 27) {
+                moveTras(SEARCHING_SPEED);
+            } else {
+                stop();
+                frente = true;
+            }
+        }
+    }
+
+    delay(250);
+    stop();
+
     bracoCopo.tryGetTerrine();
     bracoCopo.recolherBraco();
 }
 
-void GIMu::ordenhar(){
+void GIMu::ordenhar01(){
     SM_Ordenhador.attach(SERVO_ORDENHADOR);
     unsigned cont = 0;
     bool found_teta = false, found_dedo = false;
-    //elevador.goToStage02();
+    elevador.goToStage02();
     Serial.println("INICIO");
     while (!found_teta) {
       Serial.println("n achou");
         moveFrente(LOOKING_SPEED);
+        Serial.println(getSharp(SH_ORDENHADOR));
         if (getSharp(SH_ORDENHADOR) <= TEM_TETA) {
             found_teta = true;
             moveFrente(0);
@@ -385,22 +411,28 @@ void GIMu::ordenhar(){
     while (!found_dedo) {
       Serial.println("procurando dedo");
         if (cont < CICLE_TIME) {
+          Serial.println("CICLE TIME");
             if (elevador.getStage() == 3) {
                 elevador.downToStage02();
             } else if (elevador.getStage() == 2) {
                 elevador.upToStage03();
             }
-
-            Serial.println(getMSharp());
             if (getMSharp() <= TEM_DEDO) {  
                Serial.println("achou dedo");
                 found_dedo = true;
                 elevador.stop();
             }
         } else {
-            elevador.goToStage02();
-            Serial.println("testando");
-            for(int pos = ANGULO_INICIAL; pos < ANGULO_FINAL && !found_dedo; pos+=5){
+            while(elevador.getStage() == 3) {
+                elevador.downToStage02();
+                if(getMSharp() < TEM_DEDO) {
+                  found_dedo = true;
+                  elevador.stop();
+                  break;
+                }
+              }
+            for(int pos = ANGULO_INICIAL; pos < ANGULO_FINAL && !found_dedo; pos+=10){
+              Serial.println("muda pos");
               SM_Ordenhador.write(pos);
               while(elevador.getStage() == 2) {
                 elevador.upToStage03();
@@ -411,12 +443,135 @@ void GIMu::ordenhar(){
                 }
               }
 
-              if (!found_dedo) elevador.goToStage02();
+              while(elevador.getStage() == 3) {
+                elevador.downToStage02();
+                if(getMSharp() < TEM_DEDO) {
+                  found_dedo = true;
+                  elevador.stop();
+                  break;
+                }
+              }
 
             }
-            
-            cont = 0;  
         }
-        cont = (cont+1)/CICLE_TIME;
+        cont++;
+    }
+}
+
+void GIMu::ordenhar02(){
+    SM_Ordenhador.attach(SERVO_ORDENHADOR);
+    SM_Ordenhador.write(90);
+    unsigned cont = 0, pos = 90;
+    bool found_teta = false, found_dedo = false;
+    //elevador.goToStage02();
+    Serial.println("INICIO");
+    while (!found_teta) {
+      Serial.println("n achou");
+        moveFrente(LOOKING_SPEED);
+        Serial.println(getSharp(SH_ORDENHADOR));
+        if (getSharp(SH_ORDENHADOR) <= TEM_TETA) {
+            found_teta = true;
+            moveFrente(0);
+        }
+    }
+
+    while (!found_dedo) {
+      Serial.println("procurando dedo");
+        if (cont < CICLE_TIME) {
+
+            for (int pos = ANGULO_INICIAL; pos < ANGULO_FINAL; pos+=5) {
+              if(getMSharp() < TEM_DEDO) {
+                    found_dedo = true;
+                    elevador.stop();
+                    break;
+                }
+                SM_Ordenhador.write(pos);
+                delay(500);
+            }
+        
+            for (int pos = ANGULO_FINAL; pos > ANGULO_INICIAL; pos-=5) {
+              if(getMSharp() < TEM_DEDO) {
+                    found_dedo = true;
+                    elevador.stop();
+                    break;
+                }
+                SM_Ordenhador.write(pos);
+                delay(500);
+            }
+
+            while(elevador.getStage() == 2) {
+                if(getMSharp() < TEM_DEDO) {
+                    found_dedo = true;
+                    elevador.stop();
+                    break;
+                }
+                elevador.downToStage01();
+            }
+
+            while(elevador.getStage() == 1) {
+                if(getMSharp() < TEM_DEDO) {
+                    found_dedo = true;
+                    elevador.stop();
+                    break;
+                }
+                elevador.upToStage02();
+            }
+        } else {
+            break;
+        }
+        cont++;
+    }
+}
+
+void GIMu::ordenhar03(){
+    unsigned pos = 90;
+    bool left = false;
+    bool found_teta = false, found_dedo = false;
+    SM_Ordenhador.attach(SERVO_ORDENHADOR);
+    SM_Ordenhador.write(0);
+    elevador.goToStage01();
+    while (!found_teta) {
+        moveFrente(LOOKING_SPEED);
+        Serial.println(getSharp(SH_ORDENHADOR));
+        if (getSharp(SH_ORDENHADOR) <= TEM_TETA) {
+            found_teta = true;
+            moveFrente(0);
+        }
+    }
+
+    while (!found_dedo) {
+        while (elevador.getStage() == 1) {
+            if(getMSharp() < TEM_DEDO) {
+                found_dedo = true;
+                elevador.stop();
+                break;
+            }
+            elevador.upToStage02();
+            SM_Ordenhador.write(pos);
+        }
+
+        while (elevador.getStage() == 2) {
+            if(getMSharp() < TEM_DEDO) {
+                found_dedo = true;
+                elevador.stop();
+                break;
+            }
+            elevador.downToStage01();
+            SM_Ordenhador.write(pos);
+        }
+
+        if (!left) {
+            if (pos+5 < ANGULO_FINAL) {
+                pos = pos+5;
+            } else {
+                left = true;
+            }
+        } else {
+            if (pos -5 < ANGULO_INICIAL) {
+                pos = pos-5;
+            } else {
+                left = false;
+            }
+        }
     }
 }

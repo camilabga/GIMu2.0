@@ -16,6 +16,11 @@
   },
   {
     "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/.build/TestesGerais/sketch/TestesGerais.ino.cpp",
+    "Include": "LiquidCrystal.h",
+    "Includepath": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/libraries/LiquidCrystal/src"
+  },
+  {
+    "Sourcefile": "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/.build/TestesGerais/sketch/TestesGerais.ino.cpp",
     "Include": "",
     "Includepath": ""
   },
@@ -76,6 +81,11 @@
   },
   {
     "Sourcefile": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/libraries/Servo/src/stm32f4/Servo.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "/home/barbosa/Downloads/Executáveis/arduino-1.8.3/libraries/LiquidCrystal/src/LiquidCrystal.cpp",
     "Include": "",
     "Includepath": ""
   }
