@@ -43,20 +43,13 @@ class Pi2c {
 		//...values passed back from the Arduino.
 		//...Second parameter is the length of the array.
 		//...Returns: Error value. > 0 is ok. < 0 means there was an error.
-		int i2cRead(char *data,int length);
+		int i2cRead(unsigned char *data,int length);
 		
 		//Function: i2cWrite - First parameter is a pointer to a char array.containing the data to send.
 		//...Second parameter is the length of the array.
 		//...Returns: Error value. > 0 is ok. < 0 means there was an error.
-		int i2cWrite(char *data,int length);
+		int i2cWrite(unsigned char *data,int length);
 		
-		//Function: i2cWrite - No Parameters.
-		//...Returns: An Int value sent from the arduino, or -1 if there was an error.
-		int i2cReadArduinoInt();
-		
-		//Function: i2cWrite - First parameter the int to send to the array.
-		//...Returns: Error value. > 0 is ok. < 0 means there was an error.
-		int i2cWriteArduinoInt(int input);
 };
 
 #endif

@@ -17,8 +17,8 @@ class I2C{
 public:
     I2C();
 
-    char in[QTD_BYTES_I2C*4];   //Buf de entrada
-    char out[QTD_BYTES_I2C+1];  //Buf de saida
+    unsigned char in[QTD_BYTES_I2C*4];   //Buf de entrada
+    unsigned char out[QTD_BYTES_I2C+1];  //Buf de saida
 
     //Limpa o bufers de entrada e saida
     void clearBufIn();
@@ -44,4 +44,3 @@ public:
 };
 
 #endif
-//

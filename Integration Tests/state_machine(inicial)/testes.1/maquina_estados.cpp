@@ -12,36 +12,26 @@ int main(){
 	int estadoAtual=1;
 	bool fim_geral = false;
 	//
-
+//
 	while(!fim_geral){
 		switch(estadoAtual){
 			case 1:
 				//Segue Parede:
 				//Teste:
-				arduino.out[0] = 'V';
-				arduino.out[1] = 'D';
-				arduino.out[2] = 'C';
+				arduino.out[0] = 250;
 				if(!arduino.tradeData()){
 					cout << "Erro ao enviar! " << endl;
-					return -1;
+					usleep(1000000);
 				}
 				cout << "Enviado.. " << "Confirmacao: " << arduino.in << endl;
 				usleep(100000);
-				// if(!arduino.sendData()){
-				// 	cout << "Erro ao enviar! " << endl;
-				// 	return -1;
-				// }
-				// //
-				// if(!arduino.getData()){
-				// 	cout << "Erro ao receber! " << endl;
-				// 	return -1;
-				// }
-				arduino.out[0] = 'D';
-				arduino.out[1] = 'E';
-				arduino.out[2] = 'U';
+
+
+
+				arduino.out[0] = 120;
 				if(!arduino.tradeData()){
 					cout << "Erro ao enviar! " << endl;
-					return -1;
+					usleep(1000000);
 				}
 				//Teste
 				cout << "Enviado.. " << "Confirmacao: " << arduino.in << endl;
