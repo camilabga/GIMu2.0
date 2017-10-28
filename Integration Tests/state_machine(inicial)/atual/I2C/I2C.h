@@ -1,6 +1,6 @@
 #ifndef I2C_H
 #define I2C_H
-
+//
 #include "libi2c/Pi2c.h"
 #include <iostream>
 #include <string>
@@ -36,6 +36,10 @@ public:
 
     //Função para imprimir os dados recebidos, deve ser usado após um getData() ou tradeData()
     void printData();
+
+    //Função para enviar funções para o arduino
+    bool sendFunc(unsigned char b0, unsigned char b1, int b2 = 0, int b3 = 0, int b4 = 0);
+    
 
 };
 

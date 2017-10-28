@@ -1,5 +1,6 @@
 #include <Wire.h>
 #include "GIMu.h"
+//
 
 //Definições Robô:
 Motor esquerdo(DC11, DC12);
@@ -17,9 +18,9 @@ GIMu robo (direito, esquerdo, braco, elevador);
 //Definicoes I2C:
 #define SLAVE_ADDRESS 0x05
 #define QTD_BYTES_I2C 10
-char in[QTD_BYTES_I2C*4];
-char out[QTD_BYTES_I2C] = {".........;"};
-char msgPadrao[QTD_BYTES_I2C] = {".........;"};
+byte in[QTD_BYTES_I2C*4];
+byte out[QTD_BYTES_I2C] = {".........;"};
+byte msgPadrao[QTD_BYTES_I2C] = {".........;"};
 
 void clearBuf(){
   for (int i=0; i<QTD_BYTES_I2C; i++) {
