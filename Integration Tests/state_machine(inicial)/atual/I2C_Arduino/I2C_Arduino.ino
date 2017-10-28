@@ -32,7 +32,8 @@ void clearBuf(){
 
 //Definicoes estados:
 #define QTD_ESTADOS 10
-int estadoAtual = 0;
+int estadoAtual = 90;
+int subEstado = 90;
 bool fimEstado[10];
 //
 
@@ -122,10 +123,7 @@ void loop() {
     break;
 
     case 4:
-    
-      //Executa funcao segue vaca
-      //delay(3000);
-      //
+      if()
       
     break;
 
@@ -178,108 +176,91 @@ void receiveData(int byteCount) {
           break;
 
         }
-
       break;
       //  ####  
       
       //  ####  Procura copo  #### 
       case 2:
-      out[0]=2;
-      
-      switch(in[1]){
+        out[0]=2;
         
-        case 1://Mandando arduino começar.
-          estadoAtual = 2;
-          out[1] = 1;
-          fimEstado[2] = false;
-        break;
+        switch(in[1]){
+          
+          case 1://Mandando arduino começar.
+            estadoAtual = 2;
+            out[1] = 1;
+            fimEstado[2] = false;
+          break;
 
-        case 2://Perguntando se ja terminou.
-          out[1] = 2;
-          if(fimEstado[2]){
-            out[3] = 1;
-          }else{
-            out[3] = 2;
-          }
-        break;
-        
-        default:
-          out[0] = 98;
-        break;
+          case 2://Perguntando se ja terminou.
+            out[1] = 2;
+            if(fimEstado[2]){
+              out[3] = 1;
+            }else{
+              out[3] = 2;
+            }
+          break;
+          
+          default:
+            out[0] = 98;
+          break;
 
-      }
-
+        }
       break;
       //  ####
 
       //  ####  Pega Copo  #### 
       case 3:
-      out[0]=3;
-      
-      switch(in[1]){
+        out[0]=3;
         
-        case 1://Mandando arduino começar.
-          estadoAtual = 3;
-          out[1] = 1;
-          fimEstado[3] = false;
-        break;
+        switch(in[1]){
+          
+          case 1://Mandando arduino começar.
+            estadoAtual = 3;
+            out[1] = 1;
+            fimEstado[3] = false;
+          break;
 
-        case 2://Perguntando se ja terminou.
-          out[1] = 2;
-          if(fimEstado[3]){
-            out[3] = 1;
-          }else{
-            out[3] = 2;
-          }
-        break;
-        
-        default:
-          out[0] = 98;
-        break;
-
-      }
-
+          case 2://Perguntando se ja terminou.
+            out[1] = 2;
+            if(fimEstado[3]){
+              out[3] = 1;
+            }else{
+              out[3] = 2;
+            }
+          break;
+          
+          default:
+            out[0] = 98;
+          break;
+        }
       break;
       //  ####
 
       //  ####  Procura/Segue vaca  #### 
       case 4:
         out[0]=4;
-        
         switch(in[1]){
           
-          case 1://Mandando arduino começar.
-            estadoAtual = 4;
+          case 1://Inicio estado 4
             out[1] = 1;
-            fimEstado[4] = false;
+            estadoAtual = 4;
           break;
 
-          // case 2://Perguntando se ja terminou.
-          //   out[1] = 2;
-          //   if(fimEstado[4]){
-          //     out[3] = 1;
-          //   }else{
-          //     out[3] = 2;
-          //   }
-          // break;
-
-          case 2: //Recebendo comando 
-            if(in[3]=='r'){
-              int velDir = 100;
-              int velEsq = (int)in[4];
-              Serial.print(velEsq);
-              Serial.print(" ");
-              Serial.println(velDir);
-              robo.moveTank(velEsq, velDir);
-      
-            } else if (in[3]=='f') {
-              robo.moveTank(-100, 100);
-              Serial.println("girar");
-      
-            } else if (in[3]=='p') {
-              robo.moveFrente(0);
-              Serial.println("parado");
+          case 2: 
+            out[1] = 2;
+            if(in[3] == 1){
+              subEstado = 1;
+              out[3] = 1;
+              flag = true;flag2 = true;
+            }else if(in[3] == 2){
+              subEstado = 90;
+              out[3] = 2;
             }
+          break;
+
+          case 3:
+            out[1] = 3;
+            
           break;
 
           default:
