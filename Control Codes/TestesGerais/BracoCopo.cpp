@@ -72,9 +72,9 @@ void BracoCopo::tryGetTerrine(){
   }
   motorBraco.moveMotor(0,0);
   Serial.println(isFDC(FDC_FRENTE));
-  if (analogRead(MSH_GARRA_D) <= ANALOG_SENSOR_COPO) {
+  //if (analogRead(MSH_GARRA_D) <= ANALOG_SENSOR_COPO) {
     garra.write(POSICAO_GARRA_FECHADA);
-  }
+  //}
 }
 
 void BracoCopo::recolherBraco(){

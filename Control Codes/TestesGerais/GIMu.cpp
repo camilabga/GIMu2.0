@@ -151,18 +151,20 @@ void GIMu::follow_wall_to_terrine_area() {
         if (!found_wall){
             sharpsBase[2] = getSharp(SH_FRENTE_DIREITA);
             sharpsBase[3] = getSharp(SH_FRENTE_ESQUERDA);
-            if ((sharpsBase[2] == VALID_SHARP || sharpsBase[3] == VALID_SHARP) || (sharpsBase[2] >= DIST_TURN01 || sharpsBase[3] >= DIST_TURN01)) {
+            if ((sharpsBase[2] == VALID_SHARP || sharpsBase[3] == VALID_SHARP) || 
+                (sharpsBase[2] >= DIST_TURN01 || sharpsBase[3] >= DIST_TURN01)) {
                 moveFrente(LOOKING_SPEED);
                 Serial.println("Segue em frente");
+            
             } else if (sharpsBase[2] < DIST_TURN01 || sharpsBase[3] < DIST_TURN01) {
                 Serial.println("Achou Parede");
-
+                aux = 0;
                 do {
-                   //getSharps();
-                   sharpsBase[4] = getSharp(SH_ESQUERDA_FRENTE);
-                   sharpsBase[5] = getSharp(SH_ESQUERDA_TRAS);
-                   moveTank(TURNING_SPEED, -TURNING_SPEED);
-                } while(!(sharpsBase[4] != VALID_SHARP || sharpsBase[5] != VALID_SHARP) || (abs(sharpsBase[4]-sharpsBase[5]) > 2));
+                    sharpsBase[4] = getSharp(SH_ESQUERDA_FRENTE);
+                    sharpsBase[5] = getSharp(SH_ESQUERDA_TRAS);
+                    moveTank(TURNING_SPEED, -TURNING_SPEED);
+                } while(!(sharpsBase[4] != VALID_SHARP && sharpsBase[5] != VALID_SHARP 
+                    && abs(sharpsBase[4]-sharpsBase[5]) < 2));
                 
                 found_wall = true;
                 moveFrente(0);
