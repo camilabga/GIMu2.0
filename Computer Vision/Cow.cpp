@@ -392,6 +392,8 @@ void Cow::detectLimits(){
     }
     limits.clear();
 
+    vector<Point>aux;
+
     float slopeUp[2];
     float slopeDown[2];
     float slopeLeft[2];
@@ -407,21 +409,32 @@ void Cow::detectLimits(){
              || abs(squares[j][3].x * slopeUp[0] + slopeUp[1] - squares[j][3].y) 
                     <= CONSIDER_EQUAL) {
                         line(ROI, squares[i][0], squares[j][3], Scalar(0, 0, 255), 4, 8, 0);
+                        aux.push_back(squares[i][0]);
+                        aux.push_back(squares[j][3]);
+                        limits.push_back(aux);
             }
 
-            if (abs(squares[j][0].x * slopeLeft[0] + slopeLeft[1] - squares[j][0].y) <= CONSIDER_EQUAL 
+            /*if (abs(squares[j][0].x * slopeLeft[0] + slopeLeft[1] - squares[j][0].y) <= CONSIDER_EQUAL 
             || abs(squares[j][1].x * slopeLeft[0] + slopeLeft[1] - squares[j][1].y) 
                    <= CONSIDER_EQUAL) {
                        line(ROI, squares[i][0], squares[j][1], Scalar(0, 0, 255), 4, 8, 0);
-           }
+                aux.push_back(squares[i][0]);
+                aux.push_back(squares[j][1]);
+                limits.push_back(aux);
+            }
 
            if (abs(squares[j][2].x * slopeRight[0] + slopeRight[1] - squares[j][2].y) <= CONSIDER_EQUAL 
            || abs(squares[j][3].x * slopeRight[0] + slopeRight[1] - squares[j][3].y) 
                   <= CONSIDER_EQUAL) {
                       line(ROI, squares[i][2], squares[j][3], Scalar(0, 0, 255), 4, 8, 0);
-          }
+                aux.push_back(squares[i][2]);
+                aux.push_back(squares[j][3]);
+                limits.push_back(aux);
+            }*/
         }
     }
+
+    discoverAngle();
 
     namedWindow("Limits", WINDOW_NORMAL);
     resizeWindow("Limits", WIDTH, HEIGHT);
@@ -433,5 +446,14 @@ bool Cow::isAlign(){
 }
 
 void Cow::discoverAngle(){
+    vector<float> angulos;
+    if (limits.size() > 0) {
+        for (unsigned i = 0; i < limits.size(); i++) {
+            cout << ;
+        }
 
+        cout << endl;
+    } else {
+        // proximo threshold
+    }
 }
