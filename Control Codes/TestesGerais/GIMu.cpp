@@ -209,12 +209,15 @@ void GIMu::adjust_to_get_cup(){
     
         moveTank(-TURNING_SPEED, TURNING_SPEED);
 
-        if (aux%2 == 0) {
-            sharpsBase[aux%2] = getSharp(SH_DIREITA_FRENTE);
-            sharpsBase[aux%2 + 1] = getSharp(SH_DIREITA_TRAS);
+        if (aux%3 == 0) {
+            sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
+            sharpsBase[aux%3 + 1] = getSharp(SH_DIREITA_TRAS);
+        } else if (aux%3 == 1) {
+            sharpsBase[aux%3 + 1] = getSharp(SH_FRENTE_DIREITA);
+            sharpsBase[aux%3 + 2] = getSharp(SH_FRENTE_ESQUERDA);
         } else {
-            sharpsBase[aux%2 + 1] = getSharp(SH_FRENTE_DIREITA);
-            sharpsBase[aux%2 + 2] = getSharp(SH_FRENTE_ESQUERDA);
+            sharpsBase[aux%3 + 2] = getSharp(SH_ESQUERDA_FRENTE);
+            sharpsBase[aux%3 + 3] = getSharp(SH_ESQUERDA_TRAS);
         }
 
         Serial.print(" S0: ");
@@ -224,13 +227,17 @@ void GIMu::adjust_to_get_cup(){
         Serial.print("  || S2: ");
         Serial.print(sharpsBase[2]);
         Serial.print(" S3: ");
-        Serial.println(sharpsBase[3]);
+        Serial.print(sharpsBase[3]);
+        Serial.print("  || S4: ");
+        Serial.print(sharpsBase[4]);
+        Serial.print(" S5: ");
+        Serial.println(sharpsBase[5]);
         
-        aux=(aux+1)%2;
+        aux=(aux+1)%3;
 
     } while(!(sharpsBase[0] != VALID_SHARP && sharpsBase[1] != VALID_SHARP && 
-              sharpsBase[2] != VALID_SHARP && sharpsBase[3] != VALID_SHARP)
-                || abs(sharpsBase[0] - sharpsBase[1]) > SHARP_DIFF);
+        sharpsBase[2] != VALID_SHARP && sharpsBase[3] != VALID_SHARP)
+          || abs(sharpsBase[0] - sharpsBase[1]) > SHARP_DIFF);
 
     Serial.println("POSICAO CERTA");
     stop();
@@ -239,9 +246,6 @@ void GIMu::adjust_to_get_cup(){
 
     do {
         aux=0;
-        unsigned reference = sharpsBase[0];
-        Serial.print("reference = ");
-        Serial.println(reference);
         
         do{
             Serial.println("APROXIMANDO");
@@ -265,7 +269,7 @@ void GIMu::adjust_to_get_cup(){
             aux=(aux+1)%2;
 
             moveTank(-TURNING_SPEED, TURNING_SPEED);
-        } while (sharpsBase[0] > 9 && (abs(reference - sharpsBase[0]) < SHARP_DIFF_STOP_TURNING));
+        } while (sharpsBase[3] < (sharpsBase[2] + SHARP_DIFF));
 
         stop();
         delay(500);
@@ -297,6 +301,7 @@ void GIMu::adjust_to_get_cup(){
         stop();
         delay(500);
         aux = 0;
+        getSharps();
 
         do{
             Serial.println("AJUSTE");
@@ -321,7 +326,7 @@ void GIMu::adjust_to_get_cup(){
             aux=(aux+1)%2;
             
             moveTank(TURNING_SPEED, -TURNING_SPEED);
-        }while((abs(sharpsBase[0] - sharpsBase[1]) > SHARP_DIFF) && sharpsBase[2] != 35);
+        }while(abs(sharpsBase[0]-sharpsBase[1]) > 2 && sharpsBase[0] < 20);
 
         if(sharpsBase[0] < 9) aligned = true;
 
