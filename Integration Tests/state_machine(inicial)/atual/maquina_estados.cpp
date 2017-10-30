@@ -1,7 +1,7 @@
 #include <iostream>
 #include "I2C/I2C.h"
 #include "Libs/Cow.h"
-
+//
 using namespace std;
 using namespace cv;
 
@@ -12,7 +12,7 @@ int main(){
 	//
 
 	//Variaveis Máquina_Estado:
-	int estadoAtual = 4;
+	int estadoAtual = 1;
 	bool fim_geral = false;
 	//
 
@@ -22,11 +22,9 @@ int main(){
 	cout << "Cannot open the video file" << endl;
 	return -1;
 	}
-
 	/*create Cow -> first initialization has no center
 	and the still scans the whole Mat, also, do not contain
 	any rectangle center defined */
-
 	Cow cow;
 	Mat frame;
 	char c1;
@@ -36,28 +34,23 @@ int main(){
 	while(!fim_geral){
 		switch(estadoAtual){
 			
-			case 1:	//Seguir parede:
+			// ####################### SEGUE PAREDE
+			case 1:
 				
 				//Envia comando I2C: Iniciando estado
-				arduino.out[0] = 1;
-				arduino.out[1] = 1;
-				arduino.tradeData();
-				usleep(100000);
+				arduino.sendFunc(1,1);
 				//
 
 				while(1){
 
 					//Envia comando I2C: Perguntando se já acabou
-					arduino.out[0] = 1;
-					arduino.out[1] = 2;
-					arduino.tradeData();
+					arduino.sendFunc(1,2);
 					if(arduino.in[3] == 1){
 						break;
 					}
 					//
 
 					cout << "N Acabou 01." << endl;
-					usleep(100000);
 				}
 
 				//Fim de estado:
@@ -67,28 +60,23 @@ int main(){
 				//
 			break;
 			
-			case 2:	//Procura Copo:
+			// ####################### PROCURA COPO
+			case 2:
 				
 				//Envia comando I2C: Iniciando estado
-				arduino.out[0] = 2;
-				arduino.out[1] = 1;
-				arduino.tradeData();
-				usleep(100000);
+				arduino.sendFunc(2,1);
 				//
 
 				while(1){
 					
 					//Envia comando I2C: Perguntando se já acabou
-					arduino.out[0] = 2;
-					arduino.out[1] = 2;
-					arduino.tradeData();
+					arduino.sendFunc(2,2);
 					if(arduino.in[3] == 1){
 						break;
 					}
 					//
 
 					cout << "N Acabou 02." << endl;
-					usleep(100000);
 				}
 
 				//Fim de estado:
@@ -98,47 +86,40 @@ int main(){
 				//
 			break;
 			
-			case 3:	//Pega Copo
+			// ####################### PEGA COPO
+			case 3:
 
 				//Envia comando I2C: Iniciando estado
-				arduino.out[0] = 3;
-				arduino.out[1] = 1;
-				arduino.tradeData();
-				usleep(100000);
+				arduino.sendFunc(3,1);
 				//
 
 				while(1){
 
 					//Envia comando I2C: Perguntando se já acabou
-					arduino.out[0] = 3;
-					arduino.out[1] = 2;
-					arduino.tradeData();
+					arduino.sendFunc(3,2);
 					if(arduino.in[3] == 1){
 						break;
 					}
 					//
 
 					cout << "N Acabou 03." << endl;
-					usleep(100000);
 				}
 
 				//Fim de estado:
 				cout << "Acabou 03." << endl;
-				estadoAtual = 4;
-				// fim_geral = true;
+				// estadoAtual = 4;
+				fim_geral = true;
 				//
 			break;
 				
+			// ####################### PROCURA VACA
 			case 4:	//Procura vaca:
 				
 				//open webcam
 				
 
 				//Envia comando I2C: Iniciando estado
-				arduino.out[0] = 4;
-				arduino.out[1] = 1;
-				arduino.tradeData();
-				usleep(100000);
+				arduino.sendFunc(4,1);
 				//
 
 				while(1){
@@ -171,15 +152,10 @@ int main(){
 					////
 
 					//Envia comando I2C: Movimentação
-					arduino.out[0] = 4; //Estado 4
-					arduino.out[1] = 2;	//Subfunção 2: envio de comando.
-					arduino.out[3] = c1;//Comando 1
-					arduino.out[4] = c2;//Comando 2
-					arduino.tradeData();
+					arduino.sendFunc(4,2, c1, c2);
 					//
 
 					cout << "N Acabou 04." << endl;
-					usleep(10000);
 				}
 
 				//Fim de estado:
@@ -189,6 +165,7 @@ int main(){
 				//
 			break;
 
+			// ####################### ERRO !
 			default:
 				//Erro:
 			break;

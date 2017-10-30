@@ -3,9 +3,9 @@
 //Definicoes I2C:
 #define SLAVE_ADDRESS 0x04
 #define QTD_BYTES_I2C 10
-char in[QTD_BYTES_I2C*4];
-char out[QTD_BYTES_I2C] = {".........;"};
-char msgPadrao[QTD_BYTES_I2C] = {".........;"};
+byte in[QTD_BYTES_I2C*4];
+byte out[QTD_BYTES_I2C] = {".........;"};
+byte msgPadrao[QTD_BYTES_I2C] = {".........;"};
 void clearBuf(){
   for (int i=0; i<QTD_BYTES_I2C; i++) {
     in[i]='\0';
@@ -53,7 +53,6 @@ void loop() {
 void receiveData(int byteCount) {
   if(byteCount != QTD_BYTES_I2C){
     Serial.println("Erro!, Msg descartada!");
-    clearBuf();
     while(Wire.available()) {
       Wire.read();
     }
@@ -65,7 +64,7 @@ void receiveData(int byteCount) {
       Wire.readBytesUntil(';', in, byteCount);
     }
     Serial.print("Recebido: ");
-    Serial.println(in); 
+    Serial.println((int)in[0]); 
     switch(in[0]){
       case 1:
         //Segue Parede:

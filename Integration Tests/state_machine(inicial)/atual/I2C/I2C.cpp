@@ -1,5 +1,5 @@
 #include "I2C.h"
-
+//
 I2C::I2C(){
     clearBufIn();
 	clearBufOut();
@@ -77,6 +77,78 @@ bool I2C::tradeData(int milisec){
 		clearBufOut();
 		return false;
 	}
+}
+
+bool I2C::sendFunc(unsigned char b0, unsigned char b1, int b2 = 0, int b3 = 0, int b4 = 0){
+	switch(b0){
+		case 1:
+			out[0] = 1;
+			switch(b1){
+				case 1:
+					out[1] = 1;	
+				break;
+				case 2:
+					out[1] = 2;
+				break;
+				default:
+					cout << "Erro: func not defined" << endl;
+					return false;
+				break;
+			}
+		break;
+		case 2:
+			out[0] = 2;
+			switch(b1){
+				case 1:
+					out[1] = 1;	
+				break;
+				case 2:
+					out[1] = 2;
+				break;
+				default:
+					cout << "Erro: func not defined" << endl;
+					return false;
+				break;
+			}
+		break;
+		case 3:
+			switch(b1){
+				case 1:
+					out[1] = 1;	
+				break;
+				case 2:
+					out[1] = 2;
+				break;
+				default:
+					cout << "Erro: func not defined" << endl;
+					return false;
+				break;
+			}
+		break;
+		case 4:
+			switch(b1){
+				case 1:
+					out[1] = 1;
+				break;
+				case 2:
+					out[2] = 2;
+					out[3] = (unsigned char) b2;
+					out[4] = (unsigned char) b3;
+				break;
+				default:
+					cout << "Erro: func not defined" << endl;
+					return false;
+				break;
+			}
+		break;
+		default:
+			cout << "Erro: func not defined" << endl;
+			return false;
+		break;
+	}	
+
+	tradeData();
+	usleep(100000);
 }
 
 void I2C::printData(){
