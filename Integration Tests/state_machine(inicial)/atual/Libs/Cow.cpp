@@ -308,12 +308,12 @@ void Cow::drawCenter(Mat &frame){
     }
 }*/
 
-void Cow::sendSerial(float erro, unsigned i, char &c1, char &c2){
+void Cow::sendSerial(float erro, unsigned i, unsigned char &c1, unsigned char &c2){
     int to_send = (int)((erro*100+100) / 2);
     switch(i){
         case 1:
         c1 = 'r';
-        c2 = (char)to_send;
+        c2 = (unsigned char)to_send;
         break;
 
         case 2:
@@ -328,7 +328,7 @@ void Cow::sendSerial(float erro, unsigned i, char &c1, char &c2){
     }
 }
 
-void Cow::sendPID(char &c1, char &c2){
+void Cow::sendPID(unsigned char &c1, unsigned char &c2){
     if (detected) {
         if (center.x != 0 && center.y != 0) {
             float erro = center.x - (WIDTH/2);

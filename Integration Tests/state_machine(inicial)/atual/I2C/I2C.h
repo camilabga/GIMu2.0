@@ -38,7 +38,7 @@ public:
     void printData();
 
     //Função para enviar funções para o arduino
-    bool sendFunc(unsigned char b0, unsigned char b1, int b2 = 0, int b3 = 0, int b4 = 0);
+    bool sendFunc(unsigned char b0, unsigned char b1, unsigned char b2 = 0, unsigned char b3 = 0);
     
 
 };
