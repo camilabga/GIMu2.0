@@ -141,6 +141,7 @@ void GIMu::taxearDireita(){
 }
 
 void GIMu::follow_wall_to_terrine_area() {
+    bracoCopo.iniciar();
     unsigned aux = 0;
     bool found_wall = false;
     bool found_terrine_area = false;
@@ -237,14 +238,12 @@ void GIMu::adjust_to_get_cup(){
 
     } while(!(sharpsBase[0] != VALID_SHARP && sharpsBase[1] != VALID_SHARP && 
         sharpsBase[2] != VALID_SHARP && sharpsBase[3] != VALID_SHARP)
-          || abs(sharpsBase[0] - sharpsBase[1]) > SHARP_DIFF);
+          || (abs(sharpsBase[0] - sharpsBase[1]) > SHARP_DIFF));
 
     Serial.println("POSICAO CERTA");
     stop();
     delay(1000);
 
-
-    do {
         aux=0;
         
         do{
@@ -296,7 +295,7 @@ void GIMu::adjust_to_get_cup(){
 
             aux=(aux+1)%2;
             moveTras(LOOKING_SPEED);
-        } while(sharpsBase[0] > 7 && sharpsBase[2] != 35);
+        } while(sharpsBase[0] > 8 && sharpsBase[2] != 35);
 
         stop();
         delay(500);
@@ -326,15 +325,14 @@ void GIMu::adjust_to_get_cup(){
             aux=(aux+1)%2;
             
             moveTank(TURNING_SPEED, -TURNING_SPEED);
-        }while(abs(sharpsBase[0]-sharpsBase[1]) > 2 && sharpsBase[0] < 20);
-
-        if(sharpsBase[0] < 9) aligned = true;
+        }while(abs(sharpsBase[0]-sharpsBase[1]) > 2);
 
         stop();
         delay(500);
         aux = 0;
         
         do {
+            Serial.println("Ultimo ajuste!");
             if (aux%2 == 0) {
                 sharpsBase[aux%2] = getSharp(SH_DIREITA_TRAS);
                 sharpsBase[aux%2 + 1] = getSharp(SH_DIREITA_FRENTE);
@@ -352,20 +350,23 @@ void GIMu::adjust_to_get_cup(){
             Serial.print(" S3: ");
             Serial.println(sharpsBase[3]);
 
-            if(abs(sharpsBase[0] - sharpsBase[1]) > SHARP_DIFF) aligned = true;
+            if(abs(sharpsBase[0] - sharpsBase[1]) < 2 && sharpsBase[0] == 8) aligned = true;
 
             aux=(aux+1)%2;
-            moveFrente(LOOKING_SPEED);
+            if (aligned) {
+                moveFrente(LOOKING_SPEED);
+            } else {
+                if (sharpsBase[0] > sharpsBase[1]) moveTank(-TURNING_SPEED, TURNING_SPEED);
+                if (sharpsBase[0] < sharpsBase[1]) moveTank(TURNING_SPEED, -TURNING_SPEED);
+            }
             
-        } while(sharpsBase[2] > 12);
+        } while(!aligned/*sharpsBase[2] > 12*/);
 
         stop();
 
         if (sharpsBase[0] - sharpsBase[1] == 0 && sharpsBase[0] == 8)  {
             aligned = true;
         }
-
-    } while(!aligned);  
 
 }
 
@@ -391,6 +392,40 @@ void GIMu::getTerrine(){
             }
         }
     }
+
+    /*bool posCopo = true;
+    if(posCopo){
+        int distIni = 0, distFin = 0, dist = 0;
+        
+        // Andar para frente até encontrar o espaço entre copos
+        do{
+            moveFrente(SEARCHING_SPEED);
+        }
+        while( (getSharp(SH_GARRA) < TEM_COPO) 
+            || (((getSharp(SH_FRENTE_DIREITA) + getSharp(SH_FRENTE_ESQUERDA)) / 2) >= 10));
+  
+        stop();
+        distIni = (getSharp(SH_FRENTE_DIREITA) + getSharp(SH_FRENTE_ESQUERDA)) / 2;
+    
+        // Andar para trás até encontrar o espaço entre copos
+        do{
+            moveTras(SEARCHING_SPEED);
+        }
+        while(getSharp(SH_GARRA) < TEM_COPO 
+            || (((getSharp(SH_FRENTE_DIREITA) + getSharp(SH_FRENTE_ESQUERDA)) / 2) <= 30));
+  
+        stop();
+        distFin = (getSharp(SH_FRENTE_DIREITA) + getSharp(SH_FRENTE_ESQUERDA)) / 2;
+  
+        dist = (distIni + distFin) / 2;
+  
+        // Voltando para o centro do copo
+        do{
+            moveFrente(SEARCHING_SPEED);
+        }while(((getSharp(SH_FRENTE_DIREITA) + getSharp(SH_FRENTE_ESQUERDA)) / 2) <= dist);
+        
+        posCopo = false;
+    }*/
 
     delay(250);
     stop();

@@ -65,7 +65,7 @@ void BracoCopo::iniciar(){
 }
 
 void BracoCopo::tryGetTerrine(){
-  iniciar();
+  //iniciar();
   while (isFDC(FDC_FRENTE) /*&& (analogRead(MSH_GARRA_D) > ANALOG_SENSOR_COPO)*/) {
     motorBraco.moveMotor(255, 1);
     Serial.println(analogRead(MSH_GARRA_D));

@@ -35,6 +35,42 @@ void setup() {
 }
 
 void loop() {
+
+    //Serial.println(analogRead(9));
+  /*bool posCopo = true;
+  if(posCopo){
+      int distIni = 0, distFin = 0, dist = 0;
+      
+      // Andar para frente até encontrar o espaço entre copos
+      do{
+          robo.moveFrente(SEARCHING_SPEED);
+      }
+      while( (robo.getSharp(SH_GARRA) < TEM_COPO) 
+          || (((robo.getSharp(SH_FRENTE_DIREITA) + robo.getSharp(SH_FRENTE_ESQUERDA)) / 2) >= 10));
+
+      robo.stop();
+      distIni = (robo.getSharp(SH_FRENTE_DIREITA) + robo.getSharp(SH_FRENTE_ESQUERDA)) / 2;
+  
+      // Andar para trás até encontrar o espaço entre copos
+      do{
+          robo.moveTras(SEARCHING_SPEED);
+      }
+      while(robo.getSharp(SH_GARRA) < TEM_COPO 
+          || (((robo.getSharp(SH_FRENTE_DIREITA) + robo.getSharp(SH_FRENTE_ESQUERDA)) / 2) <= 30));
+
+      robo.stop();
+      distFin = (robo.getSharp(SH_FRENTE_DIREITA) + robo.getSharp(SH_FRENTE_ESQUERDA)) / 2;
+
+      dist = (distIni + distFin) / 2;
+
+      // Voltando para o centro do copo
+      do{
+          robo.moveFrente(SEARCHING_SPEED);
+      }while(((robo.getSharp(SH_FRENTE_DIREITA) + robo.getSharp(SH_FRENTE_ESQUERDA)) / 2) <= dist);
+      
+      posCopo = false;
+  }*/
+
   /*braco.tryGetTerrine();
   braco.recolherBraco();*/
 
