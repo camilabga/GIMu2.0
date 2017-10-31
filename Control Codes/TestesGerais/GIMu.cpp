@@ -295,12 +295,13 @@ void GIMu::adjust_to_get_cup(){
 
             aux=(aux+1)%2;
             moveTras(LOOKING_SPEED);
-        } while(sharpsBase[0] > 8 && sharpsBase[2] != 35);
+        } while(sharpsBase[0] > 7 && sharpsBase[2] < 30 && sharpsBase[3] < 25);
 
         stop();
         delay(500);
         aux = 0;
         getSharps();
+        bool frente = true;
 
         do{
             Serial.println("AJUSTE");
@@ -350,23 +351,32 @@ void GIMu::adjust_to_get_cup(){
             Serial.print(" S3: ");
             Serial.println(sharpsBase[3]);
 
-            if(abs(sharpsBase[0] - sharpsBase[1]) < 2 && sharpsBase[0] == 8) aligned = true;
+            if (sharpsBase[2] > 30){
+                stop();
+                frente = true;
+            } else if (sharpsBase[2] < 8) {
+                stop();
+                frente = false;
+            }
+
+            if(abs(sharpsBase[0] - sharpsBase[1]) < 2){
+                aligned = true;
+            } else {
+                aligned = false;
+            }
 
             aux=(aux+1)%2;
             if (aligned) {
-                moveFrente(LOOKING_SPEED);
+                if (frente) moveFrente(LOOKING_SPEED);
+                if (!frente) moveTras(LOOKING_SPEED);
             } else {
                 if (sharpsBase[0] > sharpsBase[1]) moveTank(-TURNING_SPEED, TURNING_SPEED);
                 if (sharpsBase[0] < sharpsBase[1]) moveTank(TURNING_SPEED, -TURNING_SPEED);
             }
             
-        } while(!aligned/*sharpsBase[2] > 12*/);
+        } while(!aligned || sharpsBase[2] > 12);
 
         stop();
-
-        if (sharpsBase[0] - sharpsBase[1] == 0 && sharpsBase[0] == 8)  {
-            aligned = true;
-        }
 
 }
 
