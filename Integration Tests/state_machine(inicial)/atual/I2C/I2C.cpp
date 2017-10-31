@@ -63,20 +63,21 @@ bool I2C::tradeData(int milisec){
 	Pi2c* ard = new Pi2c(ADD_I2C);
 	bool tryAgain = true;
 
+	cout << "SAIDA I2C ->" << (int)out[0] << " ->" << (int)out[1] << " ->" << (int)out[3] << " ->" << (int)out[4] << " ->" << (int)out[9] << endl;
+
 	//Enviar dados para arduino:
 	while(tryAgain){
 		ard->i2cWrite(out, QTD_BYTES_I2C);
 		usleep(milisec * 1000);
 
 		//Recebendo dados do arduino:
-		if(ard->i2cRead(in,QTD_BYTES_I2C) == QTD_BYTES_I2C && in[9] == ';' && in[0] == out[0] && in[1] == out[1]){
-			
+		if(ard->i2cRead(in,QTD_BYTES_I2C) == QTD_BYTES_I2C && in[9] == ';'/* && in[0] == out[0] && in[1] == out[1]*/){
 			tryAgain = false;
 		}else{
 			cout << "Erro I2C: error on send msg, trying again..." << endl;
 			tryAgain = true;
+			usleep(200000);
 		}
-		usleep(200000);
 	}
 	ard->~Pi2c();
 	return true;
@@ -172,7 +173,7 @@ bool I2C::sendFunc(unsigned char b0, unsigned char b1, unsigned char b2, unsigne
 			return false;
 		break;
 	}	
-
+	out[9] = ';';
 	tradeData();
 	usleep(100000);
 	return true;

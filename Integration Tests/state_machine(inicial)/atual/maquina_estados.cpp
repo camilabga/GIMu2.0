@@ -137,6 +137,7 @@ int main(){
 					arduino.sendFunc(4,4);
 					if(arduino.in[3] == 1) break;
 					else cout << "N termino 2" << endl;
+					usleep(500000);
 				}
 				cout << "Termino 2.." << endl;
 
@@ -147,6 +148,7 @@ int main(){
 					arduino.sendFunc(4,4);
 					if(arduino.in[3] == 1) break;
 					else cout << "N termino 3" << endl;
+					usleep(500000);
 				}
 				cout << "Termino 3.." << endl;
 
