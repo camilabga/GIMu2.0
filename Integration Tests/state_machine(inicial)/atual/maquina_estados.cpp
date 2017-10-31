@@ -12,7 +12,7 @@ int main(){
 	//
 
 	//Variaveis Máquina_Estado:
-	int estadoAtual = 4;
+	int estadoAtual = 1;
 	bool fim_geral = false;
 	//
 

@@ -63,8 +63,6 @@ bool I2C::tradeData(int milisec){
 	Pi2c* ard = new Pi2c(ADD_I2C);
 	bool tryAgain = true;
 
-	cout << "SAIDA I2C ->" << (int)out[0] << " ->" << (int)out[1] << " ->" << (int)out[3] << " ->" << (int)out[4] << " ->" << (int)out[9] << endl;
-
 	//Enviar dados para arduino:
 	while(tryAgain){
 		ard->i2cWrite(out, QTD_BYTES_I2C);
