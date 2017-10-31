@@ -30,7 +30,7 @@ private:
     Mat transformedROI;
 
     double angle(Point pt1, Point pt2, Point pt0);
-    void sendSerial(float erro, unsigned i, char& c1, char& c2);
+    void sendSerial(float erro, unsigned i, unsigned char& c1, unsigned char& c2);
     //void conectI2C(bool ok, int velE, int velD);
 
 public:
@@ -44,7 +44,7 @@ public:
     bool find();
     void drawCenter(Mat &frame);
 
-    void sendPID(char& c1, char& c2);    
+    void sendPID(unsigned char& c1, unsigned char& c2);    
 };
 
 #endif

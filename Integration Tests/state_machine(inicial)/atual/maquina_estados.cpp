@@ -17,18 +17,18 @@ int main(){
 	//
 
 	//Variaveis Opencv:
-	VideoCapture capture(0);
-	if ( !capture.isOpened() ){
-	cout << "Cannot open the video file" << endl;
-	return -1;
-	}
+	// VideoCapture capture(0);
+	// if ( !capture.isOpened() ){
+	// cout << "Cannot open the video file" << endl;
+	// return -1;
+	// }
 	/*create Cow -> first initialization has no center
 	and the still scans the whole Mat, also, do not contain
 	any rectangle center defined */
-	Cow cow;
-	Mat frame;
-	char c1;
-	char c2;
+	// Cow cow;
+	// Mat frame;
+	unsigned char c1;
+	unsigned char c2;
 	//
 
 	while(!fim_geral){
@@ -111,13 +111,10 @@ int main(){
 				fim_geral = true;
 				//
 			break;
-				
+
 			// ####################### PROCURA VACA
 			case 4:	//Procura vaca:
 				
-				//open webcam
-				
-
 				//Envia comando I2C: Iniciando estado
 				arduino.sendFunc(4,1);
 				//
@@ -126,33 +123,33 @@ int main(){
 					
 
 					//PROCESSO OPENCV:
-					if (!capture.read(frame)) {
-						cout<<"\n Cannot read the video file. \n";
-						break;
-					}
+					// if (!capture.read(frame)) {
+					// 	cout<<"\n Cannot read the video file. \n";
+					// 	break;
+					// }
 
-					cow.setROI(frame);
-					cow.transformImage(); 
-					cow.searchSquares();
+					// cow.setROI(frame);
+					// cow.transformImage(); 
+					// cow.searchSquares();
 
-					if (cow.find()){
-						cow.drawCenter(frame);
-						cow.sendPID(c1,c2);
-					} else {
-						cow.sendPID(c1,c2);
-					}
+					// if (cow.find()){
+					// 	cow.drawCenter(frame);
+					// 	cow.sendPID(c1,c2);
+					// } else {
+					// 	cow.sendPID(c1,c2);
+					// }
 
-					namedWindow("Original", WINDOW_NORMAL);
-					resizeWindow("Original", WIDTH, HEIGHT);
-					imshow("Original", frame);
+					// namedWindow("Original", WINDOW_NORMAL);
+					// resizeWindow("Original", WIDTH, HEIGHT);
+					// imshow("Original", frame);
 
-					if (waitKey(1) == 27){
-						break;
-					}
+					// if (waitKey(1) == 27){
+					// 	break;
+					// }
 					////
 
 					//Envia comando I2C: Movimentação
-					arduino.sendFunc(4,2, c1, c2);
+					arduino.sendFunc(4,2);
 					//
 
 					cout << "N Acabou 04." << endl;

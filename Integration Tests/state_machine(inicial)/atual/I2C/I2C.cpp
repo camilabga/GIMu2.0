@@ -61,27 +61,30 @@ bool I2C::sendData(){
 
 bool I2C::tradeData(int milisec){
 	Pi2c* ard = new Pi2c(ADD_I2C);
-	clearBufIn();
+	bool tryAgain = true;
 
 	//Enviar dados para arduino:
-	ard->i2cWrite(out, QTD_BYTES_I2C);
-	usleep(milisec * 1000);
+	while(tryAgain){
+		ard->i2cWrite(out, QTD_BYTES_I2C);
+		usleep(milisec * 1000);
 
-	//Recebendo dados do arduino:
-	if(ard->i2cRead(in,QTD_BYTES_I2C) == QTD_BYTES_I2C && in[9] == ';'){
-		ard->~Pi2c();
-		clearBufOut();
-		return true;
-	}else{
-		ard->~Pi2c();
-		clearBufOut();
-		return false;
+		//Recebendo dados do arduino:
+		if(ard->i2cRead(in,QTD_BYTES_I2C) == QTD_BYTES_I2C && in[9] == ';' && in[0] == out[0] && in[1] == out[1]){
+			
+			tryAgain = false;
+		}else{
+			cout << "Erro I2C: error on send msg, trying again..." << endl;
+			tryAgain = true;
+		}
+		usleep(200000);
 	}
+	ard->~Pi2c();
+	return true;
 }
 
-bool I2C::sendFunc(unsigned char b0, unsigned char b1, int b2 = 0, int b3 = 0, int b4 = 0){
+bool I2C::sendFunc(unsigned char b0, unsigned char b1, unsigned char b2, unsigned char b3){
 	switch(b0){
-		case 1:
+		case 1: //SEGUE PAREDE
 			out[0] = 1;
 			switch(b1){
 				case 1:
@@ -91,12 +94,12 @@ bool I2C::sendFunc(unsigned char b0, unsigned char b1, int b2 = 0, int b3 = 0, i
 					out[1] = 2;
 				break;
 				default:
-					cout << "Erro: func not defined" << endl;
+					cout << "Erro I2C: func not defined" << endl;
 					return false;
 				break;
 			}
 		break;
-		case 2:
+		case 2: //ACHA COPO
 			out[0] = 2;
 			switch(b1){
 				case 1:
@@ -106,12 +109,13 @@ bool I2C::sendFunc(unsigned char b0, unsigned char b1, int b2 = 0, int b3 = 0, i
 					out[1] = 2;
 				break;
 				default:
-					cout << "Erro: func not defined" << endl;
+					cout << "Erro I2C: func not defined" << endl;
 					return false;
 				break;
 			}
 		break;
-		case 3:
+		case 3: //PEGA COPO
+			out[0] = 3;
 			switch(b1){
 				case 1:
 					out[1] = 1;	
@@ -120,39 +124,62 @@ bool I2C::sendFunc(unsigned char b0, unsigned char b1, int b2 = 0, int b3 = 0, i
 					out[1] = 2;
 				break;
 				default:
-					cout << "Erro: func not defined" << endl;
+					cout << "Erro I2C: func not defined" << endl;
 					return false;
 				break;
 			}
 		break;
-		case 4:
+		case 4: // VACA
+			out[0] = 4;
 			switch(b1){
 				case 1:
 					out[1] = 1;
 				break;
 				case 2:
-					out[2] = 2;
-					out[3] = (unsigned char) b2;
-					out[4] = (unsigned char) b3;
+					if(!(b2 == 1 || b2 == 2)){
+						cout << "Erro I2C: parameter not defined" << endl;
+						return false;
+					} 
+					out[1] = 2;
+					out[3] = b2;
+				break;
+				case 3:
+					if(!(b2 == 1 || b2 == 2)){
+						cout << "Erro I2C: parameter not defined" << endl;
+						return false;
+					}
+					out[1] = 3;
+					out[3] = b2;
+					out[4] = b3;
+				break;
+				case 4:
+					out[1] = 4;
+				break;
+				case 5:
+					out[1] = 5;
+				break;
+				case 6:
+					out[1] = 6;
 				break;
 				default:
-					cout << "Erro: func not defined" << endl;
+					cout << "Erro I2C: func not defined" << endl;
 					return false;
 				break;
 			}
 		break;
 		default:
-			cout << "Erro: func not defined" << endl;
+			cout << "Erro I2C: state not defined" << endl;
 			return false;
 		break;
 	}	
 
 	tradeData();
 	usleep(100000);
+	return true;
 }
 
 void I2C::printData(){
-	cout << "Dados recebidos-> " ;
+	cout << "I2C Data:  " ;
 	for(int i=0;i<QTD_BYTES_I2C;i++){
 		cout << "B" << i << ": " << (int) in[i] << " " ;
 	}
