@@ -176,16 +176,24 @@ void receiveData(int byteCount) {
     erroCom = true;
   }else{
     clearBuf();
+    erroCom = false;
     while (Wire.available()) {
       Wire.readBytesUntil(';', in, byteCount);
     }
 
-    Serial.print("Recebido: ");
-    Serial.print(in[0]);
-    Serial.print(" ");
-    Serial.println(in[1]); 
+    // Serial.print("Recebido  : ");
+    // Serial.print("0-> ");
+    // Serial.print(in[0]);
+    // Serial.print("; 1-> ");
+    // Serial.print(in[1]);
+    // Serial.print("; 3-> ");
+    // Serial.print(in[3]);
+    // Serial.print("; 4-> ");
+    // Serial.print(in[4]);
+    // Serial.print("; 9-> ");
+    // Serial.println(in[9]); 
 
-    if(in[9] != ';')  out[0] = 99;
+    if(in[9] != 59)  out[0] = 99;
     else switch(in[0]){
       
       //  ####  Segue parede  #### 
@@ -284,7 +292,8 @@ void receiveData(int byteCount) {
             estadoAtual = 4;
           break;
 
-          case 2: 
+          case 2:
+            estadoAtual = 4; 
             out[1] = 2;
             if(in[3] == 1){
               subEstado = 1;
@@ -299,6 +308,7 @@ void receiveData(int byteCount) {
           break;
 
           case 3:
+            estadoAtual = 4;
             out[1] = 3;
             if(in[3] == 1 || in[3] == 2){
               ladoV = in[3];
@@ -310,6 +320,7 @@ void receiveData(int byteCount) {
           break;
 
           case 4:
+            estadoAtual = 4;
             out[1] = 4;
             if(subEstado == 90){
               out[3] = 1;
@@ -319,11 +330,13 @@ void receiveData(int byteCount) {
           break;
 
           case 5:
+            estadoAtual = 4;
             out[1] = 5;
             subEstado = 3;
           break;
 
           case 6:
+            estadoAtual = 4;
             out[1] = 6;
             if(subEstado == 90){
               out[3] = 1;
@@ -335,9 +348,7 @@ void receiveData(int byteCount) {
           default:
             out[0] = 98;
           break;
-
         }
-
       break;
       //  ####
 
@@ -346,10 +357,23 @@ void receiveData(int byteCount) {
       break;
 
     }
+
+    // Serial.print("Respondido: ");
+    // Serial.print("0-> ");
+    // Serial.print(out[0]);
+    // Serial.print("; 1-> ");
+    // Serial.print(out[1]);
+    // Serial.print("; 3-> ");
+    // Serial.print(out[3]);
+    // Serial.print("; 4-> ");
+    // Serial.print(out[4]);
+    // Serial.print("; 9-> ");
+    // Serial.println(out[9]);  
   }
 }
 
 void sendData() {
+  out[9] = ';';
   if(erroCom){
     Wire.write(msgPadrao, QTD_BYTES_I2C);
   }else{
