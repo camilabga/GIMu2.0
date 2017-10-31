@@ -33,7 +33,9 @@ class GIMu{
 
     void getTerrine();
 
-    void ordenhar();
+    void ordenhar01();
+    void ordenhar02();
+    void ordenhar03();
 
   private:
     Motor Mright;

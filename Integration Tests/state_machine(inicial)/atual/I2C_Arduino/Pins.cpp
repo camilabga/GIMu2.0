@@ -14,15 +14,15 @@
 #define DC22 7
 
 // ### Pinagem Braco Garra
-#define SH_GARRA 9
-#define MSH_GARRA_D 10
-#define MSH_GARRA_E 11
+#define SH_GARRA 11
+#define MSH_GARRA_D 9
+#define MSH_GARRA_E 10
 
 #define SERVOG_DEDO 44
 #define SERVOG_PULSO 46
 
-#define MBRACO1 3
-#define MBRACO2 2
+#define MBRACO1 2
+#define MBRACO2 3
 
 #define FDC_FRENTE 24 
 #define FDC_TRAS 22

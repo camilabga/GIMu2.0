@@ -1,8 +1,8 @@
 #include <Wire.h>
 #include "GIMu.h"
-//
+#include <LiquidCrystal.h>
 
-//Definições Robô:
+//  
 Motor esquerdo(DC11, DC12);
 Motor direito(DC21, DC22);
 
@@ -29,6 +29,8 @@ void clearBuf(){
   }
 }
 //
+
+LiquidCrystal lcd(28,30,32,34,36,38);
 
 //Definicoes estados:
 #define QTD_ESTADOS 10
@@ -94,7 +96,7 @@ void loop() {
     case 1:
 
       //Executa funcao segue parede
-      delay(3000);
+      robo.follow_wall_to_terrine_area();
       //
       
       //Fim estado:
@@ -107,7 +109,7 @@ void loop() {
     case 2:
     
       //Executa funcao procura copo
-      delay(3000);
+      robo.adjust_to_get_cup();
       //
       
       //Fim estado:
@@ -120,7 +122,7 @@ void loop() {
     case 3:
     
       //Executa funcao pega copo
-      delay(3000);
+      robo.getTerrine();
       //
       
       //Fim estado:
@@ -153,18 +155,20 @@ void loop() {
           Serial.println("Indo em frente..");
           delay(2000);
           Serial.println("Parei de ir pra frente");
-          subEstado = 90;
+          subEstado = 95;
+          estadoAtual = 90;
         break;
 
         case 90:
           //MOTOR PARA
           Serial.println("PAREI !");
+          flag = false;flag2 = false;
         break;
       }
     break;
   }
-
 }
+
 
 void receiveData(int byteCount) {
   if(byteCount != QTD_BYTES_I2C){
@@ -177,24 +181,12 @@ void receiveData(int byteCount) {
   }else{
     clearBuf();
     erroCom = false;
+
     while (Wire.available()) {
       Wire.readBytesUntil(';', in, byteCount);
     }
 
-    // Serial.print("Recebido  : ");
-    // Serial.print("0-> ");
-    // Serial.print(in[0]);
-    // Serial.print("; 1-> ");
-    // Serial.print(in[1]);
-    // Serial.print("; 3-> ");
-    // Serial.print(in[3]);
-    // Serial.print("; 4-> ");
-    // Serial.print(in[4]);
-    // Serial.print("; 9-> ");
-    // Serial.println(in[9]); 
-
-    if(in[9] != 59)  out[0] = 99;
-    else switch(in[0]){
+    switch(in[0]){
       
       //  ####  Segue parede  #### 
       case 1:
@@ -290,6 +282,7 @@ void receiveData(int byteCount) {
           case 1://Inicio estado 4
             out[1] = 1;
             estadoAtual = 4;
+            Serial.println("1");
           break;
 
           case 2:
@@ -305,6 +298,7 @@ void receiveData(int byteCount) {
             }else{
               out[0] = 98;
             }
+            Serial.println("2");
           break;
 
           case 3:
@@ -317,6 +311,7 @@ void receiveData(int byteCount) {
             }else{
               out[0] = 98;
             }
+            Serial.println("3");
           break;
 
           case 4:
@@ -327,12 +322,14 @@ void receiveData(int byteCount) {
             }else{
               out[3] = 2;
             }
+            Serial.println("4");
           break;
 
           case 5:
             estadoAtual = 4;
             out[1] = 5;
             subEstado = 3;
+            Serial.println("5");
           break;
 
           case 6:
@@ -343,6 +340,7 @@ void receiveData(int byteCount) {
             }else{
               out[3] = 2;
             }
+            Serial.println("6");
           break;
 
           default:
@@ -357,18 +355,6 @@ void receiveData(int byteCount) {
       break;
 
     }
-
-    // Serial.print("Respondido: ");
-    // Serial.print("0-> ");
-    // Serial.print(out[0]);
-    // Serial.print("; 1-> ");
-    // Serial.print(out[1]);
-    // Serial.print("; 3-> ");
-    // Serial.print(out[3]);
-    // Serial.print("; 4-> ");
-    // Serial.print(out[4]);
-    // Serial.print("; 9-> ");
-    // Serial.println(out[9]);  
   }
 }
 

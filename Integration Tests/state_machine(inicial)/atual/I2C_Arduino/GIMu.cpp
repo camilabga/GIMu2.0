@@ -141,6 +141,7 @@ void GIMu::taxearDireita(){
 }
 
 void GIMu::follow_wall_to_terrine_area() {
+    bracoCopo.iniciar();
     unsigned aux = 0;
     bool found_wall = false;
     bool found_terrine_area = false;
@@ -151,18 +152,20 @@ void GIMu::follow_wall_to_terrine_area() {
         if (!found_wall){
             sharpsBase[2] = getSharp(SH_FRENTE_DIREITA);
             sharpsBase[3] = getSharp(SH_FRENTE_ESQUERDA);
-            if ((sharpsBase[2] == VALID_SHARP || sharpsBase[3] == VALID_SHARP) || (sharpsBase[2] >= DIST_TURN01 || sharpsBase[3] >= DIST_TURN01)) {
+            if ((sharpsBase[2] == VALID_SHARP || sharpsBase[3] == VALID_SHARP) || 
+                (sharpsBase[2] >= DIST_TURN01 || sharpsBase[3] >= DIST_TURN01)) {
                 moveFrente(LOOKING_SPEED);
                 Serial.println("Segue em frente");
+            
             } else if (sharpsBase[2] < DIST_TURN01 || sharpsBase[3] < DIST_TURN01) {
                 Serial.println("Achou Parede");
-
+                aux = 0;
                 do {
-                   //getSharps();
-                   sharpsBase[4] = getSharp(SH_ESQUERDA_FRENTE);
-                   sharpsBase[5] = getSharp(SH_ESQUERDA_TRAS);
-                   moveTank(TURNING_SPEED, -TURNING_SPEED);
-                } while(!(sharpsBase[4] != VALID_SHARP || sharpsBase[5] != VALID_SHARP) || (abs(sharpsBase[4]-sharpsBase[5]) > SHARP_DIFF));
+                    sharpsBase[4] = getSharp(SH_ESQUERDA_FRENTE);
+                    sharpsBase[5] = getSharp(SH_ESQUERDA_TRAS);
+                    moveTank(TURNING_SPEED, -TURNING_SPEED);
+                } while(!(sharpsBase[4] != VALID_SHARP && sharpsBase[5] != VALID_SHARP 
+                    && abs(sharpsBase[4]-sharpsBase[5]) < 2));
                 
                 found_wall = true;
                 moveFrente(0);
@@ -184,7 +187,7 @@ void GIMu::follow_wall_to_terrine_area() {
                 aux = 0;
             }
             
-            if ((sharpsBase[2] <= DIST_TURN01 && sharpsBase[2] != VALID_SHARP) || (sharpsBase[3] <= DIST_TURN01 && sharpsBase[3] != VALID_SHARP)) {
+            if ((sharpsBase[2] <= DIST_TURN02 && sharpsBase[2] != VALID_SHARP) || (sharpsBase[3] <= DIST_TURN02 && sharpsBase[3] != VALID_SHARP)) {
                 found_terrine_area = true;
                 moveFrente(0);
                 Serial.println("Achei o caralho todo");
@@ -207,12 +210,15 @@ void GIMu::adjust_to_get_cup(){
     
         moveTank(-TURNING_SPEED, TURNING_SPEED);
 
-        if (aux%2 == 0) {
-            sharpsBase[aux%2] = getSharp(SH_DIREITA_FRENTE);
-            sharpsBase[aux%2 + 1] = getSharp(SH_DIREITA_TRAS);
+        if (aux%3 == 0) {
+            sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
+            sharpsBase[aux%3 + 1] = getSharp(SH_DIREITA_TRAS);
+        } else if (aux%3 == 1) {
+            sharpsBase[aux%3 + 1] = getSharp(SH_FRENTE_DIREITA);
+            sharpsBase[aux%3 + 2] = getSharp(SH_FRENTE_ESQUERDA);
         } else {
-            sharpsBase[aux%2 + 1] = getSharp(SH_FRENTE_DIREITA);
-            sharpsBase[aux%2 + 2] = getSharp(SH_FRENTE_ESQUERDA);
+            sharpsBase[aux%3 + 2] = getSharp(SH_ESQUERDA_FRENTE);
+            sharpsBase[aux%3 + 3] = getSharp(SH_ESQUERDA_TRAS);
         }
 
         Serial.print(" S0: ");
@@ -222,24 +228,23 @@ void GIMu::adjust_to_get_cup(){
         Serial.print("  || S2: ");
         Serial.print(sharpsBase[2]);
         Serial.print(" S3: ");
-        Serial.println(sharpsBase[3]);
+        Serial.print(sharpsBase[3]);
+        Serial.print("  || S4: ");
+        Serial.print(sharpsBase[4]);
+        Serial.print(" S5: ");
+        Serial.println(sharpsBase[5]);
         
-        aux=(aux+1)%2;
+        aux=(aux+1)%3;
 
-    } while(!(sharpsBase[0] != VALID_SHARP && sharpsBase[1] != VALID_SHARP 
-                && sharpsBase[2] != VALID_SHARP && sharpsBase[3] != VALID_SHARP)
-                || abs(sharpsBase[0] - sharpsBase[1]) > SHARP_DIFF);
+    } while(!(sharpsBase[0] != VALID_SHARP && sharpsBase[1] != VALID_SHARP && 
+        sharpsBase[2] != VALID_SHARP && sharpsBase[3] != VALID_SHARP)
+          || (abs(sharpsBase[0] - sharpsBase[1]) > SHARP_DIFF));
 
     Serial.println("POSICAO CERTA");
     stop();
     delay(1000);
 
-
-    do {
         aux=0;
-        unsigned reference = sharpsBase[0];
-        Serial.print("reference = ");
-        Serial.println(reference);
         
         do{
             Serial.println("APROXIMANDO");
@@ -263,7 +268,7 @@ void GIMu::adjust_to_get_cup(){
             aux=(aux+1)%2;
 
             moveTank(-TURNING_SPEED, TURNING_SPEED);
-        } while (sharpsBase[0] > 9 && (abs(reference - sharpsBase[0]) < SHARP_DIFF_STOP_TURNING));
+        } while (sharpsBase[3] < (sharpsBase[2] + SHARP_DIFF));
 
         stop();
         delay(500);
@@ -290,11 +295,13 @@ void GIMu::adjust_to_get_cup(){
 
             aux=(aux+1)%2;
             moveTras(LOOKING_SPEED);
-        } while(sharpsBase[0] > 7 && sharpsBase[2] != 35);
+        } while(sharpsBase[0] > 7 && sharpsBase[2] < 30 && sharpsBase[3] < 25);
 
         stop();
         delay(500);
         aux = 0;
+        getSharps();
+        bool frente = true;
 
         do{
             Serial.println("AJUSTE");
@@ -319,15 +326,14 @@ void GIMu::adjust_to_get_cup(){
             aux=(aux+1)%2;
             
             moveTank(TURNING_SPEED, -TURNING_SPEED);
-        }while((abs(sharpsBase[0] - sharpsBase[1]) > SHARP_DIFF) && sharpsBase[2] != 35);
-
-        if(sharpsBase[0] < 9) aligned = true;
+        }while(abs(sharpsBase[0]-sharpsBase[1]) > 2);
 
         stop();
         delay(500);
         aux = 0;
         
         do {
+            Serial.println("Ultimo ajuste!");
             if (aux%2 == 0) {
                 sharpsBase[aux%2] = getSharp(SH_DIREITA_TRAS);
                 sharpsBase[aux%2 + 1] = getSharp(SH_DIREITA_FRENTE);
@@ -345,29 +351,100 @@ void GIMu::adjust_to_get_cup(){
             Serial.print(" S3: ");
             Serial.println(sharpsBase[3]);
 
-            if(abs(sharpsBase[0] - sharpsBase[1]) > SHARP_DIFF) aligned = true;
+            if (sharpsBase[2] > 30){
+                stop();
+                frente = true;
+            } else if (sharpsBase[2] < 8) {
+                stop();
+                frente = false;
+            }
+
+            if(abs(sharpsBase[0] - sharpsBase[1]) < 2){
+                aligned = true;
+            } else {
+                aligned = false;
+            }
 
             aux=(aux+1)%2;
-            moveFrente(LOOKING_SPEED);
+            if (aligned) {
+                if (frente) moveFrente(LOOKING_SPEED);
+                if (!frente) moveTras(LOOKING_SPEED);
+            } else {
+                if (sharpsBase[0] > sharpsBase[1]) moveTank(-TURNING_SPEED, TURNING_SPEED);
+                if (sharpsBase[0] < sharpsBase[1]) moveTank(TURNING_SPEED, -TURNING_SPEED);
+            }
             
-        } while(sharpsBase[2] > 12);
+        } while(!aligned || sharpsBase[2] > 12);
 
         stop();
-
-        if (sharpsBase[0] - sharpsBase[1] == 0 && sharpsBase[0] == 8)  {
-            aligned = true;
-        }
-
-    } while(!aligned);  
 
 }
 
 void GIMu::getTerrine(){
+    bool frente = false;
+    bracoCopo.iniciar();
+    Serial.println(getSharp(SH_GARRA));
+    while (getSharp(SH_GARRA) > TEM_COPO /*&& getSharp(SH_FRENTE_DIREITA) < 30*/) {
+        Serial.println(getSharp(SH_GARRA));
+        if (frente) {
+            if (getSharp(SH_FRENTE_DIREITA) > 10) {
+                moveFrente(SEARCHING_SPEED);
+            } else {
+                stop();
+                frente = false;
+            }
+        } else {
+            if (getSharp(SH_FRENTE_DIREITA) < 27) {
+                moveTras(SEARCHING_SPEED);
+            } else {
+                stop();
+                frente = true;
+            }
+        }
+    }
+
+    /*bool posCopo = true;
+    if(posCopo){
+        int distIni = 0, distFin = 0, dist = 0;
+        
+        // Andar para frente até encontrar o espaço entre copos
+        do{
+            moveFrente(SEARCHING_SPEED);
+        }
+        while( (getSharp(SH_GARRA) < TEM_COPO) 
+            || (((getSharp(SH_FRENTE_DIREITA) + getSharp(SH_FRENTE_ESQUERDA)) / 2) >= 10));
+  
+        stop();
+        distIni = (getSharp(SH_FRENTE_DIREITA) + getSharp(SH_FRENTE_ESQUERDA)) / 2;
+    
+        // Andar para trás até encontrar o espaço entre copos
+        do{
+            moveTras(SEARCHING_SPEED);
+        }
+        while(getSharp(SH_GARRA) < TEM_COPO 
+            || (((getSharp(SH_FRENTE_DIREITA) + getSharp(SH_FRENTE_ESQUERDA)) / 2) <= 30));
+  
+        stop();
+        distFin = (getSharp(SH_FRENTE_DIREITA) + getSharp(SH_FRENTE_ESQUERDA)) / 2;
+  
+        dist = (distIni + distFin) / 2;
+  
+        // Voltando para o centro do copo
+        do{
+            moveFrente(SEARCHING_SPEED);
+        }while(((getSharp(SH_FRENTE_DIREITA) + getSharp(SH_FRENTE_ESQUERDA)) / 2) <= dist);
+        
+        posCopo = false;
+    }*/
+
+    delay(250);
+    stop();
+
     bracoCopo.tryGetTerrine();
     bracoCopo.recolherBraco();
 }
 
-void GIMu::ordenhar(){
+void GIMu::ordenhar01(){
     SM_Ordenhador.attach(SERVO_ORDENHADOR);
     unsigned cont = 0;
     bool found_teta = false, found_dedo = false;
@@ -430,5 +507,123 @@ void GIMu::ordenhar(){
             }
         }
         cont++;
+    }
+}
+
+void GIMu::ordenhar02(){
+    SM_Ordenhador.attach(SERVO_ORDENHADOR);
+    SM_Ordenhador.write(90);
+    unsigned cont = 0, pos = 90;
+    bool found_teta = false, found_dedo = false;
+    //elevador.goToStage02();
+    Serial.println("INICIO");
+    while (!found_teta) {
+      Serial.println("n achou");
+        moveFrente(LOOKING_SPEED);
+        Serial.println(getSharp(SH_ORDENHADOR));
+        if (getSharp(SH_ORDENHADOR) <= TEM_TETA) {
+            found_teta = true;
+            moveFrente(0);
+        }
+    }
+
+    while (!found_dedo) {
+      Serial.println("procurando dedo");
+        if (cont < CICLE_TIME) {
+
+            for (int pos = ANGULO_INICIAL; pos < ANGULO_FINAL; pos+=5) {
+              if(getMSharp() < TEM_DEDO) {
+                    found_dedo = true;
+                    elevador.stop();
+                    break;
+                }
+                SM_Ordenhador.write(pos);
+                delay(500);
+            }
+        
+            for (int pos = ANGULO_FINAL; pos > ANGULO_INICIAL; pos-=5) {
+              if(getMSharp() < TEM_DEDO) {
+                    found_dedo = true;
+                    elevador.stop();
+                    break;
+                }
+                SM_Ordenhador.write(pos);
+                delay(500);
+            }
+
+            while(elevador.getStage() == 2) {
+                if(getMSharp() < TEM_DEDO) {
+                    found_dedo = true;
+                    elevador.stop();
+                    break;
+                }
+                elevador.downToStage01();
+            }
+
+            while(elevador.getStage() == 1) {
+                if(getMSharp() < TEM_DEDO) {
+                    found_dedo = true;
+                    elevador.stop();
+                    break;
+                }
+                elevador.upToStage02();
+            }
+        } else {
+            break;
+        }
+        cont++;
+    }
+}
+
+void GIMu::ordenhar03(){
+    unsigned pos = 90;
+    bool left = false;
+    bool found_teta = false, found_dedo = false;
+    SM_Ordenhador.attach(SERVO_ORDENHADOR);
+    SM_Ordenhador.write(0);
+    elevador.goToStage01();
+    while (!found_teta) {
+        moveFrente(LOOKING_SPEED);
+        Serial.println(getSharp(SH_ORDENHADOR));
+        if (getSharp(SH_ORDENHADOR) <= TEM_TETA) {
+            found_teta = true;
+            moveFrente(0);
+        }
+    }
+
+    while (!found_dedo) {
+        while (elevador.getStage() == 1) {
+            if(getMSharp() < TEM_DEDO) {
+                found_dedo = true;
+                elevador.stop();
+                break;
+            }
+            elevador.upToStage02();
+            SM_Ordenhador.write(pos);
+        }
+
+        while (elevador.getStage() == 2) {
+            if(getMSharp() < TEM_DEDO) {
+                found_dedo = true;
+                elevador.stop();
+                break;
+            }
+            elevador.downToStage01();
+            SM_Ordenhador.write(pos);
+        }
+
+        if (!left) {
+            if (pos+5 < ANGULO_FINAL) {
+                pos = pos+5;
+            } else {
+                left = true;
+            }
+        } else {
+            if (pos -5 < ANGULO_INICIAL) {
+                pos = pos-5;
+            } else {
+                left = false;
+            }
+        }
     }
 }

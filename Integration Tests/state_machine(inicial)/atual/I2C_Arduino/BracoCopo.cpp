@@ -57,20 +57,24 @@ int BracoCopo::getSharp(){
     }
 }
 
-void BracoCopo::tryGetTerrine(){
+void BracoCopo::iniciar(){
   pulso.attach(SERVOG_PULSO);
   garra.attach(SERVOG_DEDO);
   pulso.write(POSICAO_INICIAL_PULSO);
   garra.write(POSICAO_INICIAL_GARRA);
-  while (isFDC(FDC_FRENTE) && (analogRead(MSH_GARRA_D) > ANALOG_SENSOR_COPO)) {
+}
+
+void BracoCopo::tryGetTerrine(){
+  //iniciar();
+  while (isFDC(FDC_FRENTE) /*&& (analogRead(MSH_GARRA_D) > ANALOG_SENSOR_COPO)*/) {
     motorBraco.moveMotor(255, 1);
     Serial.println(analogRead(MSH_GARRA_D));
   }
-
-  Serial.println(isFDC(FDC_FRENTE));
-  
   motorBraco.moveMotor(0,0);
-  garra.write(POSICAO_GARRA_FECHADA);
+  Serial.println(isFDC(FDC_FRENTE));
+  //if (analogRead(MSH_GARRA_D) <= ANALOG_SENSOR_COPO) {
+    garra.write(POSICAO_GARRA_FECHADA);
+  //}
 }
 
 void BracoCopo::recolherBraco(){
