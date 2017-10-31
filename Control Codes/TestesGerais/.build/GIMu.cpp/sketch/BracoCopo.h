@@ -32,6 +32,7 @@ public:
 
     inline bool isFDC(int porta){return digitalRead(porta);}
 
+    void iniciar();
     void tryGetTerrine();
     void recolherBraco();
     
