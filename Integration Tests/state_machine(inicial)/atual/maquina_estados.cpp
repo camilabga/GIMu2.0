@@ -12,7 +12,7 @@ int main(){
 	//
 
 	//Variaveis Máquina_Estado:
-	int estadoAtual = 1;
+	int estadoAtual = 4;
 	bool fim_geral = false;
 	//
 
@@ -107,8 +107,8 @@ int main(){
 
 				//Fim de estado:
 				cout << "Acabou 03." << endl;
-				// estadoAtual = 4;
-				fim_geral = true;
+				estadoAtual = 4;
+				// fim_geral = true;
 				//
 			break;
 
@@ -119,41 +119,75 @@ int main(){
 				arduino.sendFunc(4,1);
 				//
 
+				//TESTES:
+				arduino.sendFunc(4,2,1);
+				cout << "Gira!" << endl;
+				usleep(1000000);
+				arduino.sendFunc(4,2,1);
+				cout << "Gira! 2" << endl;
+				usleep(1000000);
+				arduino.sendFunc(4,2,2);
+				cout << "Para de girar" << endl;
+				usleep(1000000);
+
+				arduino.sendFunc(4,3,2,82);
+				cout << "Manobra ai" << endl;
+				usleep(100000);
 				while(1){
+					arduino.sendFunc(4,4);
+					if(arduino.in[3] == 1) break;
+					else cout << "N termino 2" << endl;
+				}
+				cout << "Termino 2.." << endl;
+
+				arduino.sendFunc(4,5);
+				cout << "Anda ai" << endl;
+				usleep(100000);
+				while(1){
+					arduino.sendFunc(4,4);
+					if(arduino.in[3] == 1) break;
+					else cout << "N termino 3" << endl;
+				}
+				cout << "Termino 3.." << endl;
+
+
+				//
+
+				// while(1){
 					
 
-					//PROCESSO OPENCV:
-					// if (!capture.read(frame)) {
-					// 	cout<<"\n Cannot read the video file. \n";
-					// 	break;
-					// }
+				// 	//PROCESSO OPENCV:
+				// 	// if (!capture.read(frame)) {
+				// 	// 	cout<<"\n Cannot read the video file. \n";
+				// 	// 	break;
+				// 	// }
 
-					// cow.setROI(frame);
-					// cow.transformImage(); 
-					// cow.searchSquares();
+				// 	// cow.setROI(frame);
+				// 	// cow.transformImage(); 
+				// 	// cow.searchSquares();
 
-					// if (cow.find()){
-					// 	cow.drawCenter(frame);
-					// 	cow.sendPID(c1,c2);
-					// } else {
-					// 	cow.sendPID(c1,c2);
-					// }
+				// 	// if (cow.find()){
+				// 	// 	cow.drawCenter(frame);
+				// 	// 	cow.sendPID(c1,c2);
+				// 	// } else {
+				// 	// 	cow.sendPID(c1,c2);
+				// 	// }
 
-					// namedWindow("Original", WINDOW_NORMAL);
-					// resizeWindow("Original", WIDTH, HEIGHT);
-					// imshow("Original", frame);
+				// 	// namedWindow("Original", WINDOW_NORMAL);
+				// 	// resizeWindow("Original", WIDTH, HEIGHT);
+				// 	// imshow("Original", frame);
 
-					// if (waitKey(1) == 27){
-					// 	break;
-					// }
-					////
+				// 	// if (waitKey(1) == 27){
+				// 	// 	break;
+				// 	// }
+				// 	////
 
-					//Envia comando I2C: Movimentação
-					arduino.sendFunc(4,2);
-					//
+				// 	//Envia comando I2C: Movimentação
+				// 	arduino.sendFunc(4,2);
+				// 	//
 
-					cout << "N Acabou 04." << endl;
-				}
+				// 	cout << "N Acabou 04." << endl;
+				// }
 
 				//Fim de estado:
 				cout << "Acabou 04." << endl;

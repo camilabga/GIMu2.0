@@ -37,6 +37,14 @@ int subEstado = 90;
 bool fimEstado[10];
 //
 
+//Definições vaca:
+byte ladoV;
+byte anguloV;
+bool manobrandoV = false;
+bool emFrenteV = false;
+//
+
+
 //Outras definicoes:
 bool flag = false, flag2 = false;
 bool erroCom = false;
@@ -123,10 +131,37 @@ void loop() {
     break;
 
     case 4:
-      if()
-      
-    break;
+      switch(subEstado){
+        case 1:
+          //GIRAR PARA O LADO:
+          Serial.println("Girando para o lado");
+        break;
 
+        case 2:
+          //MANOBRAR
+          Serial.print("Manobrando ...");
+          Serial.print(ladoV);
+          Serial.print(" ");
+          Serial.println(anguloV);
+          delay(3000);
+          Serial.println("Finalizado Manobra!");
+          subEstado = 90;
+        break;
+
+        case 3:
+          //IR EM FRENTE ATÉ A VACA:
+          Serial.println("Indo em frente..");
+          delay(2000);
+          Serial.println("Parei de ir pra frente");
+          subEstado = 90;
+        break;
+
+        case 90:
+          //MOTOR PARA
+          Serial.println("PAREI !");
+        break;
+      }
+    break;
   }
 
 }
@@ -144,11 +179,14 @@ void receiveData(int byteCount) {
     while (Wire.available()) {
       Wire.readBytesUntil(';', in, byteCount);
     }
+
     Serial.print("Recebido: ");
     Serial.print(in[0]);
     Serial.print(" ");
     Serial.println(in[1]); 
-    switch(in[0]){
+
+    if(in[9] != ';')  out[0] = 99;
+    else switch(in[0]){
       
       //  ####  Segue parede  #### 
       case 1:
@@ -255,12 +293,43 @@ void receiveData(int byteCount) {
             }else if(in[3] == 2){
               subEstado = 90;
               out[3] = 2;
+            }else{
+              out[0] = 98;
             }
           break;
 
           case 3:
             out[1] = 3;
-            
+            if(in[3] == 1 || in[3] == 2){
+              ladoV = in[3];
+              anguloV = in[4];
+              subEstado = 2;
+            }else{
+              out[0] = 98;
+            }
+          break;
+
+          case 4:
+            out[1] = 4;
+            if(subEstado == 90){
+              out[3] = 1;
+            }else{
+              out[3] = 2;
+            }
+          break;
+
+          case 5:
+            out[1] = 5;
+            subEstado = 3;
+          break;
+
+          case 6:
+            out[1] = 6;
+            if(subEstado == 90){
+              out[3] = 1;
+            }else{
+              out[3] = 2;
+            }
           break;
 
           default:
@@ -271,6 +340,10 @@ void receiveData(int byteCount) {
 
       break;
       //  ####
+
+      default:
+        out[0] = 98;
+      break;
 
     }
   }
