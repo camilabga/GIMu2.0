@@ -627,3 +627,183 @@ void GIMu::ordenhar03(){
         }
     }
 }
+
+void GIMu::follow_wall_to_little_gate() {
+    bool found_wall = false;
+    bool found_other_wall = false;
+    bool found_porteira = false;
+    bool found_porteira_frente = false;
+    bool turn_left = false;
+    bool turn_right = false;
+    bool turned_right = false;
+
+    // Seguindo aruco ate achar uma parede ou porteira
+    do{
+        moveFrente(LOOKING_SPEED);
+        if(sharpsBase[3] == VALID_SHARP && sharpsBase[2] < DIST_TURN01){
+            found_porteira_frente = true;
+            turn_left = true;
+        } else if(sharpsBase[2] == VALID_SHARP && sharpsBase[3] < DIST_TURN01){
+            found_porteira_frente = true;
+            turn_right = true;
+        }
+    }while( (sharpsBase[2] == VALID_SHARP && sharpsBase[3] == VALID_SHARP) 
+            || (sharpsBase[2] > DIST_TURN01 && sharpsBase[3] > DIST_TURN01)  );
+
+    stop();
+    
+    do{
+        moveTank(-TURNING_SPEED, TURNING_SPEED);
+    }while( (sharpsBase[0] != VALID_SHARP && sharpsBase[1] != VALID_SHARP)
+            && (abs(sharpsBase[0]-sharpsBase[1]) > 2) );
+
+    //Andar ate achar a porteira ou outra parede
+    do{
+        moveFrente(LOOKING_SPEED);
+        if((sharpsBase[2] > DIST_TURN01 && sharpsBase[3] > DIST_TURN01 )){
+            found_other_wall = true;
+        } else if( ( (sharpsBase[0] != VALID_SHARP && sharpsBase[1] != VALID_SHARP) 
+                    && (sharpsBase[2] != VALID_SHARP && sharpsBase[3] != VALID_SHARP) ) ){
+            found_porteira = true;
+        }
+    }while( !found_porteira && !found_other_wall );
+
+    stop();
+
+    if(found_other_wall){
+        do{
+            moveTank(TURNING_SPEED, -TURNING_SPEED);
+        }while( (sharpsBase[4] != VALID_SHARP && sharpsBase[5] != VALID_SHARP 
+                && sharpsBase[3] != VALID_SHARP && sharpsBase[2] != VALID_SHARP)
+                && (abs(sharpsBase[4] - sharpsBase[5]) > 2) );
+        
+        stop();
+        
+        turned_right = true;
+        do{
+            moveFrente(LOOKING_SPEED);
+        }while( (sharpsBase[4] != VALID_SHARP)
+                 && ( (sharpsBase[2] == VALID_SHARP && sharpsBase[3] == VALID_SHARP) );
+        found_porteira = true;
+    }
+
+    stop();
+
+    if(found_porteira_frente){
+        if(turn_left){
+            do{
+                moveTank(-TURNING_SPEED, TURNING_SPEED);
+            }while( (sharpsBase[0] == VALID_SHARP && sharpsBase[1] == VALID_SHARP)
+                    || ((sharpsBase[0] == VALID_SHARP && sharpsBase[1] == VALID_SHARP) 
+                        && (abs(sharpsBase[0] - sharpsBase[1] ) > 2)) );
+        } else {
+            if(turn_right){
+                do{
+                    moveTank(TURNING_SPEED, -TURNING_SPEED);
+                }while( (sharpsBase[0] != VALID_SHARP && sharpsBase[1] != VALID_SHARP)
+                        && (abs(sharpsBase[0] - sharpsBase[1] ) > 2) );
+            }
+        }
+    }
+    
+    //Tentar ir ate o meio da porteira utilizando tempo
+    if(found_porteira){
+        int time = millis();
+        int timeAux = 0;
+
+        if(turned_right){
+            do{
+                moveFrente(LOOKING_SPEED);
+            }while(sharpsBase[4] == VALID_SHARP);
+            
+            timeAux = millis() - time; //Tempo gasto para o comprimento da porteira
+            timeAux = timeAux / 2;
+            time = millis();
+            stop();
+            
+            //Andar ate a metade da porteira
+            do{
+                moveTras(LOOKING_SPEED);
+            }while( millis() - time = timeAux);
+
+        } else {
+            do{
+                moveFrente(LOOKING_SPEED);
+            }while( (sharpsBase[1] != VALID_SHARP && sharpsBase[0] == VALID_SHARP));
+            
+            timeAux = millis() - time;
+            time = millis();
+            stop();
+
+            do{
+                moveTras(LOOKING_SPEED);
+            }while( millis() - time = timAux);
+            
+        }
+
+        stop();
+
+        //Entrar na porteira
+        if(turned_right){
+            do{
+                moveTank(-TURNING_SPEED, TURNING_SPEED);
+            }while( (sharpsBase[4] != VALID_SHARP && sharpsBase[5] != VALID_SHARP) 
+            && ( (sharpsBase[2] != VALID_SHARP && sharpsBase[3] != VALID_SHARP));
+        } else {
+            do{
+                moveTank(TURNING_SPEED, -TURNING_SPEED);
+            }while( (sharpsBase[0] != VALID_SHARP && sharpsBase[1] != VALID_SHARP) 
+            && ( (sharpsBase[2] != VALID_SHARP && sharpsBase[3] != VALID_SHARP));
+        }
+
+        moveFrente(LOOKING_SPEED);
+        delay(1000); // Andar para passar da porteira
+        stop();
+
+        moveTank(-TURNING_SPEED, TURNING_SPEED); //Girar ate achar o aruco do tanque
+
+    }
+    /*
+//-------------------
+    //Quando um dos sensores encontrar a porteira de frente
+    if(sharpsBase[3] == VALID_SHARP && sharpsBase[2] < DIST_TURN01 ){
+        found_porteira_frente = true;
+        turn_left = true;
+        do{
+            moveTank(-TURNING_SPEED, TURNING_SPEED);
+        }while((sharpsBase[0] != VALID_SHARP && sharpsBase[1] != VALID_SHARP));
+
+    } else if(sharpsBase[2] == VALID_SHARP && sharpsBase[3] < DIST_TURN01){
+        found_porteira_frente = true;
+        turn_right = true;
+        do{
+            moveTank(TURNING_SPEED, -TURNING_SPEED);
+        }while((sharpsBase[0] != VALID_SHARP && sharpsBase[1] != VALID_SHARP));
+
+    }
+
+    if(turn_left){
+        do{
+            moveFrente(LOOKING_SPEED);
+        }while((sharpsBase[0] != VALID_SHARP && sharpsBase[1] != VALID_SHARP));
+
+        do{
+            moveTank(LOOKING_SPEED, -LOOKING_SPEED);
+        }while((sharpsBase[0] != VALID_SHARP && sharpsBase[1] != VALID_SHARP));
+
+    }
+
+    if(turn_right){
+        do{
+            moveFrente(LOOKING_SPEED);
+        }while((sharpsBase[4] != VALID_SHARP && sharpsBase[5] != VALID_SHARP));
+
+        do{
+            moveTank(LOOKING_SPEED, -LOOKING_SPEED);
+        }while((sharpsBase[4] != VALID_SHARP && sharpsBase[5] != VALID_SHARP));
+
+    }*/
+   
+//-------------------
+    
+}
