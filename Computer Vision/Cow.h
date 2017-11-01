@@ -15,15 +15,14 @@ using namespace std;
 
 #define HEIGHT 480
 #define WIDTH 640
-
+ 
 class Cow{
 private:
     Point center;
-    queue <Point> previous_centers;
     bool detected;
     bool centered;
     bool aligned;
-    //float angle;
+    float slope;
     vector<vector<Point> > squares;
     vector <Point> centers;
     vector<vector<Point> > legs;
@@ -47,8 +46,8 @@ public:
     void discoverAngle();
 
     bool find();
-    bool isCentered();
-    bool isAlign();
+    inline bool isCentered(){return centered;}
+    inline bool isAlign(){return aligned;}
 
     void distinguishParts(Mat &R);
     void getInclination(Mat &R);

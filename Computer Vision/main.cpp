@@ -30,12 +30,18 @@ int main(){
         cow.searchSquares();
  
         if (cow.find()){
-            cow.detectLimits();
-            cow.distinguishParts(frame);
-            cow.drawCenter(frame);
-            cow.sendPID(); 
+            if (cow.isCentered()) {
+                if (cow.isAlign()) {
+                    // VAI RETO
+                } else {
+                    cow.detectLimits();
+                    // ALINHAR 180 GRAUS COM A VACA
+                }
+            } else {
+                // GIRAR CONTROLADO
+            }
         } else {
-            cow.sendPID();
+            // GIRAR LOUCAMENTE
         }
 
         namedWindow("Original", WINDOW_NORMAL);
