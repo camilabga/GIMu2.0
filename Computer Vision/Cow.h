@@ -15,7 +15,7 @@ using namespace std;
 
 #define HEIGHT 480
 #define WIDTH 640
-
+ 
 class Cow{
 private:
     Point center;
@@ -23,7 +23,7 @@ private:
     bool detected;
     bool centered;
     bool aligned;
-    //float angle;
+    float slope;
     vector<vector<Point> > squares;
     vector <Point> centers;
     vector<vector<Point> > legs;

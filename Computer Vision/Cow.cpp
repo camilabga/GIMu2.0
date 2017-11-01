@@ -442,17 +442,22 @@ void Cow::detectLimits(){
 }
 
 bool Cow::isAlign(){
-
+    return aligned;
 }
 
 void Cow::discoverAngle(){
     vector<float> angulos;
+    float aux = 0;
     if (limits.size() > 0) {
         for (unsigned i = 0; i < limits.size(); i++) {
-            cout << ;
+            aux = (limits[0][0].x - limits[0][1].x) / 
+                (sqrt((limits[0][0].x - limits[0][1].x)*(limits[0][0].x - limits[0][1].x)
+                    +(limits[0][0].y - limits[0][1].y)*(limits[0][0].y - limits[0][1].y)));
+            angulos.push_back((acos(aux)*180/PI));
         }
 
-        cout << endl;
+        slope = angulos[0];
+        if (slope == 180 || slope == 0) aligned = true;
     } else {
         // proximo threshold
     }
