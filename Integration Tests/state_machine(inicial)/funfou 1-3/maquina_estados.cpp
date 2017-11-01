@@ -33,48 +33,68 @@ int main(){
 
 	while(!fim_geral){
 		switch(estadoAtual){
+			
 			// ####################### SEGUE PAREDE
 			case 1:
+				
 				//Envia comando I2C: Iniciando estado
 				arduino.sendFunc(1,1);
+				//
 
 				while(1){
+
 					//Envia comando I2C: Perguntando se já acabou
 					arduino.sendFunc(1,2);
 					if(arduino.in[3] == 1){
 						break;
 					}
+					//
+
+					cout << "N Acabou 01." << endl;
 				}
 
-				cout << "Acabou Estado 01." << endl;
+				//Fim de estado:
+				cout << "Acabou 01." << endl;
 				estadoAtual = 2;
 				//fim_geral = true;
+				//
 			break;
 			
 			// ####################### PROCURA COPO
 			case 2:
+				
 				//Envia comando I2C: Iniciando estado
 				arduino.sendFunc(2,1);
+				//
 
 				while(1){
+					
 					//Envia comando I2C: Perguntando se já acabou
 					arduino.sendFunc(2,2);
 					if(arduino.in[3] == 1){
 						break;
 					}
+					//
+
+					cout << "N Acabou 02." << endl;
 				}
 
-				cout << "Acabou Estado 02." << endl;
+				//Fim de estado:
+				cout << "Acabou 02." << endl;
 				estadoAtual = 3;
 				// fim_geral = true;
+				//
 			break;
 			
 			// ####################### PEGA COPO
 			case 3:
+
 				//Envia comando I2C: Iniciando estado
 				arduino.sendFunc(3,1);
+				//
 
 				while(1){
+
 					//Envia comando I2C: Perguntando se já acabou
 					arduino.sendFunc(3,2);
 					if(arduino.in[3] == 1){
@@ -82,11 +102,14 @@ int main(){
 					}
 					//
 
+					cout << "N Acabou 03." << endl;
 				}
 
-				cout << "Acabou Estado 03." << endl;
+				//Fim de estado:
+				cout << "Acabou 03." << endl;
 				estadoAtual = 4;
 				// fim_geral = true;
+				//
 			break;
 
 			// ####################### PROCURA VACA
