@@ -10,6 +10,7 @@ int THRESH = 150;
 #define FRACTION_CONSIDER_LEG 0.3
 #define CONSIDER_EQUAL 1
 #define PI 3.14159265
+#define CONSIDER_CENTERED 5
 
 const string trackbarWindowName = "Trackbars";
 
@@ -35,6 +36,7 @@ void createTrackbars(){
 Cow::Cow(){
     detected = false;
     centered = false;
+    aligned = false;
     center.x = 0;
     center.y = 0;
     squares.clear();
@@ -48,6 +50,7 @@ bool Cow::find(){
     center.y = 0;
     int n = 0;
     long aux_x = 0, aux_y = 0;
+
     if (detected) { // tratamento com ROI e centro anterior
         
         alignSquarePoints();
@@ -75,12 +78,12 @@ bool Cow::find(){
             center.x = center.x/n;
             center.y = center.y/n;
 
-            if (previous_centers.size() <= 50) {
-                previous_centers.push(center);
+            if (abs(center.x - WIDTH/2) < CONSIDER_CENTERED) {
+                centered = true;
             } else {
-                previous_centers.pop();
-                previous_centers.push(center);
+                centered = false;
             }
+    
 
             return true;
         } else {
@@ -240,7 +243,7 @@ void Cow::sendPID(){
     imshow("PID", ROI);
 }
 
-bool Cow::isCentered(){
+/*bool Cow::isCentered(){
     if (!centered) {
         if (previous_centers.size() <= 50) {
             int x = previous_centers.back().x-previous_centers.front().x;
@@ -255,7 +258,7 @@ bool Cow::isCentered(){
         }
     }
     return true;
-}
+}*/
 
 void Cow::distinguishParts(Mat &R){
     /*  LEG // BODY WITH COMPARED SIZES  */
@@ -439,10 +442,6 @@ void Cow::detectLimits(){
     namedWindow("Limits", WINDOW_NORMAL);
     resizeWindow("Limits", WIDTH, HEIGHT);
     imshow("Limits", ROI);
-}
-
-bool Cow::isAlign(){
-    return aligned;
 }
 
 void Cow::discoverAngle(){
