@@ -25,7 +25,7 @@ GIMu::GIMu(BracoCopo b){
 GIMu::GIMu(Motor d, Motor e, BracoCopo b){
 #line 24 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void setup();
-#line 38 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
+#line 42 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void loop();
 #line 24 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
     Mright.setPinFrente(d.getPinFrente());
@@ -366,7 +366,7 @@ void GIMu::adjust_to_get_cup(){
                 frente = false;
             }
 
-            if(abs(sharpsBase[0] - sharpsBase[1]) < 2 && sharpsBase[0] < 9){
+            if(abs(sharpsBase[0] - sharpsBase[1]) < 2){
                 aligned = true;
             } else {
                 aligned = false;
@@ -376,12 +376,9 @@ void GIMu::adjust_to_get_cup(){
             if (aligned) {
                 if (frente) moveFrente(LOOKING_SPEED);
                 if (!frente) moveTras(LOOKING_SPEED);
-            } else if (abs(sharpsBase[0] - sharpsBase[1]) < 2) {
+            } else {
                 if (sharpsBase[0] > sharpsBase[1]) moveTank(-TURNING_SPEED, TURNING_SPEED);
                 if (sharpsBase[0] < sharpsBase[1]) moveTank(TURNING_SPEED, -TURNING_SPEED);
-            } else {
-                moveTank(TURNING_SPEED, -TURNING_SPEED);
-                delay(50);
             }
             
         } while(!aligned || sharpsBase[2] > 12);
@@ -637,6 +634,393 @@ void GIMu::ordenhar03(){
         }
     }
 }
+
+void GIMu::follow_wall_to_little_gate() {
+    bool found_wall = false;
+    bool found_other_wall = false;
+    bool found_porteira = false;
+    bool found_porteira_frente = false;
+    bool turn_left = false;
+    bool turn_right = false;
+    bool turned_right = false;
+    unsigned aux = 0;
+
+    getSharps();
+
+    // Seguindo aruco ate achar uma parede ou porteira
+    do{
+        Serial.println("ACHAR PAREDE");
+
+        if (aux%3 == 0) {
+            sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
+            sharpsBase[aux%3 + 1] = getSharp(SH_DIREITA_TRAS);
+        } else if (aux%3 == 1) {
+            sharpsBase[aux%3 + 1] = getSharp(SH_FRENTE_DIREITA);
+            sharpsBase[aux%3 + 2] = getSharp(SH_FRENTE_ESQUERDA);
+        } else {
+            sharpsBase[aux%3 + 2] = getSharp(SH_ESQUERDA_FRENTE);
+            sharpsBase[aux%3 + 3] = getSharp(SH_ESQUERDA_TRAS);
+        }
+        
+        aux=(aux+1)%3;
+
+        moveFrente(LOOKING_SPEED);
+        if(sharpsBase[3] == VALID_SHARP && sharpsBase[2] < DIST_TURN02){
+            found_porteira_frente = true;
+            turn_left = true;
+        } else if(sharpsBase[2] == VALID_SHARP && sharpsBase[3] < DIST_TURN02){
+            found_porteira_frente = true;
+            turn_right = true;
+        }
+    }while( (sharpsBase[2] == VALID_SHARP && sharpsBase[3] == VALID_SHARP) 
+            || (sharpsBase[2] > DIST_TURN02 && sharpsBase[3] > DIST_TURN02)  );
+
+    stop();
+    getSharps();
+    
+    //GIRANDO
+    do{
+        Serial.println("GIRANDO");
+
+        if (aux%3 == 0) {
+            sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
+            sharpsBase[aux%3 + 1] = getSharp(SH_DIREITA_TRAS);
+        } else if (aux%3 == 1) {
+            sharpsBase[aux%3 + 1] = getSharp(SH_FRENTE_DIREITA);
+            sharpsBase[aux%3 + 2] = getSharp(SH_FRENTE_ESQUERDA);
+        } else {
+            sharpsBase[aux%3 + 2] = getSharp(SH_ESQUERDA_FRENTE);
+            sharpsBase[aux%3 + 3] = getSharp(SH_ESQUERDA_TRAS);
+        }
+        
+        aux=(aux+1)%3;
+
+        moveTank(-TURNING_SPEED, TURNING_SPEED);
+    }while( !(abs(sharpsBase[0]-sharpsBase[1]) < SHARP_DIFF && sharpsBase[4] == VALID_SHARP
+                && sharpsBase[5] == VALID_SHARP) );
+
+            getSharps();
+
+    //Andar ate achar a porteira ou outra parede
+    do{
+        Serial.println("SEGUE RETO");
+
+        if (aux%3 == 0) {
+            sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
+            sharpsBase[aux%3 + 1] = getSharp(SH_DIREITA_TRAS);
+        } else if (aux%3 == 1) {
+            sharpsBase[aux%3 + 1] = getSharp(SH_FRENTE_DIREITA);
+            sharpsBase[aux%3 + 2] = getSharp(SH_FRENTE_ESQUERDA);
+        } else {
+            sharpsBase[aux%3 + 2] = getSharp(SH_ESQUERDA_FRENTE);
+            sharpsBase[aux%3 + 3] = getSharp(SH_ESQUERDA_TRAS);
+        }
+        
+        aux=(aux+1)%3;
+
+        if( (sharpsBase[0] == VALID_SHARP && sharpsBase[1] == VALID_SHARP)  ){
+            found_porteira = true;
+            delay(2000);
+        }
+
+        if (!(sharpsBase[3] == VALID_SHARP && sharpsBase[4] == VALID_SHARP)) {
+            found_other_wall = true;
+        }
+
+        moveFrente(LOOKING_SPEED);
+
+    } while(!found_porteira && !found_other_wall);
+    
+    
+    stop();
+
+    getSharps();
+
+    if(found_other_wall){
+        Serial.println("ACHOU QUINA");
+        do{
+            if (aux%3 == 0) {
+                sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
+                sharpsBase[aux%3 + 1] = getSharp(SH_DIREITA_TRAS);
+            } else if (aux%3 == 1) {
+                sharpsBase[aux%3 + 1] = getSharp(SH_FRENTE_DIREITA);
+                sharpsBase[aux%3 + 2] = getSharp(SH_FRENTE_ESQUERDA);
+            } else {
+                sharpsBase[aux%3 + 2] = getSharp(SH_ESQUERDA_FRENTE);
+                sharpsBase[aux%3 + 3] = getSharp(SH_ESQUERDA_TRAS);
+            }
+            
+            aux=(aux+1)%3;
+
+            moveTank(TURNING_SPEED, -TURNING_SPEED);
+        }while( !(sharpsBase[0] == VALID_SHARP && sharpsBase[1] == VALID_SHARP &&
+                  sharpsBase[2] == VALID_SHARP && sharpsBase[3] == VALID_SHARP && 
+                  abs(sharpsBase[4]-sharpsBase[5]) < SHARP_DIFF) );
+        
+        stop();
+        getSharps();
+
+        // ir reto até achar porteira
+        do {
+            if (aux%3 == 0) {
+                sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
+                sharpsBase[aux%3 + 1] = getSharp(SH_DIREITA_TRAS);
+            } else if (aux%3 == 1) {
+                sharpsBase[aux%3 + 1] = getSharp(SH_FRENTE_DIREITA);
+                sharpsBase[aux%3 + 2] = getSharp(SH_FRENTE_ESQUERDA);
+            } else {
+                sharpsBase[aux%3 + 2] = getSharp(SH_ESQUERDA_FRENTE);
+                sharpsBase[aux%3 + 3] = getSharp(SH_ESQUERDA_TRAS);
+            }
+            
+            aux=(aux+1)%3;
+
+            moveFrente(LOOKING_SPEED);
+
+            if( (sharpsBase[4] == VALID_SHARP && sharpsBase[5] == VALID_SHARP) ){
+                found_porteira = true;
+                delay(2000);
+            }
+
+        } while(!found_porteira);
+        
+        stop();
+
+        moveTank(-TURNING_SPEED, TURNING_SPEED);
+        delay(6000);
+    }
+
+    stop();
+    getSharps();
+
+    /*if(found_porteira_frente){
+        Serial.println("ACHOU PORTEIRA");
+        if(turn_left){
+            do{
+                if (aux%3 == 0) {
+                    sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
+                    sharpsBase[aux%3 + 1] = getSharp(SH_DIREITA_TRAS);
+                } else if (aux%3 == 1) {
+                    sharpsBase[aux%3 + 1] = getSharp(SH_FRENTE_DIREITA);
+                    sharpsBase[aux%3 + 2] = getSharp(SH_FRENTE_ESQUERDA);
+                } else {
+                    sharpsBase[aux%3 + 2] = getSharp(SH_ESQUERDA_FRENTE);
+                    sharpsBase[aux%3 + 3] = getSharp(SH_ESQUERDA_TRAS);
+                }
+                
+                aux=(aux+1)%3;
+
+                moveTank(-TURNING_SPEED, TURNING_SPEED);
+            }while( (sharpsBase[0] == VALID_SHARP && sharpsBase[1] == VALID_SHARP)
+                    || ((sharpsBase[0] == VALID_SHARP && sharpsBase[1] == VALID_SHARP) 
+                        && (abs(sharpsBase[0] - sharpsBase[1] ) > 2)) );
+        } else {
+            if(turn_right){
+                do{
+                    if (aux%3 == 0) {
+                        sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
+                        sharpsBase[aux%3 + 1] = getSharp(SH_DIREITA_TRAS);
+                    } else if (aux%3 == 1) {
+                        sharpsBase[aux%3 + 1] = getSharp(SH_FRENTE_DIREITA);
+                        sharpsBase[aux%3 + 2] = getSharp(SH_FRENTE_ESQUERDA);
+                    } else {
+                        sharpsBase[aux%3 + 2] = getSharp(SH_ESQUERDA_FRENTE);
+                        sharpsBase[aux%3 + 3] = getSharp(SH_ESQUERDA_TRAS);
+                    }
+                    
+                    aux=(aux+1)%3;
+
+                    moveTank(TURNING_SPEED, -TURNING_SPEED);
+                }while( (sharpsBase[0] != VALID_SHARP && sharpsBase[1] != VALID_SHARP)
+                        && (abs(sharpsBase[0] - sharpsBase[1] ) > 2) );
+            }
+        }
+    }*/
+    
+    //Tentar ir ate o meio da porteira utilizando tempo
+    if(found_porteira && !found_other_wall){
+        moveTank(TURNING_SPEED, -TURNING_SPEED);
+        delay(6000);
+        stop();
+        
+        /*int time = millis();
+        int timeAux = 0;
+
+        if(turned_right){
+            do{
+                if (aux%3 == 0) {
+                    sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
+                    sharpsBase[aux%3 + 1] = getSharp(SH_DIREITA_TRAS);
+                } else if (aux%3 == 1) {
+                    sharpsBase[aux%3 + 1] = getSharp(SH_FRENTE_DIREITA);
+                    sharpsBase[aux%3 + 2] = getSharp(SH_FRENTE_ESQUERDA);
+                } else {
+                    sharpsBase[aux%3 + 2] = getSharp(SH_ESQUERDA_FRENTE);
+                    sharpsBase[aux%3 + 3] = getSharp(SH_ESQUERDA_TRAS);
+                }
+                
+                aux=(aux+1)%3;
+
+                moveFrente(LOOKING_SPEED);
+            }while(sharpsBase[4] == VALID_SHARP);
+            
+            timeAux = millis() - time; //Tempo gasto para o comprimento da porteira
+            timeAux = timeAux / 2;
+            time = millis();
+            stop();
+            
+            //Andar ate a metade da porteira
+            do{
+                if (aux%3 == 0) {
+                    sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
+                    sharpsBase[aux%3 + 1] = getSharp(SH_DIREITA_TRAS);
+                } else if (aux%3 == 1) {
+                    sharpsBase[aux%3 + 1] = getSharp(SH_FRENTE_DIREITA);
+                    sharpsBase[aux%3 + 2] = getSharp(SH_FRENTE_ESQUERDA);
+                } else {
+                    sharpsBase[aux%3 + 2] = getSharp(SH_ESQUERDA_FRENTE);
+                    sharpsBase[aux%3 + 3] = getSharp(SH_ESQUERDA_TRAS);
+                }
+                
+                aux=(aux+1)%3;
+
+                moveTras(LOOKING_SPEED);
+            }while( millis() - time == timeAux);
+
+        } else {
+            do{
+                if (aux%3 == 0) {
+                    sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
+                    sharpsBase[aux%3 + 1] = getSharp(SH_DIREITA_TRAS);
+                } else if (aux%3 == 1) {
+                    sharpsBase[aux%3 + 1] = getSharp(SH_FRENTE_DIREITA);
+                    sharpsBase[aux%3 + 2] = getSharp(SH_FRENTE_ESQUERDA);
+                } else {
+                    sharpsBase[aux%3 + 2] = getSharp(SH_ESQUERDA_FRENTE);
+                    sharpsBase[aux%3 + 3] = getSharp(SH_ESQUERDA_TRAS);
+                }
+                
+                aux=(aux+1)%3;
+
+                moveFrente(LOOKING_SPEED);
+            }while( (sharpsBase[1] != VALID_SHARP && sharpsBase[0] == VALID_SHARP));
+            
+            timeAux = millis() - time;
+            time = millis();
+            stop();
+
+            do{
+                if (aux%3 == 0) {
+                    sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
+                    sharpsBase[aux%3 + 1] = getSharp(SH_DIREITA_TRAS);
+                } else if (aux%3 == 1) {
+                    sharpsBase[aux%3 + 1] = getSharp(SH_FRENTE_DIREITA);
+                    sharpsBase[aux%3 + 2] = getSharp(SH_FRENTE_ESQUERDA);
+                } else {
+                    sharpsBase[aux%3 + 2] = getSharp(SH_ESQUERDA_FRENTE);
+                    sharpsBase[aux%3 + 3] = getSharp(SH_ESQUERDA_TRAS);
+                }
+                
+                aux=(aux+1)%3;
+
+                moveTras(LOOKING_SPEED);
+            }while( millis() - time == timeAux);
+            
+        }
+
+        stop();
+
+        //Entrar na porteira
+        if(turned_right){
+            do{
+                if (aux%3 == 0) {
+                    sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
+                    sharpsBase[aux%3 + 1] = getSharp(SH_DIREITA_TRAS);
+                } else if (aux%3 == 1) {
+                    sharpsBase[aux%3 + 1] = getSharp(SH_FRENTE_DIREITA);
+                    sharpsBase[aux%3 + 2] = getSharp(SH_FRENTE_ESQUERDA);
+                } else {
+                    sharpsBase[aux%3 + 2] = getSharp(SH_ESQUERDA_FRENTE);
+                    sharpsBase[aux%3 + 3] = getSharp(SH_ESQUERDA_TRAS);
+                }
+                
+                aux=(aux+1)%3;
+
+                moveTank(-TURNING_SPEED, TURNING_SPEED);
+            } while( (sharpsBase[4] != VALID_SHARP && sharpsBase[5] != VALID_SHARP) 
+            && ( (sharpsBase[2] != VALID_SHARP && sharpsBase[3] != VALID_SHARP)));
+        } else {
+            do{
+                if (aux%3 == 0) {
+                    sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
+                    sharpsBase[aux%3 + 1] = getSharp(SH_DIREITA_TRAS);
+                } else if (aux%3 == 1) {
+                    sharpsBase[aux%3 + 1] = getSharp(SH_FRENTE_DIREITA);
+                    sharpsBase[aux%3 + 2] = getSharp(SH_FRENTE_ESQUERDA);
+                } else {
+                    sharpsBase[aux%3 + 2] = getSharp(SH_ESQUERDA_FRENTE);
+                    sharpsBase[aux%3 + 3] = getSharp(SH_ESQUERDA_TRAS);
+                }
+                
+                aux=(aux+1)%3;
+
+                moveTank(TURNING_SPEED, -TURNING_SPEED);
+            }while( (sharpsBase[0] != VALID_SHARP && sharpsBase[1] != VALID_SHARP) 
+            && ( (sharpsBase[2] != VALID_SHARP && sharpsBase[3] != VALID_SHARP)));
+        }
+
+        moveFrente(LOOKING_SPEED);
+        delay(1000); // Andar para passar da porteira
+        stop();
+
+        //moveTank(-TURNING_SPEED, TURNING_SPEED); //Girar ate achar o aruco do tanque
+        */
+    }
+    /*
+    //-------------------
+    //Quando um dos sensores encontrar a porteira de frente
+    if(sharpsBase[3] == VALID_SHARP && sharpsBase[2] < DIST_TURN01 ){
+        found_porteira_frente = true;
+        turn_left = true;
+        do{
+            moveTank(-TURNING_SPEED, TURNING_SPEED);
+        }while((sharpsBase[0] != VALID_SHARP && sharpsBase[1] != VALID_SHARP));
+
+    } else if(sharpsBase[2] == VALID_SHARP && sharpsBase[3] < DIST_TURN01){
+        found_porteira_frente = true;
+        turn_right = true;
+        do{
+            moveTank(TURNING_SPEED, -TURNING_SPEED);
+        }while((sharpsBase[0] != VALID_SHARP && sharpsBase[1] != VALID_SHARP));
+
+    }
+
+    if(turn_left){
+        do{
+            moveFrente(LOOKING_SPEED);
+        }while((sharpsBase[0] != VALID_SHARP && sharpsBase[1] != VALID_SHARP));
+
+        do{
+            moveTank(LOOKING_SPEED, -LOOKING_SPEED);
+        }while((sharpsBase[0] != VALID_SHARP && sharpsBase[1] != VALID_SHARP));
+
+    }
+
+    if(turn_right){
+        do{
+            moveFrente(LOOKING_SPEED);
+        }while((sharpsBase[4] != VALID_SHARP && sharpsBase[5] != VALID_SHARP));
+
+        do{
+            moveTank(LOOKING_SPEED, -LOOKING_SPEED);
+        }while((sharpsBase[4] != VALID_SHARP && sharpsBase[5] != VALID_SHARP));
+
+    }*/
+   
+    //-------------------
+    
+}
+
 #line 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 #include "GIMu.h"
 #include <LiquidCrystal.h>
@@ -663,8 +1047,12 @@ LiquidCrystal lcd(28,30,32,34,36,38);
 
 void setup() {
   Serial.begin(9600);
-  robo.follow_wall_to_terrine_area();
+
+  robo.follow_wall_to_little_gate();
+
+  /*robo.follow_wall_to_terrine_area();
   robo.adjust_to_get_cup();
+  robo.getTerrine();*/
   //teste.attach(46);
   /*lcd.begin(16, 2);
   lcd.print("hello, world!");*/

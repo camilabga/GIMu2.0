@@ -26,12 +26,17 @@ LiquidCrystal lcd(28,30,32,34,36,38);
 
 #line 24 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void setup();
-#line 37 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
+#line 42 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void loop();
 #line 24 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void setup() {
   Serial.begin(9600);
 
+  robo.follow_wall_to_little_gate();
+
+  /*robo.follow_wall_to_terrine_area();
+  robo.adjust_to_get_cup();
+  robo.getTerrine();*/
   //teste.attach(46);
   /*lcd.begin(16, 2);
   lcd.print("hello, world!");*/
@@ -43,6 +48,42 @@ void setup() {
 }
 
 void loop() {
+
+    //Serial.println(analogRead(9));
+  /*bool posCopo = true;
+  if(posCopo){
+      int distIni = 0, distFin = 0, dist = 0;
+      
+      // Andar para frente até encontrar o espaço entre copos
+      do{
+          robo.moveFrente(SEARCHING_SPEED);
+      }
+      while( (robo.getSharp(SH_GARRA) < TEM_COPO) 
+          || (((robo.getSharp(SH_FRENTE_DIREITA) + robo.getSharp(SH_FRENTE_ESQUERDA)) / 2) >= 10));
+
+      robo.stop();
+      distIni = (robo.getSharp(SH_FRENTE_DIREITA) + robo.getSharp(SH_FRENTE_ESQUERDA)) / 2;
+  
+      // Andar para trás até encontrar o espaço entre copos
+      do{
+          robo.moveTras(SEARCHING_SPEED);
+      }
+      while(robo.getSharp(SH_GARRA) < TEM_COPO 
+          || (((robo.getSharp(SH_FRENTE_DIREITA) + robo.getSharp(SH_FRENTE_ESQUERDA)) / 2) <= 30));
+
+      robo.stop();
+      distFin = (robo.getSharp(SH_FRENTE_DIREITA) + robo.getSharp(SH_FRENTE_ESQUERDA)) / 2;
+
+      dist = (distIni + distFin) / 2;
+
+      // Voltando para o centro do copo
+      do{
+          robo.moveFrente(SEARCHING_SPEED);
+      }while(((robo.getSharp(SH_FRENTE_DIREITA) + robo.getSharp(SH_FRENTE_ESQUERDA)) / 2) <= dist);
+      
+      posCopo = false;
+  }*/
+
   /*braco.tryGetTerrine();
   braco.recolherBraco();*/
 
@@ -53,9 +94,9 @@ void loop() {
   Serial.println(digitalRead(FDC_TRAS));
   delay(1000);*/
 
-  robo.follow_wall_to_terrine_area();
+  /*robo.follow_wall_to_terrine_area();
   robo.adjust_to_get_cup();
-  robo.getTerrine();
+  robo.getTerrine();*/
 
   //teste.write(0);
   

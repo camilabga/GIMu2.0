@@ -30,6 +30,7 @@ class GIMu{
     
     void follow_wall_to_terrine_area();
     void adjust_to_get_cup();
+    void follow_wall_to_little_gate();
 
     void getTerrine();
 
