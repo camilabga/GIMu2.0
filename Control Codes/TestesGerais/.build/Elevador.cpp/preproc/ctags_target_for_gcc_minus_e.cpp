@@ -1,13 +1,105 @@
-#include "GIMu.h"
-#include <LiquidCrystal.h>
+# 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/Elevador.cpp"
+# 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/Elevador.cpp"
+# 2 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/Elevador.cpp" 2
 
-Motor esquerdo(DC11, DC12);
-Motor direito(DC21, DC22);
+Elevador::Elevador(Motor m, int stage){
+    mElevador.setPinFrente(m.getPinFrente());
+    mElevador.setPinTras(m.getPinTras());
 
-Motor mbraco(MBRACO1, MBRACO2);
-BracoCopo braco(SERVOG_PULSO, SERVOG_DEDO, SH_GARRA, MSH_GARRA_D, MSH_GARRA_E, mbraco);
+    this->stage = stage;
+}
 
-Motor mElevator(DC_ELEVADOR1, DC_ELEVADOR0);
+Elevador::Elevador(){
+    stage = 1;
+}
+
+void Elevador::attachMotor(Motor m){
+    mElevador.setPinFrente(m.getPinFrente());
+    mElevador.setPinTras(m.getPinTras());
+}
+
+void Elevador::goToStage01(){
+    while (whatStage() > 480 /* PEGAR COPO - INICIAL_ELEVADOR*/) {
+        mElevador.moveMotor(255, 1);
+    }
+    mElevador.moveMotor(0, 0);
+    delay(1000);
+    stage = 1;
+}
+
+void Elevador::goToStage02(){
+    if (stage == 1) {
+        while (whatStage() < 515) {
+            mElevador.moveMotor(255, 0);
+        }
+        mElevador.moveMotor(0, 0);
+    } else if (stage == 3) {
+        while (whatStage() > 515) {
+            mElevador.moveMotor(255, 1);
+        }
+        mElevador.moveMotor(0, 0);
+        delay(1000);
+    }
+
+    stage = 2;
+}
+
+void Elevador::goToStage03(){
+    while (whatStage() < 585) {
+        mElevador.moveMotor(255, 0);
+    }
+    mElevador.moveMotor(0, 0);
+    delay(1000);
+
+    stage = 3;
+}
+
+void Elevador::upToStage02(){
+    if (whatStage() < 515) {
+        mElevador.moveMotor(255,0);
+    } else {
+        mElevador.moveMotor(0, 0);
+        stage = 2;
+    }
+}
+
+void Elevador::upToStage03(){
+    if (whatStage() < 585) {
+        mElevador.moveMotor(255,0);
+    } else {
+        mElevador.moveMotor(0,0);
+        stage = 3;
+    }
+}
+
+void Elevador::downToStage01(){
+    if (whatStage() > 480 /* PEGAR COPO - INICIAL_ELEVADOR*/) {
+        mElevador.moveMotor(255,1);
+    } else {
+        mElevador.moveMotor(0, 0);
+        stage = 1;
+    }
+}
+
+void Elevador::downToStage02(){
+    if (whatStage() > 515) {
+        mElevador.moveMotor(255,1);
+    } else {
+        mElevador.moveMotor(0, 0);
+        stage = 2;
+    }
+}
+# 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
+# 2 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino" 2
+# 3 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino" 2
+
+Motor esquerdo(9 /*Direita*/, 10);
+Motor direito(8 /*Esquerda*/, 7);
+
+Motor mbraco(2, 3);
+BracoCopo braco(46, 44, 11, 9, 10, mbraco);
+
+Motor mElevator(11, 12);
 Elevador elevador(mElevator, 1);
 
 GIMu robo (direito, esquerdo, braco, elevador);
@@ -93,7 +185,7 @@ void loop() {
   robo.getTerrine();*/
 
   //teste.write(0);
-  
+
   /*mbraco.moveMotor(200, 1);
   delay(1000);*/
   /*mbraco.moveMotor(200, 0);
@@ -102,7 +194,7 @@ void loop() {
   Serial.println(analogRead(MSH_GARRA_D));*/
 
   //Serial.println(robo.getSharp(SH_GARRA));
-  
+
   /*for (unsigned a = 70; a < 110; a+=10) {
     teste.write(a);
     delay(1000);
@@ -114,7 +206,7 @@ void loop() {
   }*/
 
   //teste.write(90);
-  
+
   /* ### Teste de Movimentação:*/
    /*robo.moveFrente(255);
    delay(2000);
@@ -138,13 +230,13 @@ void loop() {
   Serial.print(robo.getSharp(SH_ESQUERDA_FRENTE));
   Serial.print(" S5: ");
   Serial.println(robo.getSharp(SH_ESQUERDA_TRAS));*/
-  
+
   /* ### Teste mov + sharp ### */
   /*Serial.print(" S0: ");
   Serial.print(robo.getSharp(SH_DIREITA_TRAS));
   Serial.print(" S1: ");
   Serial.println(robo.getSharp(SH_DIREITA_FRENTE));
-  robo.moveTank(LOOKING_SPEED, -LOOKING_SPEED); */   
+  robo.moveTank(LOOKING_SPEED, -LOOKING_SPEED); */
 
   // ### teste pegar copo ###
   //robo.getTerrine();
@@ -152,7 +244,7 @@ void loop() {
   // ### TESTE ELEVADOR ###
   /*elevador.goToStage03();
   elevador.goToStage01();*/
-  
+
   //Serial.println(elevador.whatStage());
 
   // ### TESTE GARRA ###
@@ -164,13 +256,13 @@ void loop() {
 
   /*  */
 
-  
+
   //Serial.println(robo.getSharp(SH_ORDENHADOR));
   //delay(100);
   /*lcd.setCursor(0, 1);
   lcd.print("BLA BLA BLA");*/
 
-  
+
 
   //Serial.println(robo.getMSharp());
 
