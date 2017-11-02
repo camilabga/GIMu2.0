@@ -924,5 +924,35 @@ void GIMu::follow_wall_to_little_gate() {
 
         //moveTank(-TURNING_SPEED, TURNING_SPEED); //Girar ate achar o aruco do tanque
         */
-    }    
+    }
+}
+
+void GIMu::adjust_to_derramar_leite(){
+    getSharps();
+
+    int time = 0; 
+    int timeAux = 0;
+
+    do{
+        moveTank(-TURNING_SPEED, TURNING_SPEED);
+    }while(sharpsBase[1] == VALID_SHARP);
+
+    time = millis();
+
+    do{
+        moveTank(-TURNING_SPEED, TURNING_SPEED);
+    }while(sharpsBase[0] == VALID_SHARP);
+    
+    timeAux = millis();
+    time = timeAux - time;
+
+    do{
+        moveTank(TURNING_SPEED, -TURNING_SPEED);
+    }while( millis() - timeAux < (time/2) );
+
+    elevador.goToStage03();
+}
+
+void GIMu::dropMilk(){
+    bracoCopo.dropLeite();
 }

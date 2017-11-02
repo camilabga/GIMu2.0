@@ -38,6 +38,10 @@ class GIMu{
     void ordenhar02();
     void ordenhar03();
 
+    void adjust_to_derramar_leite();
+
+    void dropMilk();
+
   private:
     Motor Mright;
     Motor Mleft;
