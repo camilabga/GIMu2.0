@@ -16,6 +16,7 @@ class GIMu{
     GIMu(Motor d, Motor e, BracoCopo b);
     GIMu(Motor d, Motor e, BracoCopo b, Elevador l);
     GIMu(Elevador e);
+    GIMu(Motor d, Motor e, BracoCopo b, Elevador l, Motor s);    
 
     void moveFrente(int velocidade);
     void moveTras(int velocidade);
@@ -38,9 +39,15 @@ class GIMu{
     void ordenhar02();
     void ordenhar03();
 
+    void adjust_to_derramar_leite();
+
+    void dropMilk();
+    void milkTeta();
+
   private:
     Motor Mright;
     Motor Mleft;
+    Motor sucker;
     int sharpsBase[6];
     BracoCopo bracoCopo;
     Elevador elevador;

@@ -1,3 +1,71 @@
+#line 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/GIMu.h"
+#line 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/GIMu.h"
+#ifndef GIMu_h
+#define GIMu_h
+
+#include "Arduino.h"
+#include "Motor.h"
+#include "SharpIR.h"
+#include "Pins.cpp"
+#include "variables.cpp"
+#include "BracoCopo.h"
+#include "Elevador.h"
+
+class GIMu{
+  public:
+    GIMu(Motor d, Motor e);
+    GIMu(BracoCopo b);
+    GIMu(Motor d, Motor e, BracoCopo b);
+    GIMu(Motor d, Motor e, BracoCopo b, Elevador l);
+    GIMu(Elevador e);
+    GIMu(Motor d, Motor e, BracoCopo b, Elevador l, Motor s);    
+
+    void moveFrente(int velocidade);
+    void moveTras(int velocidade);
+    void moveTank(int pwm_esquerdo, int pwm_direito);
+    inline void stop(){moveFrente(0);}
+    void taxearDireita();
+#line 26 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
+void setup();
+#line 44 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
+void loop();
+#line 26 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
+
+    void getSharps();
+    inline int getDistancia(int i){return sharpsBase[i];}
+    int getSharp(int porta);
+    inline int getMSharp(){return analogRead(MSH_ORDENHADOR);}
+    
+    void follow_wall_to_terrine_area();
+    void adjust_to_get_cup();
+    void follow_wall_to_little_gate();
+
+    void getTerrine();
+
+    void ordenhar01();
+    void ordenhar02();
+    void ordenhar03();
+
+    void adjust_to_derramar_leite();
+
+    void dropMilk();
+    void milkTeta();
+
+  private:
+    Motor Mright;
+    Motor Mleft;
+    Motor sucker;
+    int sharpsBase[6];
+    BracoCopo bracoCopo;
+    Elevador elevador;
+    Servo SM_Ordenhador;
+
+    
+};
+
+#endif
+
+#line 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 #include "GIMu.h"
 #include <LiquidCrystal.h>
 
@@ -26,13 +94,12 @@ LiquidCrystal lcd(28,30,32,34,36,38);
 void setup() {
   Serial.begin(9600);
 
-
   //robo.follow_wall_to_little_gate();
 
   /*robo.follow_wall_to_terrine_area();
   robo.adjust_to_get_cup();
   robo.getTerrine();*/
-  teste.attach(6);
+  //teste.attach(46);
   /*lcd.begin(16, 2);
   lcd.print("hello, world!");*/
   //robo.ordenhar03();
@@ -43,13 +110,8 @@ void setup() {
 }
 
 void loop() {
-    
-    //teste.write(20);
-    //teste.detach();
 
-   // robo.ordenhar03();
-    //elevador.goToStage01();
-   //Serial.println(analogRead(MSH_ORDENHADOR));
+    //Serial.println(elevador.whatStage());
 
     //Serial.println(analogRead(9));
   /*bool posCopo = true;
@@ -111,15 +173,15 @@ void loop() {
 
   //Serial.println(robo.getSharp(SH_GARRA));
   
-  for (unsigned a = 0; a < 90; a+=10) {
+  /*for (unsigned a = 70; a < 110; a+=10) {
     teste.write(a);
     delay(1000);
   }
 
-  for (unsigned a = 110; a >20; a-=10) {
+  for (unsigned a = 110; a >70; a-=10) {
     teste.write(a);
     delay(1000);
-  }
+  }*/
 
   //teste.write(90);
   
@@ -158,12 +220,10 @@ void loop() {
   //robo.getTerrine();
 
   // ### TESTE ELEVADOR ###
-  /*elevador.goToStage03();
+  elevador.goToStage03();
   elevador.goToStage02();
   elevador.goToStage03();
-  elevador.goToStage01();*/
-
-  //elevador.goToStage01();
+  elevador.goToStage01();
   
   //Serial.println(elevador.whatStage());
 
@@ -188,3 +248,4 @@ void loop() {
 
 
 }
+

@@ -23,13 +23,13 @@ GIMu::GIMu(BracoCopo b){
 }
 
 GIMu::GIMu(Motor d, Motor e, BracoCopo b){
-#line 24 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
-void setup();
-#line 42 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
-void loop();
-#line 24 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
     Mright.setPinFrente(d.getPinFrente());
     Mright.setPinTras(d.getPinTras());
+#line 26 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
+void setup();
+#line 44 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
+void loop();
+#line 26 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
     Mleft.setPinFrente(e.getPinFrente());
     Mleft.setPinTras(e.getPinTras());
 
@@ -64,6 +64,27 @@ GIMu::GIMu(Motor d, Motor e, BracoCopo b, Elevador l){
 GIMu::GIMu(Elevador e){
     elevador.attachMotor(e.getMotor());
     elevador.setStage(e.getStage());
+}
+
+GIMu::GIMu(Motor d, Motor e, BracoCopo b, Elevador l, Motor s){
+    Mright.setPinFrente(d.getPinFrente());
+    Mright.setPinTras(d.getPinTras());
+    Mleft.setPinFrente(e.getPinFrente());
+    Mleft.setPinTras(e.getPinTras());
+
+    bracoCopo.setSharpGarra(b.getSharpGarra());
+    bracoCopo.set_mSharp_D(b.get_mSharp_D());
+    bracoCopo.set_mSharp_E(b.get_mSharp_E());
+    bracoCopo.attachMotor(b.getMotor());
+
+    elevador.attachMotor(l.getMotor());
+    elevador.setStage(l.getStage());
+
+    pinMode(FDC_TRAS, INPUT_PULLUP);
+    pinMode(FDC_FRENTE, INPUT_PULLUP);
+
+    sucker.setPinFrente(s.getPinFrente());
+    sucker.setPinTras(s.getPinTras());
 }
 
 void GIMu::moveFrente(int velocidade){
@@ -792,50 +813,6 @@ void GIMu::follow_wall_to_little_gate() {
 
     stop();
     getSharps();
-
-    /*if(found_porteira_frente){
-        Serial.println("ACHOU PORTEIRA");
-        if(turn_left){
-            do{
-                if (aux%3 == 0) {
-                    sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
-                    sharpsBase[aux%3 + 1] = getSharp(SH_DIREITA_TRAS);
-                } else if (aux%3 == 1) {
-                    sharpsBase[aux%3 + 1] = getSharp(SH_FRENTE_DIREITA);
-                    sharpsBase[aux%3 + 2] = getSharp(SH_FRENTE_ESQUERDA);
-                } else {
-                    sharpsBase[aux%3 + 2] = getSharp(SH_ESQUERDA_FRENTE);
-                    sharpsBase[aux%3 + 3] = getSharp(SH_ESQUERDA_TRAS);
-                }
-                
-                aux=(aux+1)%3;
-
-                moveTank(-TURNING_SPEED, TURNING_SPEED);
-            }while( (sharpsBase[0] == VALID_SHARP && sharpsBase[1] == VALID_SHARP)
-                    || ((sharpsBase[0] == VALID_SHARP && sharpsBase[1] == VALID_SHARP) 
-                        && (abs(sharpsBase[0] - sharpsBase[1] ) > 2)) );
-        } else {
-            if(turn_right){
-                do{
-                    if (aux%3 == 0) {
-                        sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
-                        sharpsBase[aux%3 + 1] = getSharp(SH_DIREITA_TRAS);
-                    } else if (aux%3 == 1) {
-                        sharpsBase[aux%3 + 1] = getSharp(SH_FRENTE_DIREITA);
-                        sharpsBase[aux%3 + 2] = getSharp(SH_FRENTE_ESQUERDA);
-                    } else {
-                        sharpsBase[aux%3 + 2] = getSharp(SH_ESQUERDA_FRENTE);
-                        sharpsBase[aux%3 + 3] = getSharp(SH_ESQUERDA_TRAS);
-                    }
-                    
-                    aux=(aux+1)%3;
-
-                    moveTank(TURNING_SPEED, -TURNING_SPEED);
-                }while( (sharpsBase[0] != VALID_SHARP && sharpsBase[1] != VALID_SHARP)
-                        && (abs(sharpsBase[0] - sharpsBase[1] ) > 2) );
-            }
-        }
-    }*/
     
     //Tentar ir ate o meio da porteira utilizando tempo
     if(found_porteira && !found_other_wall){
@@ -976,51 +953,48 @@ void GIMu::follow_wall_to_little_gate() {
         //moveTank(-TURNING_SPEED, TURNING_SPEED); //Girar ate achar o aruco do tanque
         */
     }
-    /*
-    //-------------------
-    //Quando um dos sensores encontrar a porteira de frente
-    if(sharpsBase[3] == VALID_SHARP && sharpsBase[2] < DIST_TURN01 ){
-        found_porteira_frente = true;
-        turn_left = true;
-        do{
-            moveTank(-TURNING_SPEED, TURNING_SPEED);
-        }while((sharpsBase[0] != VALID_SHARP && sharpsBase[1] != VALID_SHARP));
-
-    } else if(sharpsBase[2] == VALID_SHARP && sharpsBase[3] < DIST_TURN01){
-        found_porteira_frente = true;
-        turn_right = true;
-        do{
-            moveTank(TURNING_SPEED, -TURNING_SPEED);
-        }while((sharpsBase[0] != VALID_SHARP && sharpsBase[1] != VALID_SHARP));
-
-    }
-
-    if(turn_left){
-        do{
-            moveFrente(LOOKING_SPEED);
-        }while((sharpsBase[0] != VALID_SHARP && sharpsBase[1] != VALID_SHARP));
-
-        do{
-            moveTank(LOOKING_SPEED, -LOOKING_SPEED);
-        }while((sharpsBase[0] != VALID_SHARP && sharpsBase[1] != VALID_SHARP));
-
-    }
-
-    if(turn_right){
-        do{
-            moveFrente(LOOKING_SPEED);
-        }while((sharpsBase[4] != VALID_SHARP && sharpsBase[5] != VALID_SHARP));
-
-        do{
-            moveTank(LOOKING_SPEED, -LOOKING_SPEED);
-        }while((sharpsBase[4] != VALID_SHARP && sharpsBase[5] != VALID_SHARP));
-
-    }*/
-   
-    //-------------------
-    
 }
 
+void GIMu::adjust_to_derramar_leite(){
+    getSharps();
+
+    int time = 0; 
+    int timeAux = 0;
+
+    do{
+        moveTank(-TURNING_SPEED, TURNING_SPEED);
+    }while(sharpsBase[1] == VALID_SHARP);
+
+    time = millis();
+
+    do{
+        moveTank(-TURNING_SPEED, TURNING_SPEED);
+    }while(sharpsBase[0] == VALID_SHARP);
+    
+    timeAux = millis();
+    time = timeAux - time;
+
+    do{
+        moveTank(TURNING_SPEED, -TURNING_SPEED);
+    }while( millis() - timeAux < (time/2) );
+
+    elevador.goToStage03();
+}
+
+void GIMu::dropMilk(){
+    bracoCopo.dropLeite();
+}
+
+void GIMu::milkTeta(){
+    sucker.moveMotor(255, 1);
+    delay(TEMPO_DA_CHUPADA);
+    sucker.moveMotor(0,1);
+
+    delay(500);
+
+    moveTras(LOOKING_SPEED);
+    delay(2000);
+}
 #line 1 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 #include "GIMu.h"
 #include <LiquidCrystal.h>
@@ -1032,9 +1006,11 @@ Motor mbraco(MBRACO1, MBRACO2);
 BracoCopo braco(SERVOG_PULSO, SERVOG_DEDO, SH_GARRA, MSH_GARRA_D, MSH_GARRA_E, mbraco);
 
 Motor mElevator(DC_ELEVADOR1, DC_ELEVADOR0);
-Elevador elevador(mElevator, 3);
+Elevador elevador(mElevator, 1);
 
-GIMu robo (direito, esquerdo, braco, elevador);
+Motor sucker(DC_TIRALEITE1, DC_TIRALEITE2);
+
+GIMu robo (direito, esquerdo, braco, elevador, sucker);
 
 //GIMu robo (direito, esquerdo);
 //GIMu robo (elevador);
@@ -1048,7 +1024,7 @@ LiquidCrystal lcd(28,30,32,34,36,38);
 void setup() {
   Serial.begin(9600);
 
-  robo.follow_wall_to_little_gate();
+  //robo.follow_wall_to_little_gate();
 
   /*robo.follow_wall_to_terrine_area();
   robo.adjust_to_get_cup();
@@ -1064,6 +1040,8 @@ void setup() {
 }
 
 void loop() {
+
+    //Serial.println(elevador.whatStage());
 
     //Serial.println(analogRead(9));
   /*bool posCopo = true;
@@ -1172,8 +1150,10 @@ void loop() {
   //robo.getTerrine();
 
   // ### TESTE ELEVADOR ###
-  /*elevador.goToStage03();
-  elevador.goToStage01();*/
+  elevador.goToStage03();
+  elevador.goToStage02();
+  elevador.goToStage03();
+  elevador.goToStage01();
   
   //Serial.println(elevador.whatStage());
 
