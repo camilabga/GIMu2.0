@@ -107,7 +107,7 @@ int main(){
 				cout << "Para de girar" << endl;
 				usleep(1000000);
 
-				arduino.sendFunc(4,3,2,82);
+				arduino.sendFunc(4,3,2,30);
 				cout << "Manobra ai" << endl;
 				usleep(100000);
 				while(1){
