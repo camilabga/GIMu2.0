@@ -12,8 +12,9 @@ int main(){
 	//
 
 	//Variaveis Máquina_Estado:
-	int estadoAtual = 1;
+	int estadoAtual = 4;
 	bool fim_geral = false;
+	int teste;
 	//
 
 	//Variaveis Opencv:
@@ -97,17 +98,19 @@ int main(){
 				//
 
 				//TESTES:
-				arduino.sendFunc(4,2,1);
-				cout << "Gira!" << endl;
-				usleep(1000000);
-				arduino.sendFunc(4,2,1);
-				cout << "Gira! 2" << endl;
-				usleep(1000000);
-				arduino.sendFunc(4,2,2);
-				cout << "Para de girar" << endl;
-				usleep(1000000);
+				// arduino.sendFunc(4,2,1);
+				// cout << "Gira!" << endl;
+				// usleep(1000000);
+				// arduino.sendFunc(4,2,1);
+				// cout << "Gira! 2" << endl;
+				// usleep(1000000);
+				// arduino.sendFunc(4,2,2);
+				// cout << "Para de girar" << endl;
+				// usleep(1000000);
 
-				arduino.sendFunc(4,3,2,30);
+				cin >> teste ;
+
+				arduino.sendFunc(4,3,2,(unsigned char)teste);
 				cout << "Manobra ai" << endl;
 				usleep(100000);
 				while(1){
@@ -118,16 +121,16 @@ int main(){
 				}
 				cout << "Termino 2.." << endl;
 
-				arduino.sendFunc(4,5);
-				cout << "Anda ai" << endl;
-				usleep(100000);
-				while(1){
-					arduino.sendFunc(4,4);
-					if(arduino.in[3] == 1) break;
-					else cout << "N termino 3" << endl;
-					usleep(500000);
-				}
-				cout << "Termino 3.." << endl;
+				// arduino.sendFunc(4,5);
+				// cout << "Anda ai" << endl;
+				// usleep(100000);
+				// while(1){
+				// 	arduino.sendFunc(4,4);
+				// 	if(arduino.in[3] == 1) break;
+				// 	else cout << "N termino 3" << endl;
+				// 	usleep(500000);
+				// }
+				// cout << "Termino 3.." << endl;
 
 
 				//
