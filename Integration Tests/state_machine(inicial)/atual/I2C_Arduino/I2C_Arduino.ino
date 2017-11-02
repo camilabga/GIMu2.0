@@ -33,14 +33,15 @@ int subEstado = 90;
 bool fimEstado[10];
 
 //Definições vaca:
-#define ADJ_DEG 0.2
-#define ADJ_FOR 0.2
-#define TIME_90 1000
-#define VEL_ROB 100
+#define ADJ_DEG 20
+#define ADJ_FOR 110
+#define TIME_90 4000
+#define VEL_ROB 150
 byte ladoV;
 byte anguloV;
 bool manobrandoV = false;
 bool emFrenteV = false;
+int x;
 
 //Outras definicoes:
 LiquidCrystal lcd(28,30,32,34,36,38);
@@ -51,7 +52,9 @@ unsigned long tempo;
 
 //Delay sem ser delay:
 void delay2(int milsec){
-  unsigned int tempo;
+  Serial.print("Tempo esperando: ");
+  Serial.println(milsec);
+  unsigned int tempo = millis();
   while((millis() - tempo) < milsec){  }
 }
 
@@ -114,7 +117,6 @@ void loop() {
         break;
 
         case 2: // Manobrar p/ o Lado:
-          int x;
           if(ladoV == 1){
             x =  1;
           }else if(ladoV = 2){
@@ -122,19 +124,18 @@ void loop() {
           } 
           //Girar complementar do angulo recebido
           robo.moveTank((-VEL_ROB)*x,VEL_ROB*x);
-          delay2(anguloV*ADJ_DEG);
+          delay(TIME_90 - anguloV*ADJ_DEG);
           robo.moveTank(0,0);
 
           //Andar para frente porporcionalmente:
           robo.moveTank(VEL_ROB,VEL_ROB);
-          delay2(anguloV*ADJ_FOR);
+          delay(anguloV*ADJ_FOR);
           robo.moveTank(0,0);
 
           //Girar 90 graus
           robo.moveTank(VEL_ROB*x,(-VEL_ROB)*x);
-          delay2(TIME_90);
+          delay(TIME_90 - anguloV*ADJ_DEG);
           robo.moveTank(0,0);
-
           subEstado = 90;
         break;
 
@@ -275,10 +276,10 @@ void receiveData(int byteCount) {
             if(in[3] == 1){
               subEstado = 1;
               out[3] = 1;
-              flag = true;flag2 = true;
             }else if(in[3] == 2){
               subEstado = 90;
               out[3] = 2;
+              flag = true;flag2 = true;
             }else{
               out[0] = 98;
             }
