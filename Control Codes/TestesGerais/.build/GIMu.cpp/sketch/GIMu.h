@@ -38,6 +38,7 @@ class GIMu{
     void ordenhar01();
     void ordenhar02();
     void ordenhar03();
+    void ordenhar04();
 
     void adjust_to_derramar_leite();
 

@@ -27,12 +27,12 @@ void setup() {
   Serial.begin(9600);
 
 
-  //robo.follow_wall_to_little_gate();
+  robo.follow_wall_to_little_gate();
 
   /*robo.follow_wall_to_terrine_area();
   robo.adjust_to_get_cup();
   robo.getTerrine();*/
-  teste.attach(6);
+  //teste.attach(6);
   /*lcd.begin(16, 2);
   lcd.print("hello, world!");*/
   //robo.ordenhar03();
@@ -43,7 +43,6 @@ void setup() {
 }
 
 void loop() {
-    
     //teste.write(20);
     //teste.detach();
 
@@ -111,7 +110,7 @@ void loop() {
 
   //Serial.println(robo.getSharp(SH_GARRA));
   
-  for (unsigned a = 0; a < 90; a+=10) {
+  /*for (unsigned a = 0; a < 90; a+=10) {
     teste.write(a);
     delay(1000);
   }
@@ -119,7 +118,7 @@ void loop() {
   for (unsigned a = 110; a >20; a-=10) {
     teste.write(a);
     delay(1000);
-  }
+  }*/
 
   //teste.write(90);
   

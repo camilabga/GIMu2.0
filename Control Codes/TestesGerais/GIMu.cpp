@@ -673,7 +673,7 @@ void GIMu::ordenhar04(){
             if (pos - 2*ANGULO_VARIACAO < ANGULO_INICIAL) {
                 left = true;
             }
-            pos = pos - ANGULO_VARIACAO
+            pos = pos - ANGULO_VARIACAO;
             SM_Ordenhador.write(pos);
         }
 
@@ -985,14 +985,43 @@ void GIMu::adjust_to_derramar_leite(){
 
     int time = 0; 
     int timeAux = 0;
+    unsigned aux = 0;
+
+    elevador.goToStage03();
 
     do{
+        if (aux%3 == 0) {
+            sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
+            sharpsBase[aux%3 + 1] = getSharp(SH_DIREITA_TRAS);
+        } else if (aux%3 == 1) {
+            sharpsBase[aux%3 + 1] = getSharp(SH_FRENTE_DIREITA);
+            sharpsBase[aux%3 + 2] = getSharp(SH_FRENTE_ESQUERDA);
+        } else {
+            sharpsBase[aux%3 + 2] = getSharp(SH_ESQUERDA_FRENTE);
+            sharpsBase[aux%3 + 3] = getSharp(SH_ESQUERDA_TRAS);
+        }
+        
+        aux=(aux+1)%3;
+
         moveTank(-TURNING_SPEED, TURNING_SPEED);
     }while(sharpsBase[1] == VALID_SHARP);
 
     time = millis();
 
     do{
+        if (aux%3 == 0) {
+            sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
+            sharpsBase[aux%3 + 1] = getSharp(SH_DIREITA_TRAS);
+        } else if (aux%3 == 1) {
+            sharpsBase[aux%3 + 1] = getSharp(SH_FRENTE_DIREITA);
+            sharpsBase[aux%3 + 2] = getSharp(SH_FRENTE_ESQUERDA);
+        } else {
+            sharpsBase[aux%3 + 2] = getSharp(SH_ESQUERDA_FRENTE);
+            sharpsBase[aux%3 + 3] = getSharp(SH_ESQUERDA_TRAS);
+        }
+        
+        aux=(aux+1)%3;
+
         moveTank(-TURNING_SPEED, TURNING_SPEED);
     }while(sharpsBase[0] == VALID_SHARP);
     
@@ -1000,10 +1029,21 @@ void GIMu::adjust_to_derramar_leite(){
     time = timeAux - time;
 
     do{
+        if (aux%3 == 0) {
+            sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
+            sharpsBase[aux%3 + 1] = getSharp(SH_DIREITA_TRAS);
+        } else if (aux%3 == 1) {
+            sharpsBase[aux%3 + 1] = getSharp(SH_FRENTE_DIREITA);
+            sharpsBase[aux%3 + 2] = getSharp(SH_FRENTE_ESQUERDA);
+        } else {
+            sharpsBase[aux%3 + 2] = getSharp(SH_ESQUERDA_FRENTE);
+            sharpsBase[aux%3 + 3] = getSharp(SH_ESQUERDA_TRAS);
+        }
+        
+        aux=(aux+1)%3;
+        
         moveTank(TURNING_SPEED, -TURNING_SPEED);
     }while( millis() - timeAux < (time/2) );
-
-    elevador.goToStage03();
 }
 
 void GIMu::dropMilk(){

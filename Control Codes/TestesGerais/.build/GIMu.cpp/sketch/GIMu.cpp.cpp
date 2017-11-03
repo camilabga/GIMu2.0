@@ -27,7 +27,7 @@ GIMu::GIMu(Motor d, Motor e, BracoCopo b){
     Mright.setPinTras(d.getPinTras());
 #line 26 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void setup();
-#line 44 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
+#line 45 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void loop();
 #line 26 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
     Mleft.setPinFrente(e.getPinFrente());
@@ -656,6 +656,38 @@ void GIMu::ordenhar03(){
     }
 }
 
+void GIMu::ordenhar04(){
+    bool found_teta = false, found_dedo = false, left = false;
+    unsigned pos = ANGULO_CENTRAL;
+    SM_Ordenhador.attach(SERVO_ORDENHADOR);
+    SM_Ordenhador.write(ANGULO_CENTRAL);
+    elevador.goToStage01();
+    
+    do {
+        if (elevador.getStage() == 1) {
+            elevador.upToStage02();
+        } else if (elevador.getStage() == 2) {
+            elevador.downToStage01();
+        }
+
+        if (left) {
+            if (pos + 2*ANGULO_VARIACAO > ANGULO_FINAL) {
+                left = false;
+            }
+            pos = pos + ANGULO_VARIACAO;
+            SM_Ordenhador.write(pos);
+        } else {
+            if (pos - 2*ANGULO_VARIACAO < ANGULO_INICIAL) {
+                left = true;
+            }
+            pos = pos - ANGULO_VARIACAO;
+            SM_Ordenhador.write(pos);
+        }
+
+    } while (getMSharp() > TEM_DEDO);
+
+}
+
 void GIMu::follow_wall_to_little_gate() {
     bool found_wall = false;
     bool found_other_wall = false;
@@ -960,14 +992,43 @@ void GIMu::adjust_to_derramar_leite(){
 
     int time = 0; 
     int timeAux = 0;
+    unsigned aux = 0;
+
+    elevador.goToStage03();
 
     do{
+        if (aux%3 == 0) {
+            sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
+            sharpsBase[aux%3 + 1] = getSharp(SH_DIREITA_TRAS);
+        } else if (aux%3 == 1) {
+            sharpsBase[aux%3 + 1] = getSharp(SH_FRENTE_DIREITA);
+            sharpsBase[aux%3 + 2] = getSharp(SH_FRENTE_ESQUERDA);
+        } else {
+            sharpsBase[aux%3 + 2] = getSharp(SH_ESQUERDA_FRENTE);
+            sharpsBase[aux%3 + 3] = getSharp(SH_ESQUERDA_TRAS);
+        }
+        
+        aux=(aux+1)%3;
+
         moveTank(-TURNING_SPEED, TURNING_SPEED);
     }while(sharpsBase[1] == VALID_SHARP);
 
     time = millis();
 
     do{
+        if (aux%3 == 0) {
+            sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
+            sharpsBase[aux%3 + 1] = getSharp(SH_DIREITA_TRAS);
+        } else if (aux%3 == 1) {
+            sharpsBase[aux%3 + 1] = getSharp(SH_FRENTE_DIREITA);
+            sharpsBase[aux%3 + 2] = getSharp(SH_FRENTE_ESQUERDA);
+        } else {
+            sharpsBase[aux%3 + 2] = getSharp(SH_ESQUERDA_FRENTE);
+            sharpsBase[aux%3 + 3] = getSharp(SH_ESQUERDA_TRAS);
+        }
+        
+        aux=(aux+1)%3;
+
         moveTank(-TURNING_SPEED, TURNING_SPEED);
     }while(sharpsBase[0] == VALID_SHARP);
     
@@ -975,10 +1036,21 @@ void GIMu::adjust_to_derramar_leite(){
     time = timeAux - time;
 
     do{
+        if (aux%3 == 0) {
+            sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
+            sharpsBase[aux%3 + 1] = getSharp(SH_DIREITA_TRAS);
+        } else if (aux%3 == 1) {
+            sharpsBase[aux%3 + 1] = getSharp(SH_FRENTE_DIREITA);
+            sharpsBase[aux%3 + 2] = getSharp(SH_FRENTE_ESQUERDA);
+        } else {
+            sharpsBase[aux%3 + 2] = getSharp(SH_ESQUERDA_FRENTE);
+            sharpsBase[aux%3 + 3] = getSharp(SH_ESQUERDA_TRAS);
+        }
+        
+        aux=(aux+1)%3;
+        
         moveTank(TURNING_SPEED, -TURNING_SPEED);
     }while( millis() - timeAux < (time/2) );
-
-    elevador.goToStage03();
 }
 
 void GIMu::dropMilk(){
@@ -1024,12 +1096,13 @@ LiquidCrystal lcd(28,30,32,34,36,38);
 void setup() {
   Serial.begin(9600);
 
+
   //robo.follow_wall_to_little_gate();
 
   /*robo.follow_wall_to_terrine_area();
   robo.adjust_to_get_cup();
   robo.getTerrine();*/
-  //teste.attach(46);
+  teste.attach(6);
   /*lcd.begin(16, 2);
   lcd.print("hello, world!");*/
   //robo.ordenhar03();
@@ -1040,8 +1113,13 @@ void setup() {
 }
 
 void loop() {
+    
+    //teste.write(20);
+    //teste.detach();
 
-    //Serial.println(elevador.whatStage());
+   // robo.ordenhar03();
+    //elevador.goToStage01();
+   //Serial.println(analogRead(MSH_ORDENHADOR));
 
     //Serial.println(analogRead(9));
   /*bool posCopo = true;
@@ -1103,15 +1181,15 @@ void loop() {
 
   //Serial.println(robo.getSharp(SH_GARRA));
   
-  /*for (unsigned a = 70; a < 110; a+=10) {
+  for (unsigned a = 0; a < 90; a+=10) {
     teste.write(a);
     delay(1000);
   }
 
-  for (unsigned a = 110; a >70; a-=10) {
+  for (unsigned a = 110; a >20; a-=10) {
     teste.write(a);
     delay(1000);
-  }*/
+  }
 
   //teste.write(90);
   
@@ -1150,10 +1228,12 @@ void loop() {
   //robo.getTerrine();
 
   // ### TESTE ELEVADOR ###
-  elevador.goToStage03();
+  /*elevador.goToStage03();
   elevador.goToStage02();
   elevador.goToStage03();
-  elevador.goToStage01();
+  elevador.goToStage01();*/
+
+  //elevador.goToStage01();
   
   //Serial.println(elevador.whatStage());
 

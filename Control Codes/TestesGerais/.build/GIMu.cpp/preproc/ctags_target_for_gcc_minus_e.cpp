@@ -651,6 +651,38 @@ void GIMu::ordenhar03(){
     }
 }
 
+void GIMu::ordenhar04(){
+    bool found_teta = false, found_dedo = false, left = false;
+    unsigned pos = 90;
+    SM_Ordenhador.attach(6);
+    SM_Ordenhador.write(90);
+    elevador.goToStage01();
+
+    do {
+        if (elevador.getStage() == 1) {
+            elevador.upToStage02();
+        } else if (elevador.getStage() == 2) {
+            elevador.downToStage01();
+        }
+
+        if (left) {
+            if (pos + 2*5 > 120) {
+                left = false;
+            }
+            pos = pos + 5;
+            SM_Ordenhador.write(pos);
+        } else {
+            if (pos - 2*5 < 60) {
+                left = true;
+            }
+            pos = pos - 5;
+            SM_Ordenhador.write(pos);
+        }
+
+    } while (getMSharp() > 50);
+
+}
+
 void GIMu::follow_wall_to_little_gate() {
     bool found_wall = false;
     bool found_other_wall = false;
@@ -955,14 +987,43 @@ void GIMu::adjust_to_derramar_leite(){
 
     int time = 0;
     int timeAux = 0;
+    unsigned aux = 0;
+
+    elevador.goToStage03();
 
     do{
+        if (aux%3 == 0) {
+            sharpsBase[aux%3] = getSharp(2 /* [1]*/);
+            sharpsBase[aux%3 + 1] = getSharp(1 /* [0]*/);
+        } else if (aux%3 == 1) {
+            sharpsBase[aux%3 + 1] = getSharp(3 /* [2]*/);
+            sharpsBase[aux%3 + 2] = getSharp(4 /* [3]*/);
+        } else {
+            sharpsBase[aux%3 + 2] = getSharp(5 /* [5]*/);
+            sharpsBase[aux%3 + 3] = getSharp(6 /* [4]*/);
+        }
+
+        aux=(aux+1)%3;
+
         moveTank(-120 /* velocidade de giro do robo*/, 120 /* velocidade de giro do robo*/);
     }while(sharpsBase[1] == 35);
 
     time = millis();
 
     do{
+        if (aux%3 == 0) {
+            sharpsBase[aux%3] = getSharp(2 /* [1]*/);
+            sharpsBase[aux%3 + 1] = getSharp(1 /* [0]*/);
+        } else if (aux%3 == 1) {
+            sharpsBase[aux%3 + 1] = getSharp(3 /* [2]*/);
+            sharpsBase[aux%3 + 2] = getSharp(4 /* [3]*/);
+        } else {
+            sharpsBase[aux%3 + 2] = getSharp(5 /* [5]*/);
+            sharpsBase[aux%3 + 3] = getSharp(6 /* [4]*/);
+        }
+
+        aux=(aux+1)%3;
+
         moveTank(-120 /* velocidade de giro do robo*/, 120 /* velocidade de giro do robo*/);
     }while(sharpsBase[0] == 35);
 
@@ -970,10 +1031,21 @@ void GIMu::adjust_to_derramar_leite(){
     time = timeAux - time;
 
     do{
+        if (aux%3 == 0) {
+            sharpsBase[aux%3] = getSharp(2 /* [1]*/);
+            sharpsBase[aux%3 + 1] = getSharp(1 /* [0]*/);
+        } else if (aux%3 == 1) {
+            sharpsBase[aux%3 + 1] = getSharp(3 /* [2]*/);
+            sharpsBase[aux%3 + 2] = getSharp(4 /* [3]*/);
+        } else {
+            sharpsBase[aux%3 + 2] = getSharp(5 /* [5]*/);
+            sharpsBase[aux%3 + 3] = getSharp(6 /* [4]*/);
+        }
+
+        aux=(aux+1)%3;
+
         moveTank(120 /* velocidade de giro do robo*/, -120 /* velocidade de giro do robo*/);
     }while( millis() - timeAux < (time/2) );
-
-    elevador.goToStage03();
 }
 
 void GIMu::dropMilk(){
@@ -1019,12 +1091,13 @@ LiquidCrystal lcd(28,30,32,34,36,38);
 void setup() {
   Serial.begin(9600);
 
+
   //robo.follow_wall_to_little_gate();
 
   /*robo.follow_wall_to_terrine_area();
   robo.adjust_to_get_cup();
   robo.getTerrine();*/
-  //teste.attach(46);
+  teste.attach(6);
   /*lcd.begin(16, 2);
   lcd.print("hello, world!");*/
   //robo.ordenhar03();
@@ -1036,7 +1109,12 @@ void setup() {
 
 void loop() {
 
-    //Serial.println(elevador.whatStage());
+    //teste.write(20);
+    //teste.detach();
+
+   // robo.ordenhar03();
+    //elevador.goToStage01();
+   //Serial.println(analogRead(MSH_ORDENHADOR));
 
     //Serial.println(analogRead(9));
   /*bool posCopo = true;
@@ -1098,15 +1176,15 @@ void loop() {
 
   //Serial.println(robo.getSharp(SH_GARRA));
 
-  /*for (unsigned a = 70; a < 110; a+=10) {
+  for (unsigned a = 0; a < 90; a+=10) {
     teste.write(a);
     delay(1000);
   }
 
-  for (unsigned a = 110; a >70; a-=10) {
+  for (unsigned a = 110; a >20; a-=10) {
     teste.write(a);
     delay(1000);
-  }*/
+  }
 
   //teste.write(90);
 
@@ -1145,10 +1223,12 @@ void loop() {
   //robo.getTerrine();
 
   // ### TESTE ELEVADOR ###
-  elevador.goToStage03();
+  /*elevador.goToStage03();
   elevador.goToStage02();
   elevador.goToStage03();
-  elevador.goToStage01();
+  elevador.goToStage01();*/
+
+  //elevador.goToStage01();
 
   //Serial.println(elevador.whatStage());
 
