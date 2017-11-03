@@ -649,6 +649,38 @@ void GIMu::ordenhar03(){
     }
 }
 
+void GIMu::ordenhar04(){
+    bool found_teta = false, found_dedo = false, left = false;
+    unsigned pos = ANGULO_CENTRAL;
+    SM_Ordenhador.attach(SERVO_ORDENHADOR);
+    SM_Ordenhador.write(ANGULO_CENTRAL);
+    elevador.goToStage01();
+    
+    do {
+        if (elevador.getStage() == 1) {
+            elevador.upToStage02();
+        } else if (elevador.getStage() == 2) {
+            elevador.downToStage01();
+        }
+
+        if (left) {
+            if (pos + 2*ANGULO_VARIACAO > ANGULO_FINAL) {
+                left = false;
+            }
+            pos = pos + ANGULO_VARIACAO;
+            SM_Ordenhador.write(pos);
+        } else {
+            if (pos - 2*ANGULO_VARIACAO < ANGULO_INICIAL) {
+                left = true;
+            }
+            pos = pos - ANGULO_VARIACAO
+            SM_Ordenhador.write(pos);
+        }
+
+    } while (getMSharp() > TEM_DEDO);
+
+}
+
 void GIMu::follow_wall_to_little_gate() {
     bool found_wall = false;
     bool found_other_wall = false;
