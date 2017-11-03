@@ -149,15 +149,37 @@ void GIMu::getSharps(){
     sharpsBase[5] = getSharp(SH_ESQUERDA_TRAS);
 }
 
-void GIMu::taxearDireita(){
+void GIMu::taxearEsquerda(){
+    sharpsBase[4] = getSharp(SH_ESQUERDA_FRENTE);
+    sharpsBase[5] = getSharp(SH_ESQUERDA_TRAS);
+    
     if (sharpsBase[4] > DIST_TAX && sharpsBase[5] > DIST_TAX) {
         moveTank(MINOR_TAX_SPEED, MAJOR_TAX_SPEED);
-    } else if (sharpsBase[4] > sharpsBase[5] + 3) {
-        moveTank(MINOR_TAX_SPEED, MAJOR_TAX_SPEED);
-    } else if (sharpsBase[4] + 3 < sharpsBase[5]) {
+    } else if (sharpsBase[4] < DIST_TAX && sharpsBase[5] < DIST_TAX) {
         moveTank(MAJOR_TAX_SPEED, MINOR_TAX_SPEED);
-    } else if (abs(sharpsBase[4] - sharpsBase[5]) < 3){
-        moveTank(MINOR_TAX_SPEED, MINOR_TAX_SPEED);
+    } else if (sharpsBase[4] - sharpsBase[5] == SHARP_DIFF){
+        moveFrente(MINOR_TAX_SPEED);
+    } else if (sharpsBase[4] > sharpsBase[5]) {
+        moveTank(MINOR_TAX_SPEED, MAJOR_TAX_SPEED);
+    } else if (sharpsBase[4] < sharpsBase[5]) {
+        moveTank(MAJOR_TAX_SPEED, MINOR_TAX_SPEED);
+    } 
+}
+
+void GIMu::taxearDireita(){
+    sharpsBase[0] = getSharp(SH_DIREITA_TRAS);
+    sharpsBase[1] = getSharp(SH_DIREITA_FRENTE);
+    
+    if (sharpsBase[1] > DIST_TAX && sharpsBase[0] > DIST_TAX) {
+        moveTank(MAJOR_TAX_SPEED, MINOR_TAX_SPEED);
+    } else if (sharpsBase[1] < DIST_TAX && sharpsBase[0] < DIST_TAX) {
+        moveTank(MINOR_TAX_SPEED, MAJOR_TAX_SPEED);
+    } else if (abs(sharpsBase[1] - sharpsBase[0]) < SHARP_DIFF){
+        moveFrente(MINOR_TAX_SPEED);
+    } else if (sharpsBase[1] > sharpsBase[0]) {
+        moveTank(MAJOR_TAX_SPEED, MINOR_TAX_SPEED);
+    } else if (sharpsBase[1] < sharpsBase[0]) {
+        moveTank(MINOR_TAX_SPEED, MAJOR_TAX_SPEED);
     }
 }
 
@@ -711,15 +733,8 @@ void GIMu::follow_wall_to_little_gate() {
         aux=(aux+1)%3;
 
         moveFrente(LOOKING_SPEED);
-        if(sharpsBase[3] == VALID_SHARP && sharpsBase[2] < DIST_TURN02){
-            found_porteira_frente = true;
-            turn_left = true;
-        } else if(sharpsBase[2] == VALID_SHARP && sharpsBase[3] < DIST_TURN02){
-            found_porteira_frente = true;
-            turn_right = true;
-        }
-    }while( (sharpsBase[2] == VALID_SHARP && sharpsBase[3] == VALID_SHARP) 
-            || (sharpsBase[2] > DIST_TURN02 && sharpsBase[3] > DIST_TURN02)  );
+        
+    }while( !(sharpsBase[2] < DIST_TURN03 || sharpsBase[3] < DIST_TURN03));
 
     stop();
     getSharps();
@@ -743,7 +758,7 @@ void GIMu::follow_wall_to_little_gate() {
 
         moveTank(-TURNING_SPEED, TURNING_SPEED);
     }while( !(abs(sharpsBase[0]-sharpsBase[1]) < SHARP_DIFF && sharpsBase[4] == VALID_SHARP
-                && sharpsBase[5] == VALID_SHARP) );
+                && sharpsBase[5] == VALID_SHARP && sharpsBase[1] != VALID_SHARP) );
 
             getSharps();
 
@@ -764,16 +779,19 @@ void GIMu::follow_wall_to_little_gate() {
         
         aux=(aux+1)%3;
 
-        if( (sharpsBase[0] == VALID_SHARP && sharpsBase[1] == VALID_SHARP)  ){
+        if( sharpsBase[0] == VALID_SHARP && sharpsBase[1] == VALID_SHARP &&
+            sharpsBase[2] == VALID_SHARP && sharpsBase[3] == VALID_SHARP &&
+            sharpsBase[4] == VALID_SHARP && sharpsBase[5] == VALID_SHARP ){
             found_porteira = true;
+            Serial.println("ACHOU PORTEIRA");            
             delay(2000);
-        }
-
-        if (!(sharpsBase[3] == VALID_SHARP && sharpsBase[4] == VALID_SHARP)) {
+        } else if (sharpsBase[2] < DIST_TURN01 || sharpsBase[3] < DIST_TURN01) {
             found_other_wall = true;
+            Serial.println("ACHOU OUTRA PAREDE");
+            
         }
 
-        moveFrente(LOOKING_SPEED);
+        taxearDireita();
 
     } while(!found_porteira && !found_other_wall);
     
@@ -783,8 +801,8 @@ void GIMu::follow_wall_to_little_gate() {
     getSharps();
 
     if(found_other_wall){
-        Serial.println("ACHOU QUINA");
         do{
+            Serial.println("ACHOU QUINA");
             if (aux%3 == 0) {
                 sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
                 sharpsBase[aux%3 + 1] = getSharp(SH_DIREITA_TRAS);
@@ -808,6 +826,7 @@ void GIMu::follow_wall_to_little_gate() {
 
         // ir reto até achar porteira
         do {
+            Serial.println("VAI RETO ATRAS DA PORTEIRA");
             if (aux%3 == 0) {
                 sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
                 sharpsBase[aux%3 + 1] = getSharp(SH_DIREITA_TRAS);
@@ -821,9 +840,12 @@ void GIMu::follow_wall_to_little_gate() {
             
             aux=(aux+1)%3;
 
-            moveFrente(LOOKING_SPEED);
+            taxearEsquerda();
 
-            if( (sharpsBase[4] == VALID_SHARP && sharpsBase[5] == VALID_SHARP) ){
+            if( (sharpsBase[4] == VALID_SHARP && sharpsBase[5] == VALID_SHARP)
+                && sharpsBase[3] == VALID_SHARP && sharpsBase[2] == VALID_SHARP
+                && sharpsBase[1] == VALID_SHARP && sharpsBase[0] == VALID_SHARP ){
+                Serial.println("ACHOU PORTEIRA");
                 found_porteira = true;
                 delay(2000);
             }
@@ -831,7 +853,7 @@ void GIMu::follow_wall_to_little_gate() {
         } while(!found_porteira);
         
         stop();
-
+        
         moveTank(-TURNING_SPEED, TURNING_SPEED);
         delay(6000);
     }
@@ -841,6 +863,7 @@ void GIMu::follow_wall_to_little_gate() {
     
     //Tentar ir ate o meio da porteira utilizando tempo
     if(found_porteira && !found_other_wall){
+        Serial.println("GIRANDO P FRENTE DA PORTEIRA");
         moveTank(TURNING_SPEED, -TURNING_SPEED);
         delay(6000);
         stop();

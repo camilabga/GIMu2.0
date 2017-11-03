@@ -23,6 +23,7 @@ class GIMu{
     void moveTank(int pwm_esquerdo, int pwm_direito);
     inline void stop(){moveFrente(0);}
     void taxearDireita();
+    void taxearEsquerda();
 
     void getSharps();
     inline int getDistancia(int i){return sharpsBase[i];}

@@ -26,6 +26,7 @@ LiquidCrystal lcd(28,30,32,34,36,38);
 void setup() {
   Serial.begin(9600);
 
+  
 
   robo.follow_wall_to_little_gate();
 
@@ -45,10 +46,17 @@ void setup() {
 void loop() {
     //teste.write(20);
     //teste.detach();
-
+    //robo.taxearEsquerda();
    // robo.ordenhar03();
     //elevador.goToStage01();
    //Serial.println(analogRead(MSH_ORDENHADOR));
+
+   /*robo.getSharps();
+   
+   Serial.print("Frente direita: ");
+   Serial.print(robo.getSharp(4));
+   Serial.print("  Frente esquerda: ");
+   Serial.println(robo.getSharp(3));*/
 
     //Serial.println(analogRead(9));
   /*bool posCopo = true;
