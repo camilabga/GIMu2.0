@@ -488,10 +488,11 @@ void receiveData(int byteCount) {
             if(in[2] == 1){
               subEstado = 1;
               out[2] = 1;
+              flag = true;flag2 = true;
             }else if(in[2] == 2){
               subEstado = 90;
               out[2] = 2;
-              flag = true;flag2 = true;
+              flag = false;flag2 = false;
             }else{
               out[0] = 98;
             }
@@ -517,6 +518,7 @@ void receiveData(int byteCount) {
             out[1] = 4;  
             estadoAtual = 7;
             subEstado = 3;
+            flag = false;flag2 = false;
           break;
 
           case 5:// Perguntando se ja terminou o item acima:

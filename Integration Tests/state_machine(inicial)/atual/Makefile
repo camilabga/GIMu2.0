@@ -8,4 +8,4 @@ GCC = g++
 	$(CC) -I$(INCDIR) $(CFLAGS) $< $(GL_LIBS) -o $@
 
 .cpp:
-	$(GCC) -Wall -Wunused -std=c++11 I2C/libi2c/Pi2c.cpp I2C/I2C.cpp -O2 `pkg-config --cflags opencv` $< -o $@ `pkg-config --libs opencv`
+	$(GCC) -Wall -Wunused -std=c++11 I2C/libi2c/Pi2c.cpp I2C/I2C.cpp Libs/Cow.cpp -O2 `pkg-config --cflags opencv` $< -o $@ `pkg-config --libs opencv` -laruco
