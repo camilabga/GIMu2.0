@@ -4,7 +4,6 @@ I2C::I2C(){
     clearBufIn();
 	clearBufOut();
 }
-
 void I2C::clearBufIn(){
 	for(int i=0;i<QTD_BYTES_I2C*4;i++){
 		in[i] = '\0';
@@ -81,7 +80,7 @@ bool I2C::tradeData(int milisec){
 	return true;
 }
 
-bool I2C::sendFunc(unsigned char b0, unsigned char b1, unsigned char b2, unsigned char b3){
+bool I2C::sendFunc(unsigned char b0, unsigned char b1, int b2, int b3){
 	switch(b0){
 		case 1: //SEGUE PAREDE
 			out[0] = 1;
@@ -128,7 +127,7 @@ bool I2C::sendFunc(unsigned char b0, unsigned char b1, unsigned char b2, unsigne
 				break;
 			}
 		break;
-		case 4: // VACA
+		case 4: //VACA
 			out[0] = 4;
 			switch(b1){
 				case 1:
@@ -140,12 +139,12 @@ bool I2C::sendFunc(unsigned char b0, unsigned char b1, unsigned char b2, unsigne
 						return false;
 					} 
 					out[1] = 2;
-					out[2] = b2;
+					out[2] = (unsigned char) (b2);
 				break;
 				case 3:
 					out[1]=3;
-					out[2] = b2;
-					out[3] = b3;
+					out[2] = (unsigned char) ((b2/2)+125);
+					out[3] = (unsigned char) ((b3/2)+125);
 				break;
 				case 4:
 					if(!(b2 == 1 || b2 == 2)){
@@ -153,8 +152,8 @@ bool I2C::sendFunc(unsigned char b0, unsigned char b1, unsigned char b2, unsigne
 						return false;
 					}
 					out[1] = 4;
-					out[2] = b2;
-					out[3] = b3;
+					out[2] = (unsigned char) b2;
+					out[3] = (unsigned char) b3;
 				break;
 				case 5:
 					out[1] = 5;
@@ -171,6 +170,94 @@ bool I2C::sendFunc(unsigned char b0, unsigned char b1, unsigned char b2, unsigne
 				break;
 			}
 		break;
+		case 5: //ENCAIXA TETA
+			out[0] = 5;
+			switch(b1){
+				case 1:
+					out[1] = 1;	
+				break;
+				case 2:
+					out[1] = 2;
+				break;
+				default:
+					cout << "Erro I2C: func not defined" << endl;
+					return false;
+				break;
+			}
+		break;
+		case 6: //CHUPA CHUPA
+			out[0] = 6;
+			switch(b1){
+				case 1:
+					out[1] = 1;	
+				break;
+				case 2:
+					out[1] = 2;
+				break;
+				default:
+					cout << "Erro I2C: func not defined" << endl;
+					return false;
+				break;
+			}
+		break;
+		case 7: //ARUCO
+			out[0] = 7;
+			switch(b1){
+				case 1:
+					out[1] = 1;
+				break;
+				case 2:
+					if(!(b2 == 1 || b2 == 2)){
+						cout << "Erro I2C: parameter not defined" << endl;
+						return false;
+					} 
+					out[1] = 2;
+					out[2] = (unsigned char) (b2);
+				break;
+				case 3:
+					out[1]=3;
+					out[2] = (unsigned char) ((b2/2)+125);
+					out[3] = (unsigned char) ((b3/2)+125);
+				break;
+				case 4:
+					out[1] = 4;
+				break;
+				case 5:
+					out[1] = 5;
+				break;
+				default:
+					cout << "Erro I2C: func not defined" << endl;
+					return false;
+				break;
+			}
+		break;
+		case 8: //DERRAMA O LEITE
+			out[0] = 8;
+			switch(b1){
+				case 1:
+					out[1] = 1;	
+				break;
+				case 2:
+					out[1] = 2;
+				break;
+				default:
+					cout << "Erro I2C: func not defined" << endl;
+					return false;
+				break;
+			}
+		break;
+		case 20:
+			out[0] = 20;
+			switch(b1){
+				case 1:
+					out[1] = 1;	
+				break;
+				default:
+					cout << "Erro I2C: func not defined" << endl;
+					return false;
+				break;
+			}
+		break;
 		default:
 			cout << "Erro I2C: state not defined" << endl;
 			return false;
@@ -178,7 +265,7 @@ bool I2C::sendFunc(unsigned char b0, unsigned char b1, unsigned char b2, unsigne
 	}	
 	out[9] = ';';
 	tradeData();
-	usleep(100000);
+	usleep(10000);
 	return true;
 }
 

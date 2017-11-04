@@ -35,6 +35,8 @@ public:
     void iniciar();
     void tryGetTerrine();
     void recolherBraco();
+
+    void dropLeite();
     
 private:
     Servo pulso;

@@ -27,10 +27,12 @@ void clearBuf(){
 }
 
 //Definicoes estados:
-#define QTD_ESTADOS 10
-int estadoAtual = 90;
+#define QTD_ESTADOS 9
+#define BT_INICIO 13
+int estadoAtual = 20;
 int subEstado = 90;
-bool fimEstado[10];
+bool fimEstado[QTD_ESTADOS];
+bool comecarTudo = false;
 
 //Definições vaca:
 #define ADJ_DEG 20
@@ -99,6 +101,7 @@ void loop() {
     if((millis() - tempo) > 1000 && flag2){  
       robo.moveTank(0,0);
       Serial.println("Parando por inatividade..");
+      estadoAtual = 20;
       flag2 = false;
     }
   }
@@ -228,7 +231,14 @@ void loop() {
       robo.moveFrente(0);
 
       fimEstado[8] = true;
-      estadoAtual = 90;
+      estadoAtual = 20;
+      comecarTudo = false;
+    break;
+
+    case 20:
+      if(analogRead(BT_INICIO) > 900){
+        comecarTudo = true;
+      }
     break;
 
     case 90: // ### Estado de espera por comandos:
@@ -543,6 +553,23 @@ void receiveData(int byteCount) {
             }
           break;
           
+          default:
+            out[0] = 98;
+          break;
+        }
+      break;
+
+      case 20:
+        out[0] = 20;
+        switch(in[1]){
+          case 1:
+            out[1] = 1;
+            if(comecarTudo){
+              out[2] = 1;
+            }else{
+              out[2] = 2;
+            }
+          break;
           default:
             out[0] = 98;
           break;

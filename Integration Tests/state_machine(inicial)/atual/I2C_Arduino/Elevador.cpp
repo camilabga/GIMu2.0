@@ -17,7 +17,7 @@ void Elevador::attachMotor(Motor m){
 }
 
 void Elevador::goToStage01(){
-    while (whatStage() > POSICAO01 || whatStage() < CONSIDER_NULL) {
+    while (whatStage() > POSICAO01) {
         mElevador.moveMotor(255, 1);
     }
     mElevador.moveMotor(0, 0);
@@ -27,12 +27,12 @@ void Elevador::goToStage01(){
 
 void Elevador::goToStage02(){
     if (stage == 1) {
-        while (whatStage() < POSICAO02_2 || whatStage() < CONSIDER_NULL) {
+        while (whatStage() < POSICAO02) {
             mElevador.moveMotor(255, 0);
         }
         mElevador.moveMotor(0, 0);
     } else if (stage == 3) {
-        while (whatStage() > POSICAO02_1 || whatStage() < CONSIDER_NULL) {
+        while (whatStage() > POSICAO02) {
             mElevador.moveMotor(255, 1);
         }
         mElevador.moveMotor(0, 0);
@@ -43,7 +43,7 @@ void Elevador::goToStage02(){
 }
 
 void Elevador::goToStage03(){
-    while (whatStage() < POSICAO03 || whatStage() < CONSIDER_NULL) {
+    while (whatStage() < POSICAO03) {
         mElevador.moveMotor(255, 0);
     }
     mElevador.moveMotor(0, 0);
@@ -53,7 +53,7 @@ void Elevador::goToStage03(){
 }
 
 void Elevador::upToStage02(){
-    if (whatStage() < POSICAO02_2|| whatStage() < CONSIDER_NULL) {
+    if (whatStage() < POSICAO02) {
         mElevador.moveMotor(255,0);
     } else {
         mElevador.moveMotor(0, 0);
@@ -62,7 +62,7 @@ void Elevador::upToStage02(){
 }
 
 void Elevador::upToStage03(){
-    if (whatStage() < POSICAO03 || whatStage() < CONSIDER_NULL) {
+    if (whatStage() < POSICAO03) {
         mElevador.moveMotor(255,0);
     } else {
         mElevador.moveMotor(0,0);
@@ -71,7 +71,7 @@ void Elevador::upToStage03(){
 }
 
 void Elevador::downToStage01(){
-    if (whatStage() > POSICAO01 || whatStage() < CONSIDER_NULL) {
+    if (whatStage() > POSICAO01) {
         mElevador.moveMotor(255,1);
     } else {
         mElevador.moveMotor(0, 0);
@@ -80,7 +80,7 @@ void Elevador::downToStage01(){
 }
 
 void Elevador::downToStage02(){
-    if (whatStage() > POSICAO02_1 || whatStage() < CONSIDER_NULL) {
+    if (whatStage() > POSICAO02) {
         mElevador.moveMotor(255,1);
     } else {
         mElevador.moveMotor(0, 0);

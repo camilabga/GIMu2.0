@@ -83,3 +83,15 @@ void BracoCopo::recolherBraco(){
   }
   motorBraco.moveMotor(0,0);
 }
+
+void BracoCopo::dropLeite(){
+  for(int i = POSICAO_INICIAL_PULSO; i < POSICAO_DERRAMAR_PULSO; i++){
+    pulso.write(i);
+  }
+
+  delay(500);
+
+  for(int i = POSICAO_DERRAMAR_PULSO; i < POSICAO_INICIAL_PULSO; i--){
+    pulso.write(i);
+  }
+}
