@@ -140,25 +140,30 @@ bool I2C::sendFunc(unsigned char b0, unsigned char b1, unsigned char b2, unsigne
 						return false;
 					} 
 					out[1] = 2;
-					out[3] = b2;
+					out[2] = b2;
 				break;
 				case 3:
+					out[1]=3;
+					out[2] = b2;
+					out[3] = b3;
+				break;
+				case 4:
 					if(!(b2 == 1 || b2 == 2)){
 						cout << "Erro I2C: parameter not defined" << endl;
 						return false;
 					}
-					out[1] = 3;
-					out[3] = b2;
-					out[4] = b3;
-				break;
-				case 4:
 					out[1] = 4;
+					out[2] = b2;
+					out[3] = b3;
 				break;
 				case 5:
 					out[1] = 5;
 				break;
 				case 6:
 					out[1] = 6;
+				break;
+				case 7:
+					out[1] = 7;
 				break;
 				default:
 					cout << "Erro I2C: func not defined" << endl;

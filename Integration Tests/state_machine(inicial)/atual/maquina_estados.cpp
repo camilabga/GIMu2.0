@@ -42,7 +42,7 @@ int main(){
 				while(1){
 					//Envia comando I2C: Perguntando se já acabou
 					arduino.sendFunc(1,2);
-					if(arduino.in[3] == 1){
+					if(arduino.in[2] == 1){
 						break;
 					}
 				}
@@ -60,7 +60,7 @@ int main(){
 				while(1){
 					//Envia comando I2C: Perguntando se já acabou
 					arduino.sendFunc(2,2);
-					if(arduino.in[3] == 1){
+					if(arduino.in[2] == 1){
 						break;
 					}
 				}
@@ -78,13 +78,12 @@ int main(){
 				while(1){
 					//Envia comando I2C: Perguntando se já acabou
 					arduino.sendFunc(3,2);
-					if(arduino.in[3] == 1){
+					if(arduino.in[2] == 1){
 						break;
 					}
 					//
 
 				}
-
 				cout << "Acabou Estado 03." << endl;
 				estadoAtual = 4;
 				// fim_geral = true;
@@ -110,22 +109,22 @@ int main(){
 
 				cin >> teste ;
 
-				arduino.sendFunc(4,3,2,(unsigned char)teste);
+				arduino.sendFunc(4,4,2,(unsigned char)teste);
 				cout << "Manobra ai" << endl;
 				usleep(100000);
 				while(1){
-					arduino.sendFunc(4,4);
-					if(arduino.in[3] == 1) break;
+					arduino.sendFunc(4,5);
+					if(arduino.in[2] == 1) break;
 					else cout << "N termino 2" << endl;
 					usleep(500000);
 				}
 				cout << "Termino 2.." << endl;
 
-				// arduino.sendFunc(4,5);
+				// arduino.sendFunc(4,6);
 				// cout << "Anda ai" << endl;
 				// usleep(100000);
 				// while(1){
-				// 	arduino.sendFunc(4,4);
+				// 	arduino.sendFunc(4,7);
 				// 	if(arduino.in[3] == 1) break;
 				// 	else cout << "N termino 3" << endl;
 				// 	usleep(500000);

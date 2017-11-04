@@ -42,6 +42,10 @@ byte anguloV;
 bool manobrandoV = false;
 bool emFrenteV = false;
 int x;
+int velE, velD;
+
+//Definicoes arucos:
+bool obstaculoEncontrado = false;
 
 //Outras definicoes:
 LiquidCrystal lcd(28,30,32,34,36,38);
@@ -57,6 +61,17 @@ void delay2(int milsec){
   unsigned int tempo = millis();
   while((millis() - tempo) < milsec){  }
 }
+//Imprimit LCD:
+void printLCD(){
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("E: ");
+  lcd.print(estadoAtual);
+  
+  lcd.setCursor(0,10);
+  lcd.print("E: ");
+  lcd.print(estadoAtual);
+}
 
 void setup() {
   //I2C:
@@ -65,9 +80,10 @@ void setup() {
   Wire.onReceive(receiveData);
   Wire.onRequest(sendData);
 
-  //Serial:
+  //Imprimir:
   Serial.begin(9600);
-
+  lcd.begin(16,2);
+  
   //Inicializando variaveis:
   for(int i=0; i<QTD_ESTADOS;i++){
     fimEstado[i] = true;
@@ -86,11 +102,14 @@ void loop() {
       flag2 = false;
     }
   }
-  
+
+  printLCD();
+
   // AÇÕES ESTADOS:
   switch(estadoAtual){ 
     case 1: // ### Ações Segue Parede
       robo.follow_wall_to_terrine_area();
+      robo.moveFrente(0);
       
       fimEstado[1] = true;
       estadoAtual = 90;
@@ -98,6 +117,7 @@ void loop() {
 
     case 2: // ### Ações Procura Copo
       robo.adjust_to_get_cup();
+      robo.moveFrente(0);
       
       fimEstado[2] = true;
       estadoAtual = 90;
@@ -105,6 +125,7 @@ void loop() {
 
     case 3: // ### Ações Pega Copo
       robo.getTerrine();
+      robo.moveFrente(0);
       
       fimEstado[3] = true;
       estadoAtual = 90;
@@ -116,7 +137,11 @@ void loop() {
           robo.moveTank(-100,100);
         break;
 
-        case 2: // Manobrar p/ o Lado:
+        case 2:
+          robo.moveTank(velE,velD);
+        break;
+
+        case 3: // Manobrar p/ o Lado:
           if(ladoV == 1){
             x =  1;
           }else if(ladoV = 2){
@@ -139,10 +164,12 @@ void loop() {
           subEstado = 90;
         break;
 
-        case 3: // Seguir em Frente Até a Vaca:
-          // Serial.println("Indo em frente..");
-          // delay(2000);
-          // Serial.println("Parei de ir pra frente");
+        case 4: // Seguir em Frente Até a Vaca:
+          robo.moveFrente(LOOKING_SPEED);
+          while(1){
+            if(robo.getSharp(SH_ORDENHADOR) <= TEM_TETA) break;
+          }
+          robo.moveFrente(0);
           subEstado = 90;
           estadoAtual = 90;
         break;
@@ -154,8 +181,58 @@ void loop() {
       }
     break;
 
+    case 5: // ### Ações Ordenhar
+      robo.ordenhar04();
+      robo.moveFrente(0);
+
+      fimEstado[5] = true;
+      estadoAtual = 90;
+    break;
+
+    case 6: // ### Ações Ordenhar
+      robo.milkTeta();
+      robo.moveFrente(0);
+
+      fimEstado[6] = true;
+      estadoAtual = 90;
+    break;
+
+    case 7: // ### Ações para Chegar no tanque:
+      switch(subEstado){
+        case 1: // Girar p/ encontrar tag:
+          robo.moveTank(-150,150);
+        break;
+
+        case 2: // Movimentar controlando:
+          robo.moveTank(velE,velD);
+        break;
+
+        case 3:
+          //CODIGO PARA DESVIAR DA PORRA DA MERDA DA PAREDE
+          robo.follow_wall_to_little_gate();
+          robo.moveFrente(0);
+          subEstado = 90;
+          estadoAtual = 90;
+        break;
+
+        case 90: // Sub-estado de Esperar Pelo Proximo Comando:
+          robo.moveFrente(0);
+          flag = false;flag2 = false;
+        break;
+      }
+    break;
+
+    case 8: // ### Ações para derramar :
+      robo.adjust_to_derramar_leite();
+      robo.dropMilk();
+      robo.moveFrente(0);
+
+      fimEstado[8] = true;
+      estadoAtual = 90;
+    break;
+
     case 90: // ### Estado de espera por comandos:
-      
+      //haHAA
     break;
 
     default:
@@ -191,17 +268,17 @@ void receiveData(int byteCount) {
         out[0]=1;
         switch(in[1]){
           case 1://Mandando arduino começar.
+            out[1] = 1;  
             estadoAtual = 1;
-            out[1] = 1;
             fimEstado[1] = false;
           break;
 
           case 2://Perguntando se ja terminou.
             out[1] = 2;
             if(fimEstado[1]){
-              out[3] = 1;
+              out[2] = 1;
             }else{
-              out[3] = 2;
+              out[2] = 2;
             }
           break;
           
@@ -216,17 +293,17 @@ void receiveData(int byteCount) {
         out[0]=2;
         switch(in[1]){
           case 1://Mandando arduino começar.
+            out[1] = 1;  
             estadoAtual = 2;
-            out[1] = 1;
             fimEstado[2] = false;
           break;
 
           case 2://Perguntando se ja terminou.
             out[1] = 2;
             if(fimEstado[2]){
-              out[3] = 1;
+              out[2] = 1;
             }else{
-              out[3] = 2;
+              out[2] = 2;
             }
           break;
           
@@ -241,17 +318,17 @@ void receiveData(int byteCount) {
         out[0]=3;
         switch(in[1]){
           case 1://Mandando arduino começar.
+            out[1] = 1;  
             estadoAtual = 3;
-            out[1] = 1;
             fimEstado[3] = false;
           break;
 
           case 2://Perguntando se ja terminou.
             out[1] = 2;
             if(fimEstado[3]){
-              out[3] = 1;
+              out[2] = 1;
             }else{
-              out[3] = 2;
+              out[2] = 2;
             }
           break;
           
@@ -271,58 +348,201 @@ void receiveData(int byteCount) {
           break;
 
           case 2:// Solicitando para girar/parar de procurar a vaca:
-            estadoAtual = 4; 
             out[1] = 2;
-            if(in[3] == 1){
+            estadoAtual = 4; 
+            if(in[2] == 1){
               subEstado = 1;
-              out[3] = 1;
-            }else if(in[3] == 2){
+            }else if(in[2] == 2){
               subEstado = 90;
-              out[3] = 2;
               flag = true;flag2 = true;
             }else{
               out[0] = 98;
             }
           break;
 
-          case 3:// Solicitando para fazer a manobra com os parametros:
+          case 3:
+            out[1] = 3;  
             estadoAtual = 4;
-            out[1] = 3;
-            if(in[3] == 1 || in[3] == 2){
-              ladoV = in[3];
-              anguloV = in[4];
-              subEstado = 2;
+            velE = (in[2]-125)*2;
+            velE = (in[3]-125)*2;
+            subEstado = 2;
+            flag = true;flag2 = true;
+          break;
+
+          case 4:// Solicitando para fazer a manobra com os parametros:
+            out[1] = 4;  
+            estadoAtual = 4;
+            if(in[2] == 1 || in[2] == 2){
+              ladoV = in[2];
+              anguloV = in[3];
+              subEstado = 3;
             }else{
               out[0] = 98;
             }
           break;
 
-          case 4:// Perguntando se ja terminou o item acima:
+          case 5:// Perguntando se ja terminou o item acima:
+            out[1] = 5;  
             estadoAtual = 4;
-            out[1] = 4;
             if(subEstado == 90){
-              out[3] = 1;
+              out[2] = 1;
             }else{
-              out[3] = 2;
+              out[2] = 2;
             }
           break;
 
-          case 5:// Solicitando para ir para vaca
+          case 6:// Solicitando para ir para vaca
+            out[1] = 6;
             estadoAtual = 4;
-            out[1] = 5;
+            subEstado = 4;
+          break;
+
+          case 7:// Perguntando se ja terminou o item acima:
+            out[1] = 6;  
+            estadoAtual = 4;
+            if(subEstado == 90){
+              out[2] = 1;
+            }else{
+              out[2] = 2;
+            }
+          break;
+
+          default:
+            out[0] = 98;
+          break;
+        }
+      break;
+
+      //  ####  Ordenhar  #### 
+      case 5:
+        out[0]=5;
+        switch(in[1]){
+          case 1://Mandando arduino começar.
+            out[1] = 1;  
+            estadoAtual = 5;  
+            fimEstado[5] = false;
+          break;
+
+          case 2://Perguntando se ja terminou.
+            out[1] = 2;
+            if(fimEstado[5]){
+              out[2] = 1;
+            }else{
+              out[2] = 2;
+            }
+          break;
+          
+          default:
+            out[0] = 98;
+          break;
+        }
+      break;
+
+      //  ####  Chupa Chupa  #### 
+      case 6:
+        out[0]=6;
+        switch(in[1]){
+          case 1://Mandando arduino começar.
+            out[1] = 1;  
+            estadoAtual = 6;
+            fimEstado[6] = false;
+          break;
+
+          case 2://Perguntando se ja terminou.
+            out[1] = 2;
+            if(fimEstado[6]){
+              out[2] = 1;
+            }else{
+              out[2] = 2;
+            }
+          break;
+          
+          default:
+            out[0] = 98;
+          break;
+        }
+      break;
+      
+      //  ####  Segue Aruco até infinito   #### 
+      case 7:
+        out[0]=7;
+        switch(in[1]){
+          case 1:// Inicio estado 7
+            out[1] = 1;
+            estadoAtual = 7;
+          break;
+
+          case 2:// Solicitando para girar/parar de procurar a tag:
+            out[1] = 2;
+            estadoAtual = 7; 
+            if(in[2] == 1){
+              subEstado = 1;
+              out[2] = 1;
+            }else if(in[2] == 2){
+              subEstado = 90;
+              out[2] = 2;
+              flag = true;flag2 = true;
+            }else{
+              out[0] = 98;
+            }
+          break;
+
+          case 3:
+            out[1] = 3;  
+            estadoAtual = 7;
+            if(obstaculoEncontrado){
+              velE = 0;
+              velD = 0;
+              out[2] = 1;
+            }else{
+              velE = (in[2]-125)*2;
+              velE = (in[3]-125)*2;
+              out[2] = 2;
+            }
+            subEstado = 2;
+            flag = true;flag2 = true;
+          break;
+
+          case 4:// Solicitando para ir para vaca
+            out[1] = 4;  
+            estadoAtual = 7;
             subEstado = 3;
           break;
 
-          case 6:// Perguntando se ja terminou o item acima:
-            estadoAtual = 4;
-            out[1] = 6;
+          case 5:// Perguntando se ja terminou o item acima:
+            out[1] = 5;
+            estadoAtual = 7;
             if(subEstado == 90){
-              out[3] = 1;
+              out[2] = 1;
             }else{
-              out[3] = 2;
+              out[2] = 2;
             }
           break;
 
+          default:
+            out[0] = 98;
+          break;
+        }
+      break;
+
+      case 8:
+        out[0]=8;
+        switch(in[1]){
+          case 1://Mandando arduino começar.
+            estadoAtual = 8;
+            out[1] = 1;
+            fimEstado[8] = false;
+          break;
+
+          case 2://Perguntando se ja terminou.
+            out[1] = 2;
+            if(fimEstado[8]){
+              out[2] = 1;
+            }else{
+              out[2] = 2;
+            }
+          break;
+          
           default:
             out[0] = 98;
           break;
