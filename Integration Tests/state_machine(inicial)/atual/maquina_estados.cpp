@@ -24,7 +24,7 @@ using namespace aruco;
 #define WIDTH 640
 #define LOOKING_SPEED 200
 #define TURNING_SPEED 150
-void vaiAruco(int argc, char **argv);
+bool vaiAruco(int argc, char **argv);
 float erro;
 int velE, velD;
 
@@ -311,7 +311,7 @@ int main(int argc, char **argv){
     return 0;
 }
 
-void vaiAruco(int argc, char **argv){
+bool vaiAruco(int argc, char **argv){
 	try {
         CmdLineParser cml(argc,argv);
         if (argc < 2  || cml["-h"]) {
@@ -490,6 +490,7 @@ void vaiAruco(int argc, char **argv){
         cout << "Exception :" << ex.what() << endl;
     }
 }
+
 void cvTackBarEvents(int pos, void *) {
     (void)(pos);
     if (iThresParam1 < 3)  iThresParam1 = 3;
