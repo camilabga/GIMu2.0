@@ -243,23 +243,6 @@ void Cow::sendPID(){
     imshow("PID", ROI);
 }
 
-/*bool Cow::isCentered(){
-    if (!centered) {
-        if (previous_centers.size() <= 50) {
-            int x = previous_centers.back().x-previous_centers.front().x;
-            int y = previous_centers.back().y-previous_centers.front().y;
-            if (abs((x*x - y*y)-(center.x * center.x + center.y * center.y)) < 10) {
-                centered = true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }
-    return true;
-}*/
-
 void Cow::distinguishParts(Mat &R){
     /*  LEG // BODY WITH COMPARED SIZES  */
     

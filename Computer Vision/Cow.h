@@ -8,7 +8,6 @@
 #include <opencv2/opencv.hpp>
 #include <math.h>
 #include <opencv2/imgproc/imgproc.hpp>
-#include <queue>
 
 using namespace cv;
 using namespace std;
