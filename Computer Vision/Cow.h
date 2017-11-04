@@ -14,6 +14,9 @@ using namespace std;
 
 #define HEIGHT 480
 #define WIDTH 640
+
+#define LOOKING_SPEED 200
+#define TURNING_SPEED 150
  
 class Cow{
 private:
@@ -38,6 +41,8 @@ private:
 public:
     Cow();
 
+    inline unsigned getSlope(){return slope;}
+
     void setROI(const Mat &R);
 
     void transformImage();
@@ -47,6 +52,8 @@ public:
     bool find();
     inline bool isCentered(){return centered;}
     inline bool isAlign(){return aligned;}
+
+    inline void restartLooking(){aligned = false; centered=false;}
 
     void distinguishParts(Mat &R);
     void getInclination(Mat &R);

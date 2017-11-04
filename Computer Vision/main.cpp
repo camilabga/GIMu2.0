@@ -3,10 +3,12 @@
 using namespace std;
 using namespace cv;
 
+int velD, velE;
+
 int main(){
     //open webcam
     //VideoCapture capture("arena.mp4");
-    VideoCapture capture(1);
+    VideoCapture capture(0);
     if ( !capture.isOpened() ){
       cout << "Cannot open the video file" << endl;
       return -1;
@@ -30,18 +32,29 @@ int main(){
         cow.searchSquares();
  
         if (cow.find()){
+            cow.detectLimits();
             if (cow.isCentered()) {
                 if (cow.isAlign()) {
+                    velE = LOOKING_SPEED;
+                    velD = LOOKING_SPEED;
                     // VAI RETO
                 } else {
-                    cow.detectLimits();
                     // ALINHAR 180 GRAUS COM A VACA
+                    if (cow.getSlope() > 100) {
+                        
+                    } else {
+                        
+                    }
                 }
             } else {
                 // GIRAR CONTROLADO
+                velE = TURNING_SPEED;
+                velD = -TURNING_SPEED;
             }
         } else {
             // GIRAR LOUCAMENTE
+            velE = TURNING_SPEED;
+            velD = -TURNING_SPEED;
         }
 
         namedWindow("Original", WINDOW_NORMAL);

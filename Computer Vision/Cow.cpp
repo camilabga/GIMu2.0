@@ -119,9 +119,9 @@ void Cow::transformImage(){
     transformedROI.convertTo(ROI32, CV_32F);
     threshold( ROI32, ROI32, THRESH, 255, THRESH_BINARY ); 
 
-    float laplacian[]={0,-1,0,
-                      -1,4,-1,
-                       0,-1,0};
+    float laplacian[]={-1,-1,-1,
+                      -1,8,-1,
+                       -1,-1,-1};
 
     Mat mask = Mat(3, 3, CV_32F, laplacian);
     filter2D(ROI32, transformedROI, ROI32.depth(), mask, Point(1,1), 0);
@@ -376,6 +376,7 @@ void Cow::detectLimits(){
     for (size_t i = 0; i < limits.size(); i++){
         limits[i].clear();
     }
+    
     limits.clear();
 
     vector<Point>aux;

@@ -49,5 +49,4 @@ void Porteira::setContours(){
 }
 
 void detectAreas(){
-    
 }
