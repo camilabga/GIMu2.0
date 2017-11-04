@@ -4,16 +4,19 @@ int THRESH = 150;
 #define max1 500
 #define MIN_THRESH 1
 #define MAX_THRESH 100
-#define SPEED 180
-#define BYTES 10
-
-//char buf[BYTES*4];
+#define MIN_SQUARE_AREA 400
+#define FRACTION_CONSIDER_BODY 0.7
+#define MAX_CONSIDER_BODY 1.4
+#define FRACTION_CONSIDER_LEG 0.3
+#define CONSIDER_EQUAL 1
+#define PI 3.14159265
+#define CONSIDER_CENTERED 5
 
 const string trackbarWindowName = "Trackbars";
 
 void on_trackbar( int, void* ){//This function gets called whenever a
 	// trackbar position is changed
-}
+}   
 
 void createTrackbars(){
 	//create window for trackbars
@@ -32,31 +35,61 @@ void createTrackbars(){
 
 Cow::Cow(){
     detected = false;
+    centered = false;
+    aligned = false;
     center.x = 0;
     center.y = 0;
     squares.clear();
+    centers.clear();
+    legs.clear();
+    body.clear();
 }
 
 bool Cow::find(){
     center.x = 0;
     center.y = 0;
     int n = 0;
+    long aux_x = 0, aux_y = 0;
+
     if (detected) { // tratamento com ROI e centro anterior
+        
+        alignSquarePoints();
+        detectLimits();
+        
         for (size_t i = 0; i < squares.size(); i++){
             for(size_t j = 0; j < squares[i].size(); j++){
                 n++;
                 center.x = center.x + squares[i][j].x;
                 center.y = center.y + squares[i][j].y;
+                aux_x = aux_x + squares[i][j].x;
+                aux_y = aux_y + squares[i][j].y;
             }
+            
+            aux_x = aux_x/4;
+            aux_y = aux_y/4;
+
+            centers.push_back(Point(aux_x, aux_y));
+
+            aux_x = 0;
+            aux_y = 0;
         }
 
         if (n != 0) {
             center.x = center.x/n;
             center.y = center.y/n;
+
+            if (abs(center.x - WIDTH/2) < CONSIDER_CENTERED) {
+                centered = true;
+            } else {
+                centered = false;
+            }
+    
+
             return true;
         } else {
             return false;
         }
+
     } else {
         return false;
     }
@@ -80,15 +113,15 @@ void Cow::transformImage(){
     
     cvtColor(transformedROI, transformedROI, CV_BGR2GRAY);
 
-    equalizeHist(transformedROI, transformedROI);    
+    //equalizeHist(transformedROI, transformedROI);    
 
     Mat ROI32;
     transformedROI.convertTo(ROI32, CV_32F);
     threshold( ROI32, ROI32, THRESH, 255, THRESH_BINARY ); 
 
-    float laplacian[]={0,-1,0,
-                      -1,4,-1,
-                       0,-1,0};
+    float laplacian[]={-1,-1,-1,
+                      -1,8,-1,
+                       -1,-1,-1};
 
     Mat mask = Mat(3, 3, CV_32F, laplacian);
     filter2D(ROI32, transformedROI, ROI32.depth(), mask, Point(1,1), 0);
@@ -109,63 +142,25 @@ void Cow::searchSquares(){
     vector<Vec4i> lines;
     vector<Vec4i> lines0;
 
-    //TRANSFORMADA DE HOUGH --- ACHAR LINHAS
-	/*#if 0
-    HoughLines(transformedROI, lines0, 1, CV_PI/180, 100 );
-
-    for( size_t i = 0; i < lines0.size(); i++ )
-    {
-            float rho = lines0[i][0];
-            float theta = lines0[i][1];
-            double a = cos(theta), b = sin(theta);
-            double x0 = a*rho, y0 = b*rho;
-            Point pt1(cvRound(x0 + 1000*(-b)),
-                                cvRound(y0 + 1000*(a)));
-            Point pt2(cvRound(x0 - 1000*(-b)),
-                                cvRound(y0 - 1000*(a)));
-            line(ROI, pt1, pt2, Scalar(0,0,255), 3, 8 );
+    for (size_t i = 0; i < squares.size(); i++){
+        squares[i].clear();
     }
-    #else
-    // ultimos tres elementos                  (threshold, minLineLength, maxLineGap)
-        
-        HoughLinesP(transformedROI, lines, 1, CV_PI/180, 50, 20, 30);
-
-        for (unsigned int i = 0; i < lines.size(); i++){
-            line(ROI, Point(lines[i][0], lines[i][1]),
-                Point(lines[i][2], lines[i][3]), Scalar(0,0,255), 3, 8 );
-        }
-
-        namedWindow("Teste", WINDOW_NORMAL);
-        resizeWindow("Teste", WIDTH, HEIGHT);
-        imshow("Teste", ROI);
-
-        for(unsigned int i = 0; i < lines.size(); i++){
-            if (abs(angle(Point(lines[i][0], lines[i][1]), Point(lines[i][2], lines[i][3]), Point(lines[i+1][0], lines[i+1][1])) < 0.05)){
-                points.push_back(Point(lines[i][0], lines[i][1]));
-                points.push_back(Point(lines[i][2], lines[i][3]));
-                points.push_back(Point(lines[i+1][0], lines[i+1][1]));
-            }
-            if (abs(angle(Point(lines[i][0], lines[i][1]), Point(lines[i][2], lines[i][3]), Point(lines[i+1][2], lines[i+1][3])) < 0.05)){
-                points.push_back(Point(lines[i][0], lines[i][1]));
-                points.push_back(Point(lines[i][2], lines[i][3]));
-                points.push_back(Point(lines[i+1][2], lines[i+1][3]));
-            }
-        }
-    
-        for (unsigned int i = 0; i < points.size(); i++){
-            circle(ROI, points[i], 5, Scalar(255,0,0), 2, 8, 0 );
-        }*/
-    
-        /*namedWindow("Teste1", WINDOW_NORMAL);
-        resizeWindow("Teste1", WIDTH, HEIGHT);
-        imshow("Teste1", ROI);*/
-
     squares.clear();
 
-    //for (unsigned t = MIN_THRESH; t < MAX_THRESH; t++) {
-        //threshold(transformedROI, transformedROI, THRESH, 255, THRESH_BINARY );
+    for (size_t i = 0; i < legs.size(); i++){
+        legs[i].clear();
+    }
+    legs.clear();
+
+    for (size_t i = 0; i < body.size(); i++){
+        body[i].clear();
+    }
+    body.clear();
+
+    centers.clear();
+
     vector<vector<Point>> contours;
-    findContours(transformedROI, contours, RETR_LIST, CHAIN_APPROX_SIMPLE);
+    findContours(transformedROI, contours, CV_RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
     vector<Point> approx;
 
     for (size_t i = 0; i < contours.size(); i++){
@@ -180,9 +175,9 @@ void Cow::searchSquares(){
         // area may be positive or negative - in accordance with the
         // contour orientation
         if (approx.size() == 4 &&
-            fabs(contourArea(Mat(approx))) > 600 &&
+            fabs(contourArea(Mat(approx))) > MIN_SQUARE_AREA &&
             isContourConvex(Mat(approx))){
-            
+                
                 double maxCosine = 0;
 
             for (int j = 2; j < 5; j++){
@@ -194,8 +189,17 @@ void Cow::searchSquares(){
             // if cosines of all angles are small
             // (all angles are ~90 degree) then write quandrange
             // vertices to resultant sequence
-            if (maxCosine < 0.3)
+            if (maxCosine < 0.3) {
                 squares.push_back(approx);
+
+
+                //cout << lineInclination(approx[0], approx[1]) << endl;
+                /*cout << approx[0].x << " " <<  approx[0].y << " ||  "
+                     << approx[1].x << " " <<  approx[1].y << " ||  "
+                     << approx[2].x << " " <<  approx[2].y << " ||  "
+                     << approx[3].x << " " <<  approx[3].y << " " << endl;
+                */
+            }
         }
     }
 
@@ -204,79 +208,12 @@ void Cow::searchSquares(){
         int n = (int)squares[i].size();
         polylines(ROI, &p, &n, 1, true, Scalar(0, 255, 0), 3, LINE_AA);
     }
-    //}
 
-    if (!detected && squares.size() >= 6) {
+    if (!detected && squares.size() >= 4) {
         detected = true;
     }
 
-    /*namedWindow("Teste1", WINDOW_NORMAL);
-    resizeWindow("Teste1", WIDTH, HEIGHT);
-    imshow("Teste1", ROI);*/
-
-    //#endif
-
-    // #### TESTE 01 ####
-    /*vector<vector<Point>> contours;
-    findContours(ROI,contours,RETR_CCOMP,CHAIN_APPROX_SIMPLE);
-    vector<Rect> rects;
-    
-    for (unsigned i=0; i<contours.size(); i++){
-        drawContours(ROI,contours,i,Scalar(200,0,0));
-        Rect r = boundingRect(contours[i]);
-        rects.push_back(r);
-    }
-
-    namedWindow("Squares", WINDOW_NORMAL);
-    resizeWindow("Squares", WIDTH, HEIGHT);
-    imshow("Squares", ROI);*/
-
-    // #### TESTE 02 ####
-
-    /*Mat canny_output;
-    vector<vector<Point>> contours;
-    vector<Vec4i> hierarchy;
-    int thresh = 200;
-    RNG rng(12345);
-    
-    Canny(ROI, canny_output, thresh, thresh*2, 3);
-    findContours(canny_output, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
-    
-    cout << contours.size() << endl;
-
-    vector<vector<Point> > contours_poly;
-    vector<Rect> boundRect;
-    vector<Point2f>center( contours.size() );
-    vector<float>radius( contours.size() );
-    vector<Point> temp;
-  
-    for(unsigned i = 0; i < contours.size(); i++ ){ 
-        if (contours[i].size() == 4) {
-            approxPolyDP( Mat(contours[i]), temp, 3, true );
-            contours_poly.push_back(temp);
-            boundRect.push_back(boundingRect( Mat(temp) ));
-            minEnclosingCircle( (Mat)temp, center[i], radius[i] );
-        }
-    }
-  
-    /// Draw polygonal contour + bonding rects + circles
-    for(unsigned i = 0; i< contours.size(); i++ ){
-         Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
-         drawContours(ROI, contours_poly, i, color, 1, 8, vector<Vec4i>(), 0, Point() );
-         rectangle(ROI, boundRect[i].tl(), boundRect[i].br(), color, 2, 8, 0 );
-         circle(ROI, center[i], (int)radius[i], color, 2, 8, 0 );
-    }
-
-    namedWindow( "Contours", WINDOW_AUTOSIZE );
-    imshow( "Contours", ROI);*/
-
-    /*vector<vector<Point> > squares;
-    findSquares(squares);
-    drawSquares(ROI, squares);*/
-
-
-
-
+    //cout << endl;
 }
 
 void Cow::drawCenter(Mat &frame){
@@ -284,51 +221,7 @@ void Cow::drawCenter(Mat &frame){
     circle(frame, center, 5, Scalar(0,255,0), 2, 8, 0 );
 }
 
-/*void Cow::conectI2C(bool ok, int velE, int velD){
-    for(int i=0;i<BYTES*4;i++){
-        buf[i] = '\0';
-    }
-    char cmd[BYTES+1];
-
-    cmd[0] = (char) ok;
-    cmd[1] = (char) velE;
-    cmd[2] = (char) velD;
-    cmd[3] = ';';
-
-    //Enviar comando:
-    arduino.i2cWrite(cmd, BYTES);
-    usleep(10000);
-
-    //Receber resposta:
-    if(arduino.i2cRead(buf, BYTES) == BYTES){
-        buf[(BYTES*4)-1] = '\0';
-        cout << "Retorno: " << buf << endl;
-    }else{
-        cout << "Erro !" << endl;
-    }
-}*/
-
-void Cow::sendSerial(float erro, unsigned i, unsigned char &c1, unsigned char &c2){
-    int to_send = (int)((erro*100+100) / 2);
-    switch(i){
-        case 1:
-        c1 = 'r';
-        c2 = (unsigned char)to_send;
-        break;
-
-        case 2:
-        c1 = 'f';
-        c2 = '0';
-        break;
-
-        case 3:
-        c1 = 'p';
-        c2 = '0';
-        break;
-    }
-}
-
-void Cow::sendPID(unsigned char &c1, unsigned char &c2){
+void Cow::sendPID(){
     if (detected) {
         if (center.x != 0 && center.y != 0) {
             float erro = center.x - (WIDTH/2);
@@ -338,26 +231,217 @@ void Cow::sendPID(unsigned char &c1, unsigned char &c2){
             if (erro < 0.01) { // go left
                 to_show = (int)(-100*erro);
                 line(ROI,Point((WIDTH/2),center.y),Point(center.x,center.y),Scalar(0,255,0),to_show);
-                //conectI2C(1, -SPEED*erro, SPEED);
-                
             } else if (erro > 0.01) { // go right
                 to_show = (int)(100*erro);
                 line(ROI,Point((WIDTH/2),center.y),Point(center.x,center.y),Scalar(0,0,255),to_show);
-                //conectI2C(1, SPEED, SPEED*erro);
             }
-
-            sendSerial(erro, 1,c1,c2);
-
-        } else {
-            sendSerial(0, 3,c1,c2);         
         }
-
-    } else {
-        //conectI2C(2,0,0);
-        sendSerial(0,2,c1,c2);
     }
 
     namedWindow("PID", WINDOW_NORMAL);
     resizeWindow("PID", WIDTH, HEIGHT);
     imshow("PID", ROI);
+}
+
+void Cow::distinguishParts(Mat &R){
+    /*  LEG // BODY WITH COMPARED SIZES  */
+    
+    for (size_t i = 0; i < squares.size(); i++){
+        if (abs(centers[i].x - squares[i][0].x) / 
+            abs(centers[i].y - squares[i][0].y) > FRACTION_CONSIDER_BODY 
+            && abs(centers[i].x - squares[i][0].x) / 
+            abs(centers[i].y - squares[i][0].y) < MAX_CONSIDER_BODY) {
+                body.push_back(squares[i]);
+        }
+
+        if (abs(centers[i].x - squares[i][0].x) / 
+        abs(centers[i].y - squares[i][0].y) < FRACTION_CONSIDER_LEG) {
+            legs.push_back(squares[i]);
+        }
+    }
+
+    for (size_t i = 0; i < legs.size(); i++){
+        const Point *p = &legs[i][0];
+        int n = (int)legs[i].size();
+        polylines(R, &p, &n, 1, true, Scalar(0, 0, 255), 3, LINE_AA);
+    }
+
+    for (size_t i = 0; i < body.size(); i++){
+        const Point *p = &body[i][0];
+        int n = (int)body[i].size();
+        polylines(R, &p, &n, 1, true, Scalar(255, 0, 0), 3, LINE_AA);
+    }
+
+    //getInclination(R);
+
+}
+
+double Cow::lineInclination(Point pt1, Point pt2){
+    float temp = atan((pt1.y-pt2.y)/(pt1.x-pt2.x + 0.000000001));
+    temp = temp*180.0/PI;
+    return temp;
+}
+
+void Cow::getInclination(Mat &R){
+    for (size_t i = 0; i < squares.size(); i++){
+        cout << lineInclination(Point(body[i][0].x, body[i][0].y), Point(body[i][1].x, body[i][1].y)) << endl;
+    }
+}
+
+void swap(int* a, int* b){
+    int t = *a;
+    *a = *b;
+    *b = t;
+}
+
+int partition (int allX[], int allY[], int low, int high){
+    int pivot = allX[high];    // pivot
+    int i = (low - 1);  // Index of smaller element
+ 
+    for (int j = low; j <= high- 1; j++)
+    {
+        // If current element is smaller than or
+        // equal to pivot
+        if (allX[j] <= pivot)
+        {
+            i++;    // increment index of smaller element
+            swap(&allX[i], &allX[j]);
+            swap(&allY[i], &allY[j]);
+        }
+    }
+    swap(&allX[i + 1], &allX[high]);
+    swap(&allY[i + 1], &allY[high]);
+    return (i + 1);
+}
+ 
+void quickSort(int allX[], int allY[], int low, int high){
+    if (low < high){
+        int pi = partition(allX, allY, low, high);
+ 
+        quickSort(allX, allY, low, pi - 1);
+        quickSort(allX, allY, pi + 1, high);
+    }
+}
+
+void Cow::alignSquarePoints(){
+    vector<vector<Point> > squaresOK;
+    vector <Point> quadrado;
+    int allX[4], allY[4]; 
+    for (size_t i = 0; i < squares.size(); i++) {
+        quadrado.clear();
+        allX[0]=squares[i][0].x;
+        allX[1]=squares[i][1].x;
+        allX[2]=squares[i][2].x;
+        allX[3]=squares[i][3].x;
+
+        allY[0]=squares[i][0].y;
+        allY[1]=squares[i][1].y;
+        allY[2]=squares[i][2].y;
+        allY[3]=squares[i][3].y;
+
+        int n = sizeof(allX)/sizeof(allX[0]);
+        
+        quickSort(allX, allY, 0, n-1);
+
+        if (allY[0] > allY[1]) {
+            swap(allX[0], allX[1]);
+            swap(allY[0], allY[1]);
+        }
+
+        if (allY[3] > allY[2]) {
+            swap(allX[3], allX[2]);
+            swap(allY[3], allY[2]);
+        }
+
+        quadrado.push_back(Point(allX[0], allY[0]));
+        quadrado.push_back(Point(allX[1], allY[1]));
+        quadrado.push_back(Point(allX[2], allY[2]));
+        quadrado.push_back(Point(allX[3], allY[3]));
+        squaresOK.push_back(quadrado);
+    }
+
+    squares.clear();
+    for (size_t i = 0; i < squaresOK.size(); i++) {
+        squares.push_back(squaresOK[i]);
+    }
+    //cout << endl;   
+}
+
+void Cow::getSlope(Point p1, Point p2, float slope[]){
+    slope[0] = (p1.y-p2.y)/(p1.x-p2.x+0.0000000000000001);
+    slope[1] = p1.y - slope[0]*p1.x;
+}
+
+void Cow::detectLimits(){
+    for (size_t i = 0; i < limits.size(); i++){
+        limits[i].clear();
+    }
+    
+    limits.clear();
+
+    vector<Point>aux;
+
+    float slopeUp[2];
+    float slopeDown[2];
+    float slopeLeft[2];
+    float slopeRight[2];
+    for (size_t i = 0; i < squares.size(); i++) {
+        getSlope(squares[i][3], squares[i][0], slopeUp);
+        getSlope(squares[i][0], squares[i][1], slopeLeft);
+        getSlope(squares[i][1], squares[i][2], slopeDown);
+        getSlope(squares[i][2], squares[i][3], slopeRight);
+
+        for(size_t j = i+1; j < squares.size(); j++){
+            if (abs(squares[j][0].x * slopeUp[0] + slopeUp[1] - squares[j][0].y) <= CONSIDER_EQUAL 
+             || abs(squares[j][3].x * slopeUp[0] + slopeUp[1] - squares[j][3].y) 
+                    <= CONSIDER_EQUAL) {
+                        line(ROI, squares[i][0], squares[j][3], Scalar(0, 0, 255), 4, 8, 0);
+                        aux.push_back(squares[i][0]);
+                        aux.push_back(squares[j][3]);
+                        limits.push_back(aux);
+            }
+
+            /*if (abs(squares[j][0].x * slopeLeft[0] + slopeLeft[1] - squares[j][0].y) <= CONSIDER_EQUAL 
+            || abs(squares[j][1].x * slopeLeft[0] + slopeLeft[1] - squares[j][1].y) 
+                   <= CONSIDER_EQUAL) {
+                       line(ROI, squares[i][0], squares[j][1], Scalar(0, 0, 255), 4, 8, 0);
+                aux.push_back(squares[i][0]);
+                aux.push_back(squares[j][1]);
+                limits.push_back(aux);
+            }
+
+           if (abs(squares[j][2].x * slopeRight[0] + slopeRight[1] - squares[j][2].y) <= CONSIDER_EQUAL 
+           || abs(squares[j][3].x * slopeRight[0] + slopeRight[1] - squares[j][3].y) 
+                  <= CONSIDER_EQUAL) {
+                      line(ROI, squares[i][2], squares[j][3], Scalar(0, 0, 255), 4, 8, 0);
+                aux.push_back(squares[i][2]);
+                aux.push_back(squares[j][3]);
+                limits.push_back(aux);
+            }*/
+        }
+    }
+
+    discoverAngle();
+
+    namedWindow("Limits", WINDOW_NORMAL);
+    resizeWindow("Limits", WIDTH, HEIGHT);
+    imshow("Limits", ROI);
+}
+
+void Cow::discoverAngle(){
+    vector<float> angulos;
+    float aux = 0;
+    if (limits.size() > 0) {
+        for (unsigned i = 0; i < limits.size(); i++) {
+            aux = (limits[0][0].x - limits[0][1].x) / 
+                (sqrt((limits[0][0].x - limits[0][1].x)*(limits[0][0].x - limits[0][1].x)
+                    +(limits[0][0].y - limits[0][1].y)*(limits[0][0].y - limits[0][1].y)));
+            angulos.push_back((acos(aux)*180/PI));
+        }
+
+        slope = angulos[0];
+        if (slope == 180 || slope == 0) aligned = true;
+    } else {
+        // proximo threshold
+    }
 }
