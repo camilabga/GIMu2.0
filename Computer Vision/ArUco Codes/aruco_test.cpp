@@ -1,30 +1,3 @@
-/*****************************************************************************************
-Copyright 2011 Rafael Muñoz Salinas. All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification, are
-permitted provided that the following conditions are met:
-
-   1. Redistributions of source code must retain the above copyright notice, this list of
-      conditions and the following disclaimer.
-
-   2. Redistributions in binary form must reproduce the above copyright notice, this list
-      of conditions and the following disclaimer in the documentation and/or other materials
-      provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY Rafael Muñoz Salinas ''AS IS'' AND ANY EXPRESS OR IMPLIED
-WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
-FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL Rafael Muñoz Salinas OR
-CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-The views and conclusions contained in the software and documentation are those of the
-authors and should not be interpreted as representing official policies, either expressed
-or implied, of Rafael Muñoz Salinas.
-********************************************************************************************/
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -33,8 +6,18 @@ or implied, of Rafael Muñoz Salinas.
 #include <aruco/cvdrawingutils.h>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
+
 using namespace cv;
 using namespace aruco;
+
+#define HEIGHT 480
+#define WIDTH 640
+
+#define LOOKING_SPEED 200
+#define TURNING_SPEED 150
+
+float erro;
+int velE, velD;
 
 MarkerDetector MDetector;
 VideoCapture TheVideoCapturer;
@@ -46,7 +29,27 @@ void cvTackBarEvents(int pos, void *);
 pair< double, double > AvrgTime(0, 0); // determines the average time required for detection
  int iThresParam1, iThresParam2;
 int waitTime = 0;
-class CmdLineParser{int argc; char **argv; public: CmdLineParser(int _argc,char **_argv):argc(_argc),argv(_argv){}  bool operator[] ( string param ) {int idx=-1;  for ( int i=0; i<argc && idx==-1; i++ ) if ( string ( argv[i] ) ==param ) idx=i;    return ( idx!=-1 ) ;    } string operator()(string param,string defvalue="-1"){int idx=-1;    for ( int i=0; i<argc && idx==-1; i++ ) if ( string ( argv[i] ) ==param ) idx=i; if ( idx==-1 ) return defvalue;   else  return ( argv[  idx+1] ); }};
+
+class CmdLineParser{
+    int argc; 
+    char **argv; 
+    
+public: 
+    CmdLineParser(int _argc,char **_argv):argc(_argc),argv(_argv){}  
+    bool operator[] ( string param ) {int idx=-1;  
+        for ( int i=0; i<argc && idx==-1; i++ ) 
+        if ( string ( argv[i] ) ==param ) idx=i;    
+        return ( idx!=-1 ) ;    
+    } 
+    
+    string operator()(string param,string defvalue="-1"){
+        int idx=-1;    
+        for ( int i=0; i<argc && idx==-1; i++ ) 
+        if ( string ( argv[i] ) ==param ) idx=i; 
+        if ( idx==-1 ) return defvalue;   
+        else  return ( argv[  idx+1] ); 
+    }
+};
 
 
 cv::Mat resize(const cv::Mat &in,int width){
@@ -58,12 +61,6 @@ cv::Mat resize(const cv::Mat &in,int width){
 
 }
 
-/************************************
- *
- *
- *
- *
- ************************************/
 int main(int argc, char **argv) {
     try {
         CmdLineParser cml(argc,argv);
@@ -81,9 +78,6 @@ int main(int argc, char **argv) {
         if (cml["-c"] )  TheCameraParameters.readFromXMLFile(cml("-c"));
         float TheMarkerSize = std::stof(cml("-s","-1"));
         //aruco::Dictionary::DICT_TYPES  TheDictionary= Dictionary::getTypeFromString( cml("-d","ARUCO") );
-
-
-
 
         ///////////  OPEN VIDEO
         // read from camera or from  file
@@ -125,9 +119,10 @@ int main(int argc, char **argv) {
         //go!
         char key = 0;
         int index = 0;
+        bool found_tag = false, ja_achou = false;
         // capture until press ESC or until the end of the video
         do {
-
+            found_tag = false;
             TheVideoCapturer.retrieve(TheInputImage);
             // copy image
             double tick = (double)getTickCount(); // for checking the speed
@@ -136,14 +131,53 @@ int main(int argc, char **argv) {
             // chekc the speed by calculating the mean speed of all iterations
             AvrgTime.first += ((double)getTickCount() - tick) / getTickFrequency();
             AvrgTime.second++;
-            cout << "\rTime detection=" << 1000 * AvrgTime.first / AvrgTime.second << " milliseconds nmarkers=" << TheMarkers.size() << std::endl;
+            //cout << "\rTime detection=" << 1000 * AvrgTime.first / AvrgTime.second << " milliseconds nmarkers=" << TheMarkers.size() << std::endl;
 
             // print marker info and draw the markers in image
             TheInputImage.copyTo(TheInputImageCopy);
 
             for (unsigned int i = 0; i < TheMarkers.size(); i++) {
-                cout << TheMarkers[i]<<endl;
+                if (TheMarkers[i].id == 213) {
+                    ja_achou = true;
+                    found_tag = true;
+                    if (TheMarkers[i].getCenter().x < WIDTH/2) {
+                        erro = (WIDTH/2 - TheMarkers[i].getCenter().x)/(WIDTH/2);
+
+                        velD = LOOKING_SPEED;
+                        velE = LOOKING_SPEED*erro;
+
+                        // VIRAR PRA DIREITA
+                    } else if (TheMarkers[i].getCenter().x == WIDTH/2) {
+                        velE = LOOKING_SPEED;
+                        velD = LOOKING_SPEED;
+
+                        // VAI RETO
+                    } else {
+                        erro = (TheMarkers[i].getCenter().x - WIDTH/2)/(WIDTH/2);
+                        
+                        velD = LOOKING_SPEED*erro;
+                        velE = LOOKING_SPEED;
+                        
+                        // VAI PRA ESQUERDA
+                    }
+
+                    cout << TheMarkers[i].getCenter() << endl;
+
+                }
+                //cout << TheMarkers[i]<<endl;
                 TheMarkers[i].draw(TheInputImageCopy, Scalar(0, 0, 255));
+            }
+
+            if (!ja_achou) {
+                // GIRAR LOUCAMENTE
+                velE = TURNING_SPEED;
+                velD = -TURNING_SPEED;
+
+            } else if (!found_tag) {
+                //PARAR
+
+                velE = 0;
+                velE = 0;
             }
 
             // draw a 3d cube in each marker if there is 3d info
