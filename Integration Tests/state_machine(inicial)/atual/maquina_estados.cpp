@@ -76,7 +76,7 @@ I2C arduino;
 
 int main(int argc, char **argv){
 	//Variaveis Máquina_Estado:
-	int estadoAtual = 4;
+	int estadoAtual = 1;
 	bool fim_geral = false;
 
 	while(1){
@@ -248,6 +248,8 @@ bool vaiVaca(){
             cout<<"\n Cannot read the video file. \n";
             break;
         } 
+
+		flip(frame,frame,-1);
 		
         cow.setROI(frame);
         cow.transformImage(); 
@@ -289,7 +291,7 @@ bool vaiVaca(){
 							if(arduino.in[2] == 1){
 								break;
 							}
-							usleep(1000000);
+							usleep(200000);
 						}
 						cow.restartLooking();
                     }
