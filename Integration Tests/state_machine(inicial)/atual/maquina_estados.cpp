@@ -2,7 +2,6 @@
 
 //Include I2C:
 #include "I2C/I2C.h"
-//
 
 //Include Vaca:
 #include "Libs/Cow.h"
@@ -77,7 +76,7 @@ I2C arduino;
 
 int main(int argc, char **argv){
 	//Variaveis Máquina_Estado:
-	int estadoAtual = 1;
+	int estadoAtual = 4;
 	bool fim_geral = false;
 
 	while(1){
@@ -144,11 +143,11 @@ int main(int argc, char **argv){
 					//Envia comando I2C: Iniciando estado
 					arduino.sendFunc(4,1);
 					//
-
+					vaiVaca();//
 					//Fim de estado:
 					cout << "Acabou Estado 04." << endl;
-					estadoAtual = 5;
-					// fim_geral = true;
+					// estadoAtual = 5;
+					fim_geral = true;
 					//
 				break;
 
@@ -250,7 +249,7 @@ bool vaiVaca(){
             cout<<"\n Cannot read the video file. \n";
             break;
         } 
-
+		
         cow.setROI(frame);
         cow.transformImage(); 
         cow.searchSquares();
@@ -304,7 +303,7 @@ bool vaiVaca(){
             }
         } else {
 			// GIRAR LOUCAMENTE
-			arduino.sendFunc(4,2);
+			arduino.sendFunc(4,2,1);
         }
 
         namedWindow("Original", WINDOW_NORMAL);

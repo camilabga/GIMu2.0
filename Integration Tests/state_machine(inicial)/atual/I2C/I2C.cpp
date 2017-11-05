@@ -135,7 +135,7 @@ bool I2C::sendFunc(unsigned char b0, unsigned char b1, int b2, int b3){
 				break;
 				case 2:
 					if(!(b2 == 1 || b2 == 2)){
-						cout << "Erro I2C: parameter not defined" << endl;
+						cout << "Erro I2C: parameter not defined asduhasudh" << endl;
 						return false;
 					} 
 					out[1] = 2;

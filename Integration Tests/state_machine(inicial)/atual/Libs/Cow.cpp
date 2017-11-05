@@ -1,6 +1,6 @@
 #include "Cow.h"
 
-#define THRESH 60;
+#define THRESH 36
 #define max1 500
 #define MIN_THRESH 1
 #define MAX_THRESH 100
@@ -193,7 +193,7 @@ void Cow::searchSquares(){
         polylines(ROI, &p, &n, 1, true, Scalar(0, 255, 0), 3, LINE_AA);
     }
 
-    if (!detected && squares.size() >= 4) {
+    if (!detected && squares.size() >= 2) {
         detected = true;
     }
 
