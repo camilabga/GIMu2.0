@@ -2,6 +2,7 @@
 
 //Include I2C:
 #include "I2C/I2C.h"
+//
 
 //Include Vaca:
 #include "Libs/Cow.h"
@@ -15,16 +16,12 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
-//Includes Vaca:
-#include "Cow.h"
-
 //Geral
 using namespace std;
 using namespace cv;
 using namespace aruco;
 
 //Variaveis Vaca:
-int velD, velE;
 bool vaiVaca();
 
 //Variaveis Aruco:
@@ -80,9 +77,8 @@ I2C arduino;
 
 int main(int argc, char **argv){
 	//Variaveis Máquina_Estado:
-	int estadoAtual = 4;
+	int estadoAtual = 1;
 	bool fim_geral = false;
-	int teste;
 
 	while(1){
 		while(!fim_geral){
@@ -119,8 +115,8 @@ int main(int argc, char **argv){
 					}
 
 					cout << "Acabou Estado 02." << endl;
-					estadoAtual = 3;
-					// fim_geral = true;
+					// estadoAtual = 3;
+					fim_geral = true;
 				break;
 				
 				// ####################### PEGA COPO
