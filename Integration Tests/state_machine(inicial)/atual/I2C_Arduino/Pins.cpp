@@ -1,17 +1,17 @@
 // ### Pinagem Sharps Base 
-#define SH_DIREITA_TRAS 1 // [0]
-#define SH_DIREITA_FRENTE 2 // [1]
-#define SH_FRENTE_DIREITA 3 // [2]
-#define SH_FRENTE_ESQUERDA 4 // [3]
-#define SH_ESQUERDA_TRAS 6 // [4]
-#define SH_ESQUERDA_FRENTE 5 // [5]
+#define SH_DIREITA_TRAS 6 // [0]
+#define SH_DIREITA_FRENTE 5 // [1]
+#define SH_FRENTE_DIREITA 2 // [2]
+#define SH_FRENTE_ESQUERDA 1 // [3]
+#define SH_ESQUERDA_TRAS 4 // [4]
+#define SH_ESQUERDA_FRENTE 3 // [5]
 
 // ### Pinagem Motor DC Movimentação
-#define DC11 9 //Direita
-#define DC12 10
+#define DC11 8 //Direita
+#define DC12 7
 
-#define DC21 8 //Esquerda
-#define DC22 7
+#define DC21 9 //Esquerda
+#define DC22 10
 
 // ### Pinagem Braco Garra
 #define SH_GARRA 11

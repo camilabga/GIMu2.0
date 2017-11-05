@@ -28,11 +28,11 @@ void setup() {
 
   
 
-  robo.follow_wall_to_little_gate();
+//   robo.follow_wall_to_little_gate();
 
-  /*robo.follow_wall_to_terrine_area();
-  robo.adjust_to_get_cup();
-  robo.getTerrine();*/
+//   robo.follow_wall_to_terrine_area();
+//   robo.adjust_to_get_cup();
+//   robo.getTerrine();
   //teste.attach(6);
   /*lcd.begin(16, 2);
   lcd.print("hello, world!");*/
@@ -141,7 +141,7 @@ void loop() {
   //teste.write(90);
 
   /* ### Teste dos sensores Sharps:*/
-  /*Serial.print(" S0: ");
+  Serial.print(" S0: ");
   Serial.print(robo.getSharp(SH_DIREITA_TRAS));
   Serial.print(" S1: ");
   Serial.print(robo.getSharp(SH_DIREITA_FRENTE));
@@ -152,8 +152,10 @@ void loop() {
   Serial.print("  || S4: ");
   Serial.print(robo.getSharp(SH_ESQUERDA_FRENTE));
   Serial.print(" S5: ");
-  Serial.println(robo.getSharp(SH_ESQUERDA_TRAS));*/
+  Serial.println(robo.getSharp(SH_ESQUERDA_TRAS));
   
+    // Serial.println(robo.getSharp(1));
+
   /* ### Teste mov + sharp ### */
   /*Serial.print(" S0: ");
   Serial.print(robo.getSharp(SH_DIREITA_TRAS));
