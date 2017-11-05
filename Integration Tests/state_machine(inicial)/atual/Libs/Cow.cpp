@@ -1,6 +1,6 @@
 #include "Cow.h"
 
-int THRESH = 150;
+#define THRESH 60;
 #define max1 500
 #define MIN_THRESH 1
 #define MAX_THRESH 100
@@ -17,21 +17,6 @@ const string trackbarWindowName = "Trackbars";
 void on_trackbar( int, void* ){//This function gets called whenever a
 	// trackbar position is changed
 }   
-
-void createTrackbars(){
-	//create window for trackbars
-    namedWindow(trackbarWindowName,0);
-	//create memory to store trackbar name on window
-	char TrackbarName[50];
-	sprintf( TrackbarName, "TRHESH", THRESH);
-	//create trackbars and insert them into window
-	//3 parameters are: the address of the variable that is changing when the trackbar is moved(eg.H_LOW),
-	//the max value the trackbar can move (eg. H_HIGH),
-	//and the function that is called whenever the trackbar is moved(eg. on_trackbar)
-    //                                  ---->    ---->     ---->
-    
-    createTrackbar( "THRESH", trackbarWindowName, &THRESH, max1, on_trackbar );
-}
 
 Cow::Cow(){
     detected = false;
@@ -104,7 +89,6 @@ void Cow::setROI(const Mat &R){
 }
 
 void Cow::transformImage(){
-    createTrackbars();
     transformedROI = ROI.clone();
     Mat dilateElement = getStructuringElement(MORPH_RECT, Size(5, 5));
     Mat erodeElement = getStructuringElement(MORPH_RECT, Size(3, 3));

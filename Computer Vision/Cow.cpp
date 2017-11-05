@@ -440,6 +440,7 @@ void Cow::discoverAngle(){
         }
 
         slope = angulos[0];
+        cout << slope << endl;
         if (slope == 180 || slope == 0) aligned = true;
     } else {
         // proximo threshold

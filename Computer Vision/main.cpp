@@ -8,7 +8,7 @@ int velD, velE;
 int main(){
     //open webcam
     //VideoCapture capture("arena.mp4");
-    VideoCapture capture(0);
+    VideoCapture capture(1);
     if ( !capture.isOpened() ){
       cout << "Cannot open the video file" << endl;
       return -1;
@@ -30,9 +30,10 @@ int main(){
         cow.setROI(frame);
         cow.transformImage(); 
         cow.searchSquares();
- 
+        
         if (cow.find()){
             cow.detectLimits();
+            cow.drawCenter(frame);
             if (cow.isCentered()) {
                 if (cow.isAlign()) {
                     velE = LOOKING_SPEED;
