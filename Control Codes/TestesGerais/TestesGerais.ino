@@ -1,13 +1,13 @@
 #include "GIMu.h"
 #include <LiquidCrystal.h>
 
-Motor esquerdo(DC11, DC12);
-Motor direito(DC21, DC22);
+Motor direito(DC11, DC12);
+Motor esquerdo(DC21, DC22);
 
 Motor mbraco(MBRACO1, MBRACO2);
 BracoCopo braco(SERVOG_PULSO, SERVOG_DEDO, SH_GARRA, MSH_GARRA_D, MSH_GARRA_E, mbraco);
 
-Motor mElevator(DC_ELEVADOR1, DC_ELEVADOR0);
+Motor mElevator(DC_ELEVADOR0, DC_ELEVADOR1);
 Elevador elevador(mElevator, 1);
 
 Motor sucker(DC_TIRALEITE1, DC_TIRALEITE2);
@@ -18,7 +18,7 @@ GIMu robo (direito, esquerdo, braco, elevador, sucker);
 //GIMu robo (elevador);
 //GIMu robo(braco);
 
-Servo teste;
+Servo teste,teste1,teste2;
 
 char in;
 LiquidCrystal lcd(28,30,32,34,36,38);
@@ -26,14 +26,15 @@ LiquidCrystal lcd(28,30,32,34,36,38);
 void setup() {
   Serial.begin(9600);
 
-  
 
 //   robo.follow_wall_to_little_gate();
-
-//   robo.follow_wall_to_terrine_area();
-//   robo.adjust_to_get_cup();
+   braco.recolherBraco();
+  robo.follow_wall_to_terrine_area();
+  robo.adjust_to_get_cup();
 //   robo.getTerrine();
-  //teste.attach(6);
+//   teste.attach(6);
+//   teste1.attach(44);
+//   teste2.attach(46);
   /*lcd.begin(16, 2);
   lcd.print("hello, world!");*/
   //robo.ordenhar03();
@@ -44,12 +45,31 @@ void setup() {
 }
 
 void loop() {
+    /*braco.tryGetTerrine();
+    braco.recolherBraco();*/
+
+    //elevador.goToStage01();
+    //elevador.goToStage03();
+    //elevador.upToStage03();
+    /*digitalWrite(12, HIGH);
+    digitalWrite(11, LOW);*/
     //teste.write(20);
     //teste.detach();
     //robo.taxearEsquerda();
    // robo.ordenhar03();
     //elevador.goToStage01();
-   //Serial.println(analogRead(MSH_ORDENHADOR));
+   //Serial.println(robo.getSharp(SH_ORDENHADOR));
+
+    //teste.write(POSICAO_INICIAL_GARRA);
+
+    /*teste.write(150);
+    teste1.write(POSICAO_INICIAL_GARRA);
+    teste2.write(POSICAO_INICIAL_PULSO);*/
+
+    // braco.tryGetTerrine();
+    // braco.recolherBraco();
+
+    // braco.dropLeite();
 
    /*robo.getSharps();
    
@@ -59,39 +79,6 @@ void loop() {
    Serial.println(robo.getSharp(3));*/
 
     //Serial.println(analogRead(9));
-  /*bool posCopo = true;
-  if(posCopo){
-      int distIni = 0, distFin = 0, dist = 0;
-      
-      // Andar para frente até encontrar o espaço entre copos
-      do{
-          robo.moveFrente(SEARCHING_SPEED);
-      }
-      while( (robo.getSharp(SH_GARRA) < TEM_COPO) 
-          || (((robo.getSharp(SH_FRENTE_DIREITA) + robo.getSharp(SH_FRENTE_ESQUERDA)) / 2) >= 10));
-
-      robo.stop();
-      distIni = (robo.getSharp(SH_FRENTE_DIREITA) + robo.getSharp(SH_FRENTE_ESQUERDA)) / 2;
-  
-      // Andar para trás até encontrar o espaço entre copos
-      do{
-          robo.moveTras(SEARCHING_SPEED);
-      }
-      while(robo.getSharp(SH_GARRA) < TEM_COPO 
-          || (((robo.getSharp(SH_FRENTE_DIREITA) + robo.getSharp(SH_FRENTE_ESQUERDA)) / 2) <= 30));
-
-      robo.stop();
-      distFin = (robo.getSharp(SH_FRENTE_DIREITA) + robo.getSharp(SH_FRENTE_ESQUERDA)) / 2;
-
-      dist = (distIni + distFin) / 2;
-
-      // Voltando para o centro do copo
-      do{
-          robo.moveFrente(SEARCHING_SPEED);
-      }while(((robo.getSharp(SH_FRENTE_DIREITA) + robo.getSharp(SH_FRENTE_ESQUERDA)) / 2) <= dist);
-      
-      posCopo = false;
-  }*/
 
   /*braco.tryGetTerrine();
   braco.recolherBraco();*/
@@ -118,15 +105,14 @@ void loop() {
 
   //Serial.println(robo.getSharp(SH_GARRA));
   
-  /*for (unsigned a = 0; a < 90; a+=10) {
-    teste.write(a);
-    delay(1000);
-  }
-
-  for (unsigned a = 110; a >20; a-=10) {
-    teste.write(a);
-    delay(1000);
-  }*/
+    /*for (unsigned a = 90; a < 150; a+=10) {
+        teste.write(a);
+        delay(1000);
+    }
+    for (unsigned a = 150; a >90; a-=10) {
+        teste.write(a);
+        delay(1000);
+    }*/
 
   //teste.write(90);
   
