@@ -162,7 +162,6 @@ int main(int argc, char **argv){
 							break;
 						}
 						//
-
 					}
 					cout << "Acabou Estado 05." << endl;
 					estadoAtual = 6;
@@ -290,7 +289,7 @@ bool vaiVaca(){
 							if(arduino.in[2] == 1){
 								break;
 							}
-							usleep(200000);
+							usleep(1000000);
 						}
 						cow.restartLooking();
                     }
@@ -300,10 +299,14 @@ bool vaiVaca(){
                 velE = TURNING_SPEED;
 				velD = -TURNING_SPEED;
 				arduino.sendFunc(4,3,velD,velE);
+				usleep(1000000);
+				arduino.sendFunc(4,3,0,0);
             }
         } else {
 			// GIRAR LOUCAMENTE
 			arduino.sendFunc(4,2,1);
+			usleep(1000000);
+			arduino.sendFunc(4,2,2);
         }
 
         namedWindow("Original", WINDOW_NORMAL);
@@ -498,7 +501,8 @@ bool vaiAruco(int argc, char **argv){
 
     {
         cout << "Exception :" << ex.what() << endl;
-    }
+	}
+	return false;
 }
 
 void cvTackBarEvents(int pos, void *) {

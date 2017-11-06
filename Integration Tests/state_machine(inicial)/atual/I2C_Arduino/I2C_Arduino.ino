@@ -138,6 +138,7 @@ void loop() {
       switch(subEstado){
         case 1: // Girar p/ encontrar vaca:
           robo.moveTank(-100,100);
+          subEstado = 91;
         break;
 
         case 2:
@@ -181,6 +182,9 @@ void loop() {
           robo.moveTank(0,0);
           flag = false;flag2 = false;
         break;
+        default:
+
+        break;
       }
     break;
 
@@ -203,7 +207,7 @@ void loop() {
     case 7: // ### Ações para Chegar no tanque:
       switch(subEstado){
         case 1: // Girar p/ encontrar tag:
-          robo.moveTank(-150,150);
+          robo.moveTank(-100,100);
         break;
 
         case 2: // Movimentar controlando:
@@ -362,9 +366,9 @@ void receiveData(int byteCount) {
             estadoAtual = 4; 
             if(in[2] == 1){
               subEstado = 1;
+              flag = true;flag2 = true;
             }else if(in[2] == 2){
               subEstado = 90;
-              flag = true;flag2 = true;
             }else{
               out[0] = 98;
             }
