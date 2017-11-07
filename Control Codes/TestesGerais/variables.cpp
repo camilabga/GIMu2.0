@@ -32,7 +32,7 @@
 // #### ELEVADOR ####
 #define POSICAO01 330 // PEGAR COPO - INICIAL_ELEVADOR
 #define POSICAO02 900
-#define POSICAO03 195
+#define POSICAO03 570
 
 // #### ORDENHAR ####
 #define TEM_DEDO 50

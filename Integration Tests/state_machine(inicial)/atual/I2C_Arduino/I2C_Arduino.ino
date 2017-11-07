@@ -3,8 +3,8 @@
 #include <LiquidCrystal.h>
 
 // ### Definições Robô
-Motor esquerdo(DC11, DC12);
-Motor direito(DC21, DC22);
+Motor direito(DC11, DC12);
+Motor esquerdo(DC21, DC22);
 Motor mbraco(MBRACO1, MBRACO2);
 BracoCopo braco(SERVOG_PULSO, SERVOG_DEDO, SH_GARRA, MSH_GARRA_D, MSH_GARRA_E, mbraco);
 Motor mElevator(DC_ELEVADOR1, DC_ELEVADOR0);

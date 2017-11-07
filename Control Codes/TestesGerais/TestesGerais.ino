@@ -28,9 +28,10 @@ void setup() {
 
 
 //   robo.follow_wall_to_little_gate();
-   braco.recolherBraco();
-  robo.follow_wall_to_terrine_area();
-  robo.adjust_to_get_cup();
+   ///raco.recolherBraco();
+  //robo.follow_wall_to_terrine_area();
+  //robo.adjust_to_get_cup();
+  // robo.getTerrine();
 //   robo.getTerrine();
 //   teste.attach(6);
 //   teste1.attach(44);
@@ -38,6 +39,9 @@ void setup() {
   /*lcd.begin(16, 2);
   lcd.print("hello, world!");*/
   //robo.ordenhar03();
+
+  pinMode(12, OUTPUT);
+  pinMode(11, OUTPUT);
 
   /* AJUSTAR PARA COPO */
   /*robo.follow_wall_to_terrine_area();
@@ -48,17 +52,24 @@ void loop() {
     /*braco.tryGetTerrine();
     braco.recolherBraco();*/
 
+
+
     //elevador.goToStage01();
     //elevador.goToStage03();
     //elevador.upToStage03();
-    /*digitalWrite(12, HIGH);
-    digitalWrite(11, LOW);*/
+    digitalWrite(11, HIGH);
+    digitalWrite(12, LOW);
+    delay(4000);
+    
+    digitalWrite(12, HIGH);
+    digitalWrite(11, LOW);
+    delay(4000);
     //teste.write(20);
     //teste.detach();
     //robo.taxearEsquerda();
    // robo.ordenhar03();
     //elevador.goToStage01();
-   //Serial.println(robo.getSharp(SH_ORDENHADOR));
+   Serial.println(elevador.whatStage());
 
     //teste.write(POSICAO_INICIAL_GARRA);
 
@@ -127,18 +138,18 @@ void loop() {
   //teste.write(90);
 
   /* ### Teste dos sensores Sharps:*/
-  Serial.print(" S0: ");
-  Serial.print(robo.getSharp(SH_DIREITA_TRAS));
-  Serial.print(" S1: ");
-  Serial.print(robo.getSharp(SH_DIREITA_FRENTE));
-  Serial.print("  || S2: ");
-  Serial.print(robo.getSharp(SH_FRENTE_DIREITA));
-  Serial.print(" S3: ");
-  Serial.print(robo.getSharp(SH_FRENTE_ESQUERDA));
-  Serial.print("  || S4: ");
-  Serial.print(robo.getSharp(SH_ESQUERDA_FRENTE));
-  Serial.print(" S5: ");
-  Serial.println(robo.getSharp(SH_ESQUERDA_TRAS));
+  // Serial.print(" S0: ");
+  // Serial.print(robo.getSharp(SH_DIREITA_TRAS));
+  // Serial.print(" S1: ");
+  // Serial.print(robo.getSharp(SH_DIREITA_FRENTE));
+  // Serial.print("  || S2: ");
+  // Serial.print(robo.getSharp(SH_FRENTE_DIREITA));
+  // Serial.print(" S3: ");
+  // Serial.print(robo.getSharp(SH_FRENTE_ESQUERDA));
+  // Serial.print("  || S4: ");
+  // Serial.print(robo.getSharp(SH_ESQUERDA_FRENTE));
+  // Serial.print(" S5: ");
+  // Serial.println(robo.getSharp(SH_ESQUERDA_TRAS));
   
     // Serial.println(robo.getSharp(1));
 
