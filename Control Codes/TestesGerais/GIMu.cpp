@@ -183,6 +183,10 @@ void GIMu::taxearDireita(){
     }
 }
 
+// void GIMu::findTerrineArea(){
+
+// }
+
 void GIMu::follow_wall_to_terrine_area() {
     bracoCopo.iniciar();
     unsigned aux = 0;
