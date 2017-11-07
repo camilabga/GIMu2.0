@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ctime>
 
 //Include I2C:
 #include "I2C/I2C.h"
@@ -233,8 +234,10 @@ bool vaiVaca(){
     if ( !capture.isOpened() ){
       cout << "Cannot open the video file" << endl;
       return -1;
-    }
-
+	}
+	
+	unsigned int tempo_delay_descarte;
+	
     /*create Cow -> first initialization has no center
     and the still scans the whole Mat, also, do not contain
     any rectangle center defined */
@@ -247,9 +250,7 @@ bool vaiVaca(){
         if (!capture.read(frame)) {
             cout<<"\n Cannot read the video file. \n";
             break;
-        } 
-
-		flip(frame,frame,-1);
+        }
 		
         cow.setROI(frame);
         cow.transformImage(); 
@@ -269,6 +270,7 @@ bool vaiVaca(){
 						if(arduino.in[2] == 1){
 							break;
 						}
+						tempo_delay_descarte = time(NULL);
 						usleep(200000);
 					}
 					acabaVaca = true;
@@ -301,13 +303,19 @@ bool vaiVaca(){
                 velE = TURNING_SPEED;
 				velD = -TURNING_SPEED;
 				arduino.sendFunc(4,3,velD,velE);
-				usleep(1000000);
+				tempo_delay_descarte = time(NULL);
+				while(time(NULL)+1 <= tempo_delay_descarte){
+					capture.read(frame);
+				}
 				arduino.sendFunc(4,3,0,0);
             }
         } else {
 			// GIRAR LOUCAMENTE
 			arduino.sendFunc(4,2,1);
-			usleep(1000000);
+			tempo_delay_descarte = time(NULL);
+			while(time(NULL)+1 <= tempo_delay_descarte){
+				capture.read(frame);
+			}
 			arduino.sendFunc(4,2,2);
         }
 
