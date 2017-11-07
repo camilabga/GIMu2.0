@@ -76,7 +76,7 @@ I2C arduino;
 
 int main(int argc, char **argv){
 	//Variaveis Máquina_Estado:
-	int estadoAtual = 1;
+	int estadoAtual = 4;
 	bool fim_geral = false;
 
 	while(1){
