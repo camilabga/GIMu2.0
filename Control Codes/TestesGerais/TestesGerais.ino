@@ -57,19 +57,19 @@ void loop() {
     //elevador.goToStage01();
     //elevador.goToStage03();
     //elevador.upToStage03();
-    digitalWrite(11, HIGH);
-    digitalWrite(12, LOW);
-    delay(4000);
+    // digitalWrite(11, HIGH);
+    // digitalWrite(12, LOW);
+    // delay(4000);
     
-    digitalWrite(12, HIGH);
-    digitalWrite(11, LOW);
-    delay(4000);
+    // digitalWrite(12, HIGH);
+    // digitalWrite(11, LOW);
+    // delay(4000);
     //teste.write(20);
     //teste.detach();
     //robo.taxearEsquerda();
    // robo.ordenhar03();
     //elevador.goToStage01();
-   Serial.println(elevador.whatStage());
+  //  Serial.println(elevador.whatStage());
 
     //teste.write(POSICAO_INICIAL_GARRA);
 
@@ -128,10 +128,10 @@ void loop() {
   //teste.write(90);
   
   /* ### Teste de Movimentação:*/
-   /*robo.moveFrente(255);
+   robo.moveFrente(150);
    delay(2000);
-   robo.moveTras(255);
-   delay(2000);
+   robo.moveTank(150,-150);
+   delay(4000);
    //robo.moveTank(200, -200);*/
    //delay(2000);
 
