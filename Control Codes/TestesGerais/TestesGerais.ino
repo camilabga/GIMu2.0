@@ -32,16 +32,16 @@ void setup() {
   //robo.follow_wall_to_terrine_area();
   //robo.adjust_to_get_cup();
   // robo.getTerrine();
-//   robo.getTerrine();
-//   teste.attach(6);
-//   teste1.attach(44);
-//   teste2.attach(46);
+// // //   robo.getTerrine();
+//  teste.attach(6);
+// teste1.attach(44);
+//  teste2.attach(46);
   /*lcd.begin(16, 2);
   lcd.print("hello, world!");*/
   //robo.ordenhar03();
 
-  pinMode(12, OUTPUT);
-  pinMode(11, OUTPUT);
+  // pinMode(12, OUTPUT);
+  // pinMode(11, OUTPUT);
 
   /* AJUSTAR PARA COPO */
   /*robo.follow_wall_to_terrine_area();
@@ -52,30 +52,34 @@ void loop() {
     /*braco.tryGetTerrine();
     braco.recolherBraco();*/
 
+    robo.moveTank(TURNING_SPEED, -TURNING_SPEED);
 
-
-    //elevador.goToStage01();
-    //elevador.goToStage03();
-    //elevador.upToStage03();
-    digitalWrite(11, HIGH);
-    digitalWrite(12, LOW);
-    delay(4000);
+    // robo.moveFrente(LOOKING_SPEED);
+    // delay(1000);
+    // robo.moveTras(LOOKING_SPEED);
+    // delay(1000);
+    // // elevador.goToStage03();
+    // elevador.goToStage01();
+    // // elevador.upToStage03();
+    // digitalWrite(12, HIGH);
+    // digitalWrite(11, LOW);
+    // delay(4000);
     
-    digitalWrite(12, HIGH);
-    digitalWrite(11, LOW);
-    delay(4000);
+    // digitalWrite(11, HIGH);
+    // digitalWrite(12, LOW);
+    // delay(4000);
     //teste.write(20);
     //teste.detach();
     //robo.taxearEsquerda();
    // robo.ordenhar03();
     //elevador.goToStage01();
-   Serial.println(elevador.whatStage());
+    //  Serial.println(elevador.whatStage());
 
     //teste.write(POSICAO_INICIAL_GARRA);
 
-    /*teste.write(150);
-    teste1.write(POSICAO_INICIAL_GARRA);
-    teste2.write(POSICAO_INICIAL_PULSO);*/
+    // teste.write(150);
+    // teste1.write(POSICAO_INICIAL_GARRA);
+    // teste2.write(POSICAO_INICIAL_PULSO);
 
     // braco.tryGetTerrine();
     // braco.recolherBraco();
@@ -116,14 +120,14 @@ void loop() {
 
   //Serial.println(robo.getSharp(SH_GARRA));
   
-    /*for (unsigned a = 90; a < 150; a+=10) {
-        teste.write(a);
-        delay(1000);
-    }
-    for (unsigned a = 150; a >90; a-=10) {
-        teste.write(a);
-        delay(1000);
-    }*/
+    // for (unsigned a = 90; a < 150; a+=10) {
+    //     teste.write(a);
+    //     delay(1000);
+    // }
+    // for (unsigned a = 150; a >90; a-=10) {
+    //     teste.write(a);
+    //     delay(1000);
+    // }
 
   //teste.write(90);
   
