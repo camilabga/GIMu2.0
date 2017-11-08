@@ -1,6 +1,6 @@
 #include <iostream>
 #include <ctime>
-//
+#include <thread>
 
 //Include I2C:
 #include "I2C/I2C.h"
@@ -170,7 +170,7 @@ int main(int argc, char **argv){
 							case 3:
 								// cout << "Tenta alinhar" << endl;
 								// acaoVaca = 3;
-								arduino.sendFunc(4,4,2,(int) (cow.getSlope()));
+								arduino.sendFunc(4,4,2,20);
 								while(1){
 									arduino.sendFunc(4,5);
 									if(arduino.in[2] == 1){
@@ -183,7 +183,7 @@ int main(int argc, char **argv){
 							case 4:
 								// cout << "Tenta alinhar" << endl;
 								// acaoVaca 4;
-								arduino.sendFunc(4,4,1,(int) (180 - cow.getSlope()));
+								arduino.sendFunc(4,4,1,20);
 								while(1){
 									arduino.sendFunc(4,5);
 									if(arduino.in[2] == 1){
@@ -209,6 +209,7 @@ int main(int argc, char **argv){
 							default:
 							
 							break;
+							
 						}
 					}
 					//Fim de estado:
