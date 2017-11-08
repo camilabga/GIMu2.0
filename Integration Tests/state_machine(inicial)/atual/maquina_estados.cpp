@@ -235,8 +235,9 @@ bool vaiVaca(){
       cout << "Cannot open the video file" << endl;
       return -1;
 	}
+	// capture.set(CV_CAP_PROP_BUFFERSIZE, 1);
 	
-	unsigned int tempo_delay_descarte;
+ 	long int tempo_delay_descarte;
 	
     /*create Cow -> first initialization has no center
     and the still scans the whole Mat, also, do not contain
@@ -260,6 +261,7 @@ bool vaiVaca(){
             cow.detectLimits();
             if (cow.isCentered()) {
                 if (cow.isAlign()) {
+					cout << " Vai em frente" << endl;
                     velE = LOOKING_SPEED;
                     velD = LOOKING_SPEED;
 					
@@ -270,13 +272,13 @@ bool vaiVaca(){
 						if(arduino.in[2] == 1){
 							break;
 						}
-						tempo_delay_descarte = time(NULL);
 						usleep(200000);
 					}
 					acabaVaca = true;
                 } else {
                     // ALINHAR 180 GRAUS COM A VACA
                     if (cow.getSlope() > 100) {
+						cout << "Tenta alinhar" << endl;
 						arduino.sendFunc(4,4,1,(int) (180 - cow.getSlope()));
 						while(1){
 							arduino.sendFunc(4,5);
@@ -287,6 +289,7 @@ bool vaiVaca(){
 						}
 						cow.restartLooking();
                     } else {
+						cout << "Tenta alinhar" << endl;
 						arduino.sendFunc(4,4,2,(int) (cow.getSlope()));
 						while(1){
 							arduino.sendFunc(4,5);
@@ -300,22 +303,28 @@ bool vaiVaca(){
                 }
             } else {
                 // GIRAR CONTROLADO
+				cout << "Girar Controlado" << endl;
                 velE = TURNING_SPEED;
 				velD = -TURNING_SPEED;
 				arduino.sendFunc(4,3,velD,velE);
-				tempo_delay_descarte = time(NULL);
-				while(time(NULL)+1 <= tempo_delay_descarte){
-					capture.read(frame);
-				}
+				// tempo_delay_descarte = time(NULL);
+				// while(time(NULL) >= tempo_delay_descarte + 2){
+				// 	capture.read(frame);
+				// }
+				usleep(100000);
+				// capture.grab(); 
 				arduino.sendFunc(4,3,0,0);
             }
         } else {
 			// GIRAR LOUCAMENTE
+			cout << "Girar loucamente" << endl;
 			arduino.sendFunc(4,2,1);
-			tempo_delay_descarte = time(NULL);
-			while(time(NULL)+1 <= tempo_delay_descarte){
-				capture.read(frame);
-			}
+			// tempo_delay_descarte = time(NULL);
+			// while(time(NULL) >= tempo_delay_descarte + 2){
+			// 	capture.read(frame);
+			// }
+			usleep(100000);
+			// capture.grab();
 			arduino.sendFunc(4,2,2);
         }
 
