@@ -1,10 +1,10 @@
 // ### Pinagem Sharps Base 
-#define SH_DIREITA_TRAS 1 // [0]
-#define SH_DIREITA_FRENTE 2 // [1]
-#define SH_FRENTE_DIREITA 3 // [2]
-#define SH_FRENTE_ESQUERDA 4 // [3]
-#define SH_ESQUERDA_TRAS 6 // [4]
-#define SH_ESQUERDA_FRENTE 5 // [5]
+#define SH_DIREITA_TRAS 6 // [0]
+#define SH_DIREITA_FRENTE 5 // [1]
+#define SH_FRENTE_DIREITA 2 // [2]
+#define SH_FRENTE_ESQUERDA 1 // [3]
+#define SH_ESQUERDA_TRAS 3 // [4]
+#define SH_ESQUERDA_FRENTE 4 // [5]
 
 // ### Pinagem Motor DC Movimentação
 #define DC11 9 //Direita

@@ -367,8 +367,8 @@ void find_corners(){ // NAO MEXE NOS PARAMETROS PELO AMOR DE DEUS
 }
 
 int main(){
-
-  VideoCapture capture("vaquinha_melhor.mp4");
+  VideoCapture capture(0);
+  ///./neu  VideoCapture capture("vaquinha_melhor.mp4");
   if ( !capture.isOpened() ){
   	cout << "Cannot open the video file. \n";
   	return -1;

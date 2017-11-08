@@ -183,7 +183,81 @@ void GIMu::taxearDireita(){
     }
 }
 
+void GIMu::taxearDireitaRe(){
+    sharpsBase[0] = getSharp(SH_DIREITA_TRAS);
+    sharpsBase[1] = getSharp(SH_DIREITA_FRENTE);
+    
+    if (sharpsBase[1] > DIST_TAX && sharpsBase[0] > DIST_TAX) {
+        moveTank(-MINOR_TAX_SPEED, -MAJOR_TAX_SPEED);
+    } else if (sharpsBase[1] < DIST_TAX && sharpsBase[0] < DIST_TAX) {
+        moveTank(-MAJOR_TAX_SPEED,-MINOR_TAX_SPEED);
+    } else if (abs(sharpsBase[1] - sharpsBase[0]) < SHARP_DIFF){
+        moveTras(MINOR_TAX_SPEED);
+    } else if (sharpsBase[1] > sharpsBase[0]) {
+        moveTank(-MINOR_TAX_SPEED, -MAJOR_TAX_SPEED);
+    } else if (sharpsBase[1] < sharpsBase[0]) {
+        moveTank(-MAJOR_TAX_SPEED, -MINOR_TAX_SPEED);
+    }
+}
+
+
+
 // void GIMu::findTerrineArea(){
+//     follow_wall_to_terrine_area();
+//     adjust_to_get_cup();
+//     bool frente = false, found_terrine = false;
+//     bracoCopo.iniciar();
+//     unsigned i = 0;
+//     while (i < N_TRY) {
+//         Serial.println(getSharp(SH_GARRA));
+//         //while (getSharp(SH_GARRA) > TEM_COPO /*&& getSharp(SH_FRENTE_DIREITA) < 30*/) {
+//             Serial.println(getSharp(SH_GARRA));
+//             if (frente) {
+//                 if (getSharp(SH_FRENTE_DIREITA) > 10) {
+//                     moveFrente(SEARCHING_SPEED);
+//                 } else {
+//                     stop();
+//                     i++;
+//                     frente = false;
+//                 }
+
+//             } else {
+//                 if (getSharp(SH_FRENTE_DIREITA) < 27) {
+//                     moveTras(SEARCHING_SPEED);
+//                 } else {
+//                     stop();
+//                     i++;
+//                     frente = true;
+//                 }
+//             }
+
+//             if (getSharp(SH_GARRA) <= TEM_COPO) {
+//                 found_terrine = true;
+//                 break;
+//             }
+//         //}
+//     }
+
+//     delay(250);
+//     stop();
+
+//     if (found_terrine) {
+//         bracoCopo.tryGetTerrine();
+//         bracoCopo.recolherBraco();    
+//     } else {
+//         // GIRANDO
+
+
+//         //taxear esquerda
+//         while (sharpsBase[4] != VALID_SHARP) {
+//             taxearEsquerda();
+//         }
+
+//         while (sharpsBase[5] == VALID_SHARP ){
+            
+//         }
+
+//     }
 
 // }
 
@@ -315,7 +389,7 @@ void GIMu::adjust_to_get_cup(){
             aux=(aux+1)%2;
 
             moveTank(-TURNING_SPEED, TURNING_SPEED);
-        } while (sharpsBase[3] < (sharpsBase[2] + SHARP_DIFF));
+        } while (sharpsBase[3] < (sharpsBase[2] + SHARP_DIFF_BALIZA));
 
         stop();
         delay(500);
@@ -342,7 +416,7 @@ void GIMu::adjust_to_get_cup(){
 
             aux=(aux+1)%2;
             moveTras(LOOKING_SPEED);
-        } while(sharpsBase[0] > 7 && sharpsBase[2] < 30 && sharpsBase[3] < 25);
+        } while(sharpsBase[0] > 5 && sharpsBase[2] < 30 && sharpsBase[3] < 25);
 
         stop();
         delay(500);
@@ -435,14 +509,14 @@ void GIMu::getTerrine(){
         Serial.println(getSharp(SH_GARRA));
         if (frente) {
             if (getSharp(SH_FRENTE_DIREITA) > 10) {
-                moveFrente(SEARCHING_SPEED);
+                moveFrente(LOOKING_SPEED);
             } else {
                 stop();
                 frente = false;
             }
         } else {
             if (getSharp(SH_FRENTE_DIREITA) < 27) {
-                moveTras(SEARCHING_SPEED);
+                moveTras(LOOKING_SPEED);
             } else {
                 stop();
                 frente = true;

@@ -49,10 +49,12 @@ void setup() {
 }
 
 void loop() {
-    /*braco.tryGetTerrine();
-    braco.recolherBraco();*/
+    // braco.tryGetTerrine();
+    // braco.recolherBraco();
 
-
+    // robo.follow_wall_to_terrine_area();
+    // robo.adjust_to_get_cup();
+    // robo.getTerrine();
 
     //elevador.goToStage01();
     //elevador.goToStage03();
@@ -69,7 +71,7 @@ void loop() {
     //robo.taxearEsquerda();
    // robo.ordenhar03();
     //elevador.goToStage01();
-  //  Serial.println(elevador.whatStage());
+    //  Serial.println(robo.getSharp(SH_GARRA));
 
     //teste.write(POSICAO_INICIAL_GARRA);
 
@@ -137,7 +139,7 @@ void loop() {
 
   //teste.write(90);
 
-  // /* ### Teste dos sensores Sharps:*/
+  /* ### Teste dos sensores Sharps:*/
   Serial.print(" S0: ");
   Serial.print(robo.getSharp(SH_DIREITA_TRAS));
   Serial.print(" S1: ");
