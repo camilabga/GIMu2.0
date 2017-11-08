@@ -52,7 +52,6 @@ void loop() {
     /*braco.tryGetTerrine();
     braco.recolherBraco();*/
 
-<<<<<<< HEAD
 
 
     //elevador.goToStage01();
@@ -64,34 +63,13 @@ void loop() {
     
     // digitalWrite(12, HIGH);
     // digitalWrite(11, LOW);
-=======
-    robo.moveTank(TURNING_SPEED, -TURNING_SPEED);
-
-    // robo.moveFrente(LOOKING_SPEED);
-    // delay(1000);
-    // robo.moveTras(LOOKING_SPEED);
-    // delay(1000);
-    // // elevador.goToStage03();
-    // elevador.goToStage01();
-    // // elevador.upToStage03();
-    // digitalWrite(12, HIGH);
-    // digitalWrite(11, LOW);
-    // delay(4000);
-    
-    // digitalWrite(11, HIGH);
-    // digitalWrite(12, LOW);
->>>>>>> 27e2d8dfc3739a59ca334d25d61cf3d93a9b24de
     // delay(4000);
     //teste.write(20);
     //teste.detach();
     //robo.taxearEsquerda();
    // robo.ordenhar03();
     //elevador.goToStage01();
-<<<<<<< HEAD
   //  Serial.println(elevador.whatStage());
-=======
-    //  Serial.println(elevador.whatStage());
->>>>>>> 27e2d8dfc3739a59ca334d25d61cf3d93a9b24de
 
     //teste.write(POSICAO_INICIAL_GARRA);
 
@@ -150,31 +128,42 @@ void loop() {
   //teste.write(90);
   
   /* ### Teste de Movimentação:*/
-   robo.moveFrente(150);
-   delay(2000);
-   robo.moveTank(150,-150);
-   delay(4000);
+  //  robo.moveFrente(150);
+  //  delay(2000);
+  //  robo.moveTank(150,-150);
+  //  delay(4000);
    //robo.moveTank(200, -200);*/
    //delay(2000);
 
   //teste.write(90);
 
-  /* ### Teste dos sensores Sharps:*/
-  // Serial.print(" S0: ");
-  // Serial.print(robo.getSharp(SH_DIREITA_TRAS));
-  // Serial.print(" S1: ");
-  // Serial.print(robo.getSharp(SH_DIREITA_FRENTE));
-  // Serial.print("  || S2: ");
-  // Serial.print(robo.getSharp(SH_FRENTE_DIREITA));
-  // Serial.print(" S3: ");
-  // Serial.print(robo.getSharp(SH_FRENTE_ESQUERDA));
-  // Serial.print("  || S4: ");
-  // Serial.print(robo.getSharp(SH_ESQUERDA_FRENTE));
-  // Serial.print(" S5: ");
-  // Serial.println(robo.getSharp(SH_ESQUERDA_TRAS));
+  // /* ### Teste dos sensores Sharps:*/
+  Serial.print(" S0: ");
+  Serial.print(robo.getSharp(SH_DIREITA_TRAS));
+  Serial.print(" S1: ");
+  Serial.print(robo.getSharp(SH_DIREITA_FRENTE));
+  Serial.print("  || S2: ");
+  Serial.print(robo.getSharp(SH_FRENTE_DIREITA));
+  Serial.print(" S3: ");
+  Serial.print(robo.getSharp(SH_FRENTE_ESQUERDA));
+  Serial.print("  || S4: ");
+  Serial.print(robo.getSharp(SH_ESQUERDA_FRENTE));
+  Serial.print(" S5: ");
+  Serial.println(robo.getSharp(SH_ESQUERDA_TRAS));
   
     // Serial.println(robo.getSharp(1));
+    // Serial.print(" S0: ");
+    // Serial.println(robo.getSharp(A0));
+  
+  //   Serial.print(" S0: ");
+  //   Serial.print(robo.getSharp(0));
 
+  // Serial.print(" S0: ");
+  // Serial.println(robo.getSharp(1));
+
+  
+
+  
   /* ### Teste mov + sharp ### */
   /*Serial.print(" S0: ");
   Serial.print(robo.getSharp(SH_DIREITA_TRAS));
