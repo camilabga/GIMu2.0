@@ -253,7 +253,7 @@ void GIMu::adjust_to_get_cup(){
     delay(1000);
 
     do{
-        Serial.println("GIRANDO");
+        // Serial.println("GIRANDO");
     
         moveTank(-TURNING_SPEED, TURNING_SPEED);
 
@@ -287,14 +287,14 @@ void GIMu::adjust_to_get_cup(){
         sharpsBase[2] != VALID_SHARP && sharpsBase[3] != VALID_SHARP)
           || (abs(sharpsBase[0] - sharpsBase[1]) > SHARP_DIFF));
 
-    Serial.println("POSICAO CERTA");
+    // Serial.println("POSICAO CERTA");
     stop();
     delay(1000);
 
         aux=0;
         
         do{
-            Serial.println("APROXIMANDO");
+            // Serial.println("APROXIMANDO");
             if (aux%2 == 0) {
                 sharpsBase[aux%2] = getSharp(SH_DIREITA_TRAS);
                 sharpsBase[aux%2 + 1] = getSharp(SH_DIREITA_FRENTE);
@@ -303,14 +303,14 @@ void GIMu::adjust_to_get_cup(){
                 sharpsBase[aux%2 + 2] = getSharp(SH_FRENTE_ESQUERDA);
             }
 
-            Serial.print(" S0: ");
-            Serial.print(sharpsBase[0]);
-            Serial.print(" S1: ");
-            Serial.print(sharpsBase[1]);
-            Serial.print("  || S2: ");
-            Serial.print(sharpsBase[2]);
-            Serial.print(" S3: ");
-            Serial.println(sharpsBase[3]);
+            // Serial.print(" S0: ");
+            // Serial.print(sharpsBase[0]);
+            // Serial.print(" S1: ");
+            // Serial.print(sharpsBase[1]);
+            // Serial.print("  || S2: ");
+            // Serial.print(sharpsBase[2]);
+            // Serial.print(" S3: ");
+            // Serial.println(sharpsBase[3]);
 
             aux=(aux+1)%2;
 
@@ -322,7 +322,7 @@ void GIMu::adjust_to_get_cup(){
         aux = 0;
         
         do {
-        Serial.println("RÉ");
+        // Serial.println("RÉ");
         if (aux%2 == 0) {
                 sharpsBase[aux%2] = getSharp(SH_DIREITA_TRAS);
                 sharpsBase[aux%2 + 1] = getSharp(SH_DIREITA_FRENTE);
@@ -331,14 +331,14 @@ void GIMu::adjust_to_get_cup(){
                 sharpsBase[aux%2 + 2] = getSharp(SH_FRENTE_ESQUERDA);
             }
 
-            Serial.print(" S0: ");
-            Serial.print(sharpsBase[0]);
-            Serial.print(" S1: ");
-            Serial.print(sharpsBase[1]);
-            Serial.print("  || S2: ");
-            Serial.print(sharpsBase[2]);
-            Serial.print(" S3: ");
-            Serial.println(sharpsBase[3]);
+            // Serial.print(" S0: ");
+            // Serial.print(sharpsBase[0]);
+            // Serial.print(" S1: ");
+            // Serial.print(sharpsBase[1]);
+            // Serial.print("  || S2: ");
+            // Serial.print(sharpsBase[2]);
+            // Serial.print(" S3: ");
+            // Serial.println(sharpsBase[3]);
 
             aux=(aux+1)%2;
             moveTras(LOOKING_SPEED);
@@ -351,7 +351,7 @@ void GIMu::adjust_to_get_cup(){
         bool frente = true;
 
         do{
-            Serial.println("AJUSTE");
+            // Serial.println("AJUSTE");
 
             if (aux%2 == 0) {
                 sharpsBase[aux%2] = getSharp(SH_DIREITA_TRAS);
@@ -361,14 +361,14 @@ void GIMu::adjust_to_get_cup(){
                 sharpsBase[aux%2 + 2] = getSharp(SH_FRENTE_ESQUERDA);
             }
 
-            Serial.print(" S0: ");
-            Serial.print(sharpsBase[0]);
-            Serial.print(" S1: ");
-            Serial.print(sharpsBase[1]);
-            Serial.print("  || S2: ");
-            Serial.print(sharpsBase[2]);
-            Serial.print(" S3: ");
-            Serial.println(sharpsBase[3]);
+            // Serial.print(" S0: ");
+            // Serial.print(sharpsBase[0]);
+            // Serial.print(" S1: ");
+            // Serial.print(sharpsBase[1]);
+            // Serial.print("  || S2: ");
+            // Serial.print(sharpsBase[2]);
+            // Serial.print(" S3: ");
+            // Serial.println(sharpsBase[3]);
 
             aux=(aux+1)%2;
             
@@ -380,7 +380,7 @@ void GIMu::adjust_to_get_cup(){
         aux = 0;
         
         do {
-            Serial.println("Ultimo ajuste!");
+            // Serial.println("Ultimo ajuste!");
             if (aux%2 == 0) {
                 sharpsBase[aux%2] = getSharp(SH_DIREITA_TRAS);
                 sharpsBase[aux%2 + 1] = getSharp(SH_DIREITA_FRENTE);
@@ -389,14 +389,14 @@ void GIMu::adjust_to_get_cup(){
                 sharpsBase[aux%2 + 2] = getSharp(SH_FRENTE_ESQUERDA);
             }
 
-            Serial.print(" S0: ");
-            Serial.print(sharpsBase[0]);
-            Serial.print(" S1: ");
-            Serial.print(sharpsBase[1]);
-            Serial.print("  || S2: ");
-            Serial.print(sharpsBase[2]);
-            Serial.print(" S3: ");
-            Serial.println(sharpsBase[3]);
+            // Serial.print(" S0: ");
+            // Serial.print(sharpsBase[0]);
+            // Serial.print(" S1: ");
+            // Serial.print(sharpsBase[1]);
+            // Serial.print("  || S2: ");
+            // Serial.print(sharpsBase[2]);
+            // Serial.print(" S3: ");
+            // Serial.println(sharpsBase[3]);
 
             if (sharpsBase[2] > 30){
                 stop();

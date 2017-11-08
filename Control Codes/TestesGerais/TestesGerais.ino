@@ -132,8 +132,8 @@ void loop() {
   //  delay(2000);
   //  robo.moveTank(150,-150);
   //  delay(4000);
-   //robo.moveTank(200, -200);*/
-   //delay(2000);
+  //  robo.moveTank(-200, 200);
+  //  delay(2000);
 
   //teste.write(90);
 
