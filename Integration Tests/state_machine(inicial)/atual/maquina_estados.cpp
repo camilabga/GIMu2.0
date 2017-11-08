@@ -1,5 +1,6 @@
 #include <iostream>
 #include <ctime>
+//
 
 //Include I2C:
 #include "I2C/I2C.h"
@@ -23,6 +24,7 @@ using namespace aruco;
 
 //Variaveis Vaca:
 bool vaiVaca();
+int acaoVaca;
 
 //Variaveis Aruco:
 #define HEIGHT 480
@@ -79,6 +81,8 @@ int main(int argc, char **argv){
 	//Variaveis Máquina_Estado:
 	int estadoAtual = 4;
 	bool fim_geral = false;
+
+	thread thread_vaca(vaiVaca);
 
 	while(1){
 		while(!fim_geral){
@@ -144,7 +148,69 @@ int main(int argc, char **argv){
 					//Envia comando I2C: Iniciando estado
 					arduino.sendFunc(4,1);
 					//
-					vaiVaca();//
+					// vaiVaca();//
+					while(!acabaVaca){
+						switch(acaoVaca){
+							case 1:
+								// cout << "Girar loucamente" << endl;
+								// acaoVaca = 1;
+								arduino.sendFunc(4,2,1);
+								usleep(100000);
+								arduino.sendFunc(4,2,2);
+							break;
+
+							case 2:
+								// cout << "Girar Controlado" << endl;
+								// acaoVaca = 2;
+								arduino.sendFunc(4,3,velD,velE)
+								usleep(100000);
+								arduino.sendFunc(4,3,0,0);
+							break;
+
+							case 3:
+								// cout << "Tenta alinhar" << endl;
+								// acaoVaca = 3;
+								arduino.sendFunc(4,4,2,(int) (cow.getSlope()));
+								while(1){
+									arduino.sendFunc(4,5);
+									if(arduino.in[2] == 1){
+										break;
+									}
+									usleep(200000);
+								}
+							break;
+
+							case 4:
+								// cout << "Tenta alinhar" << endl;
+								// acaoVaca 4;
+								arduino.sendFunc(4,4,1,(int) (180 - cow.getSlope()));
+								while(1){
+									arduino.sendFunc(4,5);
+									if(arduino.in[2] == 1){
+										break;
+									}
+									usleep(200000);
+								}
+							break;
+
+							case 5:
+								// cout << " Vai em frente" << endl;
+								// acaoVaca = 5;
+								arduino.sendFunc(4,6);
+								while(1){
+									arduino.sendFunc(4,7);
+									if(arduino.in[2] == 1){
+										break;
+									}
+									usleep(200000);
+								}
+								acabaVaca = true;
+							break;
+							default:
+							
+							break;
+						}
+					}
 					//Fim de estado:
 					cout << "Acabou Estado 04." << endl;
 					// estadoAtual = 5;
@@ -262,70 +328,73 @@ bool vaiVaca(){
             if (cow.isCentered()) {
                 if (cow.isAlign()) {
 					cout << " Vai em frente" << endl;
-                    velE = LOOKING_SPEED;
+					acaoVaca = 5;
+					velE = LOOKING_SPEED;
                     velD = LOOKING_SPEED;
-					
 					//VAI FRENTE
-					arduino.sendFunc(4,6);
-					while(1){
-						arduino.sendFunc(4,7);
-						if(arduino.in[2] == 1){
-							break;
-						}
-						usleep(200000);
-					}
-					acabaVaca = true;
+					// arduino.sendFunc(4,6);
+					// while(1){
+					// 	arduino.sendFunc(4,7);
+					// 	if(arduino.in[2] == 1){
+					// 		break;
+					// 	}
+					// 	usleep(200000);
+					// }
+					// acabaVaca = true;
                 } else {
                     // ALINHAR 180 GRAUS COM A VACA
                     if (cow.getSlope() > 100) {
 						cout << "Tenta alinhar" << endl;
-						arduino.sendFunc(4,4,1,(int) (180 - cow.getSlope()));
-						while(1){
-							arduino.sendFunc(4,5);
-							if(arduino.in[2] == 1){
-								break;
-							}
-							usleep(200000);
-						}
+						acaoVaca 4;
+						// arduino.sendFunc(4,4,1,(int) (180 - cow.getSlope()));
+						// while(1){
+						// 	arduino.sendFunc(4,5);
+						// 	if(arduino.in[2] == 1){
+						// 		break;
+						// 	}
+						// 	usleep(200000);
+						// }
 						cow.restartLooking();
                     } else {
 						cout << "Tenta alinhar" << endl;
-						arduino.sendFunc(4,4,2,(int) (cow.getSlope()));
-						while(1){
-							arduino.sendFunc(4,5);
-							if(arduino.in[2] == 1){
-								break;
-							}
-							usleep(200000);
-						}
+						acaoVaca = 3;
+						// arduino.sendFunc(4,4,2,(int) (cow.getSlope()));
+						// while(1){
+						// 	arduino.sendFunc(4,5);
+						// 	if(arduino.in[2] == 1){
+						// 		break;
+						// 	}
+						// 	usleep(200000);
+						// }
 						cow.restartLooking();
                     }
                 }
             } else {
-                // GIRAR CONTROLADO
 				cout << "Girar Controlado" << endl;
+				acaoVaca = 2;
                 velE = TURNING_SPEED;
 				velD = -TURNING_SPEED;
-				arduino.sendFunc(4,3,velD,velE);
-				// tempo_delay_descarte = time(NULL);
-				// while(time(NULL) >= tempo_delay_descarte + 2){
-				// 	capture.read(frame);
-				// }
-				usleep(100000);
-				// capture.grab(); 
-				arduino.sendFunc(4,3,0,0);
+				// arduino.sendFunc(4,3,velD,velE);
+				// // tempo_delay_descarte = time(NULL);
+				// // while(time(NULL) >= tempo_delay_descarte + 2){
+				// // 	capture.read(frame);
+				// // }
+				// usleep(100000);
+				// // capture.grab(); 
+				// arduino.sendFunc(4,3,0,0);
             }
         } else {
 			// GIRAR LOUCAMENTE
 			cout << "Girar loucamente" << endl;
-			arduino.sendFunc(4,2,1);
-			// tempo_delay_descarte = time(NULL);
-			// while(time(NULL) >= tempo_delay_descarte + 2){
-			// 	capture.read(frame);
-			// }
-			usleep(100000);
-			// capture.grab();
-			arduino.sendFunc(4,2,2);
+			acaoVaca = 1;
+			// arduino.sendFunc(4,2,1);
+			// // tempo_delay_descarte = time(NULL);
+			// // while(time(NULL) >= tempo_delay_descarte + 2){
+			// // 	capture.read(frame);
+			// // }
+			// usleep(100000);
+			// // capture.grab();
+			// arduino.sendFunc(4,2,2);
         }
 
         namedWindow("Original", WINDOW_NORMAL);
