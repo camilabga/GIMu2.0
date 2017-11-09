@@ -755,6 +755,8 @@ void GIMu::ordenhar04(){
     SM_Ordenhador.attach(SERVO_ORDENHADOR);
     SM_Ordenhador.write(ANGULO_CENTRAL);
     elevador.goToStage01();
+
+    delay(1000);
     
     do {
         if (elevador.getStage() == 1) {
