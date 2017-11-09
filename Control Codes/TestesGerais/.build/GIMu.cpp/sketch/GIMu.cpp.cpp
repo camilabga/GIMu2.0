@@ -27,7 +27,7 @@ GIMu::GIMu(Motor d, Motor e, BracoCopo b){
     Mright.setPinTras(d.getPinTras());
 #line 26 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void setup();
-#line 45 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
+#line 51 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
 void loop();
 #line 26 "/home/barbosa/Documentos/GIMu 2.0/Control Codes/TestesGerais/TestesGerais.ino"
     Mleft.setPinFrente(e.getPinFrente());
@@ -156,17 +156,98 @@ void GIMu::getSharps(){
     sharpsBase[5] = getSharp(SH_ESQUERDA_TRAS);
 }
 
-void GIMu::taxearDireita(){
+void GIMu::taxearEsquerda(){
+    sharpsBase[4] = getSharp(SH_ESQUERDA_FRENTE);
+    sharpsBase[5] = getSharp(SH_ESQUERDA_TRAS);
+    
     if (sharpsBase[4] > DIST_TAX && sharpsBase[5] > DIST_TAX) {
         moveTank(MINOR_TAX_SPEED, MAJOR_TAX_SPEED);
-    } else if (sharpsBase[4] > sharpsBase[5] + 3) {
-        moveTank(MINOR_TAX_SPEED, MAJOR_TAX_SPEED);
-    } else if (sharpsBase[4] + 3 < sharpsBase[5]) {
+    } else if (sharpsBase[4] < DIST_TAX && sharpsBase[5] < DIST_TAX) {
         moveTank(MAJOR_TAX_SPEED, MINOR_TAX_SPEED);
-    } else if (abs(sharpsBase[4] - sharpsBase[5]) < 3){
-        moveTank(MINOR_TAX_SPEED, MINOR_TAX_SPEED);
+    } else if (sharpsBase[4] - sharpsBase[5] == SHARP_DIFF){
+        moveFrente(MINOR_TAX_SPEED);
+    } else if (sharpsBase[4] > sharpsBase[5]) {
+        moveTank(MINOR_TAX_SPEED, MAJOR_TAX_SPEED);
+    } else if (sharpsBase[4] < sharpsBase[5]) {
+        moveTank(MAJOR_TAX_SPEED, MINOR_TAX_SPEED);
+    } 
+}
+
+void GIMu::taxearDireita(){
+    sharpsBase[0] = getSharp(SH_DIREITA_TRAS);
+    sharpsBase[1] = getSharp(SH_DIREITA_FRENTE);
+    
+    if (sharpsBase[1] > DIST_TAX && sharpsBase[0] > DIST_TAX) {
+        moveTank(MAJOR_TAX_SPEED, MINOR_TAX_SPEED);
+    } else if (sharpsBase[1] < DIST_TAX && sharpsBase[0] < DIST_TAX) {
+        moveTank(MINOR_TAX_SPEED, MAJOR_TAX_SPEED);
+    } else if (abs(sharpsBase[1] - sharpsBase[0]) < SHARP_DIFF){
+        moveFrente(MINOR_TAX_SPEED);
+    } else if (sharpsBase[1] > sharpsBase[0]) {
+        moveTank(MAJOR_TAX_SPEED, MINOR_TAX_SPEED);
+    } else if (sharpsBase[1] < sharpsBase[0]) {
+        moveTank(MINOR_TAX_SPEED, MAJOR_TAX_SPEED);
     }
 }
+
+// void GIMu::findTerrineArea(){
+//     follow_wall_to_terrine_area();
+//     adjust_to_get_cup();
+//     bool frente = false, found_terrine = false;
+//     bracoCopo.iniciar();
+//     unsigned i = 0;
+//     while (i < N_TRY) {
+//         Serial.println(getSharp(SH_GARRA));
+//         //while (getSharp(SH_GARRA) > TEM_COPO /*&& getSharp(SH_FRENTE_DIREITA) < 30*/) {
+//             Serial.println(getSharp(SH_GARRA));
+//             if (frente) {
+//                 if (getSharp(SH_FRENTE_DIREITA) > 10) {
+//                     moveFrente(SEARCHING_SPEED);
+//                 } else {
+//                     stop();
+//                     i++;
+//                     frente = false;
+//                 }
+
+//             } else {
+//                 if (getSharp(SH_FRENTE_DIREITA) < 27) {
+//                     moveTras(SEARCHING_SPEED);
+//                 } else {
+//                     stop();
+//                     i++;
+//                     frente = true;
+//                 }
+//             }
+
+//             if (getSharp(SH_GARRA) <= TEM_COPO) {
+//                 found_terrine = true;
+//                 break;
+//             }
+//         //}
+//     }
+
+//     delay(250);
+//     stop();
+
+//     if (found_terrine) {
+//         bracoCopo.tryGetTerrine();
+//         bracoCopo.recolherBraco();    
+//     } else {
+//         // GIRANDO
+
+
+//         //taxear esquerda
+//         while (sharpsBase[4] != VALID_SHARP) {
+//             taxearEsquerda();
+//         }
+
+//         while (sharpsBase[5] == VALID_SHARP ){
+            
+//         }
+
+//     }
+
+// }
 
 void GIMu::follow_wall_to_terrine_area() {
     bracoCopo.iniciar();
@@ -234,7 +315,7 @@ void GIMu::adjust_to_get_cup(){
     delay(1000);
 
     do{
-        Serial.println("GIRANDO");
+        // Serial.println("GIRANDO");
     
         moveTank(-TURNING_SPEED, TURNING_SPEED);
 
@@ -268,14 +349,14 @@ void GIMu::adjust_to_get_cup(){
         sharpsBase[2] != VALID_SHARP && sharpsBase[3] != VALID_SHARP)
           || (abs(sharpsBase[0] - sharpsBase[1]) > SHARP_DIFF));
 
-    Serial.println("POSICAO CERTA");
+    // Serial.println("POSICAO CERTA");
     stop();
     delay(1000);
 
         aux=0;
         
         do{
-            Serial.println("APROXIMANDO");
+            // Serial.println("APROXIMANDO");
             if (aux%2 == 0) {
                 sharpsBase[aux%2] = getSharp(SH_DIREITA_TRAS);
                 sharpsBase[aux%2 + 1] = getSharp(SH_DIREITA_FRENTE);
@@ -284,14 +365,14 @@ void GIMu::adjust_to_get_cup(){
                 sharpsBase[aux%2 + 2] = getSharp(SH_FRENTE_ESQUERDA);
             }
 
-            Serial.print(" S0: ");
-            Serial.print(sharpsBase[0]);
-            Serial.print(" S1: ");
-            Serial.print(sharpsBase[1]);
-            Serial.print("  || S2: ");
-            Serial.print(sharpsBase[2]);
-            Serial.print(" S3: ");
-            Serial.println(sharpsBase[3]);
+            // Serial.print(" S0: ");
+            // Serial.print(sharpsBase[0]);
+            // Serial.print(" S1: ");
+            // Serial.print(sharpsBase[1]);
+            // Serial.print("  || S2: ");
+            // Serial.print(sharpsBase[2]);
+            // Serial.print(" S3: ");
+            // Serial.println(sharpsBase[3]);
 
             aux=(aux+1)%2;
 
@@ -303,7 +384,7 @@ void GIMu::adjust_to_get_cup(){
         aux = 0;
         
         do {
-        Serial.println("RÉ");
+        // Serial.println("RÉ");
         if (aux%2 == 0) {
                 sharpsBase[aux%2] = getSharp(SH_DIREITA_TRAS);
                 sharpsBase[aux%2 + 1] = getSharp(SH_DIREITA_FRENTE);
@@ -312,14 +393,14 @@ void GIMu::adjust_to_get_cup(){
                 sharpsBase[aux%2 + 2] = getSharp(SH_FRENTE_ESQUERDA);
             }
 
-            Serial.print(" S0: ");
-            Serial.print(sharpsBase[0]);
-            Serial.print(" S1: ");
-            Serial.print(sharpsBase[1]);
-            Serial.print("  || S2: ");
-            Serial.print(sharpsBase[2]);
-            Serial.print(" S3: ");
-            Serial.println(sharpsBase[3]);
+            // Serial.print(" S0: ");
+            // Serial.print(sharpsBase[0]);
+            // Serial.print(" S1: ");
+            // Serial.print(sharpsBase[1]);
+            // Serial.print("  || S2: ");
+            // Serial.print(sharpsBase[2]);
+            // Serial.print(" S3: ");
+            // Serial.println(sharpsBase[3]);
 
             aux=(aux+1)%2;
             moveTras(LOOKING_SPEED);
@@ -332,7 +413,7 @@ void GIMu::adjust_to_get_cup(){
         bool frente = true;
 
         do{
-            Serial.println("AJUSTE");
+            // Serial.println("AJUSTE");
 
             if (aux%2 == 0) {
                 sharpsBase[aux%2] = getSharp(SH_DIREITA_TRAS);
@@ -342,14 +423,14 @@ void GIMu::adjust_to_get_cup(){
                 sharpsBase[aux%2 + 2] = getSharp(SH_FRENTE_ESQUERDA);
             }
 
-            Serial.print(" S0: ");
-            Serial.print(sharpsBase[0]);
-            Serial.print(" S1: ");
-            Serial.print(sharpsBase[1]);
-            Serial.print("  || S2: ");
-            Serial.print(sharpsBase[2]);
-            Serial.print(" S3: ");
-            Serial.println(sharpsBase[3]);
+            // Serial.print(" S0: ");
+            // Serial.print(sharpsBase[0]);
+            // Serial.print(" S1: ");
+            // Serial.print(sharpsBase[1]);
+            // Serial.print("  || S2: ");
+            // Serial.print(sharpsBase[2]);
+            // Serial.print(" S3: ");
+            // Serial.println(sharpsBase[3]);
 
             aux=(aux+1)%2;
             
@@ -361,7 +442,7 @@ void GIMu::adjust_to_get_cup(){
         aux = 0;
         
         do {
-            Serial.println("Ultimo ajuste!");
+            // Serial.println("Ultimo ajuste!");
             if (aux%2 == 0) {
                 sharpsBase[aux%2] = getSharp(SH_DIREITA_TRAS);
                 sharpsBase[aux%2 + 1] = getSharp(SH_DIREITA_FRENTE);
@@ -370,14 +451,14 @@ void GIMu::adjust_to_get_cup(){
                 sharpsBase[aux%2 + 2] = getSharp(SH_FRENTE_ESQUERDA);
             }
 
-            Serial.print(" S0: ");
-            Serial.print(sharpsBase[0]);
-            Serial.print(" S1: ");
-            Serial.print(sharpsBase[1]);
-            Serial.print("  || S2: ");
-            Serial.print(sharpsBase[2]);
-            Serial.print(" S3: ");
-            Serial.println(sharpsBase[3]);
+            // Serial.print(" S0: ");
+            // Serial.print(sharpsBase[0]);
+            // Serial.print(" S1: ");
+            // Serial.print(sharpsBase[1]);
+            // Serial.print("  || S2: ");
+            // Serial.print(sharpsBase[2]);
+            // Serial.print(" S3: ");
+            // Serial.println(sharpsBase[3]);
 
             if (sharpsBase[2] > 30){
                 stop();
@@ -718,15 +799,8 @@ void GIMu::follow_wall_to_little_gate() {
         aux=(aux+1)%3;
 
         moveFrente(LOOKING_SPEED);
-        if(sharpsBase[3] == VALID_SHARP && sharpsBase[2] < DIST_TURN02){
-            found_porteira_frente = true;
-            turn_left = true;
-        } else if(sharpsBase[2] == VALID_SHARP && sharpsBase[3] < DIST_TURN02){
-            found_porteira_frente = true;
-            turn_right = true;
-        }
-    }while( (sharpsBase[2] == VALID_SHARP && sharpsBase[3] == VALID_SHARP) 
-            || (sharpsBase[2] > DIST_TURN02 && sharpsBase[3] > DIST_TURN02)  );
+        
+    }while( !(sharpsBase[2] < DIST_TURN03 || sharpsBase[3] < DIST_TURN03));
 
     stop();
     getSharps();
@@ -750,7 +824,7 @@ void GIMu::follow_wall_to_little_gate() {
 
         moveTank(-TURNING_SPEED, TURNING_SPEED);
     }while( !(abs(sharpsBase[0]-sharpsBase[1]) < SHARP_DIFF && sharpsBase[4] == VALID_SHARP
-                && sharpsBase[5] == VALID_SHARP) );
+                && sharpsBase[5] == VALID_SHARP && sharpsBase[1] != VALID_SHARP) );
 
             getSharps();
 
@@ -771,16 +845,19 @@ void GIMu::follow_wall_to_little_gate() {
         
         aux=(aux+1)%3;
 
-        if( (sharpsBase[0] == VALID_SHARP && sharpsBase[1] == VALID_SHARP)  ){
+        if( sharpsBase[0] == VALID_SHARP && sharpsBase[1] == VALID_SHARP &&
+            sharpsBase[2] == VALID_SHARP && sharpsBase[3] == VALID_SHARP &&
+            sharpsBase[4] == VALID_SHARP && sharpsBase[5] == VALID_SHARP ){
             found_porteira = true;
+            Serial.println("ACHOU PORTEIRA");            
             delay(2000);
-        }
-
-        if (!(sharpsBase[3] == VALID_SHARP && sharpsBase[4] == VALID_SHARP)) {
+        } else if (sharpsBase[2] < DIST_TURN01 || sharpsBase[3] < DIST_TURN01) {
             found_other_wall = true;
+            Serial.println("ACHOU OUTRA PAREDE");
+            
         }
 
-        moveFrente(LOOKING_SPEED);
+        taxearDireita();
 
     } while(!found_porteira && !found_other_wall);
     
@@ -790,8 +867,8 @@ void GIMu::follow_wall_to_little_gate() {
     getSharps();
 
     if(found_other_wall){
-        Serial.println("ACHOU QUINA");
         do{
+            Serial.println("ACHOU QUINA");
             if (aux%3 == 0) {
                 sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
                 sharpsBase[aux%3 + 1] = getSharp(SH_DIREITA_TRAS);
@@ -815,6 +892,7 @@ void GIMu::follow_wall_to_little_gate() {
 
         // ir reto até achar porteira
         do {
+            Serial.println("VAI RETO ATRAS DA PORTEIRA");
             if (aux%3 == 0) {
                 sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
                 sharpsBase[aux%3 + 1] = getSharp(SH_DIREITA_TRAS);
@@ -828,9 +906,12 @@ void GIMu::follow_wall_to_little_gate() {
             
             aux=(aux+1)%3;
 
-            moveFrente(LOOKING_SPEED);
+            taxearEsquerda();
 
-            if( (sharpsBase[4] == VALID_SHARP && sharpsBase[5] == VALID_SHARP) ){
+            if( (sharpsBase[4] == VALID_SHARP && sharpsBase[5] == VALID_SHARP)
+                && sharpsBase[3] == VALID_SHARP && sharpsBase[2] == VALID_SHARP
+                && sharpsBase[1] == VALID_SHARP && sharpsBase[0] == VALID_SHARP ){
+                Serial.println("ACHOU PORTEIRA");
                 found_porteira = true;
                 delay(2000);
             }
@@ -838,7 +919,7 @@ void GIMu::follow_wall_to_little_gate() {
         } while(!found_porteira);
         
         stop();
-
+        
         moveTank(-TURNING_SPEED, TURNING_SPEED);
         delay(6000);
     }
@@ -848,6 +929,7 @@ void GIMu::follow_wall_to_little_gate() {
     
     //Tentar ir ate o meio da porteira utilizando tempo
     if(found_porteira && !found_other_wall){
+        Serial.println("GIRANDO P FRENTE DA PORTEIRA");
         moveTank(TURNING_SPEED, -TURNING_SPEED);
         delay(6000);
         stop();
@@ -1071,13 +1153,13 @@ void GIMu::milkTeta(){
 #include "GIMu.h"
 #include <LiquidCrystal.h>
 
-Motor esquerdo(DC11, DC12);
-Motor direito(DC21, DC22);
+Motor direito(DC11, DC12);
+Motor esquerdo(DC21, DC22);
 
 Motor mbraco(MBRACO1, MBRACO2);
 BracoCopo braco(SERVOG_PULSO, SERVOG_DEDO, SH_GARRA, MSH_GARRA_D, MSH_GARRA_E, mbraco);
 
-Motor mElevator(DC_ELEVADOR1, DC_ELEVADOR0);
+Motor mElevator(DC_ELEVADOR0, DC_ELEVADOR1);
 Elevador elevador(mElevator, 1);
 
 Motor sucker(DC_TIRALEITE1, DC_TIRALEITE2);
@@ -1088,7 +1170,7 @@ GIMu robo (direito, esquerdo, braco, elevador, sucker);
 //GIMu robo (elevador);
 //GIMu robo(braco);
 
-Servo teste;
+Servo teste,teste1,teste2;
 
 char in;
 LiquidCrystal lcd(28,30,32,34,36,38);
@@ -1097,15 +1179,21 @@ void setup() {
   Serial.begin(9600);
 
 
-  //robo.follow_wall_to_little_gate();
-
-  /*robo.follow_wall_to_terrine_area();
-  robo.adjust_to_get_cup();
-  robo.getTerrine();*/
-  teste.attach(6);
+//   robo.follow_wall_to_little_gate();
+   ///raco.recolherBraco();
+  //robo.follow_wall_to_terrine_area();
+  //robo.adjust_to_get_cup();
+  // robo.getTerrine();
+// // //   robo.getTerrine();
+//  teste.attach(6);
+// teste1.attach(44);
+//  teste2.attach(46);
   /*lcd.begin(16, 2);
   lcd.print("hello, world!");*/
   //robo.ordenhar03();
+
+  // pinMode(12, OUTPUT);
+  // pinMode(11, OUTPUT);
 
   /* AJUSTAR PARA COPO */
   /*robo.follow_wall_to_terrine_area();
@@ -1113,48 +1201,47 @@ void setup() {
 }
 
 void loop() {
+    /*braco.tryGetTerrine();
+    braco.recolherBraco();*/
+
+
+
+    //elevador.goToStage01();
+    //elevador.goToStage03();
+    //elevador.upToStage03();
+    // digitalWrite(11, HIGH);
+    // digitalWrite(12, LOW);
+    // delay(4000);
     
+    // digitalWrite(12, HIGH);
+    // digitalWrite(11, LOW);
+    // delay(4000);
     //teste.write(20);
     //teste.detach();
-
+    //robo.taxearEsquerda();
    // robo.ordenhar03();
     //elevador.goToStage01();
-   //Serial.println(analogRead(MSH_ORDENHADOR));
+  //  Serial.println(elevador.whatStage());
+
+    //teste.write(POSICAO_INICIAL_GARRA);
+
+    // teste.write(150);
+    // teste1.write(POSICAO_INICIAL_GARRA);
+    // teste2.write(POSICAO_INICIAL_PULSO);
+
+    // braco.tryGetTerrine();
+    // braco.recolherBraco();
+
+    // braco.dropLeite();
+
+   /*robo.getSharps();
+   
+   Serial.print("Frente direita: ");
+   Serial.print(robo.getSharp(4));
+   Serial.print("  Frente esquerda: ");
+   Serial.println(robo.getSharp(3));*/
 
     //Serial.println(analogRead(9));
-  /*bool posCopo = true;
-  if(posCopo){
-      int distIni = 0, distFin = 0, dist = 0;
-      
-      // Andar para frente até encontrar o espaço entre copos
-      do{
-          robo.moveFrente(SEARCHING_SPEED);
-      }
-      while( (robo.getSharp(SH_GARRA) < TEM_COPO) 
-          || (((robo.getSharp(SH_FRENTE_DIREITA) + robo.getSharp(SH_FRENTE_ESQUERDA)) / 2) >= 10));
-
-      robo.stop();
-      distIni = (robo.getSharp(SH_FRENTE_DIREITA) + robo.getSharp(SH_FRENTE_ESQUERDA)) / 2;
-  
-      // Andar para trás até encontrar o espaço entre copos
-      do{
-          robo.moveTras(SEARCHING_SPEED);
-      }
-      while(robo.getSharp(SH_GARRA) < TEM_COPO 
-          || (((robo.getSharp(SH_FRENTE_DIREITA) + robo.getSharp(SH_FRENTE_ESQUERDA)) / 2) <= 30));
-
-      robo.stop();
-      distFin = (robo.getSharp(SH_FRENTE_DIREITA) + robo.getSharp(SH_FRENTE_ESQUERDA)) / 2;
-
-      dist = (distIni + distFin) / 2;
-
-      // Voltando para o centro do copo
-      do{
-          robo.moveFrente(SEARCHING_SPEED);
-      }while(((robo.getSharp(SH_FRENTE_DIREITA) + robo.getSharp(SH_FRENTE_ESQUERDA)) / 2) <= dist);
-      
-      posCopo = false;
-  }*/
 
   /*braco.tryGetTerrine();
   braco.recolherBraco();*/
@@ -1181,30 +1268,29 @@ void loop() {
 
   //Serial.println(robo.getSharp(SH_GARRA));
   
-  for (unsigned a = 0; a < 90; a+=10) {
-    teste.write(a);
-    delay(1000);
-  }
-
-  for (unsigned a = 110; a >20; a-=10) {
-    teste.write(a);
-    delay(1000);
-  }
+    // for (unsigned a = 90; a < 150; a+=10) {
+    //     teste.write(a);
+    //     delay(1000);
+    // }
+    // for (unsigned a = 150; a >90; a-=10) {
+    //     teste.write(a);
+    //     delay(1000);
+    // }
 
   //teste.write(90);
   
   /* ### Teste de Movimentação:*/
-   /*robo.moveFrente(255);
-   delay(2000);
-   robo.moveTras(255);
-   delay(2000);
-   //robo.moveTank(200, -200);*/
-   //delay(2000);
+  //  robo.moveFrente(150);
+  //  delay(2000);
+  //  robo.moveTank(150,-150);
+  //  delay(4000);
+  //  robo.moveTank(-200, 200);
+  //  delay(2000);
 
   //teste.write(90);
 
-  /* ### Teste dos sensores Sharps:*/
-  /*Serial.print(" S0: ");
+  // /* ### Teste dos sensores Sharps:*/
+  Serial.print(" S0: ");
   Serial.print(robo.getSharp(SH_DIREITA_TRAS));
   Serial.print(" S1: ");
   Serial.print(robo.getSharp(SH_DIREITA_FRENTE));
@@ -1215,7 +1301,20 @@ void loop() {
   Serial.print("  || S4: ");
   Serial.print(robo.getSharp(SH_ESQUERDA_FRENTE));
   Serial.print(" S5: ");
-  Serial.println(robo.getSharp(SH_ESQUERDA_TRAS));*/
+  Serial.println(robo.getSharp(SH_ESQUERDA_TRAS));
+  
+    // Serial.println(robo.getSharp(1));
+    // Serial.print(" S0: ");
+    // Serial.println(robo.getSharp(A0));
+  
+  //   Serial.print(" S0: ");
+  //   Serial.print(robo.getSharp(0));
+
+  // Serial.print(" S0: ");
+  // Serial.println(robo.getSharp(1));
+
+  
+
   
   /* ### Teste mov + sharp ### */
   /*Serial.print(" S0: ");

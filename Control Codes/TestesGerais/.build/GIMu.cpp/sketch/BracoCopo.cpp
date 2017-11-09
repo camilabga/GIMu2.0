@@ -65,7 +65,7 @@ void BracoCopo::iniciar(){
 }
 
 void BracoCopo::tryGetTerrine(){
-  //iniciar();
+  iniciar();
   while (isFDC(FDC_FRENTE) /*&& (analogRead(MSH_GARRA_D) > ANALOG_SENSOR_COPO)*/) {
     motorBraco.moveMotor(255, 1);
     Serial.println(analogRead(MSH_GARRA_D));
@@ -85,8 +85,10 @@ void BracoCopo::recolherBraco(){
 }
 
 void BracoCopo::dropLeite(){
+  iniciar();
   for(int i = POSICAO_INICIAL_PULSO; i < POSICAO_DERRAMAR_PULSO; i++){
     pulso.write(i);
+    delay(100);
   }
 
   delay(500);

@@ -25,6 +25,8 @@ class GIMu{
     void taxearDireita();
     void taxearEsquerda();
 
+    void taxearDireitaRe();
+
     void getSharps();
     inline int getDistancia(int i){return sharpsBase[i];}
     int getSharp(int porta);
