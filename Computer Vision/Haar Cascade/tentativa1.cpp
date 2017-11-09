@@ -45,6 +45,7 @@ int main(int argc, const char *argv[]) {
         exit(1);
     }
 
+    
 
     CascadeClassifier haar_cascade;
     haar_cascade.load(fn_haar);
@@ -61,10 +62,21 @@ int main(int argc, const char *argv[]) {
         // At this point you have the position of the faces in
         // faces. Now we'll get the faces, make a prediction and
         // annotate it in the video. Cool or what?
-        for(int i = 0; i < faces.size(); i++) {
+        
+        // sstream scont = "";
+
+        for(unsigned i = 0; i < faces.size(); i++) {
             // Process face by face:
             Rect face_i = faces[i];
             // Crop the face from the image. So simple with OpenCV C++:
+            stringstream ss;
+            ss << "neg" << i+23 << ".jpg";
+
+            Mat save(original, face_i);
+
+            imwrite(ss.str(),save); //save ROI image
+
+            cout << ss.str() << endl;
             Mat face = gray(face_i);
 
             // And finally write all we've found out to the original image!

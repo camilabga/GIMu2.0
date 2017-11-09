@@ -29,11 +29,11 @@ void setup() {
 
 //   robo.follow_wall_to_little_gate();
    ///raco.recolherBraco();
-  //robo.follow_wall_to_terrine_area();
-  //robo.adjust_to_get_cup();
+  robo.follow_wall_to_terrine_area();
+  robo.adjust_to_get_cup();
   // robo.getTerrine();
 // // //   robo.getTerrine();
- teste.attach(6);
+//  teste.attach(6);
 // teste1.attach(44);
 //  teste2.attach(46);
   /*lcd.begin(16, 2);
@@ -55,9 +55,9 @@ void loop() {
     // braco.tryGetTerrine();
     // braco.recolherBraco();
     
-    robo.follow_wall_to_terrine_area();
-    robo.adjust_to_get_cup();
-    robo.getTerrine();
+    // robo.follow_wall_to_terrine_area();
+    // robo.adjust_to_get_cup();
+    // robo.getTerrine();
 
     //elevador.goToStage01();
     //elevador.goToStage03();

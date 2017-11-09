@@ -261,7 +261,7 @@ void GIMu::taxearDireitaRe(){
 
 // ####### LADO DIREITO DA ARENA
 
-void GIMu::follow_wall_to_terrine_area() {
+/*void GIMu::follow_wall_to_terrine_area() {
     bracoCopo.iniciar();
     unsigned aux = 0;
     bool found_wall = false;
@@ -499,21 +499,22 @@ void GIMu::adjust_to_get_cup(){
 
         stop();
 
-}
+}*/
 
 // ###### LADO ESQUERDO ARENA
 
-/*void GIMu::follow_wall_to_terrine_area() {
+void GIMu::follow_wall_to_terrine_area() {
     bracoCopo.iniciar();
     unsigned aux = 0;
     bool found_wall = false;
     bool found_terrine_area = false;
+    getSharps();
     while (!found_terrine_area){
                    //long int init = micros();
         //getSharps(); // pega os valores dos sharps
                   //Serial.println((float)(micros() - init)/1000000);
 
-        getSharps();
+        
 
         if (!found_wall){
             if (aux%3 == 0) {
@@ -529,12 +530,26 @@ void GIMu::adjust_to_get_cup(){
             
             aux=(aux+1)%3;
 
-            if ((sharpsBase[2] == VALID_SHARP || sharpsBase[3] == VALID_SHARP) || 
-                (sharpsBase[2] >= DIST_TURN01 || sharpsBase[3] >= DIST_TURN01)) {
+            Serial.print(" S0: ");
+            Serial.print(sharpsBase[0]);
+            Serial.print(" S1: ");
+            Serial.print(sharpsBase[1]);
+            Serial.print("  || S2: ");
+            Serial.print(sharpsBase[2]);
+            Serial.print(" S3: ");
+            Serial.print(sharpsBase[3]);
+            Serial.print("  || S4: ");
+            Serial.print(sharpsBase[4]);
+            Serial.print(" S5: ");
+            Serial.println(sharpsBase[5]);
+
+            if (sharpsBase[2] > DIST_TURN01 && sharpsBase[3] > DIST_TURN01) {
                 moveFrente(LOOKING_SPEED);
                 Serial.println("Segue em frente");
             
-            } else if (sharpsBase[2] < DIST_TURN01 || sharpsBase[3] < DIST_TURN01) {
+            } else {
+                stop();
+                delay(500);
                 Serial.println("Achou Parede");
                 aux = 0;
                 getSharps();
@@ -552,9 +567,22 @@ void GIMu::adjust_to_get_cup(){
                         
                         aux=(aux+1)%3;
 
+                        Serial.print(" S0: ");
+                        Serial.print(sharpsBase[0]);
+                        Serial.print(" S1: ");
+                        Serial.print(sharpsBase[1]);
+                        Serial.print("  || S2: ");
+                        Serial.print(sharpsBase[2]);
+                        Serial.print(" S3: ");
+                        Serial.print(sharpsBase[3]);
+                        Serial.print("  || S4: ");
+                        Serial.print(sharpsBase[4]);
+                        Serial.print(" S5: ");
+                        Serial.println(sharpsBase[5]);
+
                     moveTank(-TURNING_SPEED, TURNING_SPEED);
                 } while(!(sharpsBase[0] != VALID_SHARP && sharpsBase[1] != VALID_SHARP 
-                    && abs(sharpsBase[0]-sharpsBase[1]) < 2));
+                    && abs(sharpsBase[0]-sharpsBase[1]) < SHARP_DIFF));
                 
                 found_wall = true;
                 stop();
@@ -574,12 +602,27 @@ void GIMu::adjust_to_get_cup(){
                 }
                 
                 aux=(aux+1)%3;
+
+                Serial.print(" S0: ");
+                Serial.print(sharpsBase[0]);
+                Serial.print(" S1: ");
+                Serial.print(sharpsBase[1]);
+                Serial.print("  || S2: ");
+                Serial.print(sharpsBase[2]);
+                Serial.print(" S3: ");
+                Serial.print(sharpsBase[3]);
+                Serial.print("  || S4: ");
+                Serial.print(sharpsBase[4]);
+                Serial.print(" S5: ");
+                Serial.println(sharpsBase[5]);
             
-            if ((sharpsBase[2] <= DIST_TURN02 && sharpsBase[2] != VALID_SHARP) || (sharpsBase[3] <= DIST_TURN02 && sharpsBase[3] != VALID_SHARP)) {
+            if (sharpsBase[2] <= DIST_TURN01 || sharpsBase[3] <= DIST_TURN01 ) {
                 found_terrine_area = true;
-                moveFrente(0);
+                stop();
                 Serial.println("Achei o caralho todo");
+                delay(500);
             } else {
+                Serial.println("VAI EM FRENTE");                
                 moveFrente(LOOKING_SPEED);
             }
         }
@@ -594,9 +637,9 @@ void GIMu::adjust_to_get_cup(){
     delay(1000);
 
     do{
-        // Serial.println("GIRANDO");
+        Serial.println("GIRANDO");
     
-        moveTank(TURNING_SPEED, -TURNING_SPEED);
+        moveTank(-TURNING_SPEED, TURNING_SPEED);
 
         if (aux%3 == 0) {
             sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
@@ -615,14 +658,14 @@ void GIMu::adjust_to_get_cup(){
         sharpsBase[2] != VALID_SHARP && sharpsBase[3] != VALID_SHARP)
           || (abs(sharpsBase[4] - sharpsBase[5]) > SHARP_DIFF));
 
-    // Serial.println("POSICAO CERTA");
+    Serial.println("POSICAO CERTA");
     stop();
     delay(1000);
 
     getSharps();
         
-        do{
-            // Serial.println("APROXIMANDO");
+       /* do{
+            Serial.println("APROXIMANDO");
                 if (aux%3 == 0) {
                     sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
                     sharpsBase[aux%3 + 1] = getSharp(SH_DIREITA_TRAS);
@@ -654,7 +697,7 @@ void GIMu::adjust_to_get_cup(){
         getSharps();
 
         do {
-        // Serial.println("RÉ");
+        Serial.println("RÉ");
             if (aux%3 == 0) {
                 sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
                 sharpsBase[aux%3 + 1] = getSharp(SH_DIREITA_TRAS);
@@ -678,7 +721,7 @@ void GIMu::adjust_to_get_cup(){
         bool frente = true;
 
         do{
-            // Serial.println("AJUSTE");
+            Serial.println("AJUSTE");
 
             if (aux%3 == 0) {
                 sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
@@ -709,7 +752,7 @@ void GIMu::adjust_to_get_cup(){
         aux = 0;
         
         do {
-            // Serial.println("Ultimo ajuste!");
+            Serial.println("Ultimo ajuste!");
             if (aux%3 == 0) {
                 sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
                 sharpsBase[aux%3 + 1] = getSharp(SH_DIREITA_TRAS);
@@ -756,9 +799,9 @@ void GIMu::adjust_to_get_cup(){
             
         } while(!aligned || sharpsBase[2] > 12);
 
-        stop();
+        stop();*/
 
-}*/
+}
 
 
 void GIMu::getTerrine(){
