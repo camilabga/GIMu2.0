@@ -137,7 +137,7 @@ void loop() {
     case 4: // ### Ações para Chegar na Vaca:
       switch(subEstado){
         case 1: // Girar p/ encontrar vaca:
-          robo.moveTank(-200,200);
+          robo.moveTank(-150,150);
           subEstado = 91;
         break;
 

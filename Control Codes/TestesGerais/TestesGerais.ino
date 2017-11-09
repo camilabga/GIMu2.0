@@ -61,8 +61,7 @@ void loop() {
     // digitalWrite(12, LOW);
     // delay(4000);
     
-    // digitalWrite(12, HIGH);
-    // digitalWrite(11, LOW);
+    // digitalWrite(12, LOW);
     // delay(4000);
     //teste.write(20);
     //teste.detach();
