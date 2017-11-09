@@ -28,8 +28,8 @@
 #define FDC_TRAS 22
 
 // ### Pinagem Elevador
-#define DC_ELEVADOR1 11
-#define DC_ELEVADOR0 12
+#define DC_ELEVADOR1 12
+#define DC_ELEVADOR0 11
 #define FDC_ELEVADOR 0
 
 // ### Ordenhador ###

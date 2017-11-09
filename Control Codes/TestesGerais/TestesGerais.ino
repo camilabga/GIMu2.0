@@ -8,7 +8,7 @@ Motor mbraco(MBRACO1, MBRACO2);
 BracoCopo braco(SERVOG_PULSO, SERVOG_DEDO, SH_GARRA, MSH_GARRA_D, MSH_GARRA_E, mbraco);
 
 Motor mElevator(DC_ELEVADOR0, DC_ELEVADOR1);
-Elevador elevador(mElevator, 1);
+Elevador elevador(mElevator);
 
 Motor sucker(DC_TIRALEITE1, DC_TIRALEITE2);
 
@@ -26,9 +26,8 @@ LiquidCrystal lcd(28,30,32,34,36,38);
 void setup() {
   Serial.begin(9600);
 
-
 //   robo.follow_wall_to_little_gate();
-   ///raco.recolherBraco();
+   ///braco.recolherBraco();
   robo.follow_wall_to_terrine_area();
   robo.adjust_to_get_cup();
   // robo.getTerrine();
@@ -40,17 +39,49 @@ void setup() {
   lcd.print("hello, world!");*/
   //robo.ordenhar03();
 
-  // pinMode(12, OUTPUT);
-  // pinMode(11, OUTPUT);
+  // pinMode(5, OUTPUT);
+  // pinMode(4, OUTPUT);
 
   /* AJUSTAR PARA COPO */
   /*robo.follow_wall_to_terrine_area();
   robo.adjust_to_get_cup();*/
 }
 
+unsigned aux = 0;
+
 void loop() {
 
+  //robo.moveTank(-LOOKING_SPEED, LOOKING_SPEED);
+  // elevador.goToStage01();
   // robo.ordenhar04();
+
+  // robo.moveFrente(LOOKING_SPEED);
+
+  //   if (aux%3 == 0) {
+  //     robo.sharpsBase[aux%3] = robo.getSharp(SH_DIREITA_FRENTE);
+  //     robo.sharpsBase[aux%3 + 1] = robo.getSharp(SH_DIREITA_TRAS);
+  // } else if (aux%3 == 1) {
+  //   robo.sharpsBase[aux%3 + 1] = robo.getSharp(SH_FRENTE_DIREITA);
+  //   robo.sharpsBase[aux%3 + 2] = robo.getSharp(SH_FRENTE_ESQUERDA);
+  // } else {
+  //   robo.sharpsBase[aux%3 + 2] = robo.getSharp(SH_ESQUERDA_FRENTE);
+  //   robo.sharpsBase[aux%3 + 3] = robo.getSharp(SH_ESQUERDA_TRAS);
+  // }
+
+  // Serial.print(" S0: ");
+  // Serial.print(robo.sharpsBase[0]);
+  // Serial.print(" S1: ");
+  // Serial.print(robo.sharpsBase[1]);
+  // Serial.print("  || S2: ");
+  // Serial.print(robo.sharpsBase[2]);
+  // Serial.print(" S3: ");
+  // Serial.print(robo.sharpsBase[3]);
+  // Serial.print("  || S4: ");
+  // Serial.print(robo.sharpsBase[4]);
+  // Serial.print(" S5: ");
+  // Serial.println(robo.sharpsBase[5]);
+
+  // aux=(aux+1)%3;
 
     // braco.tryGetTerrine();
     // braco.recolherBraco();
@@ -58,12 +89,16 @@ void loop() {
     // robo.follow_wall_to_terrine_area();
     // robo.adjust_to_get_cup();
     // robo.getTerrine();
+/*
+     elevador.goToStage02();
+     Serial.println(analogRead(0));
+     */
+    // Serial.println(robo.getMSharp());
 
-    //elevador.goToStage01();
-    //elevador.goToStage03();
+    // elevador.goToStage02();
     //elevador.upToStage03();
-    // digitalWrite(11, HIGH);
-    // digitalWrite(12, LOW);
+    // digitalWrite(5, HIGH);
+    // digitalWrite(4, LOW);
     // delay(4000);
     
     // digitalWrite(12, LOW);
@@ -72,7 +107,7 @@ void loop() {
     //teste.detach();
     //robo.taxearEsquerda();
    // robo.ordenhar03();
-    //elevador.goToStage01();
+    //  elevador.goToStage01();
     //  Serial.println(elevador.whatStage());
 
     //teste.write(POSICAO_INICIAL_GARRA);
@@ -181,11 +216,14 @@ void loop() {
   //robo.getTerrine();
 
   // ### TESTE ELEVADOR ###
-  /*elevador.goToStage03();
-  elevador.goToStage02();
+  /*
   elevador.goToStage03();
-  elevador.goToStage01();*/
-
+  elevador.stop();
+  elevador.goToStage02();
+  elevador.stop();
+  elevador.goToStage01();
+  elevador.stop();
+  */
   //elevador.goToStage01();
   
   //Serial.println(elevador.whatStage());

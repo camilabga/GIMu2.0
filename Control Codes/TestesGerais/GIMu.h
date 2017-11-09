@@ -48,11 +48,13 @@ class GIMu{
     void dropMilk();
     void milkTeta();
 
+    int sharpsBase[6];
+    
+
   private:
     Motor Mright;
     Motor Mleft;
     Motor sucker;
-    int sharpsBase[6];
     BracoCopo bracoCopo;
     Elevador elevador;
     Servo SM_Ordenhador;

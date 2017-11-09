@@ -11,7 +11,7 @@ private:
     Motor mElevador;
     int stage; // 1 -> 2 -> 3
 public:
-    Elevador(Motor m, int stage);
+    Elevador(Motor m);
     Elevador();
 
     void attachMotor(Motor m);

@@ -1,10 +1,9 @@
 #include "Elevador.h"
 
-Elevador::Elevador(Motor m, int stage){
+Elevador::Elevador(Motor m){
     mElevador.setPinFrente(m.getPinFrente());
     mElevador.setPinTras(m.getPinTras());
-
-    this->stage = stage;
+    stage=0;
 }
 
 Elevador::Elevador(){
@@ -27,19 +26,15 @@ void Elevador::goToStage01(){
 }
 
 void Elevador::goToStage02(){
-    if (stage == 1) {
-        while (whatStage() > POSICAO02) {
-            mElevador.moveMotor(255, 0);
-        }
-        mElevador.moveMotor(0, 0);
-    } else if (stage == 3) {
-        while (whatStage() < POSICAO02) {
-            mElevador.moveMotor(255, 1);
-        }
-        mElevador.moveMotor(0, 0);
-        delay(1000);
+    while (whatStage() > POSICAO02) {
+        mElevador.moveMotor(255, 0);
     }
-
+    mElevador.moveMotor(0, 0);
+    while (whatStage() < POSICAO02) {
+        mElevador.moveMotor(255, 1);
+    }
+    mElevador.moveMotor(0, 0);
+    delay(1000);
     stage = 2;
 }
 
