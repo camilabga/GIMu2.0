@@ -1,10 +1,12 @@
 <?xml version="1.0"?>
 <opencv_storage>
 <classifications type_id="opencv-matrix">
-  <rows>39</rows>
+  <rows>73</rows>
   <cols>1</cols>
   <dt>i</dt>
   <data>
-    48 48 48 48 48 76 48 48 48 48 76 48 48 48 48 48 48 48 48 48 48 48 48
-    48 48 48 48 48 48 48 48 48 76 76 48 48 48 48 48</data></classifications>
+    48 48 48 48 48 48 48 48 48 48 48 48 48 76 48 48 48 48 48 48 48 48 48
+    48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48
+    48 48 48 48 48 48 48 48 48 48 48 48 76 48 48 48 48 48 48 48 48 48 48
+    48 48 48 48</data></classifications>
 </opencv_storage>
