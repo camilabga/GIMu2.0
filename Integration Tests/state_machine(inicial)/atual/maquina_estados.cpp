@@ -17,14 +17,15 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
-//Geral
+//Geral//
 using namespace std;
 using namespace cv;
 using namespace aruco;
 
 //Variaveis Vaca:
 bool vaiVaca();
-int acaoVaca;
+volatile int acaoVaca;
+volatile bool acabaVaca = false;
 
 //Variaveis Aruco:
 #define HEIGHT 480
@@ -134,8 +135,6 @@ int main(int argc, char **argv){
 						if(arduino.in[2] == 1){
 							break;
 						}
-						//
-
 					}
 					cout << "Acabou Estado 03." << endl;
 					estadoAtual = 4;
@@ -147,24 +146,28 @@ int main(int argc, char **argv){
 					
 					//Envia comando I2C: Iniciando estado
 					arduino.sendFunc(4,1);
+					cout << "Inicio estado 4" << endl;
 					//
 					// vaiVaca();//
 					while(!acabaVaca){
+						cout << acabaVaca << endl;
 						switch(acaoVaca){
 							case 1:
 								// cout << "Girar loucamente" << endl;
 								// acaoVaca = 1;
 								arduino.sendFunc(4,2,1);
-								usleep(100000);
+								usleep(70000);
 								arduino.sendFunc(4,2,2);
+								cout << "SE1" << endl;
 							break;
 
 							case 2:
 								// cout << "Girar Controlado" << endl;
 								// acaoVaca = 2;
-								arduino.sendFunc(4,3,velD,velE)
-								usleep(100000);
+								arduino.sendFunc(4,3,velE,velD);
+								usleep(80000);
 								arduino.sendFunc(4,3,0,0);
+								cout << "SE2" << endl;
 							break;
 
 							case 3:
@@ -177,6 +180,7 @@ int main(int argc, char **argv){
 										break;
 									}
 									usleep(200000);
+									cout << "SE3" << endl;
 								}
 							break;
 
@@ -190,6 +194,7 @@ int main(int argc, char **argv){
 										break;
 									}
 									usleep(200000);
+									cout << "SE4" << endl;
 								}
 							break;
 
@@ -204,13 +209,14 @@ int main(int argc, char **argv){
 									}
 									usleep(200000);
 								}
+								cout << "SE2" << endl;
 								acabaVaca = true;
 							break;
 							default:
-							
+								usleep(2000000);
 							break;
-							
 						}
+						usleep(100000);
 					}
 					//Fim de estado:
 					cout << "Acabou Estado 04." << endl;
@@ -246,7 +252,6 @@ int main(int argc, char **argv){
 						if(arduino.in[2] == 1){
 							break;
 						}
-						//
 
 					}
 					cout << "Acabou Estado 06." << endl;
@@ -272,8 +277,6 @@ int main(int argc, char **argv){
 						if(arduino.in[2] == 1){
 							break;
 						}
-						//
-
 					}
 					cout << "Acabou Estado 08." << endl;
 					// estadoAtual = 9;
@@ -304,7 +307,6 @@ bool vaiVaca(){
 	}
 	// capture.set(CV_CAP_PROP_BUFFERSIZE, 1);
 	
- 	long int tempo_delay_descarte;
 	
     /*create Cow -> first initialization has no center
     and the still scans the whole Mat, also, do not contain
@@ -313,13 +315,15 @@ bool vaiVaca(){
     Cow cow;
     Mat frame;
 
-	bool acabaVaca = false;
+	
     while (!acabaVaca){
         if (!capture.read(frame)) {
             cout<<"\n Cannot read the video file. \n";
             break;
         }
 		
+		// flip(frame,frame,-1);
+
         cow.setROI(frame);
         cow.transformImage(); 
         cow.searchSquares();
@@ -346,7 +350,7 @@ bool vaiVaca(){
                     // ALINHAR 180 GRAUS COM A VACA
                     if (cow.getSlope() > 100) {
 						cout << "Tenta alinhar" << endl;
-						acaoVaca 4;
+						acaoVaca = 4;
 						// arduino.sendFunc(4,4,1,(int) (180 - cow.getSlope()));
 						// while(1){
 						// 	arduino.sendFunc(4,5);
@@ -373,8 +377,15 @@ bool vaiVaca(){
             } else {
 				cout << "Girar Controlado" << endl;
 				acaoVaca = 2;
-                velE = TURNING_SPEED;
-				velD = -TURNING_SPEED;
+
+				if (cow.center.x > 320) {
+					velE = -TURNING_SPEED;
+					velD = TURNING_SPEED;
+				} else {
+					velE = TURNING_SPEED;
+					velD = -TURNING_SPEED;
+				}
+                
 				// arduino.sendFunc(4,3,velD,velE);
 				// // tempo_delay_descarte = time(NULL);
 				// // while(time(NULL) >= tempo_delay_descarte + 2){

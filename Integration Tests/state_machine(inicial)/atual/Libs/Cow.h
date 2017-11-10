@@ -20,7 +20,7 @@ using namespace std;
  
 class Cow{
 private:
-    Point center;
+    
     bool detected;
     bool centered;
     bool aligned;
@@ -58,6 +58,8 @@ public:
     void distinguishParts(Mat &R);
     void getInclination(Mat &R);
     void detectLimits();
+
+    Point center;
 
     void drawCenter(Mat &frame);
     void sendPID();

@@ -37,7 +37,7 @@ bool comecarTudo = false;
 //Definições vaca:
 #define ADJ_DEG 20
 #define ADJ_FOR 110
-#define TIME_90 4000
+#define TIME_90 3000 //4000
 #define VEL_ROB 150
 byte ladoV;
 byte anguloV;
@@ -127,7 +127,7 @@ void loop() {
     break;
 
     case 3: // ### Ações Pega Copo
-      robo.getTerrine();
+      robo.getTerrine(); 
       robo.moveFrente(0);
       
       fimEstado[3] = true;
@@ -137,12 +137,15 @@ void loop() {
     case 4: // ### Ações para Chegar na Vaca:
       switch(subEstado){
         case 1: // Girar p/ encontrar vaca:
-          robo.moveTank(-150,150);
+          robo.moveTank(-200,200);
           subEstado = 91;
         break;
 
         case 2:
-          robo.moveTank(velE,velD);
+          robo.moveFrente(0);
+          delay(500);
+          robo.moveTank(velD,velE);
+          delay(50);
         break;
 
         case 3: // Manobrar p/ o Lado:
@@ -378,7 +381,7 @@ void receiveData(int byteCount) {
             out[1] = 3;  
             estadoAtual = 4;
             velE = (in[2]-125)*2;
-            velE = (in[3]-125)*2;
+            velD = (in[3]-125)*2;
             subEstado = 2;
             flag = true;flag2 = true;
           break;
