@@ -29,10 +29,10 @@ void clearBuf(){
 //Definicoes estados:
 #define QTD_ESTADOS 9
 #define BT_INICIO 13
-int estadoAtual = 20;
-int subEstado = 90;
-bool fimEstado[QTD_ESTADOS];
+int estadoAtual = 1;
+int subEstado = 1;
 bool comecarTudo = false;
+byte ladoCopo = 0;
 
 //Definições vaca:
 #define ADJ_DEG 20
@@ -106,32 +106,61 @@ void loop() {
     }
   }
 
-  printLCD();
+  // printLCD();
 
   // AÇÕES ESTADOS:
   switch(estadoAtual){ 
-    case 1: // ### Ações Segue Parede
-      robo.follow_wall_to_terrine_area();
-      robo.moveFrente(0);
-      
-      fimEstado[1] = true;
-      estadoAtual = 90;
+
+    case 1: 
+      switch(subEstado){
+        case 1:
+          if(digitalRead(PIN_START) == 1){
+            subEstado = 0;
+            comecarTudo = true;
+            blocked = false;
+          }
+        break;
+        default:
+          cout << "Erro substado, Estado: 1" << endl;
+        break;
+      }
     break;
 
-    case 2: // ### Ações Procura Copo
-      robo.adjust_to_get_cup();
-      robo.moveFrente(0);
-      
-      fimEstado[2] = true;
-      estadoAtual = 90;
+    case 2:
+      switch(subEstado){
+        case 1:
+          if(blocked){
+            robo.moveFrente(0);
+            flag = false;flag2 = false;
+          }else{
+            robo.moveTank(velE,velD);
+            if(robo.getSharp(SH_FRENTE_DIREITA) < 20 || robo.getSharp(SH_FRENTE_ESQUERDA) < 20){
+              blocked = true;
+            }
+          }
+        break;
+        case 2:
+          robo.follow_wall_to_the_terrine2();
+          robo.moveFrente(0);
+          subEstado = 0;
+        break;
+        default:
+          cout << "Erro substado, Estado: 1" << endl;
+        break;
+      }
     break;
 
-    case 3: // ### Ações Pega Copo
-      robo.getTerrine();
-      robo.moveFrente(0);
-      
-      fimEstado[3] = true;
-      estadoAtual = 90;
+    case 3:
+      switch(subEstado){
+        case 1:
+          //A FUNCAO DE ESTACIONAR NA REGIÃO DO COPO VAI AQUI:
+
+          //
+          subEstado = 0;
+          estadoAtual = 0;
+
+        break;
+      }
     break;
 
     case 4: // ### Ações para Chegar na Vaca:
@@ -178,75 +207,59 @@ void loop() {
           estadoAtual = 90;
         break;
 
-        case 90: // Sub-estado de Esperar Pelo Proximo Comando:
-          robo.moveTank(0,0);
-          flag = false;flag2 = false;
-        break;
-        default:
-
         break;
       }
     break;
 
-    case 5: // ### Ações Ordenhar
-      robo.ordenhar04();
-      robo.moveFrente(0);
-
-      fimEstado[5] = true;
-      estadoAtual = 90;
-    break;
-
-    case 6: // ### Ações Ordenhar
-      robo.milkTeta();
-      robo.moveFrente(0);
-
-      fimEstado[6] = true;
-      estadoAtual = 90;
-    break;
-
-    case 7: // ### Ações para Chegar no tanque:
+    case 5:
       switch(subEstado){
-        case 1: // Girar p/ encontrar tag:
-          robo.moveTank(-150,150);
-        break;
+        case 1:
+          //A FUNCAO DE ORDENHAR A VACA VAI AQUI:
+          
+          //
 
-        case 2: // Movimentar controlando:
-          robo.moveTank(velE,velD);
-        break;
-
-        case 3:
-          //CODIGO PARA DESVIAR DA PORRA DA MERDA DA PAREDE
-          robo.follow_wall_to_little_gate();
-          robo.moveFrente(0);
-          subEstado = 90;
-          estadoAtual = 90;
-        break;
-
-        case 90: // Sub-estado de Esperar Pelo Proximo Comando:
-          robo.moveFrente(0);
-          flag = false;flag2 = false;
+          blocked = false;
+          subEstado = 0;
+          estadoAtual = 0;
         break;
       }
     break;
 
-    case 8: // ### Ações para derramar :
-      robo.adjust_to_derramar_leite();
-      robo.dropMilk();
-      robo.moveFrente(0);
+    case 6:
+      switch(subEstado){
+        case 1:
+          if(blocked){
+            robo.moveFrente(0);
+            flag = false;flag2 = false;
+          }else{
+            robo.moveTank(velE,velD);
+            if(robo.getSharp(SH_FRENTE_DIREITA) < 20 || robo.getSharp(SH_FRENTE_ESQUERDA) < 20){
+              blocked = true;
+            }
+          }
+        break;
+        case 2:
+          //FUNCAO PARA DESVIAR DA PORTEIRA VAI AQUI:
 
-      fimEstado[8] = true;
-      estadoAtual = 20;
-      comecarTudo = false;
-    break;
+          //
 
-    case 20:
-      if(analogRead(BT_INICIO) > 900){
-        comecarTudo = true;
+          blocked = false;
+        break;
       }
     break;
 
-    case 90: // ### Estado de espera por comandos:
-      //haHAA
+    case 7:
+      switch(subEstado){
+        case 1:
+          //A FUNCAO DE ORDENHAR O COPO VAI AQUI:
+          
+          //
+
+          blocked = false;
+          subEstado = 0;
+          estadoAtual = 0;
+        break;
+      }
     break;
 
     default:
@@ -255,7 +268,7 @@ void loop() {
   }
 }
 
-// ### Função executada quando recebe comando do arduino:
+// #################################### Função executada quando recebe comando do arduino:
 void receiveData(int byteCount) {
 
   if(byteCount != QTD_BYTES_I2C){
@@ -277,143 +290,114 @@ void receiveData(int byteCount) {
 
     //Interpretando comandos vindos do rasp:
     switch(in[0]){
-      //  ####  Segue parede  #### 
+      //  ####  START  #### 
       case 1:
         out[0]=1;
+        estadoAtual = 1;
         switch(in[1]){
-          case 1://Mandando arduino começar.
-            out[1] = 1;  
-            estadoAtual = 1;
-            fimEstado[1] = false;
-          break;
-
-          case 2://Perguntando se ja terminou.
-            out[1] = 2;
-            if(fimEstado[1]){
+          case 1:
+            out[1] = 1;
+            if(comecarTudo){
               out[2] = 1;
+              subEstado = 0;
             }else{
               out[2] = 2;
             }
           break;
-          
+          case 2:
+            out[1] = 2;
+            subEstado = 2;
+          break;
           default:
-            out[0] = 98;
+            out[1] = 98;
           break;
         }
       break;
       
-      //  ####  Procura copo  #### 
+      //  ####  VAI PROS COPOS  #### 
       case 2:
         out[0]=2;
+        estadoAtual = 2;
         switch(in[1]){
-          case 1://Mandando arduino começar.
-            out[1] = 1;  
-            estadoAtual = 2;
-            fimEstado[2] = false;
-          break;
-
-          case 2://Perguntando se ja terminou.
-            out[1] = 2;
-            if(fimEstado[2]){
+          case 1:
+            out[1]=1;
+            subEstado = 1;
+            velE = (in[2]-125)*2;
+            velD = (in[3]-125)*2;
+            flag = true;flag2 = true;
+            if(blocked){
               out[2] = 1;
             }else{
               out[2] = 2;
             }
           break;
-          
+          case 2:
+            out[1]=2;
+            ladoCopo = in[2];
+            subEstado = 2;
+          break;
+          case 3:
+            out[1]=3;
+            if(subEstado!=2){
+              out[2]=1;
+            }else{
+              out[2]=2;
+            }
+          break;
           default:
             out[0] = 98;
           break;
         }
       break;
 
-      //  ####  Pega Copo  #### 
+      //  ####  PEGAR COPO  #### 
       case 3:
         out[0]=3;
+        estadoAtual = 3;
         switch(in[1]){
           case 1://Mandando arduino começar.
             out[1] = 1;  
-            estadoAtual = 3;
-            fimEstado[3] = false;
+            subEstado = 1;
           break;
-
           case 2://Perguntando se ja terminou.
             out[1] = 2;
-            if(fimEstado[3]){
+            if(subEstado!=1){
               out[2] = 1;
             }else{
               out[2] = 2;
             }
           break;
-          
           default:
             out[0] = 98;
           break;
         }
       break;
 
-      //  ####  Procura/Segue vaca  #### 
+      //  ####  GO TO VACA  #### 
       case 4:
         out[0]=4;
+        estadoAtual = 4;
         switch(in[1]){
-          case 1:// Inicio estado 4
+          case 1:
             out[1] = 1;
-            estadoAtual = 4;
-          break;
-
-          case 2:// Solicitando para girar/parar de procurar a vaca:
-            out[1] = 2;
-            estadoAtual = 4; 
-            if(in[2] == 1){
-              subEstado = 1;
-              flag = true;flag2 = true;
-            }else if(in[2] == 2){
-              subEstado = 90;
-            }else{
-              out[0] = 98;
-            }
-          break;
-
-          case 3:
-            out[1] = 3;  
-            estadoAtual = 4;
             velE = (in[2]-125)*2;
-            velE = (in[3]-125)*2;
+            velD = (in[3]-125)*2;
             subEstado = 2;
             flag = true;flag2 = true;
           break;
 
-          case 4:// Solicitando para fazer a manobra com os parametros:
-            out[1] = 4;  
-            estadoAtual = 4;
+          case 2:// Solicitando para fazer a manobra com os parametros:
+            out[1] = 2;
             if(in[2] == 1 || in[2] == 2){
               ladoV = in[2];
-              anguloV = in[3];
               subEstado = 3;
             }else{
               out[0] = 98;
             }
           break;
 
-          case 5:// Perguntando se ja terminou o item acima:
-            out[1] = 5;  
-            estadoAtual = 4;
-            if(subEstado == 90){
-              out[2] = 1;
-            }else{
-              out[2] = 2;
-            }
-          break;
-
-          case 6:// Solicitando para ir para vaca
-            out[1] = 6;
-            estadoAtual = 4;
-            subEstado = 4;
-          break;
-
-          case 7:// Perguntando se ja terminou o item acima:
-            out[1] = 6;  
-            estadoAtual = 4;
+          case 3:// Perguntando se ja terminou o item acima:
+            out[1] = 3;
             if(subEstado == 90){
               out[2] = 1;
             }else{
@@ -427,150 +411,76 @@ void receiveData(int byteCount) {
         }
       break;
 
-      //  ####  Ordenhar  #### 
+      //  ####  ORDENHAR  #### 
       case 5:
         out[0]=5;
+        estadoAtual = 5;
         switch(in[1]){
           case 1://Mandando arduino começar.
             out[1] = 1;  
-            estadoAtual = 5;  
-            fimEstado[5] = false;
+            subEstado = 1;
           break;
-
           case 2://Perguntando se ja terminou.
             out[1] = 2;
-            if(fimEstado[5]){
+            if(subEstado!=1){
               out[2] = 1;
             }else{
               out[2] = 2;
             }
           break;
-          
           default:
             out[0] = 98;
           break;
         }
       break;
 
-      //  ####  Chupa Chupa  #### 
+      //  ####  IR PARA TANQUE  #### 
       case 6:
         out[0]=6;
+        estadoAtual = 6;
         switch(in[1]){
-          case 1://Mandando arduino começar.
-            out[1] = 1;  
-            estadoAtual = 6;
-            fimEstado[6] = false;
-          break;
-
-          case 2://Perguntando se ja terminou.
-            out[1] = 2;
-            if(fimEstado[6]){
+          case 1:
+            out[1]=1;
+            subEstado = 1;
+            velE = (in[2]-125)*2;
+            velD = (in[3]-125)*2;
+            flag = true;flag2 = true;
+            if(blocked){
               out[2] = 1;
             }else{
               out[2] = 2;
             }
           break;
-          
+          case 2://Mandando arduino começar.
+            out[1] = 2;  
+            subEstado = 2;
+          break;
+          case 3://Perguntando se ja terminou.
+            out[1] = 2;
+            if(subEstado!=2){
+              out[2] = 1;
+            }else{
+              out[2] = 2;
+            }
+          break;
           default:
             out[0] = 98;
           break;
         }
       break;
       
-      //  ####  Segue Aruco até infinito   #### 
+      //  ####  DERRAMAR NO TANQUE  #### 
       case 7:
         out[0]=7;
-        switch(in[1]){
-          case 1:// Inicio estado 7
-            out[1] = 1;
-            estadoAtual = 7;
-          break;
-
-          case 2:// Solicitando para girar/parar de procurar a tag:
-            out[1] = 2;
-            estadoAtual = 7; 
-            if(in[2] == 1){
-              subEstado = 1;
-              out[2] = 1;
-              flag = true;flag2 = true;
-            }else if(in[2] == 2){
-              subEstado = 90;
-              out[2] = 2;
-              flag = false;flag2 = false;
-            }else{
-              out[0] = 98;
-            }
-          break;
-
-          case 3:
-            out[1] = 3;  
-            estadoAtual = 7;
-            if(obstaculoEncontrado){
-              velE = 0;
-              velD = 0;
-              out[2] = 1;
-            }else{
-              velE = (in[2]-125)*2;
-              velE = (in[3]-125)*2;
-              out[2] = 2;
-            }
-            subEstado = 2;
-            flag = true;flag2 = true;
-          break;
-
-          case 4:// Solicitando para ir para vaca
-            out[1] = 4;  
-            estadoAtual = 7;
-            subEstado = 3;
-            flag = false;flag2 = false;
-          break;
-
-          case 5:// Perguntando se ja terminou o item acima:
-            out[1] = 5;
-            estadoAtual = 7;
-            if(subEstado == 90){
-              out[2] = 1;
-            }else{
-              out[2] = 2;
-            }
-          break;
-
-          default:
-            out[0] = 98;
-          break;
-        }
-      break;
-
-      case 8:
-        out[0]=8;
+        estadoAtual = 7;
         switch(in[1]){
           case 1://Mandando arduino começar.
-            estadoAtual = 8;
-            out[1] = 1;
-            fimEstado[8] = false;
+            out[1] = 1;  
+            subEstado = 1;
           break;
-
           case 2://Perguntando se ja terminou.
             out[1] = 2;
-            if(fimEstado[8]){
-              out[2] = 1;
-            }else{
-              out[2] = 2;
-            }
-          break;
-          
-          default:
-            out[0] = 98;
-          break;
-        }
-      break;
-
-      case 20:
-        out[0] = 20;
-        switch(in[1]){
-          case 1:
-            out[1] = 1;
-            if(comecarTudo){
+            if(subEstado!=1){
               out[2] = 1;
             }else{
               out[2] = 2;
