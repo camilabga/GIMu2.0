@@ -24,7 +24,7 @@ int main() {
     cv::Mat imgThreshCopy;              //
 
     std::vector<std::vector<cv::Point> > ptContours;        // declare contours vector
-    std::vector<cv::Vec4i> v4iHierarchy;                    // declare contours hierarchy
+    std::vector<cv::Vec4i> v4iHierarchy;                    // declare contours hierarchy   
 
     cv::Mat matClassificationInts;      // these are our training classifications, note we will have to perform some conversions before writing to file later
 
@@ -38,7 +38,7 @@ int main() {
         'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
         'U', 'V', 'W', 'X', 'Y', 'Z'};
 
-    imgTrainingNumbers = cv::imread("treino1.JPG");          // read in training numbers image
+    imgTrainingNumbers = cv::imread("treinar1.JPG");          // read in training numbers image
 
     if (imgTrainingNumbers.empty()) {                               // if unable to open image
         std::cout << "error: image not read from file\n\n";         // show error messageL on command line
