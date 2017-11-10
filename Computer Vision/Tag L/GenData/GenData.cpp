@@ -38,10 +38,10 @@ int main() {
         'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
         'U', 'V', 'W', 'X', 'Y', 'Z'};
 
-    imgTrainingNumbers = cv::imread("teste.JPG");          // read in training numbers image
+    imgTrainingNumbers = cv::imread("treino1.JPG");          // read in training numbers image
 
     if (imgTrainingNumbers.empty()) {                               // if unable to open image
-        std::cout << "error: image not read from file\n\n";         // show error message on command line
+        std::cout << "error: image not read from file\n\n";         // show error messageL on command line
         return(0);                                                  // and exit program
     }
 
