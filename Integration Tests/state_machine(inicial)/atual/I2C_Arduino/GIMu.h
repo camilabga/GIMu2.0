@@ -25,16 +25,21 @@ class GIMu{
     void taxearDireita();
     void taxearEsquerda();
 
+    void taxearDireitaRe();
+
     void getSharps();
     inline int getDistancia(int i){return sharpsBase[i];}
     int getSharp(int porta);
     inline int getMSharp(){return analogRead(MSH_ORDENHADOR);}
     
-    void follow_wall_to_terrine_area();
-    void adjust_to_get_cup();
+    void follow_wall_to_terrine_areaE();
+    void follow_wall_to_terrine_areaD();
+    void adjust_to_get_cupE();
+    void adjust_to_get_cupD();
     void follow_wall_to_little_gate();
 
-    void getTerrine();
+    void getTerrineE();
+    void getTerrineD();
 
     void ordenhar01();
     void ordenhar02();
@@ -46,11 +51,13 @@ class GIMu{
     void dropMilk();
     void milkTeta();
 
+    int sharpsBase[6];
+    
+
   private:
     Motor Mright;
     Motor Mleft;
     Motor sucker;
-    int sharpsBase[6];
     BracoCopo bracoCopo;
     Elevador elevador;
     Servo SM_Ordenhador;

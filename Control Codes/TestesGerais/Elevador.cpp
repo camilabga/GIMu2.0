@@ -20,6 +20,7 @@ void Elevador::goToStage01(){
         mElevador.moveMotor(255, 1);
         Serial.println(whatStage());
     }
+    delay(1500);
     mElevador.moveMotor(0, 0);
     delay(1000);
     stage = 1;

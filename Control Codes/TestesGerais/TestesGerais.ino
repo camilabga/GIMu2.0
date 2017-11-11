@@ -42,16 +42,24 @@ void setup() {
   lcd.print("hello, world!");*/
   //robo.ordenhar03();
 
-  elevador.goToStage01();
+  // elevador.goToStage01();
 
-  // pinMode(11, OUTPUT);
-  // pinMode(12, OUTPUT);
+  pinMode(11, OUTPUT);
+  pinMode(12, OUTPUT);
   // elevador.goToStage01();
   // braco.g
-// 
+
   /* AJUSTAR PARA COPO */
-  // robo.follow_wall_to_terrine_area();
-  // robo.adjust_to_get_cup();
+  // elevador.goToStage03();
+  //  elevador.goToStage02();
+  // robo.follow_wall_to_terrine_areaD();
+  // robo.adjust_to_get_cupD();
+  //  elevador.goToStage03();
+      // elevador.goToStage02();
+
+  // robo.getTerrineD();
+
+  // elevador.goToStage03();
 }
 
 unsigned aux = 0;
@@ -64,7 +72,7 @@ void loop() {
   // elevador.goToStage03();
   // elevador.goToStage01();
 
-  // Serial.println(elevador.whatStage());
+  Serial.println(elevador.whatStage());
 
   // robo.follow_wall_to_terrine_area();
   // robo.adjust_to_get_cup();
@@ -116,12 +124,12 @@ void loop() {
     // Serial.println(robo.getMSharp());
 
     // elevador.goToStage02();
-    // elevador.goToStage03();
+    // // elevador.goToStage03();
     // digitalWrite(12, LOW);
     // digitalWrite(11, HIGH);
-    // delay(500);
-    // digitalWrite(11, LOW);
-    // digitalWrite(12, HIGH);
+    
+    //  digitalWrite(11, HIGH);
+    //  digitalWrite(12, LOW);
     // delay(500);
     // digitalWrite(12, LOW);
     // delay(4000);
@@ -248,7 +256,7 @@ void loop() {
   */
   //elevador.goToStage01();
   
-  //Serial.println(elevador.whatStage());
+  // Serial.println(elevador.whatStage());
 
   // ### TESTE GARRA ###
   /*braco.tryGetTerrine();

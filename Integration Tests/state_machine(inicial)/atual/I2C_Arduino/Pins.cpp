@@ -7,8 +7,8 @@
 #define SH_ESQUERDA_FRENTE 4 // [5]
 
 // ### Pinagem Motor DC Movimentação
-#define DC11 9 //Direita
-#define DC12 10
+#define DC11 10 //Direita
+#define DC12 9
 
 #define DC21 8 //Esquerda
 #define DC22 7
@@ -28,8 +28,8 @@
 #define FDC_TRAS 22
 
 // ### Pinagem Elevador
-#define DC_ELEVADOR1 11
-#define DC_ELEVADOR0 12
+#define DC_ELEVADOR1 12
+#define DC_ELEVADOR0 11
 #define FDC_ELEVADOR 0
 
 // ### Ordenhador ###

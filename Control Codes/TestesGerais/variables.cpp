@@ -6,9 +6,9 @@
 
 // ###### seguir parede ######
 
-#define SHARP_DIFF 3 // diferenca entre os valores de sharps q ainda serao considerados iguais
+#define SHARP_DIFF 10 // diferenca entre os valores de sharps q ainda serao considerados iguais
 #define SHARP_DIFF_BALIZA 5
-#define DIST_TURN01 15                  // distancia que identifica q o robo achou a parede
+#define DIST_TURN01 10                 // distancia que identifica q o robo achou a parede
 #define DIST_TURN02 8
 #define DIST_TURN03 10
 #define LOOKING_SPEED 200 // velocidade para seguir em frente como se n houvesse amanha (ou parede)

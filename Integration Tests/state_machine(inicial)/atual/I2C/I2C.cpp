@@ -102,6 +102,7 @@ bool I2C::sendFunc(unsigned char b0, unsigned char b1, int b2, int b3){
 			switch(b1){
 				case 1:
 					out[1] = 1;	
+					out[2] = (unsigned char) b2;
 				break;
 				case 2:
 					out[1] = 2;

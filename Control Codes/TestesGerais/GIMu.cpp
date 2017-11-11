@@ -200,68 +200,9 @@ void GIMu::taxearDireitaRe(){
     }
 }
 
-/*void GIMu::findTerrineArea(){
-    follow_wall_to_terrine_area();
-    adjust_to_get_cup();
-    bool frente = false, found_terrine = false;
-    bracoCopo.iniciar();
-    unsigned i = 0;
-    while (i < N_TRY) {
-        Serial.println(getSharp(SH_GARRA));
-        while (getSharp(SH_GARRA) > TEM_COPO && getSharp(SH_FRENTE_DIREITA) < 30) {
-            Serial.println(getSharp(SH_GARRA));
-            if (frente) {
-                if (getSharp(SH_FRENTE_DIREITA) > 10) {
-                    moveFrente(SEARCHING_SPEED);
-                } else {
-                    stop();
-                    i++;
-                    frente = false;
-                }
-
-            } else {
-                if (getSharp(SH_FRENTE_DIREITA) < 27) {
-                    moveTras(SEARCHING_SPEED);
-                } else {
-                    stop();
-                    i++;
-                    frente = true;
-                }
-            }
-
-            if (getSharp(SH_GARRA) <= TEM_COPO) {
-                found_terrine = true;
-                break;
-            }
-        //}
-    }
-
-    delay(250);
-    stop();
-
-    if (found_terrine) {
-        bracoCopo.tryGetTerrine();
-        bracoCopo.recolherBraco();    
-    } else {
-        // GIRANDO
-
-
-        //taxear esquerda
-        while (sharpsBase[4] != VALID_SHARP) {
-            taxearEsquerda();
-        }
-
-        while (sharpsBase[5] == VALID_SHARP ){
-            
-        }
-
-    }
-
-}*/
-
 // ####### LADO DIREITO DA ARENA
 
-/*void GIMu::follow_wall_to_terrine_area() {
+void GIMu::follow_wall_to_terrine_areaD() {
     bracoCopo.iniciar();
     unsigned aux = 0;
     bool found_wall = false;
@@ -360,8 +301,7 @@ void GIMu::taxearDireitaRe(){
         }
     }
 }
-
-void GIMu::adjust_to_get_cup(){
+void GIMu::adjust_to_get_cupD(){
     unsigned aux = 0;
     getSharps();
     bool aligned = false;
@@ -541,13 +481,76 @@ void GIMu::adjust_to_get_cup(){
 
         stop();
 
-}*/
+}
+void GIMu::getTerrineD(){
+    bool frente = false;
+    bracoCopo.iniciar();
+    Serial.println(getSharp(SH_GARRA));
+    while (getSharp(SH_GARRA) > TEM_COPO /*&& getSharp(SH_FRENTE_DIREITA) < 30*/) {
+        Serial.println(getSharp(SH_GARRA));
+        if (frente) {
+            if (getSharp(SH_FRENTE_DIREITA) > 10) {
+                moveFrente(LOOKING_SPEED);
+            } else {
+                stop();
+                frente = false;
+            }
+        } else {
+            if (getSharp(SH_FRENTE_DIREITA) < 27) {
+                moveTras(LOOKING_SPEED);
+            } else {
+                stop();
+                frente = true;
+            }
+        }
+    }    
+
+    /*bool posCopo = true;
+    if(posCopo){
+        int distIni = 0, distFin = 0, dist = 0;
+        
+        // Andar para frente até encontrar o espaço entre copos
+        do{
+            moveFrente(SEARCHING_SPEED);
+        }
+        while( (getSharp(SH_GARRA) < TEM_COPO) 
+            || (((getSharp(SH_FRENTE_DIREITA) + getSharp(SH_FRENTE_ESQUERDA)) / 2) >= 10));
+  
+        stop();
+        distIni = (getSharp(SH_FRENTE_DIREITA) + getSharp(SH_FRENTE_ESQUERDA)) / 2;
+    
+        // Andar para trás até encontrar o espaço entre copos
+        do{
+            moveTras(SEARCHING_SPEED);
+        }
+        while(getSharp(SH_GARRA) < TEM_COPO 
+            || (((getSharp(SH_FRENTE_DIREITA) + getSharp(SH_FRENTE_ESQUERDA)) / 2) <= 30));
+  
+        stop();
+        distFin = (getSharp(SH_FRENTE_DIREITA) + getSharp(SH_FRENTE_ESQUERDA)) / 2;
+  
+        dist = (distIni + distFin) / 2;
+  
+        // Voltando para o centro do copo
+        do{
+            moveFrente(SEARCHING_SPEED);
+        }while(((getSharp(SH_FRENTE_DIREITA) + getSharp(SH_FRENTE_ESQUERDA)) / 2) <= dist);
+        
+        posCopo = false;
+    }*/
+
+    delay(250);
+    stop();
+
+    bracoCopo.tryGetTerrine();
+    bracoCopo.recolherBraco();
+}
+
 
 // ###### LADO ESQUERDO ARENA
 
-void GIMu::follow_wall_to_terrine_area() {
+void GIMu::follow_wall_to_terrine_areaE() {
     bracoCopo.iniciar();
-    elevador.goToStage03();
     unsigned aux = 0;
     bool found_wall = false;
     bool found_terrine_area = false;
@@ -597,17 +600,28 @@ void GIMu::follow_wall_to_terrine_area() {
                 aux = 0;
                 getSharps();
                 do {
-                        if (aux%3 == 0) {
-                            sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
-                            sharpsBase[aux%3 + 1] = getSharp(SH_DIREITA_TRAS);
-                        } else if (aux%3 == 1) {
-                            sharpsBase[aux%3 + 1] = getSharp(SH_FRENTE_DIREITA);
-                            sharpsBase[aux%3 + 2] = getSharp(SH_FRENTE_ESQUERDA);
-                        } else {
-                            sharpsBase[aux%3 + 2] = getSharp(SH_ESQUERDA_FRENTE);
-                            sharpsBase[aux%3 + 3] = getSharp(SH_ESQUERDA_TRAS);
-                        }
-                        
+                //         if (aux%3 == 0) {
+                //             sharpsBase[aux%3] = getSharp(SH_DIREITA_FRENTE);
+                //             sharpsBase[aux%3 + 1] = getSharp(SH_DIREITA_TRAS);
+                //         } else if (aux%3 == 1) {
+                //             sharpsBase[aux%3 + 1] = getSharp(SH_FRENTE_DIREITA);
+                //             sharpsBase[aux%3 + 2] = getSharp(SH_FRENTE_ESQUERDA);
+                //         } else {
+                //             sharpsBase[aux%3 + 2] = getSharp(SH_ESQUERDA_FRENTE);
+                //             sharpsBase[aux%3 + 3] = getSharp(SH_ESQUERDA_TRAS);
+                //         }
+                        // 
+                        // (aux%3 == 0) {?
+                            sharpsBase[0] = getSharp(SH_DIREITA_FRENTE);
+                            sharpsBase[1] = getSharp(SH_DIREITA_TRAS);
+                        // } else if (aux%3 == 1) {
+                            sharpsBase[2] = getSharp(SH_FRENTE_DIREITA);
+                            sharpsBase[3] = getSharp(SH_FRENTE_ESQUERDA);
+                        // } else {
+                            // sharpsBase[aux%3 + 2] = getSharp(SH_ESQUERDA_FRENTE);
+                            // sharpsBase[aux%3 + 3] = getSharp(SH_ESQUERDA_TRAS);
+                        // }
+
                         aux=(aux+1)%3;
 
                         Serial.print(" S0: ");
@@ -625,7 +639,7 @@ void GIMu::follow_wall_to_terrine_area() {
 
                     moveTank(-TURNING_SPEED, TURNING_SPEED);
                 } while(!(sharpsBase[0] != VALID_SHARP && sharpsBase[1] != VALID_SHARP 
-                    && abs(sharpsBase[0]-sharpsBase[1]) < SHARP_DIFF && sharpsBase[0] < 20));
+                    && abs(sharpsBase[0]-sharpsBase[1]) < SHARP_DIFF && sharpsBase[0] < 15));
                 
                 found_wall = true;
                 stop();
@@ -650,7 +664,7 @@ void GIMu::follow_wall_to_terrine_area() {
                 Serial.print(sharpsBase[0]);
                 Serial.print(" S1: ");
                 Serial.print(sharpsBase[1]);
-                Serial.print("  || S2: ");
+                Serial.print("  || S2:");
                 Serial.print(sharpsBase[2]);
                 Serial.print(" S3: ");
                 Serial.print(sharpsBase[3]);
@@ -671,8 +685,7 @@ void GIMu::follow_wall_to_terrine_area() {
         }
     }
 }
-
-void GIMu::adjust_to_get_cup(){
+void GIMu::adjust_to_get_cupE(){
     unsigned aux = 0;
     getSharps();
     bool aligned = false;
@@ -845,65 +858,58 @@ void GIMu::adjust_to_get_cup(){
         stop();*/
 
 }
-
-
-void GIMu::getTerrine(){
-    bool frente = false;
+void GIMu::getTerrineE(){
+    bool frente = true;
+    bool deuCertoJa = false;
     bracoCopo.iniciar();
     Serial.println(getSharp(SH_GARRA));
-    while (getSharp(SH_GARRA) > TEM_COPO /*&& getSharp(SH_FRENTE_DIREITA) < 30*/) {
+    while (!deuCertoJa /*&& getSharp(SH_FRENTE_DIREITA) < 30*/) {
         Serial.println(getSharp(SH_GARRA));
         if (frente) {
-            if (getSharp(SH_FRENTE_DIREITA) > 10) {
+            if (getSharp(SH_DIREITA_FRENTE) < 15) {
                 moveFrente(LOOKING_SPEED);
+                // if(getSharp(SH_GARRA) > TEM_COPO){
+                //     deuCertoJa = true;
+                //     break;
+                // }
             } else {
                 stop();
                 frente = false;
             }
         } else {
-            if (getSharp(SH_FRENTE_DIREITA) < 27) {
-                moveTras(LOOKING_SPEED);
-            } else {
-                stop();
+            moveTank(-200,200);
+            delay(100);
+            moveTras(LOOKING_SPEED);
+            delay(2200);
+            moveTank(200,-200);
+            delay(100);
+            if (getSharp(SH_DIREITA_TRAS)<9){
                 frente = true;
+                break;
             }
+            stop();
+            frente = true;
         }
     }
-
-    /*bool posCopo = true;
-    if(posCopo){
-        int distIni = 0, distFin = 0, dist = 0;
-        
-        // Andar para frente até encontrar o espaço entre copos
-        do{
-            moveFrente(SEARCHING_SPEED);
+    while(!deuCertoJa){
+        if (frente) {
+            if (getSharp(SH_DIREITA_FRENTE) < 20) {
+                moveFrente(LOOKING_SPEED);
+                // if(getSharp(SH_GARRA) > TEM_COPO){
+                //     deuCertoJa = true;
+                //     break;
+                // }
+            } else {
+                stop();
+                frente = false;
+            }
+        } else {
+            moveTras(LOOKING_SPEED);
+            delay(2200);
+            stop();
+            frente = true;
         }
-        while( (getSharp(SH_GARRA) < TEM_COPO) 
-            || (((getSharp(SH_FRENTE_DIREITA) + getSharp(SH_FRENTE_ESQUERDA)) / 2) >= 10));
-  
-        stop();
-        distIni = (getSharp(SH_FRENTE_DIREITA) + getSharp(SH_FRENTE_ESQUERDA)) / 2;
-    
-        // Andar para trás até encontrar o espaço entre copos
-        do{
-            moveTras(SEARCHING_SPEED);
-        }
-        while(getSharp(SH_GARRA) < TEM_COPO 
-            || (((getSharp(SH_FRENTE_DIREITA) + getSharp(SH_FRENTE_ESQUERDA)) / 2) <= 30));
-  
-        stop();
-        distFin = (getSharp(SH_FRENTE_DIREITA) + getSharp(SH_FRENTE_ESQUERDA)) / 2;
-  
-        dist = (distIni + distFin) / 2;
-  
-        // Voltando para o centro do copo
-        do{
-            moveFrente(SEARCHING_SPEED);
-        }while(((getSharp(SH_FRENTE_DIREITA) + getSharp(SH_FRENTE_ESQUERDA)) / 2) <= dist);
-        
-        posCopo = false;
-    }*/
-
+    }
     delay(250);
     stop();
 

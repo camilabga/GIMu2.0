@@ -80,7 +80,7 @@ I2C arduino;
 
 int main(int argc, char **argv){
 	//Variaveis Máquina_Estado:
-	int estadoAtual = 3;
+	int estadoAtual = 2;
 	bool fim_geral = false;
 
 	thread thread_vaca(vaiVaca);
@@ -91,7 +91,7 @@ int main(int argc, char **argv){
 				// ####################### SEGUE PAREDE
 				case 1:
 					//Envia comando I2C: Iniciando estado
-					arduino.sendFunc(1,1);
+					arduino.sendFunc(1,1,1);
 
 					while(1){
 						//Envia comando I2C: Perguntando se já acabou
@@ -100,16 +100,17 @@ int main(int argc, char **argv){
 							break;
 						}
 					}
+					//
 
 					cout << "Acabou Estado 01." << endl;
-					estadoAtual = 2;
+					estadoAtual = 4;
 					//fim_geral = true;
 				break;
 				
 				// ####################### PROCURA COPO
 				case 2:
 					//Envia comando I2C: Iniciando estado
-					arduino.sendFunc(2,1);
+					arduino.sendFunc(2,1,2);
 
 					while(1){
 						//Envia comando I2C: Perguntando se já acabou
@@ -120,7 +121,7 @@ int main(int argc, char **argv){
 					}
 
 					cout << "Acabou Estado 02." << endl;
-					// estadoAtual = 3;
+					// estadoAtual = 4;
 					fim_geral = true;
 				break;
 				
@@ -220,8 +221,8 @@ int main(int argc, char **argv){
 					}
 					//Fim de estado:
 					cout << "Acabou Estado 04." << endl;
-					estadoAtual = 5;
-					// fim_geral = true;
+					// estadoAtual = 5;
+					fim_geral = true;
 					//
 				break;
 

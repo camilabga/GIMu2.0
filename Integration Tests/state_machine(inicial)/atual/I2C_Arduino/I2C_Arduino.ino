@@ -5,11 +5,16 @@
 // ### Definições Robô
 Motor direito(DC11, DC12);
 Motor esquerdo(DC21, DC22);
+
 Motor mbraco(MBRACO1, MBRACO2);
 BracoCopo braco(SERVOG_PULSO, SERVOG_DEDO, SH_GARRA, MSH_GARRA_D, MSH_GARRA_E, mbraco);
-Motor mElevator(DC_ELEVADOR1, DC_ELEVADOR0);
-Elevador elevador(mElevator, 3);
-GIMu robo (direito, esquerdo, braco, elevador);
+
+Motor mElevator(DC_ELEVADOR0, DC_ELEVADOR1);
+Elevador elevador(mElevator);
+
+Motor sucker(DC_TIRALEITE1, DC_TIRALEITE2);
+
+GIMu robo (direito, esquerdo, braco, elevador, sucker);
 
 // ### Definicoes I2C:
 #define SLAVE_ADDRESS 0x05
@@ -33,6 +38,7 @@ int estadoAtual = 20;
 int subEstado = 90;
 bool fimEstado[QTD_ESTADOS];
 bool comecarTudo = false;
+byte ladoInicio;
 
 //Definições vaca:
 #define ADJ_DEG 20
@@ -111,7 +117,7 @@ void loop() {
   // AÇÕES ESTADOS:
   switch(estadoAtual){ 
     case 1: // ### Ações Segue Parede
-      robo.follow_wall_to_terrine_area();
+      // robo.follow_wall_to_terrine_area();
       robo.moveFrente(0);
       
       fimEstado[1] = true;
@@ -119,16 +125,30 @@ void loop() {
     break;
 
     case 2: // ### Ações Procura Copo
-      robo.adjust_to_get_cup();
-      robo.moveFrente(0);
+      if(ladoInicio == 1){
+        elevador.goToStage02();
+        robo.follow_wall_to_terrine_areaE();
+        robo.adjust_to_get_cupE();
+        elevador.goToStage01();
+        robo.getTerrineE();
+        robo.moveFrente(0);
+      }else if(ladoInicio == 2){
+        elevador.goToStage02();
+        robo.follow_wall_to_terrine_areaD();
+        robo.adjust_to_get_cupD();
+        elevador.goToStage01();
+        robo.getTerrineD();
+        robo.moveFrente(0);
+      }
       
+      elevador.goToStage03();
       fimEstado[2] = true;
       estadoAtual = 90;
     break;
 
     case 3: // ### Ações Pega Copo
       braco.tryGetTerrine();
-  braco.recolherBraco();
+      braco.recolherBraco();
       robo.moveFrente(0);
       
       fimEstado[3] = true;
@@ -311,7 +331,8 @@ void receiveData(int byteCount) {
         out[0]=2;
         switch(in[1]){
           case 1://Mandando arduino começar.
-            out[1] = 1;  
+            out[1] = 1; 
+            ladoInicio = in[2]; 
             estadoAtual = 2;
             fimEstado[2] = false;
           break;
