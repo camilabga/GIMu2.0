@@ -80,7 +80,7 @@ I2C arduino;
 
 int main(int argc, char **argv){
 	//Variaveis Máquina_Estado:
-	int estadoAtual = 4;
+	int estadoAtual = 3;
 	bool fim_geral = false;
 
 	thread thread_vaca(vaiVaca);
@@ -220,8 +220,8 @@ int main(int argc, char **argv){
 					}
 					//Fim de estado:
 					cout << "Acabou Estado 04." << endl;
-					// estadoAtual = 5;
-					fim_geral = true;
+					estadoAtual = 5;
+					// fim_geral = true;
 					//
 				break;
 

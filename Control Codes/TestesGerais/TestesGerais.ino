@@ -25,11 +25,14 @@ LiquidCrystal lcd(28,30,32,34,36,38);
 
 void setup() {
   Serial.begin(9600);
-
+  // elevador.goToStage01();
+// robo.milkTeta();
 //   robo.follow_wall_to_little_gate();
    ///braco.recolherBraco();
-  robo.follow_wall_to_terrine_area();
-  robo.adjust_to_get_cup();
+  // robo.follow_wall_to_terrine_area();
+  // robo.adjust_to_get_cup();
+  // braco.tryGetTerrine();
+  // braco.recolherBraco();
   // robo.getTerrine();
 // // //   robo.getTerrine();
 //  teste.attach(6);
@@ -39,17 +42,34 @@ void setup() {
   lcd.print("hello, world!");*/
   //robo.ordenhar03();
 
-  // pinMode(5, OUTPUT);
-  // pinMode(4, OUTPUT);
+  elevador.goToStage01();
 
+  // pinMode(11, OUTPUT);
+  // pinMode(12, OUTPUT);
+  // elevador.goToStage01();
+  // braco.g
+// 
   /* AJUSTAR PARA COPO */
-  /*robo.follow_wall_to_terrine_area();
-  robo.adjust_to_get_cup();*/
+  // robo.follow_wall_to_terrine_area();
+  // robo.adjust_to_get_cup();
 }
 
 unsigned aux = 0;
 
 void loop() {
+
+  // elevador.goToStage01();
+  // elevador.goToStage03();
+  // elevador.goToStage01();
+  // elevador.goToStage03();
+  // elevador.goToStage01();
+
+  // Serial.println(elevador.whatStage());
+
+  // robo.follow_wall_to_terrine_area();
+  // robo.adjust_to_get_cup();
+  
+  // Serial.println(robo.getMSharp());
 
   //robo.moveTank(-LOOKING_SPEED, LOOKING_SPEED);
   // elevador.goToStage01();
@@ -96,18 +116,20 @@ void loop() {
     // Serial.println(robo.getMSharp());
 
     // elevador.goToStage02();
-    //elevador.upToStage03();
-    // digitalWrite(5, HIGH);
-    // digitalWrite(4, LOW);
-    // delay(4000);
-    
+    // elevador.goToStage03();
+    // digitalWrite(12, LOW);
+    // digitalWrite(11, HIGH);
+    // delay(500);
+    // digitalWrite(11, LOW);
+    // digitalWrite(12, HIGH);
+    // delay(500);
     // digitalWrite(12, LOW);
     // delay(4000);
     //teste.write(20);
     //teste.detach();
     //robo.taxearEsquerda();
    // robo.ordenhar03();
-    //  elevador.goToStage01();
+    //  elevador.goToStage03();
     //  Serial.println(elevador.whatStage());
 
     //teste.write(POSICAO_INICIAL_GARRA);
@@ -178,7 +200,7 @@ void loop() {
 
   //teste.write(90);
 
-  // /* ### Teste dos sensores Sharps:*/
+  // // /* ### Teste dos sensores Sharps:*/
   // Serial.print(" S0: ");
   // Serial.print(robo.getSharp(SH_DIREITA_TRAS));
   // Serial.print(" S1: ");

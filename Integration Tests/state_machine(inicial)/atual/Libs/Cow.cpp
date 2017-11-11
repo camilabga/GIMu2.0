@@ -1,6 +1,6 @@
 #include "Cow.h"
 
-#define THRESH 70
+#define THRESH 60
 #define max1 500
 #define MIN_THRESH 1
 #define MAX_THRESH 100

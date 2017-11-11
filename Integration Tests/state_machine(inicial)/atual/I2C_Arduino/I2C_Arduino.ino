@@ -127,7 +127,8 @@ void loop() {
     break;
 
     case 3: // ### Ações Pega Copo
-      robo.getTerrine(); 
+      braco.tryGetTerrine();
+  braco.recolherBraco();
       robo.moveFrente(0);
       
       fimEstado[3] = true;
