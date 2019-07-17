@@ -1,10 +1,13 @@
 # Milker Robot for the 2017 IEEE Latin American Robotics Competition 
-Os desafios propostos pela IEEE Latin American Robotics Competition têm como objetivo levar às competições problemas reais encontrados no cotidiano das pessoas e indústrias. Nas edições de 2016 e 2017 da competição é abordada a questão da qualidade na produção do setor alimentício.
 
-O processo atual da produção de leite envolve muito estresse sobre os animais, o que acarreta em um leite de qualidade inferior. Podemos melhorar isso ao mudar alguns fatores. A  proposta desse desafio é fazer com que o habitat natural (pasto) deixe o animal mais confortável, para que assim os níveis de estresse do animal diminuam. 
+The challenges proposed by IEEE Latin American Robotics Competition have as goal to take to competitions rela problems found daily in people's life and industries. In the editions of 2016 and 2017 the matter of quality in the milk production.
 
-O problema proposto apresenta um cenário interessante para explorar técnicas de processamento de imagens, principalmente para a localização da miniatura de vaca. O método desenvolvido tem como saída o centro de massa do objeto e é baseado em alguns algoritmos conhecidos, como Shi-Tomasi Corner Detector, o clustering K-means e local binary patterns.
+There has been an increasing demand for quality food in the recent past. Consumers call for organic products with a known origin and free of pesticides. With respect to animals, consumers demand that the meat they consume comes from cage free and hormone free animals. Additionally, there is an increasing trend to demand that animals are not mistreated during the whole production process.
 
-Dado o problema, propomos uma solução: um robô com uma garra e um sistema de visão que também será responsável pela ordenha e transporte do leite. Com recursos como Arduino, Raspberry Pi, OpenCV e ArUco será possível apresentar essa solução.
+The task focuses on the problem of milking the cows “on­site”, to avoid the stress involved in taking them to the milking barn, and thus improving milk quality.
 
-Segue o artigo que descreve o algoritmo de detecção da minitura de vaca: https://ieeexplore.ieee.org/document/8215302
+The proposed problem presents an interesting scenario to explore digital image processing, mostly to the cow localization. The developed method has as output the mass center of the object and it is based in some well known algorithms, such as Shi-Tomasi Corner Detector, clustering K-means and local binary patterns.
+
+Our solution proposed a robot with an articulated arm and a vision recognition system that was responsible for milking the cow and the tranport of the milk. With technologies such as Arduino, Raspberry Pi and ArUco, we were able to present a proper solution.
+
+The article that describes the algorithm that detects the cow is published in the following link: https://ieeexplore.ieee.org/document/8215302
