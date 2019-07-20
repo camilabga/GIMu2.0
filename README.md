@@ -1,4 +1,4 @@
-# Milker Robot for the 2017 IEEE Latin American Robotics Competition 
+# Milker Robot for the 2017 IEEE Latin American Robotics Competition
 
 The challenges proposed by IEEE Latin American Robotics Competition have as goal to take to competitions rela problems found daily in people's life and industries. In the editions of 2016 and 2017 the matter of quality in the milk production.
 
